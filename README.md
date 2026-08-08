@@ -1,47 +1,23 @@
-# B7 FI Command Center v0.5
+# B7 FI Command Center v0.6
 
-Visualization prototype with the Quarter Tool Shipping Countdown now substantially defined.
+Workbook-driven visualization prototype.
 
-## Quarter Tool Shipping Countdown — v0.5
-The clean status page is structured like the physical wall countdown:
+## Included from B7-FI-Command-Center.xlsx
+- Complete 29XX code-name/model catalog: Regera, Celestiq, Zephyr, Panamera, Targa, Taycan, Macan, Boxster, Vanquish.
+- Quarter list CY26Q1 through CY30Q4.
+- Standard 29XX, Regera, and Celestiq route/checklist logic.
+- Tool Countdown fields including pull-in/push-out quarter planning.
+- Shipping Schedule fields and report format.
+- Weekday Priorities report format.
+- Morning Status report format generated from Tool records.
+- Weekend Volunteers + Weekend Priorities combined report.
+- Tool master fields and 45 Lead/Admin progress tasks.
 
-### Overall quarter level
-- Quarter label (example: CY26Q3)
-- Total Tools
-- Need to Ship
-- Shipped
-- Overall % Shipped progress bar
+## New workflow features
+- Screenshot Mode on operational report pages and individual Tool Status.
+- Weekend volunteer/hours editor feeding the Weekend Priorities status page.
+- Editable remembered-value fields using browser datalists for frequently reused values.
+- Separate Tool Progress and Lead/Admin Progress calculations.
+- Morning Quick Update edits the shared Tool record instead of creating duplicate status data.
 
-### Automatic Tool Type breakdown
-For each Tool Type (examples: 29XX, Regera, Celestiq):
-- Total
-- Need to Ship
-- Waiting to be Handed to FI
-- In FI
-- Shipped
-- Tool Type % Shipped progress bar
-- Individual system status cards below the totals
-
-### Tool Countdown Admin fields
-Only these eight fields are exposed:
-1. Quarter — manual text entry
-2. Tool Type — dropdown
-3. Tool Model — dependent dropdown based on Tool Type
-4. Sales Order — manual entry
-5. Customer — manual entry
-6. UTID — manual entry
-7. MFG Ship Date — date picker
-8. Tool Status — Waiting to be Handed to FI / In FI / Shipped
-
-All totals and progress percentages are calculated automatically.
-
-## Prototype dropdowns
-The Tool Type and Tool Model lists are still provisional. Replace them with the complete work list once supplied.
-
-## Other Command Center pages
-Shipping Schedule, Weekday Priorities, Morning Status, Weekend Priorities, Tools, and Administration remain in place for continued page-by-page field definition.
-
-## Data and deployment
-- Fictional sample data only.
-- Browser-local storage for prototype testing.
-- New v0.5 asset filenames are used to avoid stale GitHub Pages caching.
+All bundled records are fictional sample data. Browser localStorage is used for prototype testing.
