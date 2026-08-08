@@ -1,34 +1,49 @@
-# B7 FI Command Center v0.1
+# B7 FI Command Center v0.2
 
-First GitHub-ready working repository for the B7 FI Command Center.
+GitHub-ready interactive prototype based on the revised **Status Pages + Admin Pages** architecture.
 
-## Standardized framework
-Every operational view uses the same hero, navigation, page shell, cards, progress bars, status colors, and footer.
-
-## Included views
+## Clean status pages
 - Home
+- System Shipping Countdown
 - Daily Priorities
 - Weekend Priorities
-- Morning Meeting Updates
-- System Shipping Countdown
-- All Systems Status
-- Individual System Detail
-- Morning Quick Update
-- Administration
+- Morning Meeting
+- All Systems cards
+- Individual System Status
 
-## Working prototype features
-- 29XX, Celestiq, and Regera checklist routes
-- Automatic FI Tool Progress calculation from current checklist
-- Separate Lead Administrative Progress
-- Critical NC / escalation summaries
-- Add and edit systems
-- Quick daily update of all systems
-- Browser-local data persistence
-- Export / import JSON backup
-- Responsive layout
+## Administration
+- Administration hub
+- Universal Tool Admin (Add / Update / Delete)
+- Quarter / Countdown Admin
+- Daily Priorities Admin
+- Weekend Priorities Admin
+- Export / Import local backup
 
-## GitHub Pages
-Upload the contents of this repository to the root of `b7-fi-command-center`, then enable GitHub Pages from the `main` branch and `/root`.
+## Core behavior implemented
+- One master record per system.
+- The Universal Tool Admin is the complete editable system record.
+- A system can be added with only the information known at the beginning of the quarter and filled in later.
+- Shipping Countdown status page is read-only and focused on quarter planning/status.
+- Quarter Admin is limited to quarter planning fields and allows adding a tool, changing ship dates/status, or moving a tool out of the quarter.
+- Daily and Weekend Priority status pages are clean spreadsheet-style reports intended for screenshots.
+- Daily and Weekend Priority Admin pages are minimal quick-update screens.
+- Daily Priority and Weekend Priority are separate independent fields.
+- Priority values 1-50 can only be used once within each list. Used numbers are disabled for other tools.
+- The same system can be Daily Priority 1 and Weekend Priority 1.
+- All Systems uses live cards with Tool Progress and Lead Admin Progress.
+- Clicking a system card opens a complete read-only System Status page.
+- System Status has a direct Edit Tool button.
+- Contextual floating action navigation appears on status pages.
+- Tool Progress is calculated automatically from the fixed 29XX / Celestiq / Regera checklist routes.
+- Lead Admin Progress is calculated separately.
+- Critical operational NCs / POAs can be tracked on the master tool record.
+- Data is saved in browser `localStorage`.
+- Backup export/import is available.
+
+## GitHub Pages update
+Upload the CONTENTS of this folder to the root of your existing `b7-fi-command-center` repository, replacing the previous version.
+
+Your existing GitHub Pages configuration can remain the same (`main` branch, `/root`).
 
 ## Important
-The repository contains fictional sample data only. Do not commit real customer names, sales orders, UTIDs, NC descriptions, or other company-confidential information to GitHub. Real data entered while using the prototype is stored only in that browser's local storage unless you export a backup file.
+This repository contains fictional sample data only. Do not commit real internal company data, customer names, UTIDs, sales orders, NC details, or shipping information to GitHub. Information entered through the live prototype is stored only in that browser's local storage and is not written back to GitHub.

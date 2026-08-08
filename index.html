@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>B7 FI Command Center v0.1</title>
+  <title>B7 FI Command Center v0.2</title>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -12,26 +12,26 @@
     <div class="hero-content">
       <div class="eyebrow">FINAL INTEGRATION OPERATIONS</div>
       <h1>B7 FI COMMAND CENTER</h1>
-      <p>One live operational view for quarter planning, system priorities, FI progress, and lead administrative readiness.</p>
+      <p>Standardized status pages, universal tool administration, quarter planning, and fast B7 priority updates.</p>
     </div>
   </header>
 
   <nav class="main-nav" aria-label="Main navigation">
     <button data-view="home" class="nav-btn active">Home</button>
+    <button data-view="countdown" class="nav-btn">Shipping Countdown</button>
     <button data-view="daily" class="nav-btn">Daily Priorities</button>
     <button data-view="weekend" class="nav-btn">Weekend Priorities</button>
     <button data-view="meeting" class="nav-btn">Morning Meeting</button>
-    <button data-view="countdown" class="nav-btn">Shipping Countdown</button>
     <button data-view="systems" class="nav-btn">All Systems</button>
-    <button data-view="morning" class="nav-btn">Morning Update</button>
-    <button data-view="admin" class="nav-btn">Administration</button>
+    <button data-view="admin" class="nav-btn admin-nav">Administration</button>
   </nav>
 
   <main id="app" class="page-shell"></main>
+  <div id="floatingActions" class="floating-actions" aria-label="Quick actions"></div>
 
   <footer>
-    <strong>B7 FI Command Center v0.1</strong>
-    <span>v0.1 GitHub-ready working prototype — fictional sample data</span>
+    <strong>B7 FI Command Center v0.2</strong>
+    <span>Fictional sample data · browser-local prototype</span>
   </footer>
 
   <script src="js/app.js"></script>

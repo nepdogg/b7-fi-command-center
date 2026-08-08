@@ -1,23 +1,17 @@
-B7 FI COMMAND CENTER — INTERACTIVE PROTOTYPE v0.2
+B7 FI COMMAND CENTER v0.2
 
-HOW TO OPEN
-1. Extract the ZIP file.
-2. Open the folder b7-fi-command-center-v0.2.
-3. Double-click index.html.
-4. Use Chrome, Edge, Firefox, or Safari.
+Upload all files/folders in this directory to the root of the b7-fi-command-center GitHub repository.
 
-NEW IN v0.2
-- Morning Quick Update page for changing every active tool from one screen.
-- Save All Updates button.
-- Reorder priorities with up/down buttons.
-- Order priorities by ship date.
-- Publish Current Priorities timestamp.
-- Open a full tool dashboard from the quick-update screen.
-- Export and import prototype data as a JSON backup.
-- Existing Add Tool, Edit Tool, checklist calculations, lead tasks, and critical NC features remain available.
+Main additions:
+- Clean Status pages separated from Admin pages
+- Universal Tool Admin
+- Quarter Admin
+- Daily Priorities Admin
+- Weekend Priorities Admin
+- Unique 1-50 priority locking per list
+- All Systems live cards
+- Individual System Status pages
+- Contextual floating action bar
+- Browser-local saving and backup/restore
 
-IMPORTANT
-- This is a local proof of concept using fictional data.
-- Data is stored in the browser's local storage on that computer/browser.
-- It is not yet a multiuser SharePoint implementation.
-- Do not enter confidential work information into a home-computer prototype unless allowed by your employer.
+See README.md for details.
