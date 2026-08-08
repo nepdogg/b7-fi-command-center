@@ -4,7 +4,7 @@ const ROUTES={
 'Regera':[['R9xx_130_10','Tool Config & Verifications'],['R9xx_130_20','IR Screening & Imaging'],['R9xx_130_30','System HC & Calibrations'],['R9xx_130_40','GS Configuration & verifications'],['R9xx_140_10','Noise Prep'],['R9xx_140_20','Noise Floor Testing'],['R9xx_140_30','Stage Accuracy Test'],['R9xx_150_10','REF Matching'],['R9xx_150_20','Clipping check and Core IP calibrations'],['R9xx_150_30','BFBB Matching'],['R9xx_150_40','BFColors Matching'],['R9xx_150_50','Non-BF & DF Matching'],['R9xx_150_60','Flex Matching'],['R9xx_160_10','Sensitivity DEF Inspections'],['R9xx_160_20','Stage Conformance Inspections'],['R9xx_160_30','System CTD Inspections'],['R9xx_160_40','Design Based Inspections'],['R9xx_170_10','Stage HC'],['R9xx_170_20','AutoFocus & Image Acq'],['R9xx_170_30','Illuminator'],['R9xx_170_40','Image Path'],['R9xx_180_10','System Verifications'],['R9xx_180_20','Options Install & Testing'],['R9xx_180_30','Final Verifications'],['R9xx_180_40','PreSource'],['R9xx_190_10','Data Back up & Clean up'],['R9xx_190_20','Prepack Prep & Power down'],['R9xx_200_10','Safety Labels & System Draining'],['R9xx_200_20','System Power Off'],['R9xx_200_30','Stage & Optics tie down'],['R9xx_200_40','Thermal Rack / Laser / Chiller Draining'],['R9xx_200_50','Aux Racks & Blowers'],['R9xx_200_60','Autoloader & CI'],['R9xx_200_70','Accessories'],['R9xx_200_80','Inspection Station / MST Install'],['R9xx_200_90','Bagging IS']]
 };
 const TASKS=['Issue system wafer kit','Transact system wafer kit','Create MFG options file','Request options','Request lamp','Request wafers from B5','Request cal chips','Notify CA to review CTD data','CA approved CTD data','Ship meeting scheduled','Customer source required','Pre-source checklist complete','Customer source start date','Create IMPACT options file','Create install options file','Create RC options file','Create customer options file','Options arrived complete','Request POD','POD arrived','Request ship kit','Ship kit arrived complete','Ironman test complete','Antivirus scans complete','Antivirus data sent to CA','CA approved antivirus data','Create ship schedule','Notify shipping team','Tool powered down','Handoff subsystems','Handoff accessories','Handoff cable kit','Shipping team installed MST','Handoff IS','System completed and shipped'];
-const KEY='b7fi-v04-tools',OLD_KEY='b7fi-v03-tools';
+const KEY='b7fi-v042-tools',OLD_KEYS=['b7fi-v04-tools','b7fi-v03-tools'];
 const $=s=>document.querySelector(s), app=$('#app'), floating=$('#floatingActions');
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 const fmt=d=>d?new Date(d+'T12:00:00').toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'}):'—';
@@ -17,10 +17,21 @@ const SAMPLE=[
 {id:'1350701',so:'SO-1005',customer:'Customer E',family:'29XX',model:'2955',quarter:'Q3 2026',quarterStatus:'Waiting for FI handoff',ship:'2026-09-03',room:'Not yet handed off',driver:'Unassigned',dailyPriority:null,weekendPriority:null,checklist:'FI_130_010',status:'Waiting for FI handoff',activity:'Scheduled for FI handoff',lamp:0,priorityNotes:'',weekendNotes:'',notes:'Quarter planned tool.',admin:makeTasks(0),ncs:[],schedule:{state:'Not Created',subsystems:'',accessories:'',cables:'',mst:'',is:''}},
 {id:'1350601',so:'SO-0998',customer:'Customer F',family:'29XX',model:'2935i',quarter:'Q3 2026',quarterStatus:'Shipped',ship:'2026-08-05',room:'Shipping',driver:'Driver E',dailyPriority:null,weekendPriority:null,checklist:'FI_200_090',status:'Shipped',activity:'Complete',lamp:900,priorityNotes:'',weekendNotes:'',notes:'Shipped.',admin:makeTasks(100),ncs:[],schedule:{state:'Complete',subsystems:'2026-08-01',accessories:'2026-08-01',cables:'2026-08-02',mst:'N/A',is:'2026-08-04'}}
 ];
-let tools=JSON.parse(localStorage.getItem(KEY)||localStorage.getItem(OLD_KEY)||'null')||SAMPLE, view='countdown', selectedId=null;
-function normalize(t){t.schedule=t.schedule||{state:'Not Created',subsystems:'',accessories:'',cables:'',mst:'',is:''};t.admin=t.admin||makeTasks(0);t.ncs=t.ncs||[];
-if(t.quarterStatus==='Active in FI')t.quarterStatus='In FI';if(t.quarterStatus==='Waiting for FI handoff'||t.quarterStatus==='Planned')t.quarterStatus='Waiting for FI';
-if(!['Waiting for FI','In FI','Shipped'].includes(t.quarterStatus))t.quarterStatus='In FI';return t} tools.forEach(normalize);
+function loadStoredTools(){try{let raw=localStorage.getItem(KEY);if(!raw){for(const k of OLD_KEYS){raw=localStorage.getItem(k);if(raw)break}}if(!raw)return JSON.parse(JSON.stringify(SAMPLE));let parsed=JSON.parse(raw);return Array.isArray(parsed)?parsed:JSON.parse(JSON.stringify(SAMPLE))}catch(e){console.warn('B7FI storage recovery:',e);return JSON.parse(JSON.stringify(SAMPLE))}}
+let tools=loadStoredTools(), view='countdown', selectedId=null;
+function normalize(t){
+ if(!t||typeof t!=='object')t={};
+ t.id=t.id??'';t.so=t.so??'';t.customer=t.customer??'';t.family=ROUTES[t.family]?t.family:'29XX';t.model=t.model??t.family;
+ t.quarter=t.quarter??'Q3 2026';t.ship=t.ship??'';t.room=t.room??'';t.driver=t.driver??'Unassigned';
+ t.schedule=(t.schedule&&typeof t.schedule==='object')?t.schedule:{state:'Not Created',subsystems:'',accessories:'',cables:'',mst:'',is:''};
+ for(const k of ['state','subsystems','accessories','cables','mst','is']) if(t.schedule[k]==null)t.schedule[k]=k==='state'?'Not Created':'';
+ t.admin=(t.admin&&typeof t.admin==='object')?t.admin:makeTasks(0);t.ncs=Array.isArray(t.ncs)?t.ncs:[];
+ if(t.quarterStatus==='Active in FI')t.quarterStatus='In FI';if(t.quarterStatus==='Waiting for FI handoff'||t.quarterStatus==='Planned')t.quarterStatus='Waiting for FI';
+ if(!['Waiting for FI','In FI','Shipped'].includes(t.quarterStatus))t.quarterStatus='In FI';
+ t.checklist=t.checklist??(ROUTES[t.family][0]?.[0]||'');t.status=t.status??(t.quarterStatus==='Shipped'?'Shipped':'Progressing');t.activity=t.activity??'';
+ t.dailyPriority=t.dailyPriority??null;t.weekendPriority=t.weekendPriority??null;t.priorityNotes=t.priorityNotes??'';t.weekendNotes=t.weekendNotes??'';t.notes=t.notes??'';t.lamp=Number(t.lamp)||0;
+ return t
+} tools=tools.map(normalize);
 function save(){localStorage.setItem(KEY,JSON.stringify(tools))}
 function current(){return tools}
 function routeProgress(t){let r=ROUTES[t.family]||[],i=r.findIndex(x=>x[0]===t.checklist);return i<0?0:Math.round(((i+1)/r.length)*100)}
@@ -28,7 +39,7 @@ function adminProgress(t){let vals=TASKS.map(x=>t.admin?.[x]).filter(x=>x!=='not
 function checklistName(t){return (ROUTES[t.family]||[]).find(x=>x[0]===t.checklist)?.[1]||''}
 function tone(t){if(t.status==='Shipped')return'good';if(t.status==='Blocked'||t.ncs.some(n=>n.blocking))return'bad';if(/Waiting|Trouble|POA/.test(t.status+' '+t.activity))return'warn';return'good'}
 function page(title,desc,kicker='B7 FI OPERATIONS'){return `<div class="page-title"><div><div class="page-kicker">${kicker}</div><h2>${title}</h2><p>${desc}</p></div></div>`}
-function setView(v){view=v;document.body.dataset.theme=v==='systems'?'systems':v;document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.view===v));render();scrollTo({top:190,behavior:'smooth'})}
+function setView(v){view=v;document.body.dataset.theme=v==='systems'?'systems':v;document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.view===v));render();if(app)app.dataset.rendered='true';scrollTo({top:190,behavior:'smooth'})}
 document.querySelectorAll('.nav-btn').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.view)));
 function actions(items){floating.innerHTML=items.map((x,i)=>`<button class="btn ${x.primary?'primary':''}" data-a="${i}">${x.label}</button>`).join('');items.forEach((x,i)=>floating.querySelector(`[data-a="${i}"]`).onclick=x.fn)}
 function metrics(){let c=current(),sh=c.filter(t=>t.quarterStatus==='Shipped').length,active=c.filter(t=>t.quarterStatus==='In FI').length,wait=c.filter(t=>t.quarterStatus==='Waiting for FI').length,blocked=c.filter(t=>tone(t)==='bad').length;return {total:c.length,sh,active,wait,remaining:c.length-sh,blocked}}
@@ -60,4 +71,4 @@ function draw(){let b=$('#taBody');if(tab==='basic')b.innerHTML=`<div class="pan
 document.querySelectorAll('[data-tab]').forEach(x=>x.onclick=()=>{collect();tab=x.dataset.tab;document.querySelectorAll('[data-tab]').forEach(y=>y.classList.toggle('active',y===x));draw()});draw();actions([{label:'Save Tool',primary:true,fn:()=>{collect();if(!t.id)return alert('UTID is required.');if(!original&&tools.some(x=>x.id===t.id))return alert('That UTID already exists.');if(original)tools[tools.findIndex(x=>x.id===original.id)]=t;else tools.push(t);save();toolStatus(t.id)}},{label:'Delete Tool',fn:()=>{if(original&&confirm('Delete this tool? Use Moved Out for a real quarter plan change.')){tools=tools.filter(x=>x.id!==original.id);save();setView('systems')}}},{label:'Administration',fn:()=>admin('tools')}])}
 function field(label,id,val,type='text'){return `<div class="form-group"><label>${label}</label><input id="${id}" type="${type}" value="${esc(val)}"></div>`}function field2(label,cls,val,type='text'){return `<div class="form-group"><label>${label}</label><input class="${cls}" type="${type}" value="${esc(val)}"></div>`}
 function render(){if(view==='countdown')countdown();else if(view==='shipping')shipping();else if(view==='daily')daily();else if(view==='meeting')meeting();else if(view==='weekend')weekend();else if(view==='systems')systems();else admin()}
-render();
+render();if(app)app.dataset.rendered='true';

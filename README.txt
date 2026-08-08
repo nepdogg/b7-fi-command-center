@@ -1,22 +1,11 @@
-# B7 FI Command Center v0.4.1
+# B7 FI Command Center v0.4.2
 
-Updated visualization prototype based on hands-on testing of v0.3.
+Hotfix build for GitHub Pages rendering.
 
-## Main navigation
-Tool Countdown / Shipping Schedule / Weekday Priorities / Morning Status / Weekend Priorities / Tools / Administration
+## Fixes
+- Uses new unique asset filenames `styles-v042.css` and `app-v042.js` so browsers/GitHub Pages cannot reuse cached broken v0.4 assets.
+- Adds safe local-storage loading and schema recovery.
+- Adds a visible load/error fallback instead of silently showing an empty page.
+- Keeps all v0.4 workflow/design changes: Tool Countdown landing page, tool-type breakdown, three quarter states, Weekday Priorities naming, green shipped cards/checks, and completed Shipping Schedule rows.
 
-## Major v0.4.1 changes
-- Removed Home from the main workflow; Tool Countdown is now the default landing page.
-- Renamed Daily Status to Weekday Priorities.
-- Tool Countdown is broken down by Tool Type / Model.
-- Each type shows Total, Waiting for FI, In FI, and Shipped counts.
-- Simplified quarter status to exactly three states:
-  Red = Waiting for FI
-  Blue = In FI
-  Green = Shipped
-- Shipped countdown cards and tool cards show a green check.
-- Shipping Schedule visibly marks completed/shipped plans with green rows and checks.
-- Existing v0.3 local browser data is migrated where possible.
-- Administration remains separate from clean status/report views.
-
-All bundled data is fictional sample data. This prototype is intended to help finalize fields and dropdown selections.
+All bundled data is fictional sample data.

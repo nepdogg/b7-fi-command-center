@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>B7 FI Command Center v0.4.1</title>
-  <link rel="stylesheet" href="css/styles.css" />
+  <title>B7 FI Command Center v0.4.2</title>
+  <link rel="stylesheet" href="css/styles-v042.css?v=042" />
 </head>
 <body data-theme="countdown">
   <header class="hero">
@@ -27,14 +27,22 @@
   </nav>
 
   <div id="pageIdentity" class="page-identity"></div>
-  <main id="app" class="page-shell"></main>
+  <main id="app" class="page-shell"><div class="panel"><h2>Loading B7 FI Command Center…</h2><p class="gray">If this message remains visible, refresh the page once. v0.4.2 uses new versioned assets to bypass cached v0.4 files.</p></div></main>
   <div id="floatingActions" class="floating-actions" aria-label="Quick actions"></div>
 
   <footer>
-    <strong>B7 FI Command Center v0.4.1</strong>
+    <strong>B7 FI Command Center v0.4.2</strong>
     <span>Working visualization prototype · fictional sample data · browser-local storage</span>
   </footer>
 
-  <script src="js/app.js"></script>
+  <script>
+window.addEventListener('error', function(e){
+  var app=document.getElementById('app');
+  if(app && !app.dataset.rendered){
+    app.innerHTML='<div class="panel"><h2>Command Center could not load</h2><p class="gray">The page framework loaded, but the application script encountered an error. Error: '+String(e.message||'unknown')+'</p></div>';
+  }
+});
+</script>
+<script src="js/app-v042.js?v=042"></script>
 </body>
 </html>
