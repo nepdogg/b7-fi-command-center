@@ -50,3 +50,40 @@ linear-gradient(120deg,#0a1627,#13243a 55%,#08111e)}
 .complete-mark{display:inline-flex;align-items:center;gap:6px;color:#84e9ae;font-weight:800}.check{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:rgba(53,199,122,.14);border:1px solid rgba(53,199,122,.55)}
 .system-card.shipped-card{border-color:rgba(53,199,122,.65);background:linear-gradient(135deg,rgba(53,199,122,.10),var(--panel) 45%)}.system-card.waiting-card{border-color:rgba(239,102,102,.45)}.system-card.infi-card{border-color:rgba(88,166,255,.45)}
 .shipping-complete-row td{background:rgba(53,199,122,.06)}.shipping-active-row td{background:rgba(88,166,255,.03)}
+
+
+/* v0.5 Quarter Tool Shipping Countdown */
+.quarter-banner{
+  display:flex;justify-content:space-between;gap:18px;align-items:center;flex-wrap:wrap;
+  padding:17px 19px;margin:0 0 16px;background:linear-gradient(100deg,rgba(var(--accent-rgb),.12),var(--panel));
+  border:1px solid rgba(var(--accent-rgb),.35);border-radius:13px
+}
+.quarter-banner small{display:block;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;font-size:10px}
+.quarter-banner strong{font-size:26px}
+.overall-countdown{display:grid;grid-template-columns:repeat(3,minmax(170px,1fr));gap:14px;margin:14px 0}
+.overall-box{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:18px;text-align:center}
+.overall-box .label{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+.overall-box .number{display:block;margin-top:5px;font-size:40px;font-weight:800}
+.overall-box.need{border-color:rgba(241,196,83,.48)}
+.overall-box.shipped{border-color:rgba(53,199,122,.58);background:linear-gradient(180deg,rgba(53,199,122,.08),var(--panel))}
+.overall-box.shipped .number{color:var(--good)}
+.quarter-progress{margin:4px 0 28px;padding:15px 17px;border:1px solid var(--line);border-radius:11px;background:var(--panel)}
+.quarter-progress .progress-label{font-size:13px}
+.quarter-progress .track{height:12px}
+.type-progress{margin-top:10px}
+.type-progress .track{height:8px}
+.type-count.need b{color:var(--warn)}
+.type-count.waiting b{color:var(--bad)}
+.type-count.infi b{color:var(--info)}
+.type-count.shipped b{color:var(--good)}
+.countdown-card .model-line{color:#d9e5f4;font-weight:700;margin-top:2px}
+.countdown-admin-note{margin-bottom:14px}
+.countdown-admin-table{min-width:1250px}
+.countdown-admin-table td{min-width:120px}
+.countdown-admin-table td:first-child{min-width:130px}
+.countdown-admin-table .tool-type-cell,.countdown-admin-table .model-cell{min-width:145px}
+.add-quarter-row{margin:12px 0 0}
+.field-locked-note{font-size:11px;color:var(--muted);margin-top:4px}
+@media(max-width:760px){
+  .overall-countdown{grid-template-columns:1fr}
+}
