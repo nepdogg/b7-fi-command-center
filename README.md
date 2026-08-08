@@ -1,11 +1,11 @@
-# B7 FI Command Center v0.4
+# B7 FI Command Center v0.4.1
 
 Updated visualization prototype based on hands-on testing of v0.3.
 
 ## Main navigation
 Tool Countdown / Shipping Schedule / Weekday Priorities / Morning Status / Weekend Priorities / Tools / Administration
 
-## Major v0.4 changes
+## Major v0.4.1 changes
 - Removed Home from the main workflow; Tool Countdown is now the default landing page.
 - Renamed Daily Status to Weekday Priorities.
 - Tool Countdown is broken down by Tool Type / Model.

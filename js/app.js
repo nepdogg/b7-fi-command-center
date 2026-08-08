@@ -31,7 +31,7 @@ function page(title,desc,kicker='B7 FI OPERATIONS'){return `<div class="page-tit
 function setView(v){view=v;document.body.dataset.theme=v==='systems'?'systems':v;document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.view===v));render();scrollTo({top:190,behavior:'smooth'})}
 document.querySelectorAll('.nav-btn').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.view)));
 function actions(items){floating.innerHTML=items.map((x,i)=>`<button class="btn ${x.primary?'primary':''}" data-a="${i}">${x.label}</button>`).join('');items.forEach((x,i)=>floating.querySelector(`[data-a="${i}"]`).onclick=x.fn)}
-function metrics(){let c=current(),sh=c.filter(t=>t.quarterStatus==='Shipped').length,active=c.filter(t=>t.quarterStatus==='In FI').length,wait=c.filter(t=>t.quarterStatus==='Waiting for FI').length,blocked=c.filter(t=>tone(t)==='bad').length;return {total:c.length,sh,active,wait,remaining:c.length-sh,blocked}}}
+function metrics(){let c=current(),sh=c.filter(t=>t.quarterStatus==='Shipped').length,active=c.filter(t=>t.quarterStatus==='In FI').length,wait=c.filter(t=>t.quarterStatus==='Waiting for FI').length,blocked=c.filter(t=>tone(t)==='bad').length;return {total:c.length,sh,active,wait,remaining:c.length-sh,blocked}}
 function quarterState(t){return t.quarterStatus==='Shipped'?'shipped':t.quarterStatus==='Waiting for FI'?'waiting':'infi'}
 function scheduleComplete(t){return t.quarterStatus==='Shipped'||t.schedule.state==='Complete'}
 function toolGroups(){let g={};current().forEach(t=>{let k=t.model||t.family||'Other';(g[k]??=[]).push(t)});return Object.entries(g).sort((a,b)=>a[0].localeCompare(b[0]))}
