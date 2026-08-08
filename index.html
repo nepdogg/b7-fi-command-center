@@ -3,35 +3,37 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>B7 FI Command Center v0.2</title>
+  <title>B7 FI Command Center v0.3</title>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
-<body>
+<body data-theme="home">
   <header class="hero">
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <div class="eyebrow">FINAL INTEGRATION OPERATIONS</div>
+      <div class="eyebrow">FINAL INTEGRATION OPERATIONS · BUILDING 7</div>
       <h1>B7 FI COMMAND CENTER</h1>
-      <p>Standardized status pages, universal tool administration, quarter planning, and fast B7 priority updates.</p>
+      <p>Quarter planning, FI execution, priorities, shipping coordination, and automatically generated operational status.</p>
     </div>
   </header>
 
   <nav class="main-nav" aria-label="Main navigation">
     <button data-view="home" class="nav-btn active">Home</button>
-    <button data-view="countdown" class="nav-btn">Shipping Countdown</button>
-    <button data-view="daily" class="nav-btn">Daily Priorities</button>
+    <button data-view="countdown" class="nav-btn">Tool Countdown</button>
+    <button data-view="shipping" class="nav-btn">Shipping Schedule</button>
+    <button data-view="daily" class="nav-btn">Daily Status</button>
+    <button data-view="meeting" class="nav-btn">Morning Status</button>
     <button data-view="weekend" class="nav-btn">Weekend Priorities</button>
-    <button data-view="meeting" class="nav-btn">Morning Meeting</button>
-    <button data-view="systems" class="nav-btn">All Systems</button>
+    <button data-view="systems" class="nav-btn">Tools</button>
     <button data-view="admin" class="nav-btn admin-nav">Administration</button>
   </nav>
 
+  <div id="pageIdentity" class="page-identity"></div>
   <main id="app" class="page-shell"></main>
   <div id="floatingActions" class="floating-actions" aria-label="Quick actions"></div>
 
   <footer>
-    <strong>B7 FI Command Center v0.2</strong>
-    <span>Fictional sample data · browser-local prototype</span>
+    <strong>B7 FI Command Center v0.3</strong>
+    <span>Working visualization prototype · fictional sample data · browser-local storage</span>
   </footer>
 
   <script src="js/app.js"></script>
