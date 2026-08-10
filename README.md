@@ -1,20 +1,16 @@
-# Building 7 - Final Integration - Operations v0.10
+# Building 7 - Final Integration - Operations v0.11
 
-## Morning Quick Update refinement
-- Current/Next Checklist is now editable directly from Morning Quick Update.
-- Selecting a different checklist starts the selected checklist as In Progress.
-- Previous Checklist Action options:
-  - Complete
-  - Skipped
-  - Keep In Progress
-  - N/A
-- This supports overlapping checklists when the previous checklist must remain In Progress.
-- Detailed Checklists remains available for unusual or complex corrections.
-- Cleanroom and Bay are grouped visually as Location.
-- Increased spacing and fixed column widths throughout Morning Quick Update.
-- Morning NCs use compact separated rows.
-- Reduced Process has a dedicated padded column and no longer gets cut off by NC content.
-- Reduced Process is red only when enabled.
-- v0.9 local browser data migrates forward where possible.
+## Morning Meeting NC actions
+- Add NC directly from Morning Quick Update.
+- Escalate an existing NC directly from Morning Quick Update and enter escalation day count.
+- All changes write to the universal Tool record.
+- Normal NCs may still be checked/unchecked for the Morning Status report.
+- Escalated NCs are always displayed in red.
+- Current v0.10 checklist-transition controls remain intact for continued testing.
 
-Reminder: browser-local data remains device-specific and does not automatically synchronize between PC and phone.
+## Shipping Schedule lifecycle
+Publish now uses: N/A / Drafting / Created / Published.
+N/A means no schedule exists yet and is the default for new tools. Published means finalized/sent to Shipping. Publishing the schedule does not mark the tool itself Shipped.
+
+## Data
+v0.10 local browser data migrates into v0.11 where possible. Legacy Draft is converted to Drafting and legacy Complete is converted to Published.

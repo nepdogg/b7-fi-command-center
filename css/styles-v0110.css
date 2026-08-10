@@ -187,3 +187,5 @@ body.screenshot-mode .workflow-list{gap:4px}body.screenshot-mode .workflow-step{
  .morning-update-table{min-width:1480px}
  .sticky-header{position:sticky}
 }
+
+.nc-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}.nc-action-btn{font-size:11px;padding:5px 8px}.nc-escalate-btn{border-color:rgba(239,102,102,.5);color:#ff8d93}.nc-inline-editor{margin-top:8px;padding:10px;border:1px solid #31465f;border-radius:9px;background:#081522}.nc-inline-editor.hidden{display:none}.nc-inline-grid{display:grid;grid-template-columns:120px 1fr 130px;gap:8px}.nc-inline-grid input,.nc-inline-grid select{width:100%}.nc-inline-editor .inline-actions{display:flex;gap:6px;margin-top:8px}.morning-nc-choice{position:relative}.morning-nc-choice>span{flex:1;min-width:0}.shipping-state-na{color:#9faaba}.shipping-state-drafting{color:#f1c453}.shipping-state-created{color:#67adff}.shipping-state-published{color:#7de5aa}@media(max-width:760px){.nc-inline-grid{grid-template-columns:1fr}}
