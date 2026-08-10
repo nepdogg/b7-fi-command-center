@@ -1,16 +1,23 @@
-# Building 7 - Final Integration - Operations v0.11
+# Building 7 - Final Integration - Operations v0.12
 
-## Morning Meeting NC actions
-- Add NC directly from Morning Quick Update.
-- Escalate an existing NC directly from Morning Quick Update and enter escalation day count.
-- All changes write to the universal Tool record.
-- Normal NCs may still be checked/unchecked for the Morning Status report.
-- Escalated NCs are always displayed in red.
-- Current v0.10 checklist-transition controls remain intact for continued testing.
+## Morning NC refinement
+- Morning visibility and escalation are now separate controls for every NC.
+- Existing escalated NCs can be de-escalated directly from Morning Quick Update.
+- De-escalating changes the NC back to Open and clears its escalation day count without deleting the NC.
+- Show Morning can be independently checked or unchecked.
+- Escalated NCs remain manager-visible while escalated.
+- Existing escalation day counts can be edited directly.
 
-## Shipping Schedule lifecycle
-Publish now uses: N/A / Drafting / Created / Published.
-N/A means no schedule exists yet and is the default for new tools. Published means finalized/sent to Shipping. Publishing the schedule does not mark the tool itself Shipped.
+## Add NC improvements
+- Add NC editor now has:
+  - NC # field
+  - Status field
+  - full-width multi-line NC Description
+  - Escalation Days field when Status = Escalated
+- Creating an Escalated NC now captures the escalation day count during creation, matching the existing escalation workflow.
+- Newly created NCs are added to the universal Tool record and selected for Morning Status by default.
 
-## Data
-v0.10 local browser data migrates into v0.11 where possible. Legacy Draft is converted to Drafting and legacy Complete is converted to Published.
+## Other behavior
+- Morning checklist quick-transition controls remain unchanged for continued simulation testing.
+- v0.11 browser-local data migrates forward where possible.
+- Browser-local data remains device-specific and does not automatically sync between PC and phone.
