@@ -1,23 +1,14 @@
-# Building 7 - Final Integration - Operations v0.12
+# Building 7 - Final Integration - Operations v0.14
 
-## Morning NC refinement
-- Morning visibility and escalation are now separate controls for every NC.
-- Existing escalated NCs can be de-escalated directly from Morning Quick Update.
-- De-escalating changes the NC back to Open and clears its escalation day count without deleting the NC.
-- Show Morning can be independently checked or unchecked.
-- Escalated NCs remain manager-visible while escalated.
-- Existing escalation day counts can be edited directly.
+## Read Only / Edit Mode simulation
+The Command Center now opens in Read Only mode.
 
-## Add NC improvements
-- Add NC editor now has:
-  - NC # field
-  - Status field
-  - full-width multi-line NC Description
-  - Escalation Days field when Status = Escalated
-- Creating an Escalated NC now captures the escalation day count during creation, matching the existing escalation workflow.
-- Newly created NCs are added to the universal Tool record and selected for Morning Status by default.
+- Enable Editing: prompts for an editor name and unlocks changes.
+- Release Editing: returns to Read Only mode.
+- Editing In Use: appears if another session in the same browser profile owns the local lock.
+- Heartbeat refreshes every 30 seconds.
+- Stale local locks expire after 2 minutes.
 
-## Other behavior
-- Morning checklist quick-transition controls remain unchanged for continued simulation testing.
-- v0.11 browser-local data migrates forward where possible.
-- Browser-local data remains device-specific and does not automatically sync between PC and phone.
+Important: this v0.14 lock is a browser-local simulation. It cannot coordinate separate computers yet because the live data and lock are still stored in localStorage. True cross-computer locking requires a shared Microsoft 365 data/lock backend.
+
+All v0.13 functionality is retained.
