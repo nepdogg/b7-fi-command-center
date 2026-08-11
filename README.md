@@ -1,20 +1,42 @@
-# Building 7 - Final Integration - Operations v0.15
+# Building 7 - Final Integration - Operations v0.16
 
-Focused stability update for home/work simulation testing.
+## Automatic In-FI propagation
 
-## Fixed
-- Read Only/Edit Mode controls moved into the sticky header.
-- Enable Editing is visible at normal 100% browser zoom.
-- Removed the bottom-right Read Only overlay that covered page controls.
-- Removed the extra simulation-warning strip from page content.
-- Centralized lifecycle page visibility with one pageTools() function.
+Changing a Tool from Waiting for FI to In FI now automatically makes that same Tool appear on every active FI page:
 
-## Lifecycle rules
-- Waiting for FI: Tool Countdown only.
-- In FI: Tool Countdown + Tools + Morning Status; eligible for selected priority/shipping views.
-- Shipped: Tool Countdown + Tools, not Morning/Priority views.
-- Archive: Archive only.
+- Tool Countdown
+- Tools
+- Morning Status
+- Weekday Priorities
+- Weekend Priorities
+- Shipping Schedule
 
-The same master Tool records now drive every page filter.
+No separate page activation is required.
 
-Important: Edit locking is still browser-local until a shared Microsoft 365 backend is implemented.
+### Waiting for FI
+Only appears on Tool Countdown.
+
+### In FI
+Appears automatically on every active FI page.
+
+Weekday/Weekend:
+- new tools appear as Unprioritized until a priority number is assigned
+- Tool Assignment is reused when available
+- otherwise the row can remain Unassigned
+
+Shipping:
+- a placeholder Shipping Plan appears immediately
+- Publish = N/A
+- Schedule Status = N/A
+- unentered handoff dates display N/A
+- MST stays N/A for tools where MST is not applicable
+
+### Shipped
+Remains on Tool Countdown and Tools.
+Leaves Morning / Weekday / Weekend active work views.
+A completed/historical Shipping Plan can remain visible.
+
+### Archive
+Archive page only.
+
+All v0.15 sticky-header and Edit Mode fixes remain.
