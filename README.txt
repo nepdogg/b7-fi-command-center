@@ -1,14 +1,20 @@
-# Building 7 - Final Integration - Operations v0.14
+# Building 7 - Final Integration - Operations v0.15
 
-## Read Only / Edit Mode simulation
-The Command Center now opens in Read Only mode.
+Focused stability update for home/work simulation testing.
 
-- Enable Editing: prompts for an editor name and unlocks changes.
-- Release Editing: returns to Read Only mode.
-- Editing In Use: appears if another session in the same browser profile owns the local lock.
-- Heartbeat refreshes every 30 seconds.
-- Stale local locks expire after 2 minutes.
+## Fixed
+- Read Only/Edit Mode controls moved into the sticky header.
+- Enable Editing is visible at normal 100% browser zoom.
+- Removed the bottom-right Read Only overlay that covered page controls.
+- Removed the extra simulation-warning strip from page content.
+- Centralized lifecycle page visibility with one pageTools() function.
 
-Important: this v0.14 lock is a browser-local simulation. It cannot coordinate separate computers yet because the live data and lock are still stored in localStorage. True cross-computer locking requires a shared Microsoft 365 data/lock backend.
+## Lifecycle rules
+- Waiting for FI: Tool Countdown only.
+- In FI: Tool Countdown + Tools + Morning Status; eligible for selected priority/shipping views.
+- Shipped: Tool Countdown + Tools, not Morning/Priority views.
+- Archive: Archive only.
 
-All v0.13 functionality is retained.
+The same master Tool records now drive every page filter.
+
+Important: Edit locking is still browser-local until a shared Microsoft 365 backend is implemented.
