@@ -1,42 +1,44 @@
-# Building 7 - Final Integration - Operations v0.16
+# Building 7 - Final Integration - Operations v0.17
 
-## Automatic In-FI propagation
+## Countdown lifecycle editing
+Tool Status can now be changed directly from Administration > Countdown.
 
-Changing a Tool from Waiting for FI to In FI now automatically makes that same Tool appear on every active FI page:
+Lifecycle selections:
+- Waiting for FI
+- In FI
+- Shipped
+- Archive
 
-- Tool Countdown
-- Tools
-- Morning Status
-- Weekday Priorities
-- Weekend Priorities
-- Shipping Schedule
+Changing the lifecycle from Countdown Admin uses the same universal Tool record,
+so page visibility updates everywhere immediately after Save Countdown Changes.
 
-No separate page activation is required.
+Tool Status intentionally remains a controlled list because these lifecycle values
+drive Command Center behavior.
 
-### Waiting for FI
-Only appears on Tool Countdown.
+## Calendar date pickers
+Date-oriented fields are rendered as browser calendar pickers wherever practical,
+including:
+- MFG Ship Date
+- Pull-In Date
+- Push-Out Date
+- shipping handoff dates
+- MST date
+- IS handoff date
+- other date-like fields detected by the UI
 
-### In FI
-Appears automatically on every active FI page.
+## Dropdown suggestions + manual entry
+Reusable text fields continue to support both:
+- suggested values through datalist pull-downs
+- manually typed custom values
 
-Weekday/Weekend:
-- new tools appear as Unprioritized until a priority number is assigned
-- Tool Assignment is reused when available
-- otherwise the row can remain Unassigned
+Examples:
+- Code Name
+- Model
+- Customer
+- Sales Order
+- Tool Assignment / Driver
+- Cleanroom Bay
 
-Shipping:
-- a placeholder Shipping Plan appears immediately
-- Publish = N/A
-- Schedule Status = N/A
-- unentered handoff dates display N/A
-- MST stays N/A for tools where MST is not applicable
+This preserves speed without preventing one-off values.
 
-### Shipped
-Remains on Tool Countdown and Tools.
-Leaves Morning / Weekday / Weekend active work views.
-A completed/historical Shipping Plan can remain visible.
-
-### Archive
-Archive page only.
-
-All v0.15 sticky-header and Edit Mode fixes remain.
+All v0.16 automatic In-FI propagation remains unchanged.
