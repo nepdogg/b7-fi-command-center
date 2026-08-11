@@ -1,4 +1,4 @@
-# Building 7 - Final Integration - Operations v0.17
+# Building 7 - Final Integration - Operations v0.18
 
 ## Countdown lifecycle editing
 Tool Status can now be changed directly from Administration > Countdown.
