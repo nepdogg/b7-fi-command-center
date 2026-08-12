@@ -20,3 +20,6 @@ Direct automatic Microsoft Lists synchronization and active-user presence requir
 3. Open Shared Data in the Command Center.
 4. Import the CSV.
 5. Verify the tool appears in the correct Command Center pages.
+
+
+v0.19.1 update: Removed the global READ ONLY / Enable Editing header control. Normal Command Center controls are available immediately; shared editing permissions are intended to be governed by Microsoft Lists/SharePoint.

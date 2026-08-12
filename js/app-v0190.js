@@ -22,7 +22,8 @@ const $=s=>document.querySelector(s), app=$('#app'), floating=$('#floatingAction
 const EDIT_LOCK_KEY='b7fi-edit-lock-v1';
 const SESSION_ID=sessionStorage.getItem('b7fi-edit-session-id')||('sess_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8));
 sessionStorage.setItem('b7fi-edit-session-id',SESSION_ID);
-let editMode=false,editorName=sessionStorage.getItem('b7fi-editor-name')||'',editHeartbeat=null;
+// v0.19.1: Microsoft Lists/shared-data architecture no longer uses a global edit lock.
+let editMode=true,editorName=sessionStorage.getItem('b7fi-editor-name')||'',editHeartbeat=null;
 function readEditLock(){try{return JSON.parse(localStorage.getItem(EDIT_LOCK_KEY)||'null')}catch(e){return null}}
 function currentEditLock(){let l=readEditLock();if(l&&Date.now()-Number(l.lastSeen||0)>120000){localStorage.removeItem(EDIT_LOCK_KEY);l=null}return l}
 function renderEditControls(){let h=document.getElementById('editControlBar');if(!h)return;let l=currentEditLock();if(l&&l.sessionId===SESSION_ID&&!editMode){editMode=true;editorName=l.user||editorName||'Editor';startEditHeartbeat()}let own=editMode&&(!l||l.sessionId===SESSION_ID),busy=l&&l.sessionId!==SESSION_ID,resumable=busy&&editorName&&String(l.user||'').trim().toLowerCase()===editorName.trim().toLowerCase();h.innerHTML=`<div class="edit-control-left"><span class="edit-mode-pill ${own?'editing':busy?'busy':'readonly'}">${own?'● EDIT MODE':busy?'● READ ONLY — EDITING IN USE':'● READ ONLY'}</span><span class="edit-mode-note">${own?`Editing enabled for ${esc(editorName)}`:busy?`Currently being edited by ${esc(l.user||'another user')}`:'Viewing only — changes are blocked'}</span></div><div class="edit-control-actions">${own?'<button id="releaseEditingBtn" class="btn">Release Editing</button>':busy?(resumable?'<button id="resumeEditingBtn" class="btn primary">Resume My Editing</button>':'<button class="btn primary" disabled>Editing In Use</button>'):'<button id="enableEditingBtn" class="btn primary">Enable Editing</button>'}</div>`;let e=document.getElementById('enableEditingBtn');if(e)e.onclick=enableEditing;let m=document.getElementById('resumeEditingBtn');if(m)m.onclick=resumeEditing;let r=document.getElementById('releaseEditingBtn');if(r)r.onclick=releaseEditing}
@@ -125,15 +126,13 @@ function loadState(){
  let c=defaultConfig();return {tools:SAMPLE.map(normalize).map(t=>syncToolConfig(t,c)),weekday:{title:'B7 WEEKDAY PRIORITIES',notes:''},weekend:{title:'B7 WEEKEND PRIORITIES',volunteers:[{name:'Vinh',sat:'6am to 12pm',sun:'',notes:''},{name:'Quoc',sat:'6am to 4pm',sun:'',notes:''},{name:'Singapore team',sat:'6am to XXXX',sun:'6am to XXXX',notes:'Coverage based on volunteer list'}]},config:c}
 }
 let state=loadState(),tools=state.tools,view='countdown',selectedId=null;
+// v0.19.1: normal Command Center controls are available immediately.
+// Microsoft Lists/SharePoint permissions will govern shared-data editing instead of a browser-local lock.
 (function(){
-  const bar=document.createElement('div');
-  bar.id='editControlBar';
-  bar.className='edit-control-bar';
-  const sticky=document.querySelector('.sticky-header');
-  const nav=sticky?.querySelector('.main-nav')||sticky?.querySelector('nav');
-  if(sticky){ if(nav&&nav.parentNode===sticky) sticky.insertBefore(bar,nav.nextSibling); else sticky.appendChild(bar); }
-  else document.body.insertBefore(bar,document.body.firstChild);
-  applyEditMode();
+  localStorage.removeItem(EDIT_LOCK_KEY);
+  editMode=true;
+  document.body.classList.add('edit-mode-active');
+  document.body.classList.remove('read-only-mode');
 })();
 state.workspaceTasks=state.workspaceTasks||[];state.workspaceRefs=state.workspaceRefs||[];state.reusable=state.reusable||{drivers:['Unassigned'],bays:[],customers:['N/A'],salesOrders:['N/A']};state.shared=state.shared||{mode:'local',listName:'B7 FI Command Center',listUrl:'',lastImport:'',lastImportCount:0,lastFile:'',autoSyncSeconds:15};
 function save(){state.tools=tools;state.config=normalizeConfig(state.config);localStorage.setItem(KEY,JSON.stringify(state))}
