@@ -1,4 +1,4 @@
-# Building 7 - Final Integration - Operations v0.20
+# Building 7 - Final Integration - Operations v0.20.1
 
 ## Microsoft Lists Test Build
 
@@ -32,3 +32,10 @@ v0.20 update: Removed the global READ ONLY / Enable Editing header control. Norm
 - Added rotating Lead/Admin pending-work ticker generated from Workspace tasks, per-tool Lead/Admin workflow items, blocking NCs, and escalated NCs.
 - Added honest shared-data/sync status placeholders for the Microsoft Lists test layer; live user presence remains pending the authenticated live Lists connection.
 - Preserved the existing page designs and Microsoft Lists CSV test bridge.
+
+
+## v0.20.1 Navigation Polish
+- Main navigation active state now uses a solid page-accent fill.
+- Main navigation has stronger visual priority over Page Actions.
+- Page Actions buttons are smaller and the toolbar is slightly more compact.
+- Sticky header, Operations Status Bar, ticker, and v0.20 framework are preserved.
