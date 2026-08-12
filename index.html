@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Building 7 - Final Integration - Operations v0.19.1</title><link rel="stylesheet" href="css/styles-v0190.css?v=0190"></head>
+<title>Building 7 - Final Integration - Operations v0.20</title><link rel="stylesheet" href="css/styles-v0190.css?v=0200"></head>
 <body data-theme="countdown">
 <div class="sticky-header"><header class="hero compact-hero"><div class="hero-overlay"></div><div class="hero-content"><h1>BUILDING 7 - FINAL INTEGRATION - OPERATIONS</h1></div></header>
 <nav class="main-nav" aria-label="Main navigation">
 <button data-view="countdown" class="nav-btn active">Tool Countdown</button><button data-view="shipping" class="nav-btn">Shipping Schedule</button><button data-view="daily" class="nav-btn">Weekday Priorities</button><button data-view="meeting" class="nav-btn">Morning Status</button><button data-view="weekend" class="nav-btn">Weekend Priorities</button><button data-view="workspace" class="nav-btn">Lead Workspace</button><button data-view="systems" class="nav-btn">Tools</button><button data-view="archive" class="nav-btn">Archive</button><button data-view="shared" class="nav-btn shared-nav">Shared Data</button><button data-view="admin" class="nav-btn admin-nav">Administration</button>
 </nav><div id="pageIdentity" class="page-identity"></div>
+<div id="floatingActions" class="floating-actions page-toolbar" aria-label="Page actions"></div></div>
 <main id="app" class="page-shell"><div class="panel"><h2>Loading B7 FI Command Center…</h2></div></main>
-<div id="floatingActions" class="floating-actions"></div>
 <button id="screenshotExit" class="screenshot-exit">Exit Screenshot Mode</button>
-<footer><strong>Building 7 - Final Integration - Operations v0.19.1</strong><span>Microsoft Lists integration test · shared editing test build</span></footer>
+<footer><strong>Building 7 - Final Integration - Operations v0.20</strong><span>Microsoft Lists integration test · operations status framework</span></footer>
+<div id="operationsBar" class="operations-bar"><div class="ops-health"><span class="ops-live-dot"></span><b>COMMAND CENTER</b><span id="opsSync">Local test data</span></div><div class="ops-ticker"><span class="ops-ticker-label">LEAD / ADMIN</span><span id="opsTickerText">Loading operational tasks…</span></div><div class="ops-summary"><span id="opsTaskCount">0 open tasks</span><span class="ops-divider">•</span><span id="opsPresence">Presence: Lists connection pending</span></div></div>
 <script>window.addEventListener('error',function(e){var a=document.getElementById('app');if(a&&!a.dataset.rendered)a.innerHTML='<div class="panel"><h2>Command Center could not load</h2><p class="gray">'+String(e.message||'Unknown error')+'</p></div>'})</script>
-<script src="js/app-v0190.js?v=0190"></script></body></html>
+<script src="js/app-v0190.js?v=0200"></script></body></html>

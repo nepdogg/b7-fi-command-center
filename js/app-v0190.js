@@ -135,7 +135,7 @@ let state=loadState(),tools=state.tools,view='countdown',selectedId=null;
   document.body.classList.remove('read-only-mode');
 })();
 state.workspaceTasks=state.workspaceTasks||[];state.workspaceRefs=state.workspaceRefs||[];state.reusable=state.reusable||{drivers:['Unassigned'],bays:[],customers:['N/A'],salesOrders:['N/A']};state.shared=state.shared||{mode:'local',listName:'B7 FI Command Center',listUrl:'',lastImport:'',lastImportCount:0,lastFile:'',autoSyncSeconds:15};
-function save(){state.tools=tools;state.config=normalizeConfig(state.config);localStorage.setItem(KEY,JSON.stringify(state))}
+function save(){state.tools=tools;state.config=normalizeConfig(state.config);localStorage.setItem(KEY,JSON.stringify(state));state.lastLocalChange=new Date().toISOString();setTimeout(updateOperationsBar,0)}
 function current(){return tools.filter(t=>t.quarterStatus!=='Archive')}
 function waitingTools(){return tools.filter(t=>t.quarterStatus==='Waiting for FI')}
 function inFiTools(){return tools.filter(t=>t.quarterStatus==='In FI')}
@@ -210,7 +210,7 @@ function customFieldValueControl(field,t){let v=t.custom?.[field.id]??'',id='cf_
 function customStatusBlock(t){let fs=(state.config.customFields||[]).filter(f=>f.active!==false&&f.showStatus!==false);if(!fs.length)return'';return `<div class="tool-status-block"><h3>Additional Fields</h3><div class="tool-status-extra">${fs.map(f=>kv(f.label,t.custom?.[f.id]||'—')).join('')}</div></div>`}
 function page(title,desc,k=''){return ''}
 function reportHeader(title,sub=''){return `<div class="report-title"><h2>${esc(title)}</h2>${sub?`<p>${esc(sub)}</p>`:''}</div>`}
-function actions(items,shot=true){let a=[...items];if(shot)a.push({label:'Screenshot Mode',fn:enterScreenshot});floating.innerHTML=a.map((x,i)=>`<button class="btn ${x.primary?'primary':''}" data-act="${i}">${x.label}</button>`).join('');a.forEach((x,i)=>floating.querySelector(`[data-act="${i}"]`).onclick=x.fn)}
+function actions(items,shot=true){let a=[...items];if(shot)a.push({label:'Screenshot Mode',fn:enterScreenshot});floating.innerHTML=a.map((x,i)=>`<button class="btn ${x.primary?'primary':''}" data-act="${i}">${x.label}</button>`).join('');a.forEach((x,i)=>floating.querySelector(`[data-act="${i}"]`).onclick=x.fn);updateOperationsBar()}
 function enterScreenshot(){document.body.classList.add('screenshot-mode');let b=$('#screenshotExit');b.style.display='block';setTimeout(()=>{if(document.body.classList.contains('screenshot-mode'))b.style.display='none'},1800)}function exitScreenshot(){document.body.classList.remove('screenshot-mode');$('#screenshotExit').style.display=''}$('#screenshotExit').onclick=exitScreenshot;document.addEventListener('keydown',e=>{if(e.key==='Escape')exitScreenshot()});
 function setView(v){window.scrollTo({top:0,left:0,behavior:'auto'});view=v;document.body.dataset.theme=v==='systems'?'systems':v;document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.view===v));render();window.scrollTo(0,0)}document.querySelectorAll('.nav-btn').forEach(b=>b.onclick=()=>setView(b.dataset.view));
 function typeGroups(){let g={};pageTools('countdown').forEach(t=>(g[t.codename]??=[]).push(t));return Object.entries(g).sort((a,b)=>a[0].localeCompare(b[0]))}
@@ -334,7 +334,7 @@ function downloadListTemplate(){
 }
 function sharedData(){
   let sh=state.shared||{};let imported=tools.filter(t=>t.sharedSource).length;
-  app.innerHTML=`<div class="panel shared-hero"><div><span class="eyebrow">MICROSOFT LISTS TEST LAYER</span><h2>Shared Data</h2><p class="gray">v0.19 preserves the Command Center appearance and adds a safe first bridge for testing the Microsoft List you created at work.</p></div><div class="sync-card"><span class="sync-dot ${sh.mode==='list-csv'?'ready':'local'}"></span><div><b>${sh.mode==='list-csv'?'LIST DATA LOADED':'LOCAL FALLBACK'}</b><small>${sh.lastImport?'Last imported '+new Date(sh.lastImport).toLocaleString():'No Microsoft List export imported yet'}</small></div></div></div>
+  app.innerHTML=`<div class="panel shared-hero"><div><span class="eyebrow">MICROSOFT LISTS TEST LAYER</span><h2>Shared Data</h2><p class="gray">v0.20 preserves the Command Center appearance and adds a safe first bridge for testing the Microsoft List you created at work.</p></div><div class="sync-card"><span class="sync-dot ${sh.mode==='list-csv'?'ready':'local'}"></span><div><b>${sh.mode==='list-csv'?'LIST DATA LOADED':'LOCAL FALLBACK'}</b><small>${sh.lastImport?'Last imported '+new Date(sh.lastImport).toLocaleString():'No Microsoft List export imported yet'}</small></div></div></div>
   <div class="shared-grid"><section class="panel"><h3>Tomorrow's Working Test</h3><div class="step-list"><div><b>1</b><span>Finish or continue building the Microsoft List columns.</span></div><div><b>2</b><span>Add one test tool directly in Microsoft Lists.</span></div><div><b>3</b><span>Use Lists → Export → CSV, then import that CSV here.</span></div><div><b>4</b><span>Open Tool Countdown / Tools / Morning Status and verify the List tool appears in the correct places.</span></div></div><div class="shared-actions"><label class="btn primary file-btn">Import Microsoft List CSV<input id="listCsvInput" type="file" accept=".csv,text/csv" hidden></label><button id="listTemplateBtn" class="btn">Download Column Template</button></div><div id="listImportResult" class="import-result"></div></section>
   <section class="panel"><h3>Integration Status</h3><div class="integration-row"><span>Command Center UI</span><b class="good-text">READY</b></div><div class="integration-row"><span>Microsoft List column mapping</span><b class="good-text">READY FOR TEST</b></div><div class="integration-row"><span>CSV List import</span><b class="good-text">READY</b></div><div class="integration-row"><span>Live Graph connection</span><b class="warn-text">AUTHORIZATION REQUIRED</b></div><div class="integration-row"><span>Automatic 10–15 sec sync</span><b class="warn-text">AFTER LIVE CONNECTION</b></div><div class="integration-row"><span>Active users / presence</span><b class="warn-text">AFTER LIVE CONNECTION</b></div></section></div>
   <div class="panel"><h3>Current Shared-Data Test</h3><div class="metric-grid"><div class="metric"><span>Imported List Tools</span><strong>${imported}</strong><small>Tools currently carrying Microsoft List test data</small></div><div class="metric"><span>Last Import</span><strong style="font-size:18px">${sh.lastImport?new Date(sh.lastImport).toLocaleTimeString():'—'}</strong><small>${esc(sh.lastFile||'No file imported')}</small></div><div class="metric"><span>Target Auto Sync</span><strong>15s</strong><small>Enabled after authenticated live connection</small></div></div><p class="gray">Important: CSV import is the first no-permission test bridge. True live multi-user editing requires Microsoft Graph authentication/app authorization; v0.19 does not pretend that connection exists yet.</p></div>`;
@@ -342,7 +342,28 @@ function sharedData(){
   let b=document.getElementById('listTemplateBtn');if(b)b.onclick=downloadListTemplate;
   actions([{label:'Tool Countdown',primary:true,fn:()=>setView('countdown')},{label:'Tools',fn:()=>setView('systems')},{label:'Administration',fn:()=>setView('admin')}],false)
 }
-function render(){renderEditControls();setTimeout(enhanceDateInputs,0);if(view==='countdown')countdown();else if(view==='shipping')shipping();else if(view==='daily')daily();else if(view==='meeting')morning();else if(view==='weekend')weekend();else if(view==='workspace')workspace();else if(view==='systems')systems();else if(view==='archive')archive();else if(view==='shared')sharedData();else admin()}
+let opsTickerIndex=0;
+function operationalAlerts(){
+  let alerts=[];
+  (state.workspaceTasks||[]).filter(x=>x.status!=='Completed').forEach(x=>alerts.push({priority:x.status==='In Progress'?2:3,text:`${x.toolId?'TOOL '+x.toolId:'GENERAL'} — ${x.title} · ${x.status}`}));
+  current().forEach(t=>{
+    (activeLeadTasks()||[]).forEach(task=>{let v=t.leadAdmin?.[task.id]||'Not Started',low=String(v).toLowerCase();if(!['complete','completed','done','n/a','na'].includes(low))alerts.push({priority:low.includes('progress')?2:1,text:`TOOL ${t.id} — ${task.label}: ${v}`})});
+    let escalated=(t.ncs||[]).filter(n=>String(n.state).toLowerCase().includes('escalat'));escalated.forEach(n=>alerts.push({priority:5,text:`TOOL ${t.id} — Escalated NC ${n.id||''}${n.days?` · ${n.days} day${Number(n.days)===1?'':'s'}`:''}`}));
+    let critical=(t.ncs||[]).filter(n=>n.blocking&& !['closed','waived'].includes(String(n.state).toLowerCase()));critical.forEach(n=>alerts.push({priority:6,text:`TOOL ${t.id} — BLOCKING NC ${n.id||''}: ${n.desc||n.state}`}));
+  });
+  return alerts.sort((a,b)=>b.priority-a.priority).slice(0,120)
+}
+function updateOperationsBar(){
+  let bar=document.getElementById('operationsBar');if(!bar)return;
+  let alerts=operationalAlerts(),open=(state.workspaceTasks||[]).filter(x=>x.status!=='Completed').length;
+  let tc=document.getElementById('opsTaskCount');if(tc)tc.textContent=`${open} workspace task${open===1?'':'s'} · ${alerts.length} pending items`;
+  let sync=document.getElementById('opsSync');if(sync){let sh=state.shared||{};sync.textContent=sh.lastImport?`List CSV imported ${new Date(sh.lastImport).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}`:'Local test data · live Lists sync pending'}
+  let pr=document.getElementById('opsPresence');if(pr)pr.textContent='Presence: available after live Lists connection';
+  let tx=document.getElementById('opsTickerText');if(tx){if(!alerts.length)tx.textContent='No pending Lead / Admin items — all tracked work is complete';else{opsTickerIndex%=alerts.length;tx.textContent=alerts[opsTickerIndex].text}}
+}
+function rotateOperationsTicker(){let tx=document.getElementById('opsTickerText');if(!tx)return;let alerts=operationalAlerts();if(!alerts.length){updateOperationsBar();return}tx.style.opacity='.15';setTimeout(()=>{opsTickerIndex=(opsTickerIndex+1)%alerts.length;updateOperationsBar();tx.style.opacity='1'},180)}
+setInterval(rotateOperationsTicker,6500);
+function render(){renderEditControls();setTimeout(enhanceDateInputs,0);setTimeout(updateOperationsBar,0);if(view==='countdown')countdown();else if(view==='shipping')shipping();else if(view==='daily')daily();else if(view==='meeting')morning();else if(view==='weekend')weekend();else if(view==='workspace')workspace();else if(view==='systems')systems();else if(view==='archive')archive();else if(view==='shared')sharedData();else admin()}
 
 document.addEventListener('click',e=>{if(editMode)return;const el=e.target.closest('button,input,select,textarea');if(!el)return;if(el.id==='enableEditingBtn'||el.id==='resumeEditingBtn'||el.id==='releaseEditingBtn'||el.closest('.edit-control-bar'))return;if(el.matches('.nav-btn,[data-view],.admin-tab,[data-admin],[data-worktab]'))return;const text=(el.textContent||'').trim().toLowerCase();const allowed=['administration','tool countdown','tools','morning status','weekday priorities','weekend priorities','shipping schedule','archive','shared data','lead workspace','tasks','reference','screenshot mode'];if(el.tagName==='BUTTON'&&allowed.includes(text))return;e.preventDefault();e.stopImmediatePropagation();alert('Read Only mode is active. Click Enable Editing in the header before making changes.');},true);
 
