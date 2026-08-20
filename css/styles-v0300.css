@@ -1070,3 +1070,52 @@ body.wallboard-mode button:not(.wallboard-controls button){cursor:default}
   .header-page-lockup{margin-left:-12px!important;width:calc(100% + 12px)!important;padding-left:48px!important}
   .header-diagonal{width:20px!important;margin-left:-10px!important}
 }
+
+/* =========================================================
+   v0.30.9 REGULAR MODE TOP ACTION BAR LAYOUT FIX
+   The lower action edge was being visually swallowed by the Page Actions row.
+   Reserve a dedicated edge lane between the two rows and render the lower sweep
+   into that lane so regular mode matches Wallboard mode.
+   ========================================================= */
+body:not(.wallboard-mode) .top-action-bar{
+  position:relative!important;
+  z-index:90!important;
+  box-sizing:border-box!important;
+  margin:0 0 7px 0!important;
+  overflow:visible!important;
+  border-top:2px solid rgba(255,255,255,.62)!important;
+  border-bottom:3px solid rgba(255,255,255,.82)!important;
+  box-shadow:0 7px 18px rgba(0,0,0,.34),0 4px 0 rgba(var(--accent-rgb),.30)!important;
+}
+body:not(.wallboard-mode) .top-action-bar::before{
+  top:0!important;
+  bottom:auto!important;
+  height:4px!important;
+  z-index:120!important;
+  animation:b7EdgeLTR 5.8s linear infinite!important;
+}
+body:not(.wallboard-mode) .top-action-bar::after{
+  top:auto!important;
+  bottom:-7px!important;
+  height:4px!important;
+  z-index:121!important;
+  animation:b7EdgeRTL 5.8s linear infinite!important;
+  pointer-events:none!important;
+}
+body:not(.wallboard-mode) .page-toolbar{
+  position:relative!important;
+  z-index:60!important;
+  margin-top:0!important;
+  clear:both!important;
+  border-top:1px solid rgba(var(--accent-rgb),.24)!important;
+  border-bottom:2px solid rgba(255,255,255,.32)!important;
+}
+/* The 7px reserved lane itself stays dark so both the white lower rule and
+   opposite-direction glow remain distinct from Page Actions. */
+body:not(.wallboard-mode) .top-action-bar + .page-toolbar{
+  margin-top:0!important;
+}
+@media (prefers-reduced-motion:reduce){
+  body:not(.wallboard-mode) .top-action-bar::before,
+  body:not(.wallboard-mode) .top-action-bar::after{animation:none!important;}
+}
