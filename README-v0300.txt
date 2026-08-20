@@ -16,3 +16,11 @@ Major additions:
 
 Reference file note:
 Local file:// pages cannot guarantee an embedded Excel renderer. The Reference Files page lets you select a workbook, attempt an in-page preview, and open the real workbook for worksheet tabs, filters and sorting.
+
+
+v0.30.1 Reference Files browser preview test:
+- Replaces iframe XLSX preview with an in-browser spreadsheet reader.
+- Supports .xlsx, .xls, .xlsm through SheetJS loaded from the official SheetJS CDN when Preview is used.
+- Supports .csv and .tsv without the external library.
+- Adds worksheet tabs and a visible-row text filter.
+- Preview is read-only. Open Original remains available for full Excel features.
