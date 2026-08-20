@@ -1,4 +1,4 @@
-const APP_VERSION='0.31.6';
+const APP_VERSION='0.31.7';
 const PRODUCT_FAMILY='29XX';
 const PRODUCT_CATALOG={"Regera": ["D10H", "D10L", "D10M", "R900", "R900M", "R905", "R905i", "R905iSens", "R905t"], "Celestiq": ["D11H", "D11L", "D11M", "R910", "R910M", "R915", "R915i", "R915t"], "Zephyr": ["C200", "C205", "C300", "C305"], "Panamera": ["2935", "2935i", "2935Lite", "2935Lite_TI", "2935LiteS", "2935LiteSE", "2935t"], "Targa": ["2955", "2955i", "2955t", "D8L", "D8H", "D8M"], "Taycan": ["2965", "2965t", "2965C", "D8H_EP", "D8L_EP", "D8M_EP"], "Macan": ["2930XR", "2935iXR", "2935tXR", "2935XR", "D7XR"], "Boxster": ["2915S2"], "Vanquish": ["2905", "2915"]};
 const QUARTERS=["CY26Q1", "CY26Q2", "CY26Q3", "CY26Q4", "CY27Q1", "CY27Q2", "CY27Q3", "CY27Q4", "CY28Q1", "CY28Q2", "CY28Q3", "CY28Q4", "CY29Q1", "CY29Q2", "CY29Q3", "CY29Q4", "CY30Q1", "CY30Q2", "CY30Q3", "CY30Q4"];
