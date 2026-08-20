@@ -1423,3 +1423,37 @@ body:not(.wallboard-mode) .header-status-stack .page-toolbar::before{
   body:not(.wallboard-mode) .header-status-stack{grid-template-rows:64px 12px auto!important}
   body:not(.wallboard-mode) .header-status-stack .page-toolbar{min-height:50px!important;padding-top:10px!important;padding-bottom:7px!important}
 }
+
+/* =========================================================
+   v0.31.4 FINAL FRAMEWORK POLISH
+   - Top Action Center status uses the full viewport width like Fleet Status.
+   - Page Actions receives balanced vertical breathing room.
+   ========================================================= */
+body:not(.wallboard-mode) .header-status-stack .top-action-bar{
+  width:100%!important;
+  max-width:none!important;
+}
+body:not(.wallboard-mode) .header-status-stack .top-action-current{
+  width:calc(100% - 135px)!important;
+  max-width:none!important;
+  flex:1 1 auto!important;
+}
+body:not(.wallboard-mode) .header-status-stack .top-action-all{
+  flex:0 0 135px!important;
+  width:135px!important;
+}
+body:not(.wallboard-mode) .header-status-stack .top-action-clear{
+  width:100%!important;
+  max-width:none!important;
+}
+body:not(.wallboard-mode) .header-status-stack .page-toolbar{
+  min-height:56px!important;
+  padding-top:12px!important;
+  padding-bottom:12px!important;
+  align-items:center!important;
+}
+@media(max-width:800px){
+  body:not(.wallboard-mode) .header-status-stack .top-action-current{width:calc(100% - 78px)!important}
+  body:not(.wallboard-mode) .header-status-stack .top-action-all{flex-basis:78px!important;width:78px!important}
+  body:not(.wallboard-mode) .header-status-stack .page-toolbar{min-height:52px!important;padding-top:10px!important;padding-bottom:10px!important}
+}
