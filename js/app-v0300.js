@@ -421,7 +421,7 @@ document.addEventListener('change',e=>{
 const V0300_PAGE_META={
  countdown:['TOOL COUNTDOWN','countdown'],shipping:['SHIPPING SCHEDULE','shipping'],daily:['WEEKDAY PRIORITIES','daily'],meeting:['MORNING STATUS','meeting'],
  leads:['LEADS EXTRA STATUS','leads'],weekend:['WEEKEND PRIORITIES','weekend'],workspace:['LEAD WORKSPACE','workspace'],systems:['TOOLS','systems'],archive:['ARCHIVE','archive'],
- references:['REFERENCE FILES','references'],actions:['ACTION CENTER','actions'],shared:['SHARED DATA','shared'],admin:['ADMINISTRATION','admin']
+ references:['REFERENCE FILES','references'],actions:['ACTION CENTER','actions'],wallboard:['WALLBOARD','wallboard'],shared:['SHARED DATA','shared'],admin:['ADMINISTRATION','admin']
 };
 const DEFAULT_SUPPLEMENTALS=[
  {id:'supp_lamp_swap',label:'Lamp Swap',repeatable:true,defaultSteps:10,active:true},
@@ -560,11 +560,11 @@ renderAdmin=function(s){_renderAdminV21(s);if(s==='home'){let grid=document.quer
 const _wireAdminV21=wireAdmin;
 wireAdmin=function(s){if(s==='meeting'){return} _wireAdminV21(s);if(s==='countdown')wireRapidAdd();if(s==='daily'||s==='weekend')setTimeout(wirePriorityDynamic,0)}
 
-function renderV3(){renderEditControls();setTimeout(enhanceDateInputs,0);setTimeout(updateOperationsBar,0);if(view==='countdown')countdown();else if(view==='shipping'){setHeaderContext('SHIPPING SCHEDULE');shipping()}else if(view==='daily'){setHeaderContext('WEEKDAY PRIORITIES');daily()}else if(view==='meeting'){setHeaderContext('MORNING STATUS');morning()}else if(view==='leads')leadsExtraPage(false);else if(view==='weekend'){setHeaderContext('WEEKEND PRIORITIES');weekend()}else if(view==='workspace'){setHeaderContext('LEAD WORKSPACE');workspace()}else if(view==='systems')systems();else if(view==='archive'){setHeaderContext('ARCHIVE');archive()}else if(view==='references')referencesPage();else if(view==='actions')actionCenter();else if(view==='shared'){setHeaderContext('SHARED DATA');sharedData()}else admin()}
+function renderV3(){renderEditControls();setTimeout(enhanceDateInputs,0);setTimeout(updateOperationsBar,0);if(view==='countdown')countdown();else if(view==='shipping'){setHeaderContext('SHIPPING SCHEDULE');shipping()}else if(view==='daily'){setHeaderContext('WEEKDAY PRIORITIES');daily()}else if(view==='meeting'){setHeaderContext('MORNING STATUS');morning()}else if(view==='leads')leadsExtraPage(false);else if(view==='weekend'){setHeaderContext('WEEKEND PRIORITIES');weekend()}else if(view==='workspace'){setHeaderContext('LEAD WORKSPACE');workspace()}else if(view==='systems')systems();else if(view==='archive'){setHeaderContext('ARCHIVE');archive()}else if(view==='references')referencesPage();else if(view==='actions')actionCenter();else if(view==='wallboard')wallboardPage();else if(view==='shared'){setHeaderContext('SHARED DATA');sharedData()}else admin()}
 render=renderV3;
 
 // v0.30 backup metadata
-exportFullBackup=function(){state.tools=tools;state.config=normalizeConfig(state.config);ensureV0300State();const payload={schema:'B7-FI-COMMAND-CENTER-BACKUP',schemaVersion:2,appVersion:'0.30.0',exportedAt:new Date().toISOString(),state};downloadBlob(`B7-FI-Command-Center-Full-Backup-${safeFileStamp()}.json`,JSON.stringify(payload,null,2),'application/json')}
+exportFullBackup=function(){state.tools=tools;state.config=normalizeConfig(state.config);ensureV0300State();const payload={schema:'B7-FI-COMMAND-CENTER-BACKUP',schemaVersion:2,appVersion:'0.30.7',exportedAt:new Date().toISOString(),state};downloadBlob(`B7-FI-Command-Center-Full-Backup-${safeFileStamp()}.json`,JSON.stringify(payload,null,2),'application/json')}
 
 
 
@@ -576,7 +576,7 @@ function ensureV0305ToolState(){
     if(t.microTargetChecklist==null)t.microTargetChecklist='';
     if(t.microTargetUpdatedAt==null)t.microTargetUpdatedAt='';
   });
-  state.appVersion='0.30.6';
+  state.appVersion='0.30.7';
 }
 ensureV0305ToolState();
 
@@ -659,3 +659,57 @@ exportFullBackup=function(){state.tools=tools;state.config=normalizeConfig(state
 setThemeFor(view);
 
 render();app.dataset.rendered='true';
+
+
+/* =========================================================
+   v0.30.7 WALLBOARD / LIVE DISPLAY MODE
+   ========================================================= */
+const WALLBOARD_DEFAULTS=[
+  {view:'countdown',label:'Tool Countdown',seconds:25,enabled:true},
+  {view:'actions',label:'Action Center',seconds:25,enabled:true},
+  {view:'meeting',label:'Morning Status',seconds:35,enabled:true},
+  {view:'daily',label:'Weekday Priorities',seconds:25,enabled:true},
+  {view:'shipping',label:'Shipping Schedule',seconds:25,enabled:true},
+  {view:'leads',label:'Leads Extra Status',seconds:25,enabled:true},
+  {view:'systems',label:'Fleet / Tools Overview',seconds:35,enabled:true}
+];
+let wallboard={active:false,paused:false,index:0,timer:null,returnView:'countdown'};
+function ensureWallboardConfig(){
+  state.wallboard=state.wallboard||{};
+  state.wallboard.slides=Array.isArray(state.wallboard.slides)&&state.wallboard.slides.length?state.wallboard.slides:clone(WALLBOARD_DEFAULTS);
+  state.wallboard.autoRefreshSeconds=Number(state.wallboard.autoRefreshSeconds)||15;
+}
+ensureWallboardConfig();
+function wallboardSlides(){ensureWallboardConfig();return state.wallboard.slides.filter(x=>x.enabled!==false)}
+function wallboardPage(){
+  setHeaderContext('WALLBOARD','Large-screen live operations display');ensureWallboardConfig();
+  app.innerHTML=`<div class="wallboard-setup"><div class="wallboard-intro"><h2>B7 FI Live Wallboard</h2><p>Use a dedicated PC and large monitor to rotate through live Command Center status pages. Wallboard Mode is read-only and hides normal editing/navigation controls.</p><div class="wallboard-live-card"><b>● LIVE DISPLAY READY</b><span>Local test mode now · shared-data auto-update when Microsoft Lists sync is enabled</span></div></div><div class="panel"><h3>Rotation</h3><div class="wallboard-slide-list">${state.wallboard.slides.map((x,i)=>`<div class="wallboard-slide-row" data-wallrow="${i}"><label><input type="checkbox" class="wall-enabled" ${x.enabled!==false?'checked':''}> ${esc(x.label)}</label><label>Display <input type="number" class="wall-seconds" min="10" max="180" value="${Number(x.seconds)||25}"> sec</label></div>`).join('')}</div><div class="wallboard-start-row"><button id="wallStart" class="btn primary">Start Wallboard Mode</button><button id="wallFullscreen" class="btn">Start Full Screen</button></div></div><div class="panel"><h3>Wallboard behavior</h3><div class="wallboard-feature-grid"><div><b>AUTO ROTATION</b><span>Cycles only through enabled pages.</span></div><div><b>ACTION CENTER</b><span>Shows the same live actions used by the top B7 FI Actions bar.</span></div><div><b>FLEET STATUS</b><span>Bottom bar continues to show Actual vs Micro Schedule status.</span></div><div><b>READ ONLY</b><span>Editing controls are hidden while the wallboard is running.</span></div></div></div></div>`;
+  document.querySelectorAll('[data-wallrow]').forEach(r=>{let i=Number(r.dataset.wallrow),e=r.querySelector('.wall-enabled'),sec=r.querySelector('.wall-seconds');e.onchange=()=>{state.wallboard.slides[i].enabled=e.checked;save()};sec.onchange=()=>{state.wallboard.slides[i].seconds=Math.max(10,Number(sec.value)||25);save()}});
+  $('#wallStart').onclick=()=>startWallboard(false);$('#wallFullscreen').onclick=()=>startWallboard(true);
+  actions([{label:'Start Wallboard',primary:true,fn:()=>startWallboard(false)},{label:'Tools',fn:()=>setView('systems')}],false)
+}
+function startWallboard(fullscreen){
+  let slides=wallboardSlides();if(!slides.length)return alert('Enable at least one Wallboard page first.');
+  wallboard.active=true;wallboard.paused=false;wallboard.index=0;wallboard.returnView=view==='wallboard'?'countdown':view;
+  document.body.classList.add('wallboard-mode');document.getElementById('wallboardControls')?.classList.add('show');
+  if(fullscreen&&document.documentElement.requestFullscreen)document.documentElement.requestFullscreen().catch(()=>{});
+  showWallboardSlide(0);
+}
+function showWallboardSlide(index){
+  let slides=wallboardSlides();if(!wallboard.active||!slides.length)return;wallboard.index=(index+slides.length)%slides.length;
+  let slide=slides[wallboard.index];setView(slide.view);document.body.classList.add('wallboard-mode');document.getElementById('wallboardControls')?.classList.add('show');
+  let live=document.getElementById('wallLive');if(live)live.textContent=`● LIVE · ${wallboard.index+1}/${slides.length} · ${slide.seconds}s`;
+  if(wallboard.timer)clearTimeout(wallboard.timer);if(!wallboard.paused)wallboard.timer=setTimeout(()=>showWallboardSlide(wallboard.index+1),(Number(slide.seconds)||25)*1000);
+}
+function exitWallboard(){
+  wallboard.active=false;wallboard.paused=false;if(wallboard.timer)clearTimeout(wallboard.timer);wallboard.timer=null;
+  document.body.classList.remove('wallboard-mode');document.getElementById('wallboardControls')?.classList.remove('show');
+  if(document.fullscreenElement&&document.exitFullscreen)document.exitFullscreen().catch(()=>{});setView('wallboard');
+}
+function wireWallboardControls(){
+  let p=$('#wallPrev'),n=$('#wallNext'),pa=$('#wallPause'),ex=$('#wallExit');if(!p)return;
+  p.onclick=()=>showWallboardSlide(wallboard.index-1);n.onclick=()=>showWallboardSlide(wallboard.index+1);ex.onclick=exitWallboard;
+  pa.onclick=()=>{wallboard.paused=!wallboard.paused;pa.textContent=wallboard.paused?'RESUME':'PAUSE';if(wallboard.timer)clearTimeout(wallboard.timer);wallboard.timer=null;if(!wallboard.paused)showWallboardSlide(wallboard.index)};
+}
+wireWallboardControls();
+window.addEventListener('storage',e=>{if(!wallboard.active||e.key!==KEY)return;try{state=loadState();tools=state.tools;ensureV0300State();ensureV0305ToolState();ensureWallboardConfig();render()}catch(err){}});
