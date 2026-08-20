@@ -564,7 +564,7 @@ function renderV3(){renderEditControls();setTimeout(enhanceDateInputs,0);setTime
 render=renderV3;
 
 // v0.30 backup metadata
-exportFullBackup=function(){state.tools=tools;state.config=normalizeConfig(state.config);ensureV0300State();const payload={schema:'B7-FI-COMMAND-CENTER-BACKUP',schemaVersion:2,appVersion:'0.30.7',exportedAt:new Date().toISOString(),state};downloadBlob(`B7-FI-Command-Center-Full-Backup-${safeFileStamp()}.json`,JSON.stringify(payload,null,2),'application/json')}
+exportFullBackup=function(){state.tools=tools;state.config=normalizeConfig(state.config);ensureV0300State();const payload={schema:'B7-FI-COMMAND-CENTER-BACKUP',schemaVersion:2,appVersion:'0.30.8',exportedAt:new Date().toISOString(),state};downloadBlob(`B7-FI-Command-Center-Full-Backup-${safeFileStamp()}.json`,JSON.stringify(payload,null,2),'application/json')}
 
 
 
@@ -576,7 +576,7 @@ function ensureV0305ToolState(){
     if(t.microTargetChecklist==null)t.microTargetChecklist='';
     if(t.microTargetUpdatedAt==null)t.microTargetUpdatedAt='';
   });
-  state.appVersion='0.30.7';
+  state.appVersion='0.30.8';
 }
 ensureV0305ToolState();
 
@@ -662,7 +662,7 @@ render();app.dataset.rendered='true';
 
 
 /* =========================================================
-   v0.30.7 WALLBOARD / LIVE DISPLAY MODE
+   v0.30.8 WALLBOARD / LIVE DISPLAY MODE
    ========================================================= */
 const WALLBOARD_DEFAULTS=[
   {view:'countdown',label:'Tool Countdown',seconds:25,enabled:true},
