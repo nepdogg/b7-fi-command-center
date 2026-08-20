@@ -576,7 +576,7 @@ function ensureV0305ToolState(){
     if(t.microTargetChecklist==null)t.microTargetChecklist='';
     if(t.microTargetUpdatedAt==null)t.microTargetUpdatedAt='';
   });
-  state.appVersion='0.30.5';
+  state.appVersion='0.30.6';
 }
 ensureV0305ToolState();
 
@@ -653,7 +653,7 @@ function toolStatusV5(id){
 toolStatus=toolStatusV5;
 
 /* v0.30.5 metadata */
-exportFullBackup=function(){state.tools=tools;state.config=normalizeConfig(state.config);ensureV0300State();ensureV0305ToolState();const payload={schema:'B7-FI-COMMAND-CENTER-BACKUP',schemaVersion:3,appVersion:'0.30.5',exportedAt:new Date().toISOString(),state};downloadBlob(`B7-FI-Command-Center-Full-Backup-${safeFileStamp()}.json`,JSON.stringify(payload,null,2),'application/json')}
+exportFullBackup=function(){state.tools=tools;state.config=normalizeConfig(state.config);ensureV0300State();ensureV0305ToolState();const payload={schema:'B7-FI-COMMAND-CENTER-BACKUP',schemaVersion:3,appVersion:'0.30.6',exportedAt:new Date().toISOString(),state};downloadBlob(`B7-FI-Command-Center-Full-Backup-${safeFileStamp()}.json`,JSON.stringify(payload,null,2),'application/json')}
 
 // Ensure page label and bars are initialized before first v0.30 render.
 setThemeFor(view);

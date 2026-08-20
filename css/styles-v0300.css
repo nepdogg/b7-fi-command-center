@@ -926,3 +926,74 @@ body{padding-bottom:70px!important}
 .micro-schedule-panel{display:grid;grid-template-columns:minmax(250px,1fr) minmax(340px,1.25fr);gap:18px;align-items:center;margin:16px 0;padding:16px 18px;border:1px solid rgba(var(--accent-rgb),.52);border-left:5px solid var(--accent);border-radius:12px;background:linear-gradient(90deg,rgba(var(--accent-rgb),.08),#0d1a2a 55%)}
 .micro-schedule-panel h3{margin:0 0 5px}.micro-schedule-panel p{margin:0;color:var(--muted);line-height:1.35}.micro-schedule-controls{display:flex;gap:8px}.micro-schedule-controls select{flex:1;background:#081522;color:#fff;border:1px solid #344860;border-radius:8px;padding:9px}.micro-schedule-readout{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:center;padding-top:10px;border-top:1px solid #2b4057}.micro-schedule-readout span{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.08em}.micro-schedule-readout b{display:block;margin-top:3px}
 @media(max-width:850px){.micro-schedule-panel{grid-template-columns:1fr}.micro-schedule-readout{grid-template-columns:1fr}.micro-schedule-controls{display:grid;grid-template-columns:1fr}.header-diagonal{width:11px!important;margin-left:-5px!important}}
+
+/* =========================================================
+   v0.30.6 HEADER ALIGNMENT + OPPOSING STATUS SWEEPS
+   ========================================================= */
+/* One geometric transition: dark half -> white diagonal band -> page color. */
+.header-diagonal{
+  top:0!important;
+  left:50%!important;
+  width:28px!important;
+  height:88px!important;
+  margin-left:-14px!important;
+  transform:none!important;
+  clip-path:polygon(58% 0,100% 0,42% 100%,0 100%)!important;
+  background:#fff!important;
+  box-shadow:none!important;
+  z-index:12!important;
+}
+.header-page-lockup{
+  clip-path:polygon(28px 0,100% 0,100% 100%,0 100%)!important;
+  padding-left:48px!important;
+}
+
+/* Permanent boundaries remain visible while the glow travels over them. */
+.top-action-bar,.operations-bar{
+  border-top:2px solid rgba(255,255,255,.55)!important;
+  border-bottom:2px solid rgba(255,255,255,.55)!important;
+  overflow:hidden!important;
+}
+/* Use compact moving light elements rather than animated full-width backgrounds.
+   TOP travels left -> right; BOTTOM travels right -> left. */
+@keyframes b7EdgeLTR{from{transform:translateX(-280px)}to{transform:translateX(calc(100vw + 280px))}}
+@keyframes b7EdgeRTL{from{transform:translateX(calc(100vw + 280px))}to{transform:translateX(-280px)}}
+.top-action-bar::before,.top-action-bar::after,
+.operations-bar::before,.operations-bar::after{
+  content:""!important;
+  position:absolute!important;
+  left:0!important;
+  right:auto!important;
+  width:250px!important;
+  height:3px!important;
+  z-index:40!important;
+  pointer-events:none!important;
+  background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.12) 18%,var(--accent) 42%,#fff 50%,var(--accent) 58%,rgba(255,255,255,.12) 82%,transparent 100%)!important;
+  filter:drop-shadow(0 0 6px rgba(var(--accent-rgb),.95))!important;
+  background-size:100% 100%!important;
+  background-position:0 0!important;
+}
+.top-action-bar::before,.operations-bar::before{
+  top:0!important;
+  bottom:auto!important;
+  animation:b7EdgeLTR 5.8s linear infinite!important;
+}
+.top-action-bar::after,.operations-bar::after{
+  top:auto!important;
+  bottom:0!important;
+  animation:b7EdgeRTL 5.8s linear infinite!important;
+}
+/* Extra inset separator makes the lower edge of the top Action bar unmistakable. */
+.top-action-bar{box-shadow:inset 0 -1px 0 rgba(var(--accent-rgb),.60),0 7px 18px rgba(0,0,0,.34)!important;}
+.operations-bar{box-shadow:inset 0 1px 0 rgba(var(--accent-rgb),.55),0 -7px 18px rgba(0,0,0,.36)!important;}
+
+/* Fleet target missing = visible warning, not ordinary status text. */
+.ops-ticker.fleet-unset #opsTickerText{color:#ffe891!important;font-weight:950!important;}
+
+@media(max-width:700px){
+  .header-diagonal{height:76px!important;width:22px!important;margin-left:-11px!important;clip-path:polygon(60% 0,100% 0,40% 100%,0 100%)!important;}
+  .header-page-lockup{clip-path:polygon(22px 0,100% 0,100% 100%,0 100%)!important;padding-left:34px!important;}
+}
+@media(prefers-reduced-motion:reduce){
+  .top-action-bar::before,.top-action-bar::after,.operations-bar::before,.operations-bar::after{animation:none!important;transform:translateX(calc(50vw - 125px))!important;}
+}
