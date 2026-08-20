@@ -1,0 +1,3 @@
+B7 FI Command Center v0.31.1
+
+Focused fix: top B7 FI Actions lower border and reverse-direction glow are rendered inside the action row so Page Actions cannot clip them. Header geometry from v0.31.0 is preserved.

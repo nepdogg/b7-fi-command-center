@@ -1281,3 +1281,41 @@ body.wallboard-mode .header-status-stack .top-action-bar{margin:0!important}
   body:not(.wallboard-mode) .header-status-stack .top-action-bar::before,
   body:not(.wallboard-mode) .header-status-stack .top-action-bar::after{animation:none!important;transform:translateX(calc(50vw - 125px))!important}
 }
+
+/* =========================================================
+   v0.31.1 TOP ACTION BAR INNER-EDGE FIX
+   Keep the lower rule/sweep inside the action row so no parent/adjacent row can clip it.
+   ========================================================= */
+body:not(.wallboard-mode) .header-status-stack{
+  grid-template-rows:68px auto!important;
+}
+body:not(.wallboard-mode) .header-status-stack .top-action-bar{
+  height:68px!important;
+  min-height:68px!important;
+  overflow:visible!important;
+  border-bottom:0!important;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.60),
+    inset 0 -5px 0 #fff,
+    inset 0 -7px 0 rgba(var(--accent-rgb),.95)!important;
+}
+body:not(.wallboard-mode) .header-status-stack .top-action-bar::before,
+body:not(.wallboard-mode) .header-status-stack .top-action-bar::after{
+  height:5px!important;
+}
+body:not(.wallboard-mode) .header-status-stack .top-action-bar::before{
+  top:2px!important;
+}
+body:not(.wallboard-mode) .header-status-stack .top-action-bar::after{
+  top:58px!important;
+  bottom:auto!important;
+  z-index:999!important;
+}
+body:not(.wallboard-mode) .header-status-stack .page-toolbar{
+  z-index:1!important;
+}
+@media(max-width:800px){
+  body:not(.wallboard-mode) .header-status-stack{grid-template-rows:64px auto!important}
+  body:not(.wallboard-mode) .header-status-stack .top-action-bar{height:64px!important;min-height:64px!important}
+  body:not(.wallboard-mode) .header-status-stack .top-action-bar::after{top:54px!important}
+}
