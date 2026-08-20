@@ -582,3 +582,211 @@ body{padding-bottom:58px!important}
   .operations-bar{min-height:48px!important}
   body{padding-bottom:52px!important}
 }
+
+/* =========================================================
+   v0.30.3 FINAL HEADER SPLIT + ACTION BAR VISIBILITY FIX
+   ========================================================= */
+/* 50/50 application / page identity header */
+.compact-hero{
+  min-height:88px!important;
+  height:88px!important;
+  padding:0!important;
+  overflow:hidden!important;
+  background:#08131f!important;
+}
+.compact-hero .hero-overlay{display:none!important}
+.header-lockup{
+  width:100%!important;
+  height:88px!important;
+  max-width:none!important;
+  display:grid!important;
+  grid-template-columns:50% 50%!important;
+  gap:0!important;
+  padding:0!important;
+  margin:0!important;
+  align-items:stretch!important;
+  justify-content:stretch!important;
+}
+.header-app-name{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  padding:0 38px 0 24px!important;
+  color:#fff!important;
+  font-size:clamp(23px,2.25vw,35px)!important;
+  line-height:1!important;
+  text-align:right!important;
+}
+.header-diagonal{
+  position:absolute!important;
+  left:50%!important;
+  top:-10px!important;
+  width:2px!important;
+  height:110px!important;
+  z-index:5!important;
+  background:rgba(255,255,255,.9)!important;
+  transform:skewX(-24deg)!important;
+  box-shadow:0 0 16px rgba(var(--accent-rgb),.75)!important;
+  pointer-events:none!important;
+}
+.header-page-lockup{
+  min-width:0!important;
+  max-width:none!important;
+  width:100%!important;
+  height:88px!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  align-items:flex-start!important;
+  padding:0 28px 0 46px!important;
+  background:var(--accent)!important;
+  color:#fff!important;
+  clip-path:polygon(4% 0,100% 0,100% 100%,0 100%)!important;
+}
+.header-page-title{
+  color:#fff!important;
+  font-size:clamp(18px,1.7vw,27px)!important;
+  line-height:1.05!important;
+  text-shadow:0 1px 3px rgba(0,0,0,.45)!important;
+}
+.header-page-sub{
+  color:rgba(255,255,255,.9)!important;
+  font-size:11px!important;
+  font-weight:800!important;
+  letter-spacing:.06em!important;
+  text-shadow:0 1px 2px rgba(0,0,0,.35)!important;
+}
+
+/* Action bar must be a full, readable row between nav and Page Actions. */
+.sticky-header{z-index:2000!important;overflow:visible!important}
+.top-action-bar{
+  position:relative!important;
+  z-index:70!important;
+  width:100%!important;
+  min-height:66px!important;
+  height:66px!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:stretch!important;
+  justify-content:center!important;
+  padding:0!important;
+  overflow:hidden!important;
+  background:#071522!important;
+  border-top:2px solid rgba(var(--accent-rgb),.72)!important;
+  border-bottom:1px solid #35506d!important;
+  box-shadow:0 7px 18px rgba(0,0,0,.30)!important;
+}
+.top-action-current{
+  width:min(1500px,calc(100% - 135px))!important;
+  min-height:66px!important;
+  height:66px!important;
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:auto minmax(0,1fr) auto auto!important;
+  align-items:center!important;
+  gap:16px!important;
+  padding:0 22px!important;
+  margin:0!important;
+  overflow:hidden!important;
+}
+.top-action-current strong{
+  display:block!important;
+  min-width:0!important;
+  color:#f4f8fd!important;
+  font-size:15px!important;
+  line-height:1.25!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+.top-action-label{
+  font-size:12px!important;
+  line-height:1!important;
+  font-weight:950!important;
+  white-space:nowrap!important;
+}
+.top-action-count,.top-action-open{
+  font-size:12px!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}
+.top-action-all{
+  flex:0 0 135px!important;
+  width:135px!important;
+  min-height:66px!important;
+  height:66px!important;
+  box-sizing:border-box!important;
+  font-size:13px!important;
+  padding:0 16px!important;
+}
+.top-action-clear{
+  width:min(1500px,calc(100% - 40px))!important;
+  min-height:66px!important;
+  height:66px!important;
+  box-sizing:border-box!important;
+  justify-content:flex-start!important;
+  padding:0 22px!important;
+  font-size:14px!important;
+}
+/* Ensure Page Actions cannot overlap or cover the Action row. */
+.page-toolbar{
+  z-index:60!important;
+  min-height:52px!important;
+  height:auto!important;
+  padding-top:8px!important;
+  padding-bottom:8px!important;
+  box-shadow:none!important;
+}
+
+/* Larger, more useful persistent footer/status bar. */
+.operations-bar{
+  z-index:2100!important;
+  min-height:66px!important;
+  height:66px!important;
+  box-sizing:border-box!important;
+  padding:0 22px!important;
+  gap:18px!important;
+  font-size:13px!important;
+  border-top:2px solid rgba(var(--accent-rgb),.62)!important;
+}
+.ops-health b{font-size:12px!important}
+.ops-health #opsSync{font-size:12px!important}
+.ops-ticker{height:42px!important;padding:0 16px!important;gap:13px!important}
+.ops-ticker-label{font-size:11px!important}
+.ops-ticker #opsTickerText{font-size:13px!important;line-height:1.3!important;font-weight:800!important}
+.ops-summary{font-size:12px!important}
+body{padding-bottom:70px!important}
+.page-shell{padding-bottom:104px!important}
+
+@media(max-width:1000px){
+  .header-app-name{padding-right:26px!important;font-size:22px!important}
+  .header-page-lockup{padding-left:36px!important}
+  .header-page-title{font-size:18px!important}
+  .top-action-current{grid-template-columns:auto minmax(0,1fr) auto!important;width:calc(100% - 105px)!important;padding:0 14px!important}
+  .top-action-open{display:none!important}
+  .top-action-all{flex-basis:105px!important;width:105px!important}
+  .operations-bar{grid-template-columns:1fr auto!important;min-height:60px!important;height:60px!important;padding:0 14px!important}
+  .ops-health{display:none!important}
+  body{padding-bottom:64px!important}
+}
+@media(max-width:700px){
+  .compact-hero,.header-lockup{height:76px!important;min-height:76px!important}
+  .header-app-name{font-size:17px!important;padding:0 18px 0 10px!important;white-space:normal!important;line-height:1.1!important}
+  .header-page-lockup{height:76px!important;padding:0 10px 0 26px!important}
+  .header-page-title{font-size:15px!important;white-space:normal!important}
+  .header-page-sub{font-size:9px!important}
+  .header-diagonal{height:96px!important}
+  .top-action-bar{height:60px!important;min-height:60px!important}
+  .top-action-current{height:60px!important;min-height:60px!important;width:calc(100% - 78px)!important;grid-template-columns:minmax(0,1fr) auto!important;gap:8px!important;padding:0 10px!important}
+  .top-action-label{display:none!important}
+  .top-action-current strong{font-size:13px!important}
+  .top-action-count{font-size:10px!important}
+  .top-action-all{height:60px!important;min-height:60px!important;flex-basis:78px!important;width:78px!important;font-size:11px!important;padding:0 6px!important}
+  .operations-bar{grid-template-columns:1fr!important;height:56px!important;min-height:56px!important;padding:0 10px!important}
+  .ops-summary{display:none!important}
+  .ops-ticker{border:0!important;height:40px!important;padding:0!important}
+  .ops-ticker #opsTickerText{font-size:12px!important}
+  body{padding-bottom:60px!important}
+}

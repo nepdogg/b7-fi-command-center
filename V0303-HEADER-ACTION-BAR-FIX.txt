@@ -1,0 +1,20 @@
+B7 FI COMMAND CENTER v0.30.3
+
+TEST BUILD: FINAL HEADER SPLIT + ACTION BAR VISIBILITY
+
+Changes:
+- 50/50 header: permanent dark B7 FI COMMAND CENTER left half, solid current-page color right half.
+- White page-title text on the solid color panel.
+- Diagonal divider retained between application identity and page identity.
+- Top B7 FI Action bar is now a dedicated 66px row and cannot be covered by Page Actions.
+- Top action message, counter and ALL button are larger and vertically centered.
+- Bottom Command Center / Action Center bar increased to 66px with larger text.
+- Added extra page bottom clearance so the larger footer bar does not cover content.
+- Responsive sizes included for smaller screens.
+
+Primary home test:
+1. Open Tool Countdown.
+2. Verify entire top B7 FI ACTIONS row is visible between navigation and PAGE ACTIONS.
+3. Verify text is not vertically clipped.
+4. Verify bottom status bar is larger and fully readable.
+5. Navigate between pages and confirm the right half of the header changes to each page accent color.
