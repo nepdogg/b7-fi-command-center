@@ -1457,3 +1457,29 @@ body:not(.wallboard-mode) .header-status-stack .page-toolbar{
   body:not(.wallboard-mode) .header-status-stack .top-action-all{flex-basis:78px!important;width:78px!important}
   body:not(.wallboard-mode) .header-status-stack .page-toolbar{min-height:52px!important;padding-top:10px!important;padding-bottom:10px!important}
 }
+
+
+/* =========================================================
+   v0.31.5 PAGE ACTIONS BALANCED SPACING
+   Keep the fixed Action Center bar/separator untouched.
+   Give Page Actions equal top/bottom breathing room with a
+   slightly tighter overall row than v0.31.4.
+   ========================================================= */
+body:not(.wallboard-mode) .header-status-stack .page-toolbar{
+  min-height:0!important;
+  height:auto!important;
+  padding-top:9px!important;
+  padding-bottom:9px!important;
+  align-items:center!important;
+  box-sizing:border-box!important;
+}
+body:not(.wallboard-mode) .header-status-stack .page-toolbar::before{
+  align-self:center!important;
+}
+@media(max-width:800px){
+  body:not(.wallboard-mode) .header-status-stack .page-toolbar{
+    min-height:0!important;
+    padding-top:8px!important;
+    padding-bottom:8px!important;
+  }
+}

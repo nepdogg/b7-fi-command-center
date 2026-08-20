@@ -1,0 +1,7 @@
+B7 FI Command Center v0.31.5
+
+Focused framework spacing update:
+- Page Actions now has equal top and bottom spacing.
+- Slightly more breathing room above the Page Actions content than the prior visual target.
+- Overall Page Actions row is tighter than v0.31.4 to remove excess blank space below.
+- Top B7 FI Actions bar, animated separator, header, Fleet Status, Wallboard, and application logic are unchanged.
