@@ -1397,3 +1397,29 @@ body:not(.wallboard-mode) .header-status-stack .page-toolbar{
 @media(prefers-reduced-motion:reduce){
   body:not(.wallboard-mode) .header-status-stack::after{animation:none!important;transform:translateX(calc(50vw - 125px))!important}
 }
+
+/* =========================================================
+   v0.31.3 PAGE ACTIONS NAVIGATION SPACING FINALIZATION
+   Keep the now-correct Action Center row/separator untouched.
+   Give Page Actions its own breathing room below the animated separator.
+   ========================================================= */
+body:not(.wallboard-mode) .header-status-stack{
+  grid-template-rows:68px 12px auto!important;
+}
+body:not(.wallboard-mode) .header-status-stack .page-toolbar{
+  grid-row:3!important;
+  min-height:52px!important;
+  padding-top:11px!important;
+  padding-bottom:8px!important;
+  align-items:center!important;
+  overflow:visible!important;
+  line-height:1.2!important;
+}
+body:not(.wallboard-mode) .header-status-stack .page-toolbar::before{
+  align-self:center!important;
+  line-height:1.2!important;
+}
+@media(max-width:800px){
+  body:not(.wallboard-mode) .header-status-stack{grid-template-rows:64px 12px auto!important}
+  body:not(.wallboard-mode) .header-status-stack .page-toolbar{min-height:50px!important;padding-top:10px!important;padding-bottom:7px!important}
+}
