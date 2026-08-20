@@ -566,6 +566,95 @@ render=renderV3;
 // v0.30 backup metadata
 exportFullBackup=function(){state.tools=tools;state.config=normalizeConfig(state.config);ensureV0300State();const payload={schema:'B7-FI-COMMAND-CENTER-BACKUP',schemaVersion:2,appVersion:'0.30.0',exportedAt:new Date().toISOString(),state};downloadBlob(`B7-FI-Command-Center-Full-Backup-${safeFileStamp()}.json`,JSON.stringify(payload,null,2),'application/json')}
 
+
+
+/* =========================================================
+   v0.30.5 ACTION / FLEET / MICRO-SCHEDULE CONSOLIDATION
+   ========================================================= */
+function ensureV0305ToolState(){
+  tools.forEach(t=>{
+    if(t.microTargetChecklist==null)t.microTargetChecklist='';
+    if(t.microTargetUpdatedAt==null)t.microTargetUpdatedAt='';
+  });
+  state.appVersion='0.30.5';
+}
+ensureV0305ToolState();
+
+function microScheduleInfo(t){
+  let r=routeFor(t), actualIndex=r.findIndex(x=>x[0]===t.checklist), targetIndex=r.findIndex(x=>x[0]===t.microTargetChecklist);
+  if(t.quarterStatus==='Shipped')return {set:true,targetIndex:r.length-1,actualIndex:r.length-1,plannedPct:100,delta:0,label:'SHIPPED',className:'on',target:t.microTargetChecklist||t.checklist||'—'};
+  if(targetIndex<0)return {set:false,targetIndex:-1,actualIndex,plannedPct:0,delta:null,label:'TARGET NOT SET',className:'unset',target:'—'};
+  let plannedPct=pct(targetIndex+1,r.length),delta=actualIndex<0?targetIndex+1:targetIndex-actualIndex;
+  if(delta>0)return {set:true,targetIndex,actualIndex,plannedPct,delta,label:`BEHIND ${delta} CHECKLIST${delta===1?'':'S'}`,className:'behind',target:r[targetIndex][0]};
+  if(delta<0)return {set:true,targetIndex,actualIndex,plannedPct,delta,label:`AHEAD ${Math.abs(delta)} CHECKLIST${Math.abs(delta)===1?'':'S'}`,className:'ahead',target:r[targetIndex][0]};
+  return {set:true,targetIndex,actualIndex,plannedPct,delta:0,label:'ON SCHEDULE',className:'on',target:r[targetIndex][0]};
+}
+function microTargetOptions(t){
+  return `<option value="">Not Set</option>`+routeFor(t).map(x=>`<option value="${esc(x[0])}" ${x[0]===t.microTargetChecklist?'selected':''}>${esc(x[0])} — ${esc(x[1])}</option>`).join('');
+}
+function scheduleStatusBadge(t){let m=microScheduleInfo(t);return `<span class="schedule-chip ${m.className}">${esc(m.label)}</span>`}
+function supplementalCardBlock(t){
+  let active=activeSupplementals(t); if(!active.length)return '';
+  let sp=supplementalPct(t);
+  return `<div class="progress-row supplemental-progress active-only"><div class="progress-label"><span>SUPPLEMENTAL / SPECIAL</span><b>${sp}%</b></div><div class="track"><div class="fill supplemental" style="width:${sp}%"></div></div><div class="card-progress-meta"><span>${esc(supplementalSummary(t))}</span><span>${active.length} active</span></div></div>`;
+}
+
+/* Action Center is the single source of truth for the top status bar. */
+actionTarget=function(a){if(a.view)setView(a.view);else if(a.toolId)openToolAction(a.toolId,a.tab||'basic')};
+v3Alerts=function(){
+  let out=[],today=new Date();today.setHours(0,0,0,0);syncWorkspaceFromTools();
+  (state.manualReminders||[]).filter(x=>!x.complete).forEach(x=>out.push({severity:x.severity||'yellow',priority:x.severity==='red'?10:x.severity==='orange'?7:4,text:`${x.toolId?'TOOL '+x.toolId+' — ':''}${x.text}`,toolId:x.toolId||'',tab:x.tab||'basic',id:'manual:'+x.id,source:'manual'}));
+  (state.workspaceTasks||[]).filter(x=>x.status!=='Completed').forEach(x=>out.push({severity:x.status==='In Progress'?'orange':'yellow',priority:x.status==='In Progress'?7:5,text:`LEAD WORKSPACE · ${x.toolId?'TOOL '+x.toolId+' — ':'GENERAL — '}${x.title} · ${x.status}`,view:'workspace',id:'workspace:'+x.id,source:'workspace'}));
+  tools.filter(t=>t.quarterStatus==='In FI'||t.quarterStatus==='Waiting for FI').forEach(t=>{
+    (t.ncs||[]).filter(n=>!['closed','waived'].includes(String(n.state).toLowerCase())).forEach(n=>{if(n.blocking)out.push({severity:'red',priority:12,text:`TOOL ${t.id} — BLOCKING NC ${n.id||''}: ${n.desc||n.state}`,toolId:t.id,tab:'issues',source:'nc'});else if(isEscalatedNc(n))out.push({severity:'red',priority:11,text:`TOOL ${t.id} — Escalated ${n.id||'NC'}${n.days?` · Day ${n.days}`:''}`,toolId:t.id,tab:'issues',source:'nc'})});
+    activeSupplementals(t).forEach(s=>out.push({severity:'orange',priority:8,text:`TOOL ${t.id} — ${s.label.toUpperCase()} ${s.status||'IN PROGRESS'}${s.totalSteps?` · ${s.completedSteps||0}/${s.totalSteps}`:''}`,toolId:t.id,tab:'fi',source:'supplemental'}));
+    let mi=microScheduleInfo(t);if(mi.set&&mi.delta>0)out.push({severity:mi.delta>=2?'orange':'yellow',priority:mi.delta>=2?9:6,text:`TOOL ${t.id} — BEHIND MICRO SCHEDULE · Actual ${t.checklist||'—'} / Planned ${mi.target} · ${mi.delta} checklist${mi.delta===1?'':'s'} behind`,toolId:t.id,tab:'fi',source:'schedule'});
+    if(t.quarterStatus==='In FI'&&(!t.driver||t.driver==='Unassigned'))out.push({severity:'yellow',priority:5,text:`TOOL ${t.id} — Driver / assignment is unassigned`,toolId:t.id,tab:'basic',source:'tool'});
+    if(t.quarterStatus==='In FI'&&t.ship){let d=new Date(t.ship+'T00:00:00'),days=Math.round((d-today)/86400000);if(days>=0&&days<=7&&(!t.schedule||t.schedule.publish==='N/A'))out.push({severity:days<=2?'orange':'yellow',priority:days<=2?8:6,text:`TOOL ${t.id} — Ships ${days===0?'TODAY':days===1?'TOMORROW':`in ${days} days`} · Shipping schedule not created`,toolId:t.id,tab:'shipping',source:'shipping'})}
+    let first=t.quarterStatus==='In FI'?(activeLeadTasks()||[]).find(task=>!['Complete','N/A'].includes(t.leadAdmin?.[task.id]||'Not Started')):null;if(first)out.push({severity:'yellow',priority:3,text:`TOOL ${t.id} — Lead/Admin next: ${first.label}`,toolId:t.id,tab:'lead',source:'lead'});
+  });
+  return out.sort((a,b)=>b.priority-a.priority);
+};
+
+/* Bottom bar = fleet health, not a duplicate Action Center ticker. */
+function fleetStatusEntries(){
+  return current().filter(t=>t.quarterStatus!=='Shipped').map(t=>{let m=microScheduleInfo(t),supp=activeSupplementals(t),suppText=supp.length?` · ${supp.map(s=>`${s.label.toUpperCase()} ${s.completedSteps||0}/${s.totalSteps||1}`).join(' + ')}`:'';return {toolId:t.id,className:m.className,text:`TOOL ${t.id} · ${t.checklist||'NO CHECKLIST'} · ${m.label}${suppText}`}});
+}
+updateOperationsBar=function(){
+  let bar=document.getElementById('operationsBar');if(!bar)return;
+  let fleet=fleetStatusEntries(),alerts=v3Alerts();
+  let sync=document.getElementById('opsSync');if(sync)sync.textContent=(state.shared?.mode==='sharepoint-direct-test'?'SharePoint reachable':'Local Production Mode · SharePoint live sync pending');
+  let tx=document.getElementById('opsTickerText'),ticker=document.querySelector('.ops-ticker');
+  if(tx){if(!fleet.length){tx.textContent='No active FI tools';if(ticker)ticker.className='ops-ticker fleet-on'}else{opsTickerIndex%=fleet.length;let x=fleet[opsTickerIndex];tx.textContent=x.text;if(ticker){ticker.className=`ops-ticker fleet-${x.className}`;ticker.onclick=()=>toolStatus(x.toolId);ticker.title=`Open Tool ${x.toolId}`}}}
+  let counts={ahead:0,on:0,behind:0,unset:0};fleet.forEach(x=>{if(x.className==='ahead')counts.ahead++;else if(x.className==='behind')counts.behind++;else if(x.className==='on')counts.on++;else counts.unset++});
+  let tc=document.getElementById('opsTaskCount');if(tc)tc.textContent=`${fleet.length} active tool${fleet.length===1?'':'s'} · ${counts.behind} behind · ${counts.on} on schedule · ${counts.ahead} ahead`;
+  let pr=document.getElementById('opsPresence');if(pr)pr.textContent=`${counts.unset} Micro Schedule target${counts.unset===1?'':'s'} not set`;
+  renderTopActionBar();
+};
+
+/* Three permanent card bars: Actual, Micro Schedule, Lead/Admin. Supplemental is conditional. */
+function systemsV5(){
+  setHeaderContext('TOOLS','Actual vs Micro Schedule vs Lead/Admin');let list=pageTools('systems'),groups={};list.forEach(t=>(groups[t.codename]??=[]).push(t));
+  app.innerHTML=`<div class="tools-filter-bar"><input id="toolSearch" placeholder="Search UTID, model, customer, assignment…"><select id="toolStatusFilter"><option value="">All Statuses</option><option>Waiting for FI</option><option>In FI</option><option>Shipped</option></select></div><div id="toolsGroups">${Object.entries(groups).sort((a,b)=>a[0].localeCompare(b[0])).map(([name,arr])=>`<section class="tool-section v3-tool-section"><div class="tool-section-head"><h2 class="tool-section-title">${esc(name)}</h2><span class="tool-section-count">${arr.length} tool${arr.length===1?'':'s'}</span></div><div class="system-grid v3-system-grid">${arr.map(t=>{let rc=routeCounts(t),lc=leadCounts(t),mi=microScheduleInfo(t);return `<div class="system-card v3-system-card ${t.quarterStatus==='Shipped'?'shipped-card':t.quarterStatus==='Waiting for FI'?'waiting-card':'infi-card'}" data-tool="${esc(t.id)}" data-search="${esc([t.id,t.model,t.customer,t.driver,t.codename,t.quarterStatus].join(' ').toLowerCase())}" data-status="${esc(t.quarterStatus)}"><div class="system-head"><div><div class="system-id v3-system-id">${esc(t.id)}</div><div><span class="model-badge">${esc(t.model)}</span> <span class="gray">${esc(t.customer)}</span></div></div>${t.quarterStatus==='Shipped'?'<span class="complete-mark"><span class="check">✓</span> SHIPPED</span>':`<span class="state-chip ${qState(t)}">${t.quarterStatus==='Waiting for FI'?'WAITING FI':'IN FI'}</span>`}</div><div class="progress-row"><div class="progress-label"><span>ACTUAL TOOL PROGRESS</span><b>${routeProgress(t)}%</b></div><div class="track"><div class="fill" style="width:${routeProgress(t)}%"></div></div><div class="card-progress-meta"><span>${rc.done} complete</span><span>${esc(t.checklist||'—')}</span></div></div><div class="progress-row micro-progress ${mi.className}"><div class="progress-label"><span>MICRO SCHEDULE / PLANNED</span><b>${mi.set?mi.plannedPct+'%':'—'}</b></div><div class="track"><div class="fill micro" style="width:${mi.plannedPct}%"></div></div><div class="card-progress-meta"><span>${mi.set?esc(mi.target):'Set target on Tool page'}</span>${scheduleStatusBadge(t)}</div></div><div class="progress-row"><div class="progress-label"><span>LEAD / ADMIN</span><b>${adminProgress(t)}%</b></div><div class="track"><div class="fill admin" style="width:${adminProgress(t)}%"></div></div><div class="card-progress-meta"><span>${lc.done} complete</span><span>${lc.total} applicable</span></div></div>${supplementalCardBlock(t)}<div class="card-meta"><div><span>Assignment</span><strong>${esc(t.driver)}</strong></div><div><span>Location</span><strong>${esc(t.room)}${t.bay?' / '+esc(t.bay):''}</strong></div><div><span>Primary Checklist</span><strong>${activeChecklists(t).map(x=>x[0]).join(', ')||t.checklist||'—'}</strong></div><div><span>MFG Ship</span><strong>${fmt(t.ship)}</strong></div></div></div>`}).join('')}</div></section>`).join('')}</div>`;
+  function filter(){let q=$('#toolSearch').value.toLowerCase(),s=$('#toolStatusFilter').value;document.querySelectorAll('.v3-system-card').forEach(c=>c.style.display=(!q||c.dataset.search.includes(q))&&(!s||c.dataset.status===s)?'':'none')};$('#toolSearch').oninput=filter;$('#toolStatusFilter').onchange=filter;document.querySelectorAll('[data-tool]').forEach(x=>x.onclick=()=>toolStatus(x.dataset.tool));actions([{label:'Add Tool',primary:true,fn:()=>toolAdmin()},{label:'Administration',fn:()=>setView('admin')}],false);
+}
+systems=systemsV5;
+
+function microSchedulePanel(t){let mi=microScheduleInfo(t);return `<section class="micro-schedule-panel"><div><h3>Micro Schedule Target</h3><p>Set where this tool should be on the FI route according to the current Micro Schedule. This does not change Actual Tool Progress.</p></div><div class="micro-schedule-controls"><select id="microTargetChecklist">${microTargetOptions(t)}</select><button id="microTargetSave" class="btn primary">Save Micro Schedule Target</button></div><div class="micro-schedule-readout"><div><span>Actual</span><b>${esc(t.checklist||'—')}</b></div><div><span>Planned</span><b>${esc(mi.target)}</b></div><div>${scheduleStatusBadge(t)}</div></div></section>`}
+function toolStatusV5(id){
+  let t=tools.find(x=>x.id===id);if(!t)return;ensureV0305ToolState();selectedId=id;document.body.dataset.theme='systems';setHeaderContext(`TOOL ${t.id}`,`${t.codename} · ${t.model} · ${t.customer}`);let rc=routeCounts(t),lc=leadCounts(t),mi=microScheduleInfo(t),activeSupp=activeSupplementals(t);
+  app.innerHTML=`<div class="report-screen">${reportHeader(`${t.id} TOOL STATUS`,`${t.model} · ${t.codename} · ${t.customer}`)}<div class="metric-grid"><div class="metric"><span>MFG Ship Date</span><strong style="font-size:20px">${fmt(t.ship)}</strong></div><div class="metric"><span>Primary Checklist</span><strong style="font-size:18px">${esc(t.checklist)}</strong><small>${esc(checkName(t))}</small></div><div class="metric"><span>Actual Tool Progress</span><strong>${routeProgress(t)}%</strong><small>${rc.done}/${rc.total} completed</small></div><div class="metric"><span>Micro Schedule</span><strong>${mi.set?mi.plannedPct+'%':'—'}</strong><small>${esc(mi.label)}</small></div><div class="metric"><span>Lead / Admin</span><strong>${adminProgress(t)}%</strong><small>${lc.done}/${lc.total} applicable</small></div>${activeSupp.length?`<div class="metric"><span>Supplemental</span><strong>${supplementalPct(t)}%</strong><small>${esc(supplementalSummary(t))}</small></div>`:''}<div class="metric"><span>Tool Status</span><strong style="font-size:18px" class="${qState(t)==='shipped'?'green-text':qState(t)==='waiting'?'red-text':'yellow-text'}">${esc(t.quarterStatus)}</strong></div></div>${microSchedulePanel(t)}<div class="tool-status-grid v3-tool-status-grid"><div class="tool-status-block"><h3>Tool Information</h3>${kv('Product Family',t.family)}${kv('Code Name',t.codename)}${kv('Model',t.model)}${kv('UTID',t.id)}${kv('Sales Order',t.so)}${kv('Customer',t.customer)}${kv('Cleanroom',t.room)}${kv('Bay',t.bay)}${kv('Tool Assignment',t.driver)}${kv('SW Version',t.sw)}${kv('FI Process',t.process)}${kv('Lamp Hours',displayLamp(t))}</div><div class="tool-status-block fi-status-large"><h3>FI Status / Issues</h3>${kv('Current Checklist',`${t.checklist} — ${checkName(t)}`)}${kv('Latest Status',t.activity)}${kv('Micro Schedule Target',mi.target)}${kv('Schedule Position',mi.label)}${kv('Active Supplemental',supplementalSummary(t))}${kv('POA',t.poa)}${kv('Escalation Meeting',t.escalationMeeting)}${kv('Waivers',t.waivers)}${kv('Open NCs',t.ncs.map(n=>n.id+' '+n.state).join(', ')||'None')}<div class="tool-notes-block"><span>Notes</span><p>${esc(t.notes||'No notes entered.')}</p></div></div></div>${shippingPlanBlock(t)}${supplementalPanel(t)}<div class="progress-board"><div class="progress-panel"><h3>FI Checklist Route · ${rc.done}/${rc.total} Complete</h3>${routeWorkflow(t)}</div><div class="progress-panel"><h3>Lead / Admin Workflow · ${lc.done}/${lc.total} Complete</h3>${leadWorkflow(t,false)}</div></div></div>`;
+  $('#microTargetSave').onclick=()=>{t.microTargetChecklist=$('#microTargetChecklist').value;t.microTargetUpdatedAt=new Date().toISOString();save();toolStatusV5(t.id)};
+  if($('#suppStart'))$('#suppStart').onclick=()=>{let cfg=state.supplementalConfig.find(x=>x.id===$('#suppType').value);if(!cfg)return;t.supplementals.push({id:'si'+Date.now(),typeId:cfg.id,label:cfg.label,status:'In Progress',completedSteps:0,totalSteps:cfg.defaultSteps||1,returnChecklist:t.checklist,startedAt:new Date().toISOString()});if(cfg.label==='Lamp Swap')t.lampState='OFF';save();toolStatusV5(t.id)};
+  document.querySelectorAll('[data-supp]').forEach(row=>{row.querySelector('.supp-save').onclick=()=>{let i=Number(row.dataset.supp),s=t.supplementals[i];s.status=row.querySelector('.supp-state').value;s.completedSteps=Math.max(0,Number(row.querySelector('.supp-done').value)||0);if(s.status==='Complete'){s.completedSteps=s.totalSteps||1;s.completedAt=new Date().toISOString();t.supplementalHistory.push(clone(s));t.supplementals.splice(i,1)}save();toolStatusV5(t.id)}});
+  actions([{label:'Edit This Tool',primary:true,fn:()=>toolAdmin(t.id)},{label:'Back to Tools',fn:()=>setView('systems')}]);
+  updateOperationsBar();
+}
+toolStatus=toolStatusV5;
+
+/* v0.30.5 metadata */
+exportFullBackup=function(){state.tools=tools;state.config=normalizeConfig(state.config);ensureV0300State();ensureV0305ToolState();const payload={schema:'B7-FI-COMMAND-CENTER-BACKUP',schemaVersion:3,appVersion:'0.30.5',exportedAt:new Date().toISOString(),state};downloadBlob(`B7-FI-Command-Center-Full-Backup-${safeFileStamp()}.json`,JSON.stringify(payload,null,2),'application/json')}
+
 // Ensure page label and bars are initialized before first v0.30 render.
 setThemeFor(view);
 
