@@ -1,33 +1,38 @@
-# Building 7 - Final Integration - Operations v0.21.0
+# Building 7 - Final Integration - Operations v0.20.1
 
-## Local Production + SharePoint / Entra Migration Test Build
+## Microsoft Lists Test Build
 
-This build is based directly on the user's working v0.20.1 repository. It preserves all existing pages and local workflows, while adding a safer migration/testing layer for the approved KLA Entra / SharePoint integration work.
+This build preserves the v0.18 Command Center UI and adds a Shared Data page for the first Microsoft Lists integration tests.
 
-### New in v0.21.0
-- Full Command Center JSON backup export.
-- Full backup restore with an automatic safety export before replacement.
-- Microsoft Lists migration CSV export from current local tools.
-- Existing Microsoft Lists CSV import remains available.
-- SharePoint/Entra integration configuration fields for Site URL, List Name, Tenant ID and Client/Application ID.
-- No client secret is stored or requested by the browser app.
-- Direct SharePoint REST diagnostic test using the current browser session.
-- Open Microsoft List shortcut.
-- Copy/downloadable diagnostic report with browser protocol, counts, site/list configuration and connection-test result.
-- Operations status bar now clearly identifies Local Production Mode versus a successful SharePoint REST diagnostic.
-- Local storage key upgraded to b7fi-v0210-state and automatically migrates v0.20.1 / v0.19 data.
+### Ready now
+- Import a CSV exported from the B7 FI Command Center Microsoft List.
+- Map core List columns into the existing universal tool records.
+- Verify imported tools automatically appear on Tool Countdown, Tools, Morning Status, priorities, and other pages according to FI Status.
+- Download a column-header template matching the List structure being built.
+- Keep local browser data as a fallback while Microsoft 365 authorization is investigated.
 
-### Tomorrow's one-shot test order
-1. Copy the entire extracted v0.21.0 folder into the dedicated OneDrive - KLA Corporation / B7 FI Command Center folder.
-2. Open index.html.
-3. Verify Tool Countdown and Administration still show the expected local data.
-4. Open Shared Data and immediately Export Full Backup JSON.
-5. Confirm the prefilled SharePoint Site URL and Microsoft List name.
-6. If IT has supplied Tenant ID / Client ID, enter them and Save Integration Configuration. Do NOT enter a secret.
-7. Click Test Direct SharePoint REST.
-8. Copy Diagnostic Report and save/screenshot the exact result.
-9. If the direct test fails, use Open Microsoft List to confirm the list itself opens in the same browser session.
-10. Optional fallback: Export the List to CSV and Import Microsoft List CSV to confirm mapping.
+### Not yet live
+Direct automatic Microsoft Lists synchronization and active-user presence require an authenticated Microsoft Graph connection. A JavaScript web app must be registered/authorized in the organization's Microsoft identity environment before it can securely read/write SharePoint/Microsoft Lists through Graph. v0.20 deliberately does not embed credentials or pretend this authorization exists.
 
-### Important
-A successful direct REST diagnostic does not yet enable full live write synchronization. Authenticated production synchronization will be implemented only after the exact IT-provided Entra configuration is known. A failed direct REST test is also useful because it identifies browser/authentication/CORS limitations without risking production local data.
+### Tomorrow's test
+1. Add a test tool to Microsoft Lists.
+2. Export the List to CSV.
+3. Open Shared Data in the Command Center.
+4. Import the CSV.
+5. Verify the tool appears in the correct Command Center pages.
+
+
+## v0.20 Operations Framework
+- Restored persistent sticky title/header and main navigation on all pages.
+- Moved contextual page actions from the lower-right floating panel to a toolbar directly below the main navigation.
+- Added a persistent bottom Operations Status Bar.
+- Added rotating Lead/Admin pending-work ticker generated from Workspace tasks, per-tool Lead/Admin workflow items, blocking NCs, and escalated NCs.
+- Added honest shared-data/sync status placeholders for the Microsoft Lists test layer; live user presence remains pending the authenticated live Lists connection.
+- Preserved the existing page designs and Microsoft Lists CSV test bridge.
+
+
+## v0.20.1 Navigation Polish
+- Main navigation active state now uses a solid page-accent fill.
+- Main navigation has stronger visual priority over Page Actions.
+- Page Actions buttons are smaller and the toolbar is slightly more compact.
+- Sticky header, Operations Status Bar, ticker, and v0.20 framework are preserved.
