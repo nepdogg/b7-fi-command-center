@@ -2264,3 +2264,246 @@ body:not(.wallboard-mode) .header-status-stack::after{display:none!important}
   .micro-schedule-controls{grid-template-columns:1fr!important}
   #microTargetSave{width:100%!important}
 }
+
+
+/* =========================================================
+   v0.46.0 FRAMEWORK + WEEKEND OPERATIONS POLISH
+   ========================================================= */
+
+/* Tool Detail hierarchy: 31/69 on both operational rows. */
+.tool-primary-grid,
+.tool-secondary-grid{
+  grid-template-columns:minmax(250px,31%) minmax(0,69%)!important;
+  gap:14px!important;
+  align-items:stretch!important;
+}
+.tool-primary-grid > .tool-status-block:first-child,
+.tool-secondary-grid > .micro-schedule-panel{min-width:0!important}
+.fi-status-expanded{min-width:0!important}
+
+/* Text-heavy FI Status areas: room for real production notes. */
+.fi-status-expanded .status-large-block,
+.fi-status-expanded .notes-large-block,
+.fi-status-expanded .fi-nc-section{
+  min-height:112px!important;
+  max-height:155px!important;
+  overflow:auto!important;
+  padding:10px 0!important;
+  box-sizing:border-box!important;
+}
+.fi-status-expanded .status-large-block > div,
+.fi-status-expanded .status-large-block ul,
+.fi-status-expanded .fi-nc-section{
+  line-height:1.45!important;
+}
+.fi-status-expanded .status-large-block span,
+.fi-status-expanded .fi-nc-section > span{
+  display:block!important;
+  margin-bottom:6px!important;
+  font-size:10px!important;
+  font-weight:900!important;
+  text-transform:uppercase!important;
+  letter-spacing:.045em!important;
+  color:var(--muted)!important;
+}
+
+/* Smaller, denser status metrics while retaining visual progress bars. */
+.report-screen .metric-grid{
+  grid-template-columns:repeat(auto-fit,minmax(145px,1fr))!important;
+  gap:9px!important;
+}
+.report-screen .metric{
+  min-height:112px!important;
+  padding:12px!important;
+}
+.report-screen .metric > strong{font-size:20px!important;line-height:1.05!important}
+.report-screen .metric > small{font-size:10px!important;line-height:1.25!important}
+.metric-mini-track{margin-top:auto!important}
+
+/* Waiting-for-FI diamond: only the two-layer shape, no legacy chip frame. */
+.lifecycle-shape.life-waiting{
+  border:0!important;
+  outline:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  padding:12px 16px!important;
+}
+.lifecycle-shape.life-waiting::before,
+.lifecycle-shape.life-waiting::after{box-sizing:border-box!important}
+.lifecycle-shape.life-waiting::before{
+  width:54px!important;height:54px!important;left:19px!important;top:7px!important;
+  background:#ef6666!important;transform:rotate(45deg)!important;border-radius:3px!important;
+}
+.lifecycle-shape.life-waiting::after{
+  width:50px!important;height:50px!important;left:21px!important;top:9px!important;
+  background:#321d29!important;transform:rotate(45deg)!important;border-radius:2px!important;
+}
+
+/* Navigation artifact cleanup:
+   normal mouse state has no browser-blue focus outline.
+   keyboard focus keeps a page-color accessible ring. */
+.nav-btn,
+.admin-nav,
+.shared-nav{
+  outline:none!important;
+}
+.nav-btn:focus:not(:focus-visible),
+.admin-nav:focus:not(:focus-visible),
+.shared-nav:focus:not(:focus-visible){
+  outline:none!important;
+  box-shadow:none!important;
+}
+.nav-btn:focus-visible,
+.admin-nav:focus-visible,
+.shared-nav:focus-visible{
+  outline:2px solid var(--accent)!important;
+  outline-offset:2px!important;
+  box-shadow:0 0 10px rgba(var(--accent-rgb),.35)!important;
+}
+
+/* Repair top action ticker layout. It always owns a visible 68px row.
+   The lower sweep sits INSIDE the row above its lower border. */
+body:not(.wallboard-mode) .header-status-stack{
+  grid-template-rows:68px 8px 44px!important;
+  overflow:visible!important;
+}
+body:not(.wallboard-mode) .header-status-stack .top-action-bar{
+  display:flex!important;
+  grid-row:1!important;
+  visibility:visible!important;
+  opacity:1!important;
+  height:68px!important;
+  min-height:68px!important;
+  overflow:hidden!important;
+  position:relative!important;
+  background:#071522!important;
+  border-top:1px solid rgba(255,255,255,.26)!important;
+  border-bottom:2px solid var(--accent)!important;
+  box-shadow:none!important;
+}
+body:not(.wallboard-mode) .header-status-stack .top-action-current{
+  display:grid!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+body:not(.wallboard-mode) .header-status-stack .top-action-bar::before,
+body:not(.wallboard-mode) .header-status-stack .top-action-bar::after{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  width:100%!important;
+  height:4px!important;
+  opacity:1!important;
+  pointer-events:none!important;
+  background-image:linear-gradient(90deg,transparent 0,rgba(255,255,255,.10) 22%,#fff 46%,var(--accent) 54%,rgba(255,255,255,.10) 78%,transparent 100%)!important;
+  background-repeat:no-repeat!important;
+  background-size:260px 100%!important;
+  filter:drop-shadow(0 0 7px rgba(var(--accent-rgb),.95))!important;
+  z-index:20!important;
+}
+body:not(.wallboard-mode) .header-status-stack .top-action-bar::before{
+  top:1px!important;
+  animation:b7SweepLTR 5.5s linear infinite!important;
+}
+body:not(.wallboard-mode) .header-status-stack .top-action-bar::after{
+  top:auto!important;
+  bottom:3px!important;
+  animation:b7SweepRTL 5.5s linear infinite!important;
+}
+body:not(.wallboard-mode) .header-status-stack::before,
+body:not(.wallboard-mode) .header-status-stack::after{display:none!important}
+
+/* Page Actions is a separate row after an 8px protected spacer. */
+body:not(.wallboard-mode) .header-status-stack .page-toolbar,
+body:not(.wallboard-mode) .header-status-stack .page-toolbar.v041-page-toolbar{
+  grid-row:3!important;
+  height:44px!important;
+  min-height:44px!important;
+  margin:0!important;
+  padding:7px max(18px,calc((100% - 1500px)/2))!important;
+  box-sizing:border-box!important;
+  align-items:center!important;
+}
+
+/* Bottom Fleet Status follows current page theme instead of hard-coded orange. */
+.operations-bar{
+  border-top-color:var(--accent)!important;
+  border-bottom-color:var(--accent)!important;
+  box-shadow:0 -1px 0 rgba(var(--accent-rgb),.22),0 0 14px rgba(var(--accent-rgb),.08)!important;
+}
+.operations-bar::before,
+.operations-bar::after{
+  background-image:linear-gradient(90deg,transparent,rgba(255,255,255,.9),var(--accent),transparent)!important;
+  filter:drop-shadow(0 0 6px rgba(var(--accent-rgb),.8))!important;
+}
+.ops-ticker-label{color:var(--accent)!important}
+.ops-ticker{border-left-color:var(--accent)!important}
+
+/* Weekend date + two-day volunteer layout. */
+.weekend-date-banner{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:12px!important;
+  margin:0 0 14px!important;
+  padding:12px 14px!important;
+  border:1px solid var(--line)!important;
+  border-left:4px solid var(--accent)!important;
+  border-radius:10px!important;
+  background:rgba(var(--accent-rgb),.055)!important;
+}
+.weekend-date-banner span,
+.weekend-derived span{
+  display:block!important;font-size:9px!important;text-transform:uppercase!important;
+  color:var(--muted)!important;letter-spacing:.055em!important;margin-bottom:4px!important
+}
+.weekend-date-banner b{font-size:14px!important}
+.weekend-volunteer-grid,
+.weekend-admin-day-grid{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:14px!important;
+  margin-bottom:14px!important;
+}
+.weekend-day-panel{margin:0!important}
+.weekend-day-panel.saturday{border-top:3px solid #7cbcff!important}
+.weekend-day-panel.sunday{border-top:3px solid #b98cff!important}
+.weekend-day-date{font-size:11px;color:var(--muted);margin:-3px 0 10px}
+.weekend-priority-section{margin-top:14px!important}
+.weekend-admin-top{
+  display:grid!important;
+  grid-template-columns:minmax(220px,1fr) 1fr 1fr 1.5fr!important;
+  gap:12px!important;
+  align-items:end!important;
+}
+.weekend-derived{
+  min-height:62px!important;padding:10px 12px!important;border:1px solid var(--line)!important;
+  border-radius:8px!important;background:#091727!important
+}
+.weekend-derived.email{border-color:rgba(var(--accent-rgb),.52)!important}
+.weekend-admin-v46 small{display:block;margin-top:5px;color:var(--muted);font-size:10px}
+.v46-hide-report-title{display:none!important}
+.v46-weekend-priority-wrap > .panel{margin-top:0!important}
+
+/* Customer requirements / secondary row fills the 69% side cleanly. */
+.tool-secondary-grid .customer-requirements-block{width:100%!important}
+.tool-secondary-grid .requirement-form{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+
+/* Keep Micro Schedule compact on the 31% side. */
+.tool-secondary-grid .micro-schedule-panel{
+  grid-template-columns:1fr!important;
+  padding:16px!important;
+  align-content:start!important;
+}
+.tool-secondary-grid .micro-schedule-controls{
+  grid-template-columns:1fr!important;
+}
+.tool-secondary-grid #microTargetSave{width:100%!important;min-width:0!important}
+.tool-secondary-grid .micro-schedule-readout{margin-top:12px!important}
+
+@media(max-width:1050px){
+  .tool-primary-grid,.tool-secondary-grid,.weekend-volunteer-grid,.weekend-admin-day-grid{grid-template-columns:1fr!important}
+  .weekend-admin-top{grid-template-columns:1fr 1fr!important}
+}
