@@ -2549,3 +2549,192 @@ body[data-theme="countdown"] .report-title h2{font-size:28px!important;letter-sp
 @media(max-width:1250px){.final-countdown-grid,.v3-system-grid,.system-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
 @media(max-width:950px){.final-countdown-grid,.v3-system-grid,.system-grid,.meeting-note-grid,.weekend-volunteer-grid,.weekend-admin-day-grid{grid-template-columns:1fr!important}.final-countdown-grid .lifecycle-card,.v3-system-card,.system-card{min-height:0!important;height:auto!important}}
 @media(prefers-reduced-motion:reduce){body:not(.wallboard-mode) .header-status-stack .top-action-bar::before,body:not(.wallboard-mode) .header-status-stack .top-action-bar::after,.operations-bar::before,.operations-bar::after{animation:none!important}}
+
+
+/* =========================================================
+   v0.48.0 NAVIGATION + STATUSBAR QA
+   ========================================================= */
+
+body[data-theme="knowledge"]{
+  --accent:#55c7ad;
+  --accent-rgb:85,199,173;
+}
+
+/* Main navigation remains one row on desktop. */
+.main-nav{
+  flex-wrap:nowrap!important;
+  gap:2px!important;
+  overflow-x:auto!important;
+  scrollbar-width:thin;
+  justify-content:center!important;
+  padding-left:10px!important;
+  padding-right:10px!important;
+}
+.main-nav .nav-btn{
+  flex:0 0 auto!important;
+  white-space:nowrap!important;
+  padding:8px 9px!important;
+  font-size:12px!important;
+}
+@media(max-width:1450px){
+  .main-nav{justify-content:flex-start!important}
+  .main-nav .nav-btn{padding:8px 8px!important;font-size:11px!important}
+}
+
+/* Top B7 FI Actions — independent final geometry. */
+body:not(.wallboard-mode) .header-status-stack{
+  display:grid!important;
+  grid-template-rows:68px 8px 44px!important;
+  overflow:visible!important;
+}
+body:not(.wallboard-mode) .header-status-stack .top-action-bar{
+  grid-row:1!important;
+  display:flex!important;
+  position:relative!important;
+  height:68px!important;
+  min-height:68px!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+  visibility:visible!important;
+  opacity:1!important;
+  background:#071522!important;
+  border-top:2px solid rgba(255,255,255,.54)!important;
+  border-bottom:2px solid var(--accent)!important;
+  box-shadow:none!important;
+  isolation:isolate!important;
+}
+body:not(.wallboard-mode) .header-status-stack .top-action-current,
+body:not(.wallboard-mode) .header-status-stack .top-action-all,
+body:not(.wallboard-mode) .header-status-stack .top-action-clear{
+  visibility:visible!important;
+  opacity:1!important;
+  position:relative!important;
+  z-index:8!important;
+}
+
+/* Matched top/bottom sweeps; lower sweep sits above lower border. */
+body:not(.wallboard-mode) .header-status-stack .top-action-bar::before,
+body:not(.wallboard-mode) .header-status-stack .top-action-bar::after{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  width:280px!important;
+  height:5px!important;
+  left:0!important;
+  right:auto!important;
+  opacity:1!important;
+  pointer-events:none!important;
+  z-index:20!important;
+  background:linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,.12) 14%,
+    rgba(255,255,255,.98) 45%,
+    var(--accent) 56%,
+    rgba(255,255,255,.18) 78%,
+    transparent 100%
+  )!important;
+  background-size:280px 100%!important;
+  filter:drop-shadow(0 0 7px rgba(var(--accent-rgb),.98))!important;
+}
+body:not(.wallboard-mode) .header-status-stack .top-action-bar::before{
+  top:2px!important;
+  bottom:auto!important;
+  animation:b7v48LTR 5.6s linear infinite!important;
+}
+body:not(.wallboard-mode) .header-status-stack .top-action-bar::after{
+  top:auto!important;
+  bottom:6px!important;
+  animation:b7v48RTL 5.6s linear infinite!important;
+}
+@keyframes b7v48LTR{
+  from{transform:translateX(-300px)}
+  to{transform:translateX(calc(100vw + 300px))}
+}
+@keyframes b7v48RTL{
+  from{transform:translateX(calc(100vw + 300px))}
+  to{transform:translateX(-300px)}
+}
+
+body:not(.wallboard-mode) .header-status-stack .page-toolbar,
+body:not(.wallboard-mode) .header-status-stack .page-toolbar.v041-page-toolbar{
+  grid-row:3!important;
+  height:44px!important;
+  min-height:44px!important;
+  margin:0!important;
+  padding-top:7px!important;
+  padding-bottom:7px!important;
+  box-sizing:border-box!important;
+  align-items:center!important;
+}
+
+/* This project intentionally keeps the two decorative ticker sweeps active. */
+@media(prefers-reduced-motion:reduce){
+  body:not(.wallboard-mode) .header-status-stack .top-action-bar::before{
+    animation:b7v48LTR 5.6s linear infinite!important;
+  }
+  body:not(.wallboard-mode) .header-status-stack .top-action-bar::after{
+    animation:b7v48RTL 5.6s linear infinite!important;
+  }
+}
+
+/* Bottom Fleet Status page-color map. */
+body[data-theme="countdown"]{--fleet-accent:#e4b84d;--fleet-rgb:228,184,77}
+body[data-theme="shipping"]{--fleet-accent:#49cbd3;--fleet-rgb:73,203,211}
+body[data-theme="customer"]{--fleet-accent:#55a4f6;--fleet-rgb:85,164,246}
+body[data-theme="daily"]{--fleet-accent:#46c77b;--fleet-rgb:70,199,123}
+body[data-theme="meeting"]{--fleet-accent:#ef9a4a;--fleet-rgb:239,154,74}
+body[data-theme="leads"]{--fleet-accent:#bb78ef;--fleet-rgb:187,120,239}
+body[data-theme="weekend"]{--fleet-accent:#a77ae8;--fleet-rgb:167,122,232}
+body[data-theme="workspace"]{--fleet-accent:#7b8cff;--fleet-rgb:123,140,255}
+body[data-theme="knowledge"]{--fleet-accent:#55c7ad;--fleet-rgb:85,199,173}
+body[data-theme="systems"]{--fleet-accent:#6e9fbd;--fleet-rgb:110,159,189}
+body[data-theme="actions"]{--fleet-accent:#ff7a59;--fleet-rgb:255,122,89}
+body[data-theme="references"]{--fleet-accent:#2ec9b7;--fleet-rgb:46,201,183}
+body[data-theme="archive"]{--fleet-accent:#8b96a5;--fleet-rgb:139,150,165}
+body[data-theme="shared"]{--fleet-accent:#4b8dff;--fleet-rgb:75,141,255}
+body[data-theme="admin"]{--fleet-accent:#b8c1cc;--fleet-rgb:184,193,204}
+
+.operations-bar{
+  border-top:2px solid var(--fleet-accent,var(--accent))!important;
+  border-bottom:2px solid var(--fleet-accent,var(--accent))!important;
+  box-shadow:0 -1px 0 rgba(var(--fleet-rgb,var(--accent-rgb)),.25),
+             0 0 14px rgba(var(--fleet-rgb,var(--accent-rgb)),.10)!important;
+}
+.operations-bar::before,
+.operations-bar::after{
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,.94),
+    var(--fleet-accent,var(--accent)),
+    transparent
+  )!important;
+  filter:drop-shadow(0 0 7px rgba(var(--fleet-rgb,var(--accent-rgb)),.90))!important;
+}
+.ops-ticker-label{color:var(--fleet-accent,var(--accent))!important}
+.ops-ticker{border-left-color:var(--fleet-accent,var(--accent))!important}
+
+/* Weekend title already shows the date range, so remove duplicate summary band. */
+.weekend-date-banner{display:none!important}
+.weekend-volunteer-grid{
+  width:100%!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  gap:14px!important;
+  box-sizing:border-box!important;
+}
+.weekend-volunteer-grid>*{
+  min-width:0!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
+}
+
+/* Knowledge Base page styling. */
+body[data-theme="knowledge"] .workspace-reference-grid .reference-card{
+  border-left:3px solid var(--accent)!important;
+}
+body[data-theme="knowledge"] #app>.panel>h3{
+  font-size:24px!important;
+  letter-spacing:.02em!important;
+}
