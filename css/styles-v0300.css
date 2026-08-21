@@ -1606,3 +1606,127 @@ body:not(.wallboard-mode) .header-status-stack .page-toolbar .btn{position:stati
 body:not(.wallboard-mode) .header-status-stack .page-toolbar>div:last-child{width:auto!important;flex:0 0 auto!important;margin:0!important;display:flex!important;align-items:center!important;gap:8px!important}
 
 @media(max-width:1000px){.tool-primary-grid,.tool-secondary-grid{grid-template-columns:1fr}.shipping-milestone-grid{grid-template-columns:repeat(2,1fr)}.countdown-family-head{align-items:start;flex-direction:column}.family-counts{width:100%}}
+
+
+/* =========================================================
+   v0.42.0 COUNTDOWN CARD + FRAMEWORK POLISH
+   ========================================================= */
+
+/* Give Page Actions clear breathing room below the Action ticker.
+   Keep compact right-aligned buttons and equal vertical padding. */
+body:not(.wallboard-mode) .page-toolbar{
+  margin-top:7px!important;
+  min-height:44px!important;
+  height:auto!important;
+  padding-top:8px!important;
+  padding-bottom:8px!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  column-gap:8px!important;
+}
+body:not(.wallboard-mode) .page-toolbar::before{
+  margin-right:auto!important;
+  align-self:center!important;
+}
+
+/* Make the top status bar's bottom animation use the same geometry as
+   the top animation, but in the opposite direction, and keep it clear
+   of the Page Actions row. */
+.top-action-bar{
+  overflow:visible!important;
+  padding-bottom:3px!important;
+}
+.top-action-bar::before,
+.top-action-bar::after{
+  height:4px!important;
+  background-size:260px 100%!important;
+  filter:drop-shadow(0 0 6px rgba(var(--accent-rgb),.9))!important;
+}
+.top-action-bar::before{top:0!important;animation:b7SweepLTR 5.5s linear infinite!important}
+.top-action-bar::after{bottom:0!important;animation:b7SweepRTL 5.5s linear infinite!important}
+.header-status-stack{overflow:visible!important}
+
+/* Slightly larger header typography for desktop / wall display. */
+.header-app-name{
+  font-size:clamp(26px,2.6vw,38px)!important;
+  letter-spacing:.07em!important;
+}
+.header-page-title{
+  font-size:clamp(22px,2vw,31px)!important;
+  line-height:1.04!important;
+}
+.header-page-sub{
+  margin-top:5px!important;
+  font-size:13px!important;
+  font-weight:850!important;
+  letter-spacing:.07em!important;
+}
+
+/* Countdown cards: stronger state coding using both border and subtle fill. */
+.countdown-card{
+  position:relative;
+  overflow:hidden;
+  border-width:1px!important;
+  border-left-width:5px!important;
+  transition:transform .16s ease,border-color .16s ease,background .16s ease,box-shadow .16s ease;
+}
+.countdown-card.waiting{
+  border-color:rgba(239,102,102,.48)!important;
+  border-left-color:#ef6666!important;
+  background:linear-gradient(135deg,rgba(239,102,102,.16),rgba(239,102,102,.055) 42%,var(--panel) 82%)!important;
+}
+.countdown-card.infi{
+  border-color:rgba(226,187,75,.55)!important;
+  border-left-color:#e2bb4b!important;
+  background:linear-gradient(135deg,rgba(226,187,75,.15),rgba(226,187,75,.045) 43%,var(--panel) 82%)!important;
+}
+.countdown-card.shipped{
+  border-color:rgba(53,199,122,.56)!important;
+  border-left-color:#35c77a!important;
+  background:linear-gradient(135deg,rgba(53,199,122,.17),rgba(53,199,122,.05) 45%,var(--panel) 83%)!important;
+}
+.countdown-card.packing-tint{
+  border-color:rgba(75,199,218,.62)!important;
+  border-left-color:#4bc7da!important;
+  background:linear-gradient(135deg,rgba(75,199,218,.17),rgba(75,199,218,.055) 45%,var(--panel) 83%)!important;
+}
+.countdown-card.pulled-card{
+  box-shadow:inset 0 0 0 1px rgba(82,217,138,.28),0 0 16px rgba(82,217,138,.08);
+}
+.countdown-card.pushed-card{
+  border-color:rgba(255,101,114,.72)!important;
+  border-left-color:#ff6572!important;
+  background:linear-gradient(135deg,rgba(255,101,114,.18),rgba(255,101,114,.055) 44%,var(--panel) 82%)!important;
+}
+.countdown-card:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(0,0,0,.22)}
+
+.cc-status-stack{display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+.cc-meta-rich{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+.cc-meta-rich b{overflow-wrap:anywhere}
+.cc-progress-row{margin-top:10px;padding-top:9px;border-top:1px solid rgba(255,255,255,.07)}
+.cc-progress-head{display:flex;align-items:center;justify-content:space-between;font-size:10px;text-transform:uppercase;color:var(--muted);letter-spacing:.05em}
+.cc-progress-head b{font-size:12px;color:#fff}
+.cc-progress-track{height:6px;margin-top:5px;border-radius:999px;background:#172a40;overflow:hidden}
+.cc-progress-track i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--page-accent),rgba(255,255,255,.85))}
+.cc-micro{margin-top:6px;font-size:10px;font-weight:900;letter-spacing:.045em}
+.cc-micro.behind{color:#ff8f98}.cc-micro.ahead{color:#80eaae}.cc-micro.on{color:#8eeafa}.cc-micro.unset{color:#ffe68b}
+
+.cc-badges{display:flex;gap:5px;flex-wrap:wrap;margin-top:9px}
+.cc-badge{display:inline-flex;align-items:center;border-radius:999px;padding:3px 7px;font-size:8.5px;font-weight:950;letter-spacing:.055em;border:1px solid #40546c;background:rgba(7,18,30,.72);white-space:nowrap}
+.cc-badge.reduced{color:#ffc071;border-color:#d78b36;background:rgba(215,139,54,.09)}
+.cc-badge.source{color:#d9adff;border-color:#9f68d9;background:rgba(159,104,217,.09)}
+.cc-badge.str{color:#7fe6df;border-color:#41aaa4;background:rgba(65,170,164,.09)}
+.cc-badge.packing{color:#91edf5;border-color:#4bc7da;background:rgba(75,199,218,.10)}
+.cc-badge.change{color:#ffd780;border-color:#c7983f;background:rgba(199,152,63,.09)}
+.cc-badge.pull{color:#8df0ba;border-color:#52d98a;background:rgba(82,217,138,.09)}
+.cc-badge.push{color:#ff9ba4;border-color:#ef6666;background:rgba(239,102,102,.10)}
+.cc-badge.behind{color:#ff9ba4;border-color:#ef6666;background:rgba(239,102,102,.10)}
+.cc-badge.ahead{color:#8df0ba;border-color:#52d98a;background:rgba(82,217,138,.09)}
+.cc-badge.on{color:#91edf5;border-color:#4bc7da;background:rgba(75,199,218,.09)}
+
+@media(max-width:900px){
+  .header-app-name{font-size:22px!important}
+  .header-page-title{font-size:20px!important}
+  .header-page-sub{font-size:11px!important}
+  .cc-meta-rich{grid-template-columns:1fr!important}
+}

@@ -1,6 +1,6 @@
 /* B7 FI Command Center v0.41.0 — Unified QA Corrections */
 (function(){
-  const VERSION='0.41.0';
+  const VERSION='0.42.0';
 
   function qOptions(selected){
     const now=calendarQuarter();
@@ -19,15 +19,71 @@
     if(oq===q&&cq!==q)return `<span class="change-chip push">↓ PUSHED OUT</span>`;
     return latestChangeBadge(t)||'';
   }
-  function countdownCard41(t,q,pushed=false){
-    const oq=t.originalQuarter||quarterFromDate(t.originalShip)||'';const cq=currentQuarterMembership(t);const moved=(t.originalShip&&t.originalShip!==t.ship)||(oq&&cq&&oq!==cq);
-    return `<div class="countdown-card ${qState(t)} ${pushed?'pushed-card':''}">
-      <div class="cc-head"><div><div class="cc-id">${esc(t.id)}</div><b>${esc(t.model)}</b><div class="gray">${esc(t.customer)}</div></div>${movementLabel(t,q)}</div>
-      <div class="cc-meta"><div><span>MFG Ship Date</span><b>${fmt(t.ship)}</b>${moved?`<small class="ship-move">${fmt(t.originalShip)} → ${fmt(t.ship)}</small>`:''}</div><div><span>Status</span><b>${esc(t.quarterStatus)}</b></div></div>
-      ${moved?`<div class="quarter-movement-line"><span>Original ${esc(oq||'—')}</span><strong>${pushed?'PUSHED OUT →':'CURRENT →'} ${esc(cq||'—')}</strong></div>`:''}
-    </div>`;
+
+function cardBadges42(t,q,pushed=false){
+  const badges=[];
+  const oq=t.originalQuarter||quarterFromDate(t.originalShip)||'';
+  const cq=currentQuarterMembership(t);
+  const movedShip=!!(t.originalShip&&t.ship&&t.originalShip!==t.ship);
+  const customerChanged=!!(t.originalCustomer&&t.customer&&t.originalCustomer!==t.customer);
+  const soChanged=!!(t.originalSO&&t.so&&t.originalSO!==t.so);
+  const pulled=oq&&cq&&oq!==q&&cq===q;
+  const pushedOut=oq===q&&cq&&cq!==q;
+  const micro=(t.quarterStatus==='In FI'&&typeof microScheduleInfo==='function')?microScheduleInfo(t):null;
+
+  if(String(t.process||'').toLowerCase().includes('reduced')) badges.push(['reduced','REDUCED PROCESS']);
+  if(t.sourceRequired==='Yes') badges.push(['source','SOURCE REQUIRED']);
+  if(t.strRequired==='Yes') badges.push(['str','STR REQUIRED']);
+  if(typeof packingActive==='function'&&packingActive(t)) badges.push(['packing','PACKING ACTIVE']);
+  if(movedShip) badges.push(['change','SHIP DATE CHANGED']);
+  if(customerChanged) badges.push(['change','CUSTOMER CHANGED']);
+  if(soChanged) badges.push(['change','SO CHANGED']);
+  if(pulled) badges.push(['pull','PULLED IN']);
+  if(pushed||pushedOut) badges.push(['push','PUSHED OUT']);
+  if(micro){
+    const label=String(micro.label||'').toUpperCase();
+    if(micro.className==='behind') badges.push(['behind',label||'BEHIND']);
+    else if(micro.className==='ahead') badges.push(['ahead',label||'AHEAD']);
+    else if(micro.className==='on') badges.push(['on',label||'ON SCHEDULE']);
   }
-  function familySummary41(name,arr,q){
+  return badges.map(([c,l])=>`<span class="cc-badge ${c}">${esc(l)}</span>`).join('');
+}
+
+function countdownCard41(t,q,pushed=false){
+  const oq=t.originalQuarter||quarterFromDate(t.originalShip)||'';
+  const cq=currentQuarterMembership(t);
+  const moved=(t.originalShip&&t.originalShip!==t.ship)||(oq&&cq&&oq!==cq);
+  const isPacking=(typeof packingActive==='function'&&packingActive(t));
+  const pulled=oq!==q&&cq===q;
+  const micro=(t.quarterStatus==='In FI'&&typeof microScheduleInfo==='function')?microScheduleInfo(t):null;
+  const fiPct=(typeof routeProgress==='function')?routeProgress(t):0;
+  const phase=(typeof currentPhase==='function')?currentPhase(t):(isPacking?'200 PACKING':(t.quarterStatus||''));
+  const badges=cardBadges42(t,q,pushed);
+  return `<div class="countdown-card ${qState(t)} ${isPacking?'packing-tint':''} ${pulled?'pulled-card':''} ${pushed?'pushed-card':''}">
+    <div class="cc-head">
+      <div>
+        <div class="cc-id">${esc(t.id)}</div>
+        <b>${esc(t.model)}</b>
+        <div class="gray">${esc(t.customer)}</div>
+      </div>
+      <div class="cc-status-stack">${movementLabel(t,q)}<span class="state-chip ${qState(t)}">${esc(t.quarterStatus||'')}</span></div>
+    </div>
+    <div class="cc-meta cc-meta-rich">
+      <div><span>MFG Ship Date</span><b>${fmt(t.ship)}</b>${moved?`<small class="ship-move">${fmt(t.originalShip)} → ${fmt(t.ship)}</small>`:''}</div>
+      <div><span>Sales Order</span><b>${esc(t.so||'N/A')}</b></div>
+      <div><span>Current Phase</span><b>${esc(phase||'—')}</b></div>
+      <div><span>Current Checklist</span><b>${esc(t.checklist||'—')}</b></div>
+    </div>
+    <div class="cc-progress-row">
+      <div class="cc-progress-head"><span>FI Progress</span><b>${fiPct}%</b></div>
+      <div class="cc-progress-track"><i style="width:${Math.max(0,Math.min(100,fiPct))}%"></i></div>
+      ${micro?`<div class="cc-micro ${micro.className}">${esc(micro.label||'')}</div>`:''}
+    </div>
+    ${badges?`<div class="cc-badges">${badges}</div>`:''}
+    ${moved?`<div class="quarter-movement-line"><span>Original ${esc(oq||'—')}</span><strong>${pushed?'PUSHED OUT →':'CURRENT →'} ${esc(cq||'—')}</strong></div>`:''}
+  </div>`;
+}
+function familySummary41(name,arr,q){
     let waiting=arr.filter(t=>t.quarterStatus==='Waiting for FI').length,infi=arr.filter(t=>t.quarterStatus==='In FI').length,shipped=arr.filter(t=>t.quarterStatus==='Shipped').length;
     return `<section class="countdown-family"><div class="countdown-family-head"><h2>${esc(name)}</h2><div class="family-counts"><div><span>TOTAL</span><b>${arr.length}</b></div><div><span>WAITING FI</span><b>${waiting}</b></div><div><span>IN FI</span><b>${infi}</b></div><div><span>SHIPPED</span><b>${shipped}</b></div></div></div><div class="countdown-card-grid">${arr.sort((a,b)=>(a.ship||'9').localeCompare(b.ship||'9')||serialKey(a.id)-serialKey(b.id)).map(t=>countdownCard41(t,q,false)).join('')}</div></section>`;
   }
