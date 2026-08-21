@@ -2906,3 +2906,165 @@ footer{border-bottom-color:var(--live-page-accent,var(--accent))!important}
   .kb-form49 .wide,.kb-favorite-check49{grid-column:auto}
   .kb-grid49{grid-template-columns:1fr}
 }
+
+
+/* =========================================================
+   v0.49.1 HEADER / PAGE ACTIONS FINAL LAYOUT FIX
+   Targeted correction only — no other page logic changed.
+   ========================================================= */
+
+/* The stack owns exactly two content rows plus a real spacer:
+   1) B7 FI Actions
+   2) protected gap
+   3) Page Actions
+   Everything stays in normal flow. */
+body:not(.wallboard-mode) .header-status-stack{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  grid-template-rows:70px 10px 46px!important;
+  height:auto!important;
+  min-height:126px!important;
+  max-height:none!important;
+  overflow:visible!important;
+  position:relative!important;
+  margin:0!important;
+  padding:0!important;
+}
+
+/* Put B7 FI Actions firmly in row 1. */
+body:not(.wallboard-mode) .header-status-stack .top-action-bar{
+  grid-column:1!important;
+  grid-row:1!important;
+  position:relative!important;
+  top:auto!important;
+  bottom:auto!important;
+  transform:none!important;
+  margin:0!important;
+  width:100%!important;
+  height:70px!important;
+  min-height:70px!important;
+  max-height:70px!important;
+  box-sizing:border-box!important;
+  overflow:hidden!important;
+  z-index:2!important;
+  border-top:2px solid rgba(255,255,255,.55)!important;
+  border-bottom:2px solid var(--accent)!important;
+}
+
+/* Use row 2 as a true spacer. The old pseudo-element spacer is disabled. */
+body:not(.wallboard-mode) .header-status-stack::before,
+body:not(.wallboard-mode) .header-status-stack::after{
+  display:none!important;
+}
+
+/* Page Actions is row 3. Never overlap the ticker. */
+body:not(.wallboard-mode) .header-status-stack .page-toolbar,
+body:not(.wallboard-mode) .header-status-stack .page-toolbar.v041-page-toolbar{
+  grid-column:1!important;
+  grid-row:3!important;
+  position:relative!important;
+  top:auto!important;
+  bottom:auto!important;
+  left:auto!important;
+  right:auto!important;
+  transform:none!important;
+  margin:0!important;
+  width:100%!important;
+  height:46px!important;
+  min-height:46px!important;
+  max-height:46px!important;
+  padding:8px max(18px,calc((100% - 1500px)/2))!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:8px!important;
+  z-index:1!important;
+  overflow:visible!important;
+  background:#091827!important;
+  border-top:1px solid rgba(var(--accent-rgb),.22)!important;
+  border-bottom:1px solid var(--accent)!important;
+}
+
+/* Keep PAGE ACTIONS readable and vertically centered. */
+body:not(.wallboard-mode) .header-status-stack .page-toolbar::before{
+  position:static!important;
+  transform:none!important;
+  margin-right:auto!important;
+  align-self:center!important;
+  line-height:1!important;
+  opacity:1!important;
+}
+
+/* Keep all Page Action buttons fully visible. */
+body:not(.wallboard-mode) .header-status-stack .page-toolbar .btn,
+body:not(.wallboard-mode) .header-status-stack .page-toolbar button{
+  position:relative!important;
+  top:auto!important;
+  bottom:auto!important;
+  transform:none!important;
+  margin-top:0!important;
+  margin-bottom:0!important;
+  align-self:center!important;
+  white-space:nowrap!important;
+  opacity:1!important;
+  visibility:visible!important;
+}
+
+/* Top/bottom ticker glow stay entirely inside row 1. */
+body:not(.wallboard-mode) .header-status-stack .top-action-bar::before,
+body:not(.wallboard-mode) .header-status-stack .top-action-bar::after{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  left:0!important;
+  width:280px!important;
+  height:5px!important;
+  pointer-events:none!important;
+  z-index:30!important;
+  opacity:1!important;
+  background:linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,.12) 14%,
+    #fff 45%,
+    var(--accent) 56%,
+    rgba(255,255,255,.18) 79%,
+    transparent 100%
+  )!important;
+  filter:drop-shadow(0 0 7px rgba(var(--accent-rgb),.98))!important;
+}
+body:not(.wallboard-mode) .header-status-stack .top-action-bar::before{
+  top:2px!important;
+  bottom:auto!important;
+  animation:b7v491LTR 5.6s linear infinite!important;
+}
+body:not(.wallboard-mode) .header-status-stack .top-action-bar::after{
+  top:auto!important;
+  bottom:5px!important;
+  animation:b7v491RTL 5.6s linear infinite!important;
+}
+@keyframes b7v491LTR{
+  from{transform:translateX(-300px)}
+  to{transform:translateX(calc(100vw + 300px))}
+}
+@keyframes b7v491RTL{
+  from{transform:translateX(calc(100vw + 300px))}
+  to{transform:translateX(-300px)}
+}
+
+/* On narrower screens, keep Page Actions usable rather than clipped. */
+@media(max-width:900px){
+  body:not(.wallboard-mode) .header-status-stack{
+    grid-template-rows:70px 8px auto!important;
+    min-height:0!important;
+  }
+  body:not(.wallboard-mode) .header-status-stack .page-toolbar,
+  body:not(.wallboard-mode) .header-status-stack .page-toolbar.v041-page-toolbar{
+    height:auto!important;
+    min-height:46px!important;
+    max-height:none!important;
+    flex-wrap:wrap!important;
+    padding:8px 12px!important;
+  }
+}
