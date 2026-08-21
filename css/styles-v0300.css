@@ -3068,3 +3068,54 @@ body:not(.wallboard-mode) .header-status-stack .top-action-bar::after{
     padding:8px 12px!important;
   }
 }
+
+
+/* =========================================================
+   v0.49.2 ACTION CENTER MANUAL REMINDER CONTROL
+   ========================================================= */
+.manual-action492{
+  display:grid!important;
+  grid-template-columns:auto minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:10px!important;
+  width:100%!important;
+  padding:9px 10px!important;
+  border-radius:7px!important;
+  background:#081522!important;
+  border:1px solid #334a63!important;
+  border-left-width:3px!important;
+  margin-bottom:7px!important;
+  box-sizing:border-box!important;
+}
+.manual-action492.red{border-left-color:#ff6572!important}
+.manual-action492.orange{border-left-color:#ff9d45!important}
+.manual-action492.yellow{border-left-color:#e5c43d!important}
+.manual-action492.blue{border-left-color:#55a4f6!important}
+.manual-main492{min-width:0}
+.manual-main492 b{display:block;overflow-wrap:anywhere}
+.manual-main492 small{display:block;margin-top:4px;color:var(--muted);font-size:10px}
+.manual-controls492{display:flex;gap:6px}
+.manual-grid492{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:10px!important;
+}
+.manual-grid492 .wide{grid-column:1/-1!important}
+.manual-grid492 input,.manual-grid492 select{
+  width:100%!important;
+  box-sizing:border-box!important;
+  background:#071522!important;
+  color:#fff!important;
+  border:1px solid #38516b!important;
+  border-radius:7px!important;
+  padding:9px 10px!important;
+}
+.manual-editor492{border-left:4px solid var(--accent)!important}
+.action-item.blue{border-left-color:#55a4f6!important}
+.action-summary.blue{border-top-color:#55a4f6!important}
+@media(max-width:900px){
+  .manual-grid492{grid-template-columns:1fr!important}
+  .manual-grid492 .wide{grid-column:auto!important}
+  .manual-action492{grid-template-columns:auto 1fr!important}
+  .manual-controls492{grid-column:1/-1;justify-content:flex-end}
+}
