@@ -1754,3 +1754,233 @@ body:not(.wallboard-mode) .page-toolbar{margin-top:0!important;padding-top:9px!i
 .reduced-process-metric{border-color:#d78b36!important;background:rgba(215,139,54,.11)!important}.reduced-process-metric strong{color:#ffc071!important}
 .final-countdown-admin .admin-original{display:block;margin-top:4px;color:#7890aa;font-size:9px}.final-countdown-admin select,.final-countdown-admin input{min-width:130px}
 @media(max-width:900px){.final-family .countdown-family-head{align-items:flex-start!important;flex-direction:column!important;gap:10px!important}.final-family .family-counts{flex-wrap:wrap!important}.final-countdown-grid{grid-template-columns:1fr!important}}
+
+
+/* =========================================================
+   v0.44.0 LIFECYCLE SIMULATION TEST POLISH
+   ========================================================= */
+
+/* Final Page Actions geometry:
+   a small protected gap below the action animation, then equal
+   internal top/bottom spacing. */
+body:not(.wallboard-mode) .header-status-stack{
+  gap:0!important;
+  overflow:visible!important;
+}
+body:not(.wallboard-mode) .page-toolbar{
+  margin-top:5px!important;
+  padding-top:7px!important;
+  padding-bottom:7px!important;
+  min-height:42px!important;
+  height:auto!important;
+  align-items:center!important;
+}
+body:not(.wallboard-mode) .page-toolbar::before{
+  align-self:center!important;
+}
+
+/* Make top and bottom action-bar sweeps literally match in geometry.
+   Only the direction differs. */
+.top-action-bar{
+  overflow:visible!important;
+  z-index:80!important;
+}
+.top-action-bar::before,
+.top-action-bar::after{
+  height:4px!important;
+  left:0!important;
+  right:0!important;
+  opacity:1!important;
+  background-image:linear-gradient(
+    90deg,
+    transparent 0,
+    rgba(255,255,255,.10) 22%,
+    rgba(255,255,255,.95) 45%,
+    var(--accent) 54%,
+    rgba(255,255,255,.10) 78%,
+    transparent 100%
+  )!important;
+  background-size:260px 100%!important;
+  filter:drop-shadow(0 0 7px rgba(var(--accent-rgb),.95))!important;
+}
+.top-action-bar::before{top:0!important;animation:b7SweepLTR 5.5s linear infinite!important}
+.top-action-bar::after{bottom:-2px!important;animation:b7SweepRTL 5.5s linear infinite!important}
+
+/* Tool-family section no longer needs a redundant heading. */
+.tool-type-panel{padding-top:12px!important}
+
+/* One physical card size for every lifecycle state. */
+.final-countdown-grid{
+  grid-template-columns:repeat(auto-fit,minmax(290px,1fr))!important;
+  align-items:stretch!important;
+}
+.lifecycle-card,
+.lifecycle-card.waiting,
+.lifecycle-card.shipped{
+  min-height:330px!important;
+  height:330px!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-direction:column!important;
+  opacity:1!important;
+  overflow:hidden!important;
+}
+.lifecycle-card .cc-badges{margin-top:auto!important}
+.lifecycle-card .quarter-movement-line{margin-top:8px!important}
+
+/* Strong, visible Actual FI bar; Micro Schedule remains cyan. */
+.lifecycle-card .actual-progress .cc-progress-track i{
+  display:block!important;
+  height:100%!important;
+  min-width:0!important;
+  opacity:1!important;
+  background:linear-gradient(90deg,#d9a91f,#ffd35b)!important;
+  box-shadow:0 0 8px rgba(242,201,76,.72)!important;
+}
+.lifecycle-card .micro-progress .cc-progress-track i{
+  display:block!important;
+  height:100%!important;
+  opacity:1!important;
+  background:linear-gradient(90deg,#37b9d5,#67d7ef)!important;
+  box-shadow:0 0 8px rgba(75,199,218,.70)!important;
+}
+.lifecycle-card .cc-progress-track{
+  height:8px!important;
+  background:#17304a!important;
+  overflow:hidden!important;
+}
+
+/* Lifecycle color + tint system. */
+.lifecycle-card.life-waiting{
+  border-color:rgba(239,102,102,.72)!important;
+  border-left-color:#ef6666!important;
+  background:linear-gradient(145deg,rgba(239,102,102,.18),rgba(239,102,102,.055) 48%,#0d1b2b 90%)!important;
+}
+.lifecycle-card.life-infi{
+  border-color:rgba(226,187,75,.72)!important;
+  border-left-color:#e2bb4b!important;
+  background:linear-gradient(145deg,rgba(226,187,75,.16),rgba(226,187,75,.045) 48%,#0d1b2b 90%)!important;
+}
+.lifecycle-card.life-packing{
+  border-color:rgba(75,199,218,.75)!important;
+  border-left-color:#4bc7da!important;
+  background:linear-gradient(145deg,rgba(75,199,218,.18),rgba(75,199,218,.055) 48%,#0d1b2b 90%)!important;
+}
+.lifecycle-card.life-shipped{
+  border-color:rgba(53,199,122,.72)!important;
+  border-left-color:#35c77a!important;
+  background:linear-gradient(145deg,rgba(53,199,122,.17),rgba(53,199,122,.05) 48%,#0d1b2b 90%)!important;
+}
+
+/* Hover remains in place and follows lifecycle color. */
+.lifecycle-card:hover,.lifecycle-card:focus-visible{
+  transform:none!important;
+  outline:none!important;
+}
+.lifecycle-card.life-waiting:hover,.lifecycle-card.life-waiting:focus-visible{
+  border-color:#ff7782!important;
+  box-shadow:0 0 0 1px #ef6666,0 0 22px rgba(239,102,102,.38)!important;
+}
+.lifecycle-card.life-infi:hover,.lifecycle-card.life-infi:focus-visible{
+  border-color:#f2c94c!important;
+  box-shadow:0 0 0 1px #e2bb4b,0 0 22px rgba(226,187,75,.38)!important;
+}
+.lifecycle-card.life-packing:hover,.lifecycle-card.life-packing:focus-visible{
+  border-color:#6dddea!important;
+  box-shadow:0 0 0 1px #4bc7da,0 0 22px rgba(75,199,218,.38)!important;
+}
+.lifecycle-card.life-shipped:hover,.lifecycle-card.life-shipped:focus-visible{
+  border-color:#62dfa0!important;
+  box-shadow:0 0 0 1px #35c77a,0 0 22px rgba(53,199,122,.36)!important;
+}
+
+/* Shape language: words remain visible so the symbols never rely on memory. */
+.lifecycle-shape{
+  min-width:70px!important;
+  min-height:48px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  padding:8px 10px!important;
+  font-size:10px!important;
+  line-height:1.05!important;
+  font-weight:950!important;
+  letter-spacing:.035em!important;
+}
+.lifecycle-shape.life-infi{
+  border-radius:50%!important;
+  width:58px!important;
+  height:58px!important;
+  min-width:58px!important;
+  min-height:58px!important;
+  color:#ffd75a!important;
+  border-color:#e2bb4b!important;
+  background:rgba(226,187,75,.08)!important;
+}
+.lifecycle-shape.life-packing{
+  border-radius:0!important;
+  clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%)!important;
+  width:82px!important;
+  min-width:82px!important;
+  color:#87eef5!important;
+  border:0!important;
+  background:rgba(75,199,218,.20)!important;
+  box-shadow:inset 0 0 0 2px rgba(75,199,218,.78)!important;
+}
+.lifecycle-shape.life-shipped{
+  border-radius:12px!important;
+  color:#78e7ae!important;
+  border-color:#35c77a!important;
+  background:rgba(53,199,122,.10)!important;
+}
+.lifecycle-shape.life-waiting{
+  border-radius:0!important;
+  clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)!important;
+  width:86px!important;
+  min-width:86px!important;
+  min-height:64px!important;
+  padding:13px 16px!important;
+  color:#ff9ba4!important;
+  border:0!important;
+  background:rgba(239,102,102,.20)!important;
+  box-shadow:inset 0 0 0 2px rgba(239,102,102,.78)!important;
+}
+
+/* Waiting tools intentionally carry no FI progress content. */
+.lifecycle-card.life-waiting .cc-progress-row,
+.lifecycle-card.life-waiting .cc-micro,
+.lifecycle-card.life-waiting .schedule-chip{display:none!important}
+
+/* Family counters keep their semantic colors. */
+.family-counts .family-total{
+  border-color:#405874!important;
+  background:rgba(78,118,160,.08)!important;
+}
+.family-counts .family-total b{color:#fff!important}
+.family-counts .family-waiting{
+  border-color:#ef6666!important;background:rgba(239,102,102,.10)!important
+}
+.family-counts .family-infi{
+  border-color:#e2bb4b!important;background:rgba(226,187,75,.10)!important
+}
+.family-counts .family-shipped{
+  border-color:#35c77a!important;background:rgba(53,199,122,.10)!important
+}
+
+/* Reduced Process remains prominent without changing lifecycle status color. */
+.lifecycle-card .cc-badge.reduced{
+  border-width:2px!important;
+  font-size:9px!important;
+  color:#ffd08a!important;
+  background:rgba(215,139,54,.15)!important;
+}
+
+@media(max-width:900px){
+  .lifecycle-card,
+  .lifecycle-card.waiting,
+  .lifecycle-card.shipped{
+    height:auto!important;
+    min-height:300px!important;
+  }
+}
