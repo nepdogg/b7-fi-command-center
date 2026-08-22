@@ -4493,3 +4493,63 @@ body > footer.v57-footer{
   .v57-header-left,.v57-header-right{font-size:16px!important}
   .v57-kla-logo{width:125px!important}
 }
+
+/* =========================================================
+   v0.60.0 — CENTER PAGE NAVIGATION + FULL-WIDTH OPERATIONS
+   ========================================================= */
+
+/* The former Page Actions strip is now each Center's single page-navigation bar. */
+body:not([data-center="home"]) .page-toolbar::before{content:none!important;display:none!important}
+body:not([data-center="home"]) .page-toolbar{
+  gap:10px!important;
+  padding:9px 22px!important;
+  min-height:58px!important;
+  justify-content:flex-start!important;
+  background:#071522!important;
+}
+.page-toolbar .v60-center-nav{min-width:150px!important;padding:10px 16px!important}
+.page-toolbar .v57-report-btn{margin-left:auto!important}
+
+/* Legacy in-content center tab rows are retired; navigation lives above content. */
+#app>.v57-center-tabs{display:none!important}
+
+/* Operations Center now uses the same wide working canvas as the other Centers. */
+body[data-center="home"] > main#app{
+  padding:28px 22px 42px!important;
+}
+body[data-center="home"] .v57-operations-grid{
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:20px!important;
+}
+body[data-center="home"] .v57-live-card{
+  min-height:190px!important;
+  padding:24px!important;
+  border-width:1px!important;
+  border-top-width:3px!important;
+  border-radius:10px!important;
+}
+body[data-center="home"] .v57-live-card span{font-size:14px!important}
+body[data-center="home"] .v57-live-card strong{font-size:20px!important;line-height:1.38!important}
+body[data-center="home"] .v57-live-card b{font-size:12px!important}
+
+/* Preserve semantic alert severity colors; Center color only owns structural chrome. */
+.action-item.red,.severity-red,.critical,.alert-critical{--semantic-accent:#E54848!important}
+.action-item.orange,.severity-orange,.alert-attention{--semantic-accent:#F28C28!important}
+.action-item.yellow,.severity-yellow,.alert-reminder{--semantic-accent:#D4A72C!important}
+
+@media(max-width:1180px){
+ body[data-center="home"] .v57-operations-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .page-toolbar .v60-center-nav{min-width:135px!important}
+}
+@media(max-width:760px){
+ body[data-center="home"] .v57-operations-grid{grid-template-columns:1fr!important}
+ body[data-center="home"] > main#app{padding:18px 14px 30px!important}
+ body:not([data-center="home"]) .page-toolbar{overflow-x:auto!important;flex-wrap:nowrap!important}
+}
