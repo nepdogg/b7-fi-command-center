@@ -56,7 +56,7 @@ function syncTheme51(){
  document.body.style.setProperty('--fleet-accent',pair[0]);
  document.body.style.setProperty('--fleet-rgb',pair[1]);
 }
-new MutationObserver(syncTheme51).observe(document.body,{attributes:true,attributeFilter:['data-theme']});
+/* v0.57.0: legacy theme observer disabled; authoritative Center theme is controlled by patch-v0570.js. */
 
 /* ---------------- Morning status = master daily editing console ---------------- */
 function morningList51(){

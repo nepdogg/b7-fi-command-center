@@ -2,7 +2,13 @@
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>B7 FI Command Center</title><link rel="stylesheet" href="css/styles-v0300.css?v=0560"><link rel="stylesheet" href="css/styles-v0210-workflow.css?v=0520"><style>body[data-theme="customer"]{--page-accent:#a78bfa;--page-accent-rgb:167,139,250}</style></head>
 <body data-theme="home">
-<div class="sticky-header"><header class="hero compact-hero"><div class="hero-overlay"></div><div class="header-lockup"><div class="kla-brand-block"><img class="kla-header-logo" src="assets/kla-plus-official.png" alt="KLA+"><span class="kla-brand-divider"></span></div><div class="header-app-name">B7 FI COMMAND CENTER</div><div class="header-diagonal"></div><div class="header-page-lockup"><div id="headerPageTitle" class="header-page-title">OPERATIONS HOME</div><div id="headerPageSub" class="header-page-sub"></div></div></div></header>
+<div class="sticky-header"><header class="hero compact-hero v57-hero">
+  <div class="v57-header">
+    <section class="v57-header-left">B7 FI COMMAND CENTER</section>
+    <section class="v57-header-center"><img class="v57-kla-logo" src="assets/kla-plus-official.png" alt="KLA+"></section>
+    <section class="v57-header-right"><span id="headerPageTitle">OPERATIONS CENTER</span></section>
+  </div>
+</header>
 <nav class="main-nav" aria-label="Main navigation">
 <button data-view="home" class="nav-btn active">Operations Center</button>
 <button data-view="toolcenter" class="nav-btn">Tool Center</button>
@@ -12,11 +18,15 @@
 <button data-view="meetingcenter" class="nav-btn">Meeting Center</button>
 <button data-view="actions" class="nav-btn">Action Center</button>
 <button data-view="referencecenter" class="nav-btn">Reference Center</button>
-</nav><div id="pageIdentity" class="page-identity"></div><div class="header-status-stack"><div id="topActionBar" class="top-action-bar"></div><div id="floatingActions" class="floating-actions page-toolbar" aria-label="Page actions"></div></div></div>
+</nav><div class="header-status-stack"><div id="topActionBar" class="top-action-bar"></div><div id="floatingActions" class="floating-actions page-toolbar" aria-label="Page actions"></div></div></div>
 <main id="app" class="page-shell"><div class="panel"><h2>Loading B7 FI Command Center…</h2></div></main>
 <button id="screenshotExit" class="screenshot-exit">Exit Screenshot Mode</button>
 
-<div id="operationsBar" class="operations-bar"><div class="ops-health"><span class="ops-live-dot"></span><b>COMMAND CENTER</b><span id="opsSync">Local test data</span></div><div class="ops-ticker"><span class="ops-ticker-label">FLEET STATUS</span><span id="opsTickerText">Loading fleet status…</span></div><div class="ops-summary"><span id="opsTaskCount">0 open actions</span><span class="ops-divider">•</span><span id="opsPresence">Context: fleet overview</span></div></div><footer><strong id="appVersionLabel">B7 FI Command Center</strong><span>Building 7 · Final Integration · Operations</span></footer>
+<div id="operationsBar" class="operations-bar"><div class="ops-health"><span class="ops-live-dot"></span><b>COMMAND CENTER</b><span id="opsSync">Local test data</span></div><div class="ops-ticker"><span class="ops-ticker-label">FLEET STATUS</span><span id="opsTickerText">Loading fleet status…</span></div><div class="ops-summary"><span id="opsTaskCount">0 open actions</span><span class="ops-divider">•</span><span id="opsPresence">Context: fleet overview</span></div></div><footer class="v57-footer">
+      <strong id="appVersionLabel">B7 FI Command Center v0.57.0</strong>
+      <button id="administrationCenterFooter" class="v57-admin-footer-btn">ADMINISTRATION CENTER</button>
+      <span>Building 7 · Final Integration · Operations</span>
+    </footer>
 <script>window.addEventListener('error',function(e){var a=document.getElementById('app');if(a&&!a.dataset.rendered)a.innerHTML='<div class="panel"><h2>Command Center could not load</h2><p class="gray">'+String(e.message||'Unknown error')+'</p></div>'})</script>
 <div id="wallboardControls" class="wallboard-controls" aria-label="Wallboard controls"><button id="wallPrev">◀</button><button id="wallPause">PAUSE</button><button id="wallNext">▶</button><button id="wallExit">EXIT WALLBOARD</button><span id="wallLive">● LIVE</span></div>
-<script src="js/app-v0300.js?v=0410"></script><script src="js/merge-bridge-v0400.js?v=0410"></script><script src="js/app-v0210-workflow.js?v=0410"></script><script src="js/merge-compat-v0400.js?v=0410"></script><script src="js/merge-fixes-v0410.js?v=0410"></script><script src="js/patch-v0430.js?v=0430"></script><script src="js/patch-v0450.js?v=0450"></script><script src="js/patch-v0460.js?v=0460"></script><script src="js/patch-v0470.js?v=0470"></script><script src="js/patch-v0480.js?v=0480"></script><script src="js/patch-v0490.js?v=0490"></script><script src="js/patch-v0491.js?v=0491"></script><script src="js/patch-v0492.js?v=0492"></script><script src="js/patch-v0500.js?v=0500"></script><script src="js/patch-v0510.js?v=0515"></script><script src="js/patch-v0520.js?v=0520"></script><script src="js/patch-v0521.js?v=0521"></script><script src="js/patch-v0522.js?v=0522"></script><script src="js/patch-v0523.js?v=0523"></script><script src="js/patch-v0530.js?v=0530"></script><script src="js/patch-v0540.js?v=0540"></script><script src="js/patch-v0550.js?v=0550"></script><script src="js/patch-v0560.js?v=0560"></script></body></html>
+<script src="js/app-v0300.js?v=0410"></script><script src="js/merge-bridge-v0400.js?v=0410"></script><script src="js/app-v0210-workflow.js?v=0410"></script><script src="js/merge-compat-v0400.js?v=0410"></script><script src="js/merge-fixes-v0410.js?v=0410"></script><script src="js/patch-v0430.js?v=0430"></script><script src="js/patch-v0450.js?v=0450"></script><script src="js/patch-v0460.js?v=0460"></script><script src="js/patch-v0470.js?v=0470"></script><script src="js/patch-v0480.js?v=0480"></script><script src="js/patch-v0490.js?v=0490"></script><script src="js/patch-v0491.js?v=0491"></script><script src="js/patch-v0492.js?v=0492"></script><script src="js/patch-v0500.js?v=0500"></script><script src="js/patch-v0510.js?v=0515"></script><script src="js/patch-v0570.js?v=0570"></script></body></html>
