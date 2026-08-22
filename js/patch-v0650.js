@@ -89,6 +89,6 @@ function shell(){theme();rebuildFleetBar();rebuildFooter();normalizeSearch();mee
   const h=$('#headerPageTitle');if(h)h.style.textTransform='uppercase';
 }
 let busy=false;
-new MutationObserver(()=>{if(busy)return;busy=true;requestAnimationFrame(()=>{busy=false;shell()})}).observe(document.body,{subtree:true,childList:true});
+/* v0.67: legacy body observer disabled */
 setTimeout(shell,120);
 })();

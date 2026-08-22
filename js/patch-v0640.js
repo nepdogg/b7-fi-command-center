@@ -155,6 +155,6 @@ function shell(){
   const ht=$('#headerPageTitle');if(ht)ht.style.textTransform='uppercase';
 }
 let scheduled=false;
-new MutationObserver(()=>{if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{scheduled=false;shell()})}).observe(document.body,{subtree:true,childList:true});
+/* v0.67: legacy body observer disabled */
 setTimeout(shell,180);
 })();

@@ -66,6 +66,6 @@ function statusBar(){
 function cleanStatusContent(){if(center()==='status')$$('#app button').forEach(b=>{if(/RESET TOOL TYPE\s*\/\s*SERIAL ORDER/i.test(b.textContent))b.remove()})}
 function uppercase(){ $$('.main-nav button,#floatingActions button').forEach(b=>{b.style.textTransform='uppercase'}); const t=$('#headerPageTitle');if(t)t.style.textTransform='uppercase' }
 function decorate(){hardTheme();statusBar();ensureGlobalActions();cleanStatusContent();uppercase()}
-let busy=false;new MutationObserver(()=>{if(busy)return;busy=true;requestAnimationFrame(()=>{decorate();busy=false})}).observe(document.body,{childList:true,subtree:true});
+let busy=false;/* v0.67 legacy body observer disabled */
 setTimeout(decorate,120);
 })();

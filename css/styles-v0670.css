@@ -1,0 +1,71 @@
+/* B7 FI Command Center v0.67.0 — shared shell stabilization */
+:root{--v67-shell-max:1680px;--v67-action-label:128px;--v67-fleet-label:128px;--v67-divider-h:30px;--v67-toolbar-h:48px}
+html,body{margin:0!important;padding:0!important;min-height:100%!important;background:#050b11!important}
+body{min-height:100vh!important;min-height:100dvh!important;display:flex!important;flex-direction:column!important;align-items:center!important;padding-bottom:0!important}
+body>.sticky-header,body>main#app,body>.operations-bar,body>footer.v57-footer{width:min(100%,var(--v67-shell-max))!important;max-width:var(--v67-shell-max)!important;margin-left:auto!important;margin-right:auto!important;box-sizing:border-box!important}
+body>.sticky-header{flex:0 0 auto!important}
+body>main#app{flex:1 1 auto!important;min-height:0!important;padding-bottom:22px!important}
+body>.operations-bar,body>footer.v57-footer{flex:0 0 auto!important}
+
+/* Header scale: fill the existing panels without increasing header height. */
+.v57-header-left,.v57-header-right{font-size:48px!important;line-height:1!important;font-weight:950!important;white-space:nowrap!important;text-transform:uppercase!important}
+.v57-kla-logo{width:350px!important;max-width:96%!important;max-height:110px!important;object-fit:contain!important}
+
+/* Nine Center nav: no clipping, even distribution, uppercase. */
+.main-nav{display:grid!important;grid-template-columns:1.20fr .88fr 1.02fr .96fr .94fr 1.02fr .98fr 1.12fr 1.04fr!important;gap:6px!important;align-items:stretch!important;padding:7px 14px!important;overflow:visible!important}
+.main-nav .nav-btn{width:100%!important;min-width:0!important;max-width:none!important;box-sizing:border-box!important;overflow:visible!important;text-overflow:clip!important;white-space:nowrap!important;font-size:14px!important;font-weight:900!important;line-height:1!important;padding:0 8px!important;min-height:48px!important;text-transform:uppercase!important}
+
+/* ACTION STATUS + PAGE NAV are one continuous stack with no blank row. */
+.header-status-stack{display:flex!important;flex-direction:column!important;gap:0!important;row-gap:0!important;height:auto!important;min-height:0!important;margin:0!important;padding:0!important;overflow:visible!important}
+.top-action-bar{flex:0 0 62px!important;height:62px!important;min-height:62px!important;margin:0!important;padding:0!important;display:grid!important;grid-template-columns:var(--v67-action-label) minmax(0,1fr) auto!important;align-items:stretch!important;justify-content:stretch!important;overflow:hidden!important;position:relative!important;background:#08131f!important;border-top:2px solid var(--center-color)!important;border-bottom:2px solid var(--center-color)!important;box-sizing:border-box!important;z-index:900!important}
+.v66-action-status-label{position:relative!important;inset:auto!important;width:auto!important;height:auto!important;display:flex!important;align-items:center!important;justify-content:flex-start!important;padding:0 16px!important;box-sizing:border-box!important;background:#071522!important;color:var(--center-color)!important;z-index:2!important;font-size:11px!important;letter-spacing:.07em!important;white-space:nowrap!important}
+.v66-action-status-label::after{content:""!important;position:absolute!important;right:0!important;top:50%!important;transform:translateY(-50%)!important;width:1px!important;height:var(--v67-divider-h)!important;background:var(--center-color)!important;opacity:.9!important}
+.top-action-current{grid-column:2!important;width:100%!important;min-width:0!important;max-width:none!important;margin:0!important;box-sizing:border-box!important;padding:8px 16px!important;gap:12px!important;overflow:hidden!important}
+.top-action-current strong{min-width:0!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}
+.top-action-label{font-size:10px!important;white-space:nowrap!important}
+.top-action-all{grid-column:3!important;position:relative!important;border-left:0!important;padding:0 16px!important;min-width:104px!important}
+.top-action-all::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);width:1px;height:var(--v67-divider-h);background:var(--center-color);opacity:.9}
+
+/* Identical edge animation geometry on Action and Fleet status bars. */
+.top-action-bar::before,.top-action-bar::after,.operations-bar::before,.operations-bar::after{width:22%!important;height:3px!important;background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.12) 18%,#fff 46%,var(--center-color) 60%,rgba(255,255,255,.15) 80%,transparent 100%)!important;filter:drop-shadow(0 0 7px rgba(var(--center-rgb),.95))!important;pointer-events:none!important;z-index:20!important}
+.top-action-bar::before,.operations-bar::before{top:0!important;bottom:auto!important;animation:b7EdgeLTR 5.8s linear infinite!important}
+.top-action-bar::after,.operations-bar::after{top:auto!important;bottom:0!important;animation:b7EdgeRTL 5.8s linear infinite!important}
+
+/* Sticky page bar: always present, directly attached, left views/right actions. */
+body #floatingActions.page-toolbar,body .page-toolbar{flex:0 0 var(--v67-toolbar-h)!important;height:var(--v67-toolbar-h)!important;min-height:var(--v67-toolbar-h)!important;display:flex!important;align-items:center!important;gap:9px!important;margin:0!important;padding:5px 64px!important;top:auto!important;left:auto!important;right:auto!important;bottom:auto!important;position:relative!important;max-width:none!important;width:100%!important;box-sizing:border-box!important;background:#071522!important;border:0!important;border-bottom:1px solid var(--center-color)!important;border-radius:0!important;box-shadow:none!important;backdrop-filter:none!important;z-index:1800!important;pointer-events:auto!important;overflow:visible!important}
+#floatingActions>button{pointer-events:auto!important;position:relative!important;z-index:1801!important;min-height:33px!important;text-transform:uppercase!important;font-weight:900!important}
+#floatingActions [data-v57tab],#floatingActions .v67-page-nav{order:10!important}
+#floatingActions .v67-page-action{order:20!important}
+#floatingActions .v67-first-action{margin-left:auto!important}
+
+/* Fleet status: tighter label, more message room, same short dividers as Action Status. */
+.operations-bar{position:relative!important;display:grid!important;grid-template-columns:var(--v67-fleet-label) minmax(0,1fr) auto!important;align-items:stretch!important;min-height:58px!important;height:58px!important;margin:0!important;padding:0!important;background:#071522!important;border-top:2px solid var(--center-color)!important;border-bottom:2px solid var(--center-color)!important;overflow:hidden!important}
+.v65-fleet-label,.v65-fleet-ticker,.v65-fleet-summary{min-height:54px!important;display:flex!important;align-items:center!important;box-sizing:border-box!important}
+.v65-fleet-label{padding:0 14px!important;position:relative!important;color:var(--center-color)!important;font-size:11px!important;letter-spacing:.07em!important;white-space:nowrap!important}
+.v65-fleet-ticker{padding:0 18px!important;position:relative!important;min-width:0!important}
+.v65-fleet-summary{padding:0 16px!important;white-space:nowrap!important}
+.v65-fleet-label::after,.v65-fleet-ticker::after{content:""!important;position:absolute!important;right:0!important;top:50%!important;transform:translateY(-50%)!important;width:1px!important;height:var(--v67-divider-h)!important;background:var(--center-color)!important;opacity:.9!important}
+
+/* Footer mirrors the header and stays inside the same Command Center frame. */
+body>footer.v57-footer{width:min(100%,var(--v67-shell-max))!important;max-width:var(--v67-shell-max)!important;min-height:92px!important;margin:0 auto!important;padding:10px 22px!important;display:grid!important;grid-template-columns:1fr auto 1fr!important;align-items:center!important;gap:24px!important;background:#06121d!important;border-top:1px solid rgba(var(--center-rgb),.60)!important;border-bottom:2px solid var(--center-color)!important;box-sizing:border-box!important}
+.v66-footer-left{justify-self:start!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:7px!important}.v66-footer-left strong{font-size:11px!important}
+.v66-footer-center{justify-self:center!important;display:flex!important;align-items:center!important;justify-content:center!important}.v66-footer-kla{width:190px!important;max-height:58px!important;object-fit:contain!important}
+.v66-footer-right{justify-self:end!important;text-align:right!important;font-size:11px!important;line-height:1.35!important}
+.v57-admin-footer-btn{min-width:180px!important}
+
+/* Full-height short pages: no gap below footer. */
+body::after{display:none!important}
+
+@media(max-width:1180px){
+ .v57-header-left,.v57-header-right{font-size:32px!important}.v57-kla-logo{width:250px!important}
+ .main-nav .nav-btn{font-size:12px!important;padding:0 4px!important}
+ body #floatingActions.page-toolbar,body .page-toolbar{padding-left:20px!important;padding-right:20px!important}
+ :root{--v67-action-label:116px;--v67-fleet-label:116px}
+}
+@media(max-width:760px){
+ .v57-header-left,.v57-header-right{font-size:19px!important}.v57-kla-logo{width:170px!important}
+ .main-nav{display:flex!important;overflow-x:auto!important}.main-nav .nav-btn{flex:0 0 auto!important;min-width:130px!important}
+ .v66-action-status-label{display:none!important}.top-action-bar{grid-template-columns:minmax(0,1fr) auto!important}.top-action-current{grid-column:1!important}.top-action-all{grid-column:2!important}
+ .operations-bar{grid-template-columns:1fr!important;height:auto!important}.v65-fleet-label,.v65-fleet-ticker,.v65-fleet-summary{min-height:42px!important}.v65-fleet-label::after,.v65-fleet-ticker::after{display:none!important}
+ body>footer.v57-footer{grid-template-columns:1fr!important;justify-items:center!important;text-align:center!important}.v66-footer-left,.v66-footer-center,.v66-footer-right{justify-self:center!important;align-items:center!important;text-align:center!important}
+}

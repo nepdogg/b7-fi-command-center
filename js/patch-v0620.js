@@ -51,6 +51,6 @@ function classifyLegacyActions62(){
  qsa(':scope > button',bar).forEach(b=>{if(!b.dataset.v57tab&&ACTION_RX.test(b.textContent.trim()))b.classList.add('v62-page-action')});
 }
 function decorate62(){version62();promoteReferenceAdd62();promoteMeetingStart62();hideDuplicateEditorControls62();classifyLegacyActions62();normalizeToolbar62()}
-let busy=false;new MutationObserver(()=>{if(busy)return;busy=true;requestAnimationFrame(()=>{decorate62();busy=false})}).observe(document.body,{childList:true,subtree:true});
+let busy=false;/* v0.67 legacy body observer disabled */
 setTimeout(decorate62,80);
 })();
