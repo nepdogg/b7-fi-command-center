@@ -1,7 +1,7 @@
 /* B7 FI Command Center v0.51.0 — Friday Field-Test Consolidated */
 (function(){
 'use strict';
-const VERSION='0.51.2';
+const VERSION='0.51.3';
 const esc51=(v)=>typeof esc==='function'?esc(String(v??'')):String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const nowISO51=()=>new Date().toISOString();
 const today51=()=>{let d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};

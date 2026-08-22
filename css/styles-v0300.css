@@ -3443,3 +3443,65 @@ body[data-theme="countdown"] .report-title h2{font-size:30px!important;font-weig
 .home500 .home-card500:hover strong{
   filter:brightness(1.12);
 }
+
+/* =========================================================
+   v0.51.3 HEADER GEOMETRY REFINEMENT
+   Consistent diagonal flow: KLA+ / Command Center / Active Page
+   ========================================================= */
+.header-lockup{
+  grid-template-columns:18% 30% 52%!important;
+  overflow:hidden!important;
+  background:#090b10!important;
+}
+.kla-brand-block{
+  grid-column:1!important;
+  position:relative!important;
+  background:#090b10!important;
+  clip-path:polygon(0 0,100% 0,calc(100% - 28px) 100%,0 100%)!important;
+  margin-right:-28px!important;
+  padding-right:42px!important;
+  z-index:3!important;
+}
+.header-app-name{
+  grid-column:2!important;
+  position:relative!important;
+  background:linear-gradient(90deg,#0b568d,#0d6aa9)!important;
+  clip-path:polygon(28px 0,100% 0,calc(100% - 28px) 100%,0 100%)!important;
+  margin-left:0!important;
+  margin-right:-28px!important;
+  padding:0 46px 0 52px!important;
+  z-index:2!important;
+  font-size:26px!important;
+  letter-spacing:.6px!important;
+}
+.header-page-lockup{
+  grid-column:3!important;
+  position:relative!important;
+  clip-path:polygon(28px 0,100% 0,100% 100%,0 100%)!important;
+  padding-left:58px!important;
+  z-index:1!important;
+}
+/* Thin dark wedges repeat the same diagonal language at both joins. */
+.kla-brand-block:after,
+.header-app-name:after{
+  content:""!important;
+  position:absolute!important;
+  top:0!important;
+  right:7px!important;
+  width:13px!important;
+  height:100%!important;
+  background:#090b10!important;
+  transform:skewX(-17deg)!important;
+  transform-origin:top!important;
+  pointer-events:none!important;
+}
+@media(max-width:1350px){
+  .header-lockup{grid-template-columns:17% 31% 52%!important}
+  .header-app-name{font-size:22px!important;padding-left:46px!important;padding-right:40px!important}
+  .header-page-lockup{padding-left:52px!important}
+}
+@media(max-width:1050px){
+  .header-lockup{grid-template-columns:16% 32% 52%!important;min-width:900px!important}
+  .header-app-name{font-size:19px!important;letter-spacing:.35px!important}
+  .header-page-title{font-size:17px!important}
+}
