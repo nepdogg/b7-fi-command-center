@@ -2,7 +2,7 @@
 (function(){
 'use strict';
 window.VERSION='0.63.0';
-const C={home:['#176FA8','23,111,168'],tool:['#8E5AE8','142,90,232'],shipping:['#27AE60','39,174,96'],priority:['#D4A72C','212,167,44'],status:['#F28C28','242,140,40'],meeting:['#19B9D1','25,185,209'],action:['#E54848','229,72,72'],reference:['#E94A9A','233,74,154'],admin:['#A6AFBC','166,175,188']};
+const C={home:['#176FA8','23,111,168'],tool:['#8E5AE8','142,90,232'],shipping:['#27AE60','39,174,96'],priority:['#D4A72C','212,167,44'],status:['#F28C28','242,140,40'],meeting:['#19B9D1','25,185,209'],action:['#E54848','229,72,72'],reference:['#E94A9A','233,74,154'],search:['#4F6BFF','79,107,255'],admin:['#A6AFBC','166,175,188']};
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 function center(){return document.body.dataset.center||'home'}
 function hardTheme(){
