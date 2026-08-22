@@ -3854,3 +3854,75 @@ body.report-preview530::after{
  .main-nav .nav-btn{flex:0 0 auto!important}
  .report-options530{grid-template-columns:repeat(2,1fr)}
 }
+
+/* =========================================================
+   v0.54.0 FINAL CENTER ARCHITECTURE + FRAME REBUILD
+   ========================================================= */
+
+/* Hard reset the top shell seam. Header and nav are adjacent with zero spacer. */
+.sticky-header{gap:0!important}
+.compact-hero{display:block!important;margin:0!important;padding:0!important;height:92px!important;min-height:92px!important;max-height:92px!important}
+.header-lockup{height:92px!important;min-height:92px!important;max-height:92px!important;margin:0!important;padding:0!important}
+.main-nav{margin:0!important;padding:7px 14px!important;min-height:48px!important;border-top:0!important}
+
+/* Identical divider geometry. */
+.header-lockup::before,.header-lockup::after{
+ top:-10px!important;width:12px!important;height:116px!important;
+ transform:skewX(-15deg)!important;transform-origin:center!important;
+ border:0!important;box-shadow:none!important;z-index:999!important;
+}
+.header-lockup::before{left:calc(18% - 6px)!important;background:#fff!important}
+.header-lockup::after{left:calc(48% - 6px)!important;background:#05070a!important}
+
+/* Status lower animation: independent layer directly on bottom border. */
+.top-action-bar{position:relative!important;overflow:hidden!important}
+.top-action-bar::after{
+ content:""!important;display:block!important;visibility:visible!important;opacity:1!important;
+ position:absolute!important;bottom:0!important;left:-24%!important;width:24%!important;height:4px!important;
+ z-index:9999!important;background:linear-gradient(90deg,transparent,#fff,var(--accent),transparent)!important;
+ filter:drop-shadow(0 0 7px rgba(var(--accent-rgb),.95))!important;
+ animation:statusBottom540 7s linear infinite!important;
+}
+@keyframes statusBottom540{from{transform:translateX(0)}to{transform:translateX(520%)}}
+
+/* More top breathing room in Page Actions. */
+.header-status-stack{grid-template-rows:70px 12px 64px!important;min-height:146px!important}
+.page-toolbar,.page-toolbar.v041-page-toolbar{
+ height:64px!important;min-height:64px!important;max-height:64px!important;
+ padding:17px 14px 10px!important;align-items:center!important;box-sizing:border-box!important;
+}
+
+/* Final center navigation */
+.main-nav{justify-content:center!important;gap:6px!important}
+.main-nav .nav-btn{white-space:nowrap!important;padding:9px 13px!important}
+
+/* Internal Center tabs */
+.center-tabs540{
+ display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:0 0 18px;padding:10px 12px;
+ border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;background:#091522;
+}
+.center-tabs540 .btn.primary{background:var(--accent)!important;color:#fff!important;border-color:var(--accent)!important}
+
+/* Larger, simpler Operations Center cards */
+.home-grid500{
+ grid-template-columns:repeat(3,minmax(240px,1fr))!important;
+ gap:16px!important;
+}
+.home-card540{
+ min-height:150px!important;padding:20px!important;text-align:left!important;
+ display:flex!important;flex-direction:column!important;justify-content:space-between!important;
+}
+.home-card540 span{font-size:13px!important;font-weight:900!important;letter-spacing:.08em!important;color:var(--accent)!important}
+.home-card540 strong{font-size:18px!important;line-height:1.3!important;color:#fff!important;font-weight:800!important}
+.home-card540 b{font-size:12px!important;color:#dbe8f5!important}
+
+/* Dormant quarter exception cards stay visible but quiet. */
+.dormant540{opacity:.38!important;filter:saturate(.25)!important;box-shadow:none!important}
+.dormant540:hover{opacity:.55!important}
+
+@media(max-width:1200px){
+ .main-nav{justify-content:flex-start!important;overflow-x:auto!important;flex-wrap:nowrap!important}
+ .main-nav .nav-btn{flex:0 0 auto!important}
+ .home-grid500{grid-template-columns:repeat(2,minmax(240px,1fr))!important}
+}
+@media(max-width:760px){.home-grid500{grid-template-columns:1fr!important}}
