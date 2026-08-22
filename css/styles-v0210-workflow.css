@@ -65,3 +65,15 @@
   .header-app-name{padding-right:28px!important}
   .header-page-lockup{padding-left:46px!important}
 }
+
+/* =========================================================
+   v0.52.0 SIMPLIFIED PAGE IDENTITY
+   One page title in header; no page taglines or duplicate body title.
+   ========================================================= */
+.header-page-sub{display:none!important}
+.header-page-title{white-space:nowrap!important}
+/* Requested visible first divider: white between KLA+ and Command Center. */
+.kla-brand-block::after{background:#fff!important}
+/* Second divider remains black between blue Command Center and page color. */
+.header-app-name::after{background:#080a0f!important}
+footer{border-top:1px solid var(--line)!important;border-bottom:2px solid var(--page-accent,#e4b84d)!important}
