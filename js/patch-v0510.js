@@ -580,4 +580,11 @@ try{
   render();
 }catch(e){}
 setTimeout(()=>{syncTheme51();enhanceHome51();renderTicker51(true)},100);
+
+/* v0.58.0 bridge: expose mature Center renderers to the authoritative shell. */
+window.B7Renderers58={
+  meetingCenter: meetingCenter51,
+  actionCenter: actionCenter51,
+  knowledge: knowledgePage51
+};
 })();

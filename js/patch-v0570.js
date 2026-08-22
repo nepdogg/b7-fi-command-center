@@ -1,16 +1,16 @@
-/* B7 FI Command Center v0.57.0
+/* B7 FI Command Center v0.58.0
    Authoritative router + theme controller.
    This replaces the v0.52-v0.56 stacked shell patches that caused route flicker.
 */
 (function(){
 'use strict';
-window.VERSION='0.57.0';
+window.VERSION='0.58.0';
 
 const CENTER={
-  home:      {name:'OPERATIONS CENTER', color:'#C69220', rgb:'198,146,32'},
+  home:      {name:'OPERATIONS CENTER', color:'#176FA8', rgb:'23,111,168'},
   tool:      {name:'TOOL CENTER',       color:'#8E5AE8', rgb:'142,90,232'},
   shipping:  {name:'SHIPPING CENTER',   color:'#27AE60', rgb:'39,174,96'},
-  priority:  {name:'PRIORITY CENTER',   color:'#2878D0', rgb:'40,120,208'},
+  priority:  {name:'PRIORITY CENTER',   color:'#D4A72C', rgb:'212,167,44'},
   status:    {name:'STATUS CENTER',     color:'#F28C28', rgb:'242,140,40'},
   meeting:   {name:'MEETING CENTER',    color:'#19B9D1', rgb:'25,185,209'},
   action:    {name:'ACTION CENTER',     color:'#E54848', rgb:'229,72,72'},
@@ -33,6 +33,7 @@ function qQuarter(){
 }
 function setCenterTheme(key){
   currentCenter=key;
+  document.body.classList.toggle('v58-home-center',key==='home');
   const c=CENTER[key]||CENTER.home;
   document.body.dataset.center=key;
   document.body.dataset.theme=key; // semantic only; no legacy observer remains
@@ -59,7 +60,7 @@ function setCenterTheme(key){
   const af=document.getElementById('administrationCenterFooter');
   if(af) af.classList.toggle('active',key==='admin');
   const ver=document.getElementById('appVersionLabel');
-  if(ver) ver.textContent='B7 FI Command Center v0.57.0';
+  if(ver) ver.textContent='B7 FI Command Center v0.58.0';
 }
 function cleanLegacyHeading(){
   const candidates=document.querySelectorAll('#app .report-title,#app > .page-title,#app .page-head');
@@ -94,6 +95,8 @@ function ensureReportButton(){
 }
 function postRender(key){
   setCenterTheme(key);
+  const actionBar=document.getElementById('floatingActions');
+  if(actionBar) actionBar.style.display='';
   cleanLegacyHeading();
   removeLegacyActionButtons();
   ensureReportButton();
@@ -135,7 +138,8 @@ function renderHome(){
     else if(d==='backup') renderAdmin('data');
     else route57(d);
   });
-  const bar=document.getElementById('floatingActions'); if(bar) bar.innerHTML='';
+  const bar=document.getElementById('floatingActions');
+  if(bar){bar.innerHTML='';bar.style.display='none';}
 }
 function renderTool(tab=centerTabs.tool){
   centerTabs.tool=tab;
@@ -173,14 +177,16 @@ function renderStatus(tab=centerTabs.status){
   installTabs([['morning','MORNING STATUS'],['extra','LEADS EXTRA STATUS']],tab,renderStatus);
 }
 function renderMeeting(){
-  meetingCenter51();postRender('meeting');
+  if(window.B7Renderers58&&B7Renderers58.meetingCenter) B7Renderers58.meetingCenter(); else throw new Error('Meeting Center renderer unavailable');
+  postRender('meeting');
 }
 function renderAction(){
-  actionCenter51();postRender('action');
+  if(window.B7Renderers58&&B7Renderers58.actionCenter) B7Renderers58.actionCenter(); else throw new Error('Action Center renderer unavailable');
+  postRender('action');
 }
 function renderReference(tab=centerTabs.reference){
   centerTabs.reference=tab;
-  if(tab==='files') referencesPage(); else knowledgePage51();
+  if(tab==='files') referencesPage(); else if(window.B7Renderers58&&B7Renderers58.knowledge) B7Renderers58.knowledge(); else throw new Error('Reference Center renderer unavailable');
   postRender('reference');
   installTabs([['knowledge','FI KNOWLEDGE'],['files','REFERENCE FILES']],tab,renderReference);
 }

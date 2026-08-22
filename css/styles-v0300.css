@@ -4121,3 +4121,177 @@ body.v57-clean-report::after{content:"Press ESC to exit Screenshot View"!importa
  .v57-kla-logo{width:92px!important}
  .v57-operations-grid{grid-template-columns:1fr!important}
 }
+
+/* =========================================================
+   v0.58.0 — DEFINED APP FRAME + FINAL CENTER COLOR/HEADER PASS
+   ========================================================= */
+
+/* Defined application page: centered like a real app/site, never endlessly stretched. */
+html{
+  min-height:100%;
+  background:#070b10!important;
+}
+body{
+  min-height:100vh!important;
+  margin:0!important;
+  background:
+    radial-gradient(circle at 15% 10%,rgba(23,111,168,.08),transparent 32%),
+    radial-gradient(circle at 85% 85%,rgba(255,255,255,.035),transparent 28%),
+    #070b10!important;
+}
+body > .sticky-header,
+body > main#app,
+body > .operations-bar,
+body > footer.v57-footer{
+  width:min(100%,1680px)!important;
+  max-width:1680px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  box-sizing:border-box!important;
+}
+body > .sticky-header,
+body > main#app,
+body > .operations-bar,
+body > footer.v57-footer{
+  box-shadow:
+    -1px 0 0 rgba(157,188,214,.20),
+     1px 0 0 rgba(157,188,214,.20)!important;
+}
+
+/* Give the application itself a visibly defined page surface. */
+body > main#app{
+  background:#06131f!important;
+  min-height:calc(100vh - 344px)!important;
+}
+body > .sticky-header{background:#06131f!important}
+
+/* Header proportions: equal information zones around a stronger KLA centerpiece. */
+.v57-hero{
+  height:100px!important;
+  min-height:100px!important;
+  max-height:100px!important;
+}
+.v57-header{
+  height:100px!important;
+  grid-template-columns:41% 18% 41%!important;
+  background:#07090e!important;
+}
+/* No CSS clip gaps: side shapes meet the center black wedge exactly. */
+.v57-header-left{
+  font-size:30px!important;
+  clip-path:polygon(0 0,100% 0,94% 100%,0 100%)!important;
+  padding-right:6%!important;
+}
+.v57-header-right{
+  font-size:30px!important;
+  clip-path:polygon(6% 0,100% 0,100% 100%,0 100%)!important;
+  padding-left:6%!important;
+}
+.v57-header-center{
+  z-index:4!important;
+  overflow:visible!important;
+}
+/* Matching white separator edges, mathematically mirrored. */
+.v57-header-center::before,
+.v57-header-center::after{
+  top:-3px!important;
+  width:4px!important;
+  height:106px!important;
+  background:#f4f6f8!important;
+  box-shadow:0 0 1px rgba(255,255,255,.5)!important;
+}
+.v57-header-center::before{
+  left:-3px!important;
+  transform:skewX(-16deg)!important;
+}
+.v57-header-center::after{
+  right:-3px!important;
+  transform:skewX(16deg)!important;
+}
+/* Larger KLA+ logo fills the black center without enlarging the center zone. */
+.v57-kla-logo{
+  width:154px!important;
+  max-width:82%!important;
+  max-height:72px!important;
+  object-fit:contain!important;
+}
+
+/* Operations Center is the KLA-blue home identity. */
+body[data-center="home"]{
+  --center-color:#176FA8!important;
+  --center-rgb:23,111,168!important;
+  --accent:#176FA8!important;
+  --accent-rgb:23,111,168!important;
+}
+/* Priority Center now owns gold. */
+body[data-center="priority"]{
+  --center-color:#D4A72C!important;
+  --center-rgb:212,167,44!important;
+  --accent:#D4A72C!important;
+  --accent-rgb:212,167,44!important;
+}
+
+/* Absolutely no Page Actions strip on Operations Center. */
+body.v58-home-center #floatingActions,
+body.v58-home-center .page-toolbar,
+body[data-center="home"] #floatingActions,
+body[data-center="home"] .page-toolbar{
+  display:none!important;
+  height:0!important;
+  min-height:0!important;
+  max-height:0!important;
+  padding:0!important;
+  margin:0!important;
+  border:0!important;
+  overflow:hidden!important;
+}
+body.v58-home-center .header-status-stack,
+body[data-center="home"] .header-status-stack{
+  min-height:70px!important;
+  height:70px!important;
+  grid-template-rows:70px!important;
+}
+
+/* Ensure top status lower animation is never clipped by the next layout row. */
+.top-action-bar{
+  overflow:visible!important;
+  isolation:isolate!important;
+}
+.top-action-bar::after{
+  bottom:-4px!important;
+  height:4px!important;
+  z-index:10000!important;
+}
+
+/* Operations live grid scales with the defined page rather than viewport. */
+.v57-operations-grid{
+  width:min(1080px,calc(100% - 56px))!important;
+  margin:34px auto 48px!important;
+}
+
+/* Larger operational nav now that Administration lives in footer. */
+.main-nav{
+  min-height:54px!important;
+  padding:8px 22px!important;
+  gap:16px!important;
+}
+.main-nav .nav-btn{
+  font-size:14px!important;
+  padding:10px 16px!important;
+}
+
+/* Maintain full-width practicality on smaller work laptops. */
+@media(max-width:1680px){
+  body > .sticky-header,
+  body > main#app,
+  body > .operations-bar,
+  body > footer.v57-footer{
+    width:100%!important;
+  }
+}
+@media(max-width:1150px){
+  .v57-header{grid-template-columns:39% 22% 39%!important}
+  .v57-header-left,.v57-header-right{font-size:23px!important}
+  .v57-kla-logo{width:135px!important}
+  .main-nav{justify-content:flex-start!important;overflow-x:auto!important;gap:9px!important}
+}
