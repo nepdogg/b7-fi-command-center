@@ -481,5 +481,13 @@ document.querySelectorAll('.nav-btn').forEach(b=>b.onclick=()=>setView(b.dataset
 /* Add branded report header to generated report windows through the existing Report Center button. */
 document.title=`B7 FI Command Center v${VERSION}`;
 let ver=document.getElementById('appVersionLabel');if(ver)ver.textContent=`B7 FI Command Center v${VERSION}`;
+/* index.html must always open on Operations Home.
+   Navigation can still move to Tool Countdown normally after startup. */
+try{
+  view='home';
+  document.body.dataset.theme='home';
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.view==='home'));
+  render();
+}catch(e){}
 setTimeout(()=>{syncTheme51();enhanceHome51();renderTicker51(true)},100);
 })();

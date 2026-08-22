@@ -3275,3 +3275,76 @@ body[data-theme="countdown"] .report-title h2{font-size:30px!important;font-weig
 /* Shared Data focus artifact final removal */
 .shared-nav:not(.active){outline:0!important;box-shadow:none!important;border-color:transparent!important}
 .shared-nav:focus:not(:focus-visible){outline:0!important;box-shadow:none!important}
+
+
+/* =========================================================
+   v0.51.1 IMMEDIATE HOME + HEADER FIX
+   ========================================================= */
+
+/* Header is a deliberate 3-zone layout:
+   official KLA+ brand | application name | current page title.
+   This prevents the page title from being pushed off-screen. */
+.header-lockup{
+ display:grid!important;
+ grid-template-columns:minmax(145px,12%) minmax(430px,48%) minmax(360px,40%)!important;
+ align-items:stretch!important;
+ width:100%!important;
+ max-width:none!important;
+ gap:0!important;
+ overflow:hidden!important;
+ padding:0!important;
+}
+.kla-brand-block{
+ grid-column:1!important;
+ min-width:0!important;
+ justify-content:center!important;
+ padding:0 12px!important;
+}
+.kla-header-logo{width:min(105px,80%)!important;height:48px!important}
+.kla-brand-divider{display:none!important}
+.header-app-name{
+ grid-column:2!important;
+ min-width:0!important;
+ justify-content:center!important;
+ padding:0 28px!important;
+ font-size:30px!important;
+ white-space:nowrap!important;
+ overflow:hidden!important;
+}
+.header-diagonal{display:none!important}
+.header-page-lockup{
+ grid-column:3!important;
+ min-width:0!important;
+ width:auto!important;
+ max-width:none!important;
+ margin:0!important;
+ padding:0 24px 0 46px!important;
+ display:flex!important;
+ flex-direction:column!important;
+ justify-content:center!important;
+ clip-path:polygon(28px 0,100% 0,100% 100%,0 100%)!important;
+ overflow:hidden!important;
+}
+.header-page-title{
+ font-size:25px!important;
+ line-height:1.05!important;
+ white-space:nowrap!important;
+ overflow:hidden!important;
+ text-overflow:ellipsis!important;
+}
+.header-page-sub{white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+
+@media(max-width:1350px){
+ .header-lockup{grid-template-columns:120px minmax(360px,47%) minmax(300px,1fr)!important}
+ .header-app-name{font-size:25px!important;padding:0 16px!important}
+ .header-page-title{font-size:21px!important}
+ .header-page-lockup{padding-left:38px!important}
+ .kla-header-logo{width:88px!important}
+}
+@media(max-width:900px){
+ .header-lockup{grid-template-columns:92px minmax(280px,1fr) minmax(230px,.8fr)!important}
+ .header-app-name{font-size:19px!important;padding:0 10px!important}
+ .header-page-title{font-size:16px!important}
+ .header-page-lockup{padding-left:28px!important;padding-right:8px!important}
+ .kla-header-logo{width:72px!important}
+}
