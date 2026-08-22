@@ -4611,3 +4611,26 @@ body.v61-focused-editor #saveCountdown,body.v61-focused-editor #saveShipping,bod
 .v61-weekend-status h2{color:var(--center-color);margin-top:0}.v61-status-meta{display:flex;gap:22px;flex-wrap:wrap;padding:12px 0;border-bottom:1px solid var(--center-color)}.v61-notes{padding:18px 0;line-height:1.5}.v61-weekend-status textarea,.v61-weekend-status input{width:100%;box-sizing:border-box;padding:10px;background:#071521;color:#fff;border:1px solid #39546b;border-radius:5px}
 
 @media(max-width:1180px){.v57-header-left,.v57-header-right{font-size:27px!important}.v57-kla-logo{width:190px!important}}
+
+/* =========================================================
+   v0.62.0 — CENTER NAV LEFT / PAGE ACTIONS RIGHT
+   ========================================================= */
+body:not([data-center="home"]) .page-toolbar{
+  display:flex!important;align-items:center!important;justify-content:flex-start!important;
+  gap:10px!important;padding-left:68px!important;padding-right:68px!important;
+}
+.page-toolbar .v62-page-nav{min-width:145px!important}
+.page-toolbar .v62-first-action{margin-left:auto!important}
+.page-toolbar .v62-page-action + .v62-page-action{margin-left:0!important}
+.page-toolbar .v57-report-btn{margin-left:0!important}
+.page-toolbar .v62-page-action{order:20}
+.page-toolbar .v62-page-nav{order:10}
+.page-toolbar .v62-first-action{order:19}
+/* Global Save/Apply controls are represented in the sticky page bar. */
+#app .v62-content-global-action{display:none!important}
+/* Tool-family separation: use breathing room and a stronger family heading instead of stray divider lines. */
+body[data-center="tool"] #app .type-section{border-top:0!important;margin-top:30px!important;padding-top:0!important}
+body[data-center="tool"] #app .type-section + .type-section{margin-top:42px!important}
+body[data-center="tool"] #app .type-header{border-top:0!important;border-bottom:0!important;padding:0 0 14px!important;margin-bottom:12px!important}
+body[data-center="tool"] #app .type-header h3{font-size:26px!important}
+@media(max-width:900px){body:not([data-center="home"]) .page-toolbar{padding-left:18px!important;padding-right:18px!important}.page-toolbar .v62-page-nav{min-width:130px!important}}
