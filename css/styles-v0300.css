@@ -3505,3 +3505,25 @@ body[data-theme="countdown"] .report-title h2{font-size:30px!important;font-weig
   .header-app-name{font-size:19px!important;letter-spacing:.35px!important}
   .header-page-title{font-size:17px!important}
 }
+
+/* =========================================================
+   v0.51.4 HEADER CONTINUOUS COLOR JOIN
+   Remove separator wedges/gaps so the three header panels touch.
+   ========================================================= */
+.kla-brand-block:after,
+.header-app-name:after{display:none!important;content:none!important}
+.header-diagonal{display:none!important;width:0!important;margin:0!important;padding:0!important}
+.header-lockup{gap:0!important;background:#090b10!important}
+.kla-brand-block{
+  clip-path:polygon(0 0,100% 0,calc(100% - 28px) 100%,0 100%)!important;
+  margin-right:-28px!important;
+}
+.header-app-name{
+  clip-path:polygon(28px 0,100% 0,calc(100% - 28px) 100%,0 100%)!important;
+  margin-left:0!important;
+  margin-right:-28px!important;
+}
+.header-page-lockup{
+  clip-path:polygon(28px 0,100% 0,100% 100%,0 100%)!important;
+  margin-left:0!important;
+}
