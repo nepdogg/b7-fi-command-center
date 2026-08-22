@@ -4553,3 +4553,61 @@ body[data-center="home"] .v57-live-card b{font-size:12px!important}
  body[data-center="home"] > main#app{padding:18px 14px 30px!important}
  body:not([data-center="home"]) .page-toolbar{overflow-x:auto!important;flex-wrap:nowrap!important}
 }
+
+/* =========================================================
+   v0.61.0 — GLOBAL CONSISTENCY / EDGE-TO-EDGE / EDITOR UX
+   ========================================================= */
+/* Stronger header presence without increasing overall height. */
+.v57-header-left,.v57-header-right{font-size:35px!important;font-weight:900!important}
+.v57-kla-logo{width:225px!important;max-width:96%!important;max-height:90px!important}
+
+/* Main navigation has no top accent border; status bar starts the Center color. */
+.main-nav{border-top:0!important}
+.top-action-bar{position:relative!important;z-index:50!important;overflow:visible!important;border-top:2px solid var(--center-color)!important;border-bottom:2px solid var(--center-color)!important}
+.top-action-bar::after{bottom:-5px!important;z-index:100!important;pointer-events:none!important}
+.page-toolbar{position:relative!important;z-index:10!important;margin-top:5px!important}
+
+/* Exact Center color ownership for bottom Fleet Status and footer. */
+body[data-center="home"] .operations-bar,body[data-center="home"] footer.v57-footer{border-color:#176FA8!important}
+body[data-center="tool"] .operations-bar,body[data-center="tool"] footer.v57-footer{border-color:#8E5AE8!important}
+body[data-center="shipping"] .operations-bar,body[data-center="shipping"] footer.v57-footer{border-color:#27AE60!important}
+body[data-center="priority"] .operations-bar,body[data-center="priority"] footer.v57-footer{border-color:#D4A72C!important}
+body[data-center="status"] .operations-bar,body[data-center="status"] footer.v57-footer{border-color:#F28C28!important}
+body[data-center="meeting"] .operations-bar,body[data-center="meeting"] footer.v57-footer{border-color:#19B9D1!important}
+body[data-center="action"] .operations-bar,body[data-center="action"] footer.v57-footer{border-color:#E54848!important}
+body[data-center="reference"] .operations-bar,body[data-center="reference"] footer.v57-footer{border-color:#E94A9A!important}
+body[data-center="admin"] .operations-bar,body[data-center="admin"] footer.v57-footer{border-color:#A6AFBC!important}
+.operations-bar .ops-health,.operations-bar .ops-ticker{border-color:var(--center-color)!important}.ops-ticker-label{color:var(--center-color)!important}
+
+/* True full-browser-height application shell. */
+body{display:grid!important;grid-template-rows:auto minmax(0,1fr) auto auto!important;min-height:100vh!important;height:auto!important;align-content:stretch!important}
+body>.sticky-header{grid-row:1!important}body>main#app{grid-row:2!important;min-height:0!important}body>.operations-bar{grid-row:3!important;margin-top:0!important}body>footer.v57-footer{grid-row:4!important;margin:0 auto!important;align-self:end!important}
+
+/* Remove outer dashboard boxes; keep useful individual cards/tables. */
+#app>.report-screen,#app>.panel,#app>.shared-grid,#app>.action-center-grid,#app>.v61-weekend-status{max-width:none!important;width:auto!important;margin:0!important;padding:22px 26px!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+#app .report-screen{background:transparent!important;border:0!important;box-shadow:none!important}
+#app>.report-screen>.panel,#app>.report-screen>.type-section,#app>.report-screen>.progress-board{border-left:0!important;border-right:0!important;border-radius:0!important}
+/* Flatten category/group wrappers while retaining item cards. */
+body[data-center="action"] .action-group,body[data-center="reference"] .kb-category51,body[data-center="meeting"] .generic-meeting51{background:transparent!important;border:0!important;border-radius:0!important;padding-left:10px!important;padding-right:10px!important}
+
+/* Shipping Center: no outer shell; summary cards stand directly on page. */
+body[data-center="shipping"] #app>.report-screen{padding:28px 26px!important}
+body[data-center="shipping"] .packing-summary-grid{margin:0!important;width:100%!important}
+
+/* Dormant quarter exception cards truly look inactive at zero/no change. */
+.v61-dormant,.v57-dormant{opacity:.34!important;filter:grayscale(.55) saturate(.25)!important;border-color:#41546a!important;box-shadow:none!important}
+
+/* Focused editors: only the selected editor, no general Administration menu. */
+body.v61-focused-editor .admin-tabs,body.v61-focused-editor .admin-launch-grid{display:none!important}
+body.v61-focused-editor #app>.page-head,body.v61-focused-editor #app>.page-title{display:none!important}
+body.v61-focused-editor #saveCountdown,body.v61-focused-editor #saveShipping,body.v61-focused-editor #savePriority,body.v61-focused-editor #saveMorning,body.v61-focused-editor #saveMeet51{display:none!important}
+.v61-editor-body{padding:24px 26px!important}.v61-editor-body>.panel{margin:0!important;border:0!important;background:transparent!important;box-shadow:none!important;padding:0!important}
+.page-toolbar .v61-right{margin-left:auto!important}
+
+/* Action Center add-task modal */
+.v61-modal{position:fixed;inset:0;z-index:200000;background:rgba(0,0,0,.72);display:flex;align-items:center;justify-content:center;padding:20px}.v61-modal-card{width:min(700px,94vw);background:#0b1b29;border:2px solid var(--center-color);border-radius:10px;padding:22px}.v61-modal-card label{display:flex;flex-direction:column;gap:7px;margin:12px 0}.v61-modal-card input,.v61-modal-card select{padding:10px;background:#071521;color:#fff;border:1px solid #39546b;border-radius:5px}.v61-edit-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* Weekend morning status */
+.v61-weekend-status h2{color:var(--center-color);margin-top:0}.v61-status-meta{display:flex;gap:22px;flex-wrap:wrap;padding:12px 0;border-bottom:1px solid var(--center-color)}.v61-notes{padding:18px 0;line-height:1.5}.v61-weekend-status textarea,.v61-weekend-status input{width:100%;box-sizing:border-box;padding:10px;background:#071521;color:#fff;border:1px solid #39546b;border-radius:5px}
+
+@media(max-width:1180px){.v57-header-left,.v57-header-right{font-size:27px!important}.v57-kla-logo{width:190px!important}}
