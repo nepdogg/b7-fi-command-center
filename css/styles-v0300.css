@@ -4634,3 +4634,50 @@ body[data-center="tool"] #app .type-section + .type-section{margin-top:42px!impo
 body[data-center="tool"] #app .type-header{border-top:0!important;border-bottom:0!important;padding:0 0 14px!important;margin-bottom:12px!important}
 body[data-center="tool"] #app .type-header h3{font-size:26px!important}
 @media(max-width:900px){body:not([data-center="home"]) .page-toolbar{padding-left:18px!important;padding-right:18px!important}.page-toolbar .v62-page-nav{min-width:130px!important}}
+
+/* =========================================================
+   v0.63.0 — GLOBAL CHROME / NAV RELIABILITY / STATUS CENTER
+   ========================================================= */
+html,body{min-height:100%!important}
+body{min-height:100vh!important;min-height:100dvh!important;display:flex!important;flex-direction:column!important;align-items:stretch!important}
+body>.sticky-header{flex:0 0 auto!important;width:100%!important}
+body>main#app{flex:1 0 auto!important;width:100%!important;box-sizing:border-box!important}
+body>.operations-bar,body>footer.v57-footer{flex:0 0 auto!important;width:100%!important;box-sizing:border-box!important;margin-left:0!important;margin-right:0!important}
+
+/* Larger header lockup: use the available black/color header space. */
+.v57-header-left,.v57-header-right{font-size:39px!important;font-weight:900!important;letter-spacing:.3px!important;text-transform:uppercase!important}
+.v57-kla-logo{width:260px!important;max-width:98%!important;max-height:96px!important}
+.main-nav .nav-btn{font-size:15px!important;font-weight:800!important;text-transform:uppercase!important;padding:12px 8px!important}
+
+/* Page bar is interactive even when the application itself is in read-only data mode. */
+#floatingActions{pointer-events:auto!important;z-index:500!important}
+#floatingActions>button{pointer-events:auto!important;position:relative!important;z-index:501!important;text-transform:uppercase!important;font-weight:800!important}
+body:not([data-center="home"]) .page-toolbar,body[data-center="home"] .page-toolbar{display:flex!important;align-items:center!important;gap:10px!important;padding:9px 68px!important;min-height:58px!important;background:#071522!important;border-bottom:1px solid var(--center-color)!important}
+.page-toolbar .v63-nav{order:10!important;min-width:145px!important}
+.page-toolbar .v63-action{order:20!important}
+.page-toolbar .v63-first-action{margin-left:auto!important}
+body[data-center="home"] .header-status-stack{height:auto!important;min-height:128px!important;grid-template-rows:70px 58px!important}
+body[data-center="home"] #floatingActions{display:flex!important;justify-content:flex-end!important}
+body[data-center="home"] #floatingActions .v63-first-action{margin-left:auto!important}
+
+/* The top-status lower sweep is always visible INSIDE the bottom edge so the page bar cannot cover it. */
+.top-action-bar{position:relative!important;overflow:hidden!important;border-bottom:2px solid var(--center-color)!important;z-index:300!important}
+body:not(.wallboard-mode) .header-status-stack .top-action-bar::after{
+ content:""!important;display:block!important;visibility:visible!important;opacity:1!important;
+ position:absolute!important;left:-24%!important;top:auto!important;bottom:0!important;width:24%!important;height:4px!important;
+ z-index:99999!important;pointer-events:none!important;
+ background:linear-gradient(90deg,transparent,#fff,var(--center-color),transparent)!important;
+ filter:drop-shadow(0 0 8px rgba(var(--center-rgb),1))!important;
+ animation:v63TopStatusSweep 6.2s linear infinite!important;
+}
+@keyframes v63TopStatusSweep{from{transform:translateX(0)}to{transform:translateX(530%)}}
+
+/* Bottom Fleet Status and footer always inherit the active Center identity. */
+.operations-bar{border-top:2px solid var(--center-color)!important;border-bottom:2px solid var(--center-color)!important}
+.operations-bar .ops-health,.operations-bar .ops-ticker{border-color:var(--center-color)!important}
+.operations-bar .ops-ticker-label{color:var(--center-color)!important}
+.operations-bar::before,.operations-bar::after{background:linear-gradient(90deg,transparent,#fff,var(--center-color),transparent)!important;filter:drop-shadow(0 0 7px rgba(var(--center-rgb),.95))!important}
+footer.v57-footer{border-top:1px solid rgba(var(--center-rgb),.6)!important;border-bottom:2px solid var(--center-color)!important}
+
+@media(max-width:1180px){.v57-header-left,.v57-header-right{font-size:30px!important}.v57-kla-logo{width:215px!important}body:not([data-center="home"]) .page-toolbar,body[data-center="home"] .page-toolbar{padding-left:20px!important;padding-right:20px!important}}
+@media(max-width:760px){.v57-header-left,.v57-header-right{font-size:19px!important}.v57-kla-logo{width:150px!important}.main-nav .nav-btn{font-size:12px!important}}
