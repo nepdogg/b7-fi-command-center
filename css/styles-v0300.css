@@ -4295,3 +4295,201 @@ body[data-center="home"] .header-status-stack{
   .v57-kla-logo{width:135px!important}
   .main-nav{justify-content:flex-start!important;overflow-x:auto!important;gap:9px!important}
 }
+
+/* =========================================================
+   v0.59.0 — FINAL DEFINED-PAGE SHELL PASS
+   ========================================================= */
+
+/* The entire application behaves as one defined page from top to bottom. */
+html{
+  min-height:100%!important;
+  background:#05080c!important;
+}
+body{
+  min-height:100vh!important;
+  margin:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  background:#05080c!important;
+  overflow-x:hidden!important;
+}
+body > .sticky-header,
+body > main#app,
+body > .operations-bar,
+body > footer.v57-footer{
+  width:min(100%,1680px)!important;
+  max-width:1680px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  box-sizing:border-box!important;
+  flex-shrink:0!important;
+}
+
+/* Main content expands on short Centers so the status/footer reaches browser bottom,
+   while long Centers continue growing naturally. */
+body > main#app{
+  flex:1 0 auto!important;
+  min-height:0!important;
+  background:#06131f!important;
+  border-left:1px solid rgba(138,169,196,.18)!important;
+  border-right:1px solid rgba(138,169,196,.18)!important;
+}
+
+/* Keep the bottom system chrome at the end of the defined page. */
+body > .operations-bar{margin-top:auto!important}
+body > footer.v57-footer{margin-top:0!important}
+
+/* Header: blue permanent command identity + true black center wedge + active Center color.
+   No floating white lines. The actual color boundaries ARE the diagonal dividers. */
+.v57-hero{
+  height:104px!important;
+  min-height:104px!important;
+  max-height:104px!important;
+  background:#07090e!important;
+}
+.v57-header{
+  height:104px!important;
+  grid-template-columns:40.5% 19% 40.5%!important;
+  overflow:hidden!important;
+  background:#07090e!important;
+}
+.v57-header-left{
+  background:#176FA8!important;
+  clip-path:polygon(0 0,100% 0,93% 100%,0 100%)!important;
+  padding-right:7%!important;
+  font-size:31px!important;
+}
+.v57-header-center{
+  background:#07090e!important;
+  overflow:visible!important;
+  z-index:5!important;
+}
+.v57-header-center::before,
+.v57-header-center::after{
+  content:none!important;
+  display:none!important;
+}
+.v57-header-right{
+  background:var(--center-color)!important;
+  clip-path:polygon(7% 0,100% 0,100% 100%,0 100%)!important;
+  padding-left:7%!important;
+  font-size:31px!important;
+}
+/* KLA+ is intentionally dominant in the black center. */
+.v57-kla-logo{
+  width:190px!important;
+  max-width:92%!important;
+  max-height:82px!important;
+  height:auto!important;
+  object-fit:contain!important;
+}
+
+/* Navigation uses the whole defined application width. */
+.main-nav{
+  width:100%!important;
+  min-height:58px!important;
+  display:grid!important;
+  grid-template-columns:repeat(8,minmax(0,1fr))!important;
+  gap:10px!important;
+  align-items:center!important;
+  justify-content:stretch!important;
+  padding:8px 16px!important;
+  box-sizing:border-box!important;
+  overflow:visible!important;
+}
+.main-nav .nav-btn{
+  width:100%!important;
+  min-width:0!important;
+  padding:11px 8px!important;
+  font-size:14px!important;
+  line-height:1.15!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+}
+.main-nav .nav-btn.active{
+  background:var(--center-color)!important;
+  border-color:rgba(255,255,255,.62)!important;
+  color:#fff!important;
+  box-shadow:0 0 14px rgba(var(--center-rgb),.38)!important;
+}
+
+/* Force every frame accent to the active Center identity. */
+.top-action-bar{
+  border-top-color:var(--center-color)!important;
+  border-bottom-color:var(--center-color)!important;
+}
+body:not([data-center="home"]) .page-toolbar{
+  border-top-color:var(--center-color)!important;
+  border-bottom-color:var(--center-color)!important;
+}
+.operations-bar{
+  position:relative!important;
+  border-top:2px solid var(--center-color)!important;
+  border-bottom:2px solid var(--center-color)!important;
+  box-shadow:none!important;
+}
+.operations-bar .ops-health{
+  border-right-color:var(--center-color)!important;
+}
+.operations-bar .ops-ticker{
+  border-left-color:var(--center-color)!important;
+  border-right-color:var(--center-color)!important;
+}
+.operations-bar .ops-ticker-label{
+  color:var(--center-color)!important;
+}
+.operations-bar::before,
+.operations-bar::after{
+  background:linear-gradient(90deg,transparent,#fff,var(--center-color),transparent)!important;
+  filter:drop-shadow(0 0 7px rgba(var(--center-rgb),.90))!important;
+}
+footer.v57-footer{
+  border-top:1px solid rgba(var(--center-rgb),.55)!important;
+  border-bottom:2px solid var(--center-color)!important;
+}
+
+/* Suppress old fixed accent colors that can bleed into global status chrome. */
+body[data-center] .operations-bar,
+body[data-center] footer.v57-footer{
+  --page-accent:var(--center-color)!important;
+  --fleet-accent:var(--center-color)!important;
+  --live-page-accent:var(--center-color)!important;
+}
+
+/* Operations Center remains intentionally clean. */
+body[data-center="home"] #floatingActions,
+body[data-center="home"] .page-toolbar{
+  display:none!important;
+}
+body[data-center="home"] .header-status-stack{
+  height:70px!important;
+  min-height:70px!important;
+  grid-template-rows:70px!important;
+}
+
+/* Defined-page edges are visible without looking like a card. */
+body > .sticky-header,
+body > main#app,
+body > .operations-bar,
+body > footer.v57-footer{
+  border-left:1px solid rgba(138,169,196,.16)!important;
+  border-right:1px solid rgba(138,169,196,.16)!important;
+}
+
+/* On work laptops the page remains usable; buttons stay evenly distributed
+   until the viewport is genuinely too narrow. */
+@media(max-width:1180px){
+  .v57-header{grid-template-columns:38.5% 23% 38.5%!important}
+  .v57-header-left,.v57-header-right{font-size:23px!important}
+  .v57-kla-logo{width:165px!important}
+  .main-nav{
+    grid-template-columns:repeat(8,minmax(115px,1fr))!important;
+    overflow-x:auto!important;
+    justify-content:start!important;
+  }
+}
+@media(max-width:760px){
+  .v57-header-left,.v57-header-right{font-size:16px!important}
+  .v57-kla-logo{width:125px!important}
+}

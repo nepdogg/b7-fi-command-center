@@ -1,10 +1,10 @@
-/* B7 FI Command Center v0.58.0
+/* B7 FI Command Center v0.59.0
    Authoritative router + theme controller.
    This replaces the v0.52-v0.56 stacked shell patches that caused route flicker.
 */
 (function(){
 'use strict';
-window.VERSION='0.58.0';
+window.VERSION='0.59.0';
 
 const CENTER={
   home:      {name:'OPERATIONS CENTER', color:'#176FA8', rgb:'23,111,168'},
@@ -41,8 +41,16 @@ function setCenterTheme(key){
   document.documentElement.style.setProperty('--accent-rgb',c.rgb);
   document.documentElement.style.setProperty('--center-color',c.color);
   document.documentElement.style.setProperty('--center-rgb',c.rgb);
+  document.documentElement.style.setProperty('--page-accent',c.color);
+  document.documentElement.style.setProperty('--page-accent-rgb',c.rgb);
+  document.documentElement.style.setProperty('--fleet-accent',c.color);
+  document.documentElement.style.setProperty('--fleet-rgb',c.rgb);
+  document.documentElement.style.setProperty('--live-page-accent',c.color);
+  document.documentElement.style.setProperty('--live-page-rgb',c.rgb);
   document.body.style.setProperty('--accent',c.color);
   document.body.style.setProperty('--accent-rgb',c.rgb);
+  document.body.style.setProperty('--page-accent',c.color);
+  document.body.style.setProperty('--page-accent-rgb',c.rgb);
   document.body.style.setProperty('--fleet-accent',c.color);
   document.body.style.setProperty('--fleet-rgb',c.rgb);
   document.body.style.setProperty('--live-page-accent',c.color);
@@ -60,7 +68,7 @@ function setCenterTheme(key){
   const af=document.getElementById('administrationCenterFooter');
   if(af) af.classList.toggle('active',key==='admin');
   const ver=document.getElementById('appVersionLabel');
-  if(ver) ver.textContent='B7 FI Command Center v0.58.0';
+  if(ver) ver.textContent='B7 FI Command Center v0.59.0';
 }
 function cleanLegacyHeading(){
   const candidates=document.querySelectorAll('#app .report-title,#app > .page-title,#app .page-head');
