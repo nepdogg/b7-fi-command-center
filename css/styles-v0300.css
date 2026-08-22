@@ -3348,3 +3348,98 @@ body[data-theme="countdown"] .report-title h2{font-size:30px!important;font-weig
  .header-page-lockup{padding-left:28px!important;padding-right:8px!important}
  .kla-header-logo{width:72px!important}
 }
+
+
+/* =========================================================
+   v0.51.2 HEADER / NAVIGATION / HOME POLISH
+   ========================================================= */
+
+/* Three-zone permanent header:
+   18% KLA+ black | 30% Command Center blue | 52% active page color.
+   Only the right section changes with page accent. */
+.header-lockup{
+  grid-template-columns:18% 30% 52%!important;
+  background:#0b0c12!important;
+}
+.kla-brand-block{
+  grid-column:1!important;
+  background:#0b0c12!important;
+  justify-content:center!important;
+  padding:0 18px!important;
+}
+.header-app-name{
+  grid-column:2!important;
+  background:linear-gradient(90deg,#0d5f9d,#1177bd)!important;
+  color:#fff!important;
+  justify-content:center!important;
+  text-align:center!important;
+  font-size:28px!important;
+  padding:0 20px!important;
+  box-shadow:inset 1px 0 0 rgba(255,255,255,.08),inset -1px 0 0 rgba(0,0,0,.22)!important;
+  clip-path:polygon(0 0,100% 0,calc(100% - 24px) 100%,0 100%)!important;
+  margin-right:-24px!important;
+  z-index:2!important;
+}
+.header-page-lockup{
+  grid-column:3!important;
+  background:linear-gradient(100deg,rgba(var(--accent-rgb),.92),rgba(var(--accent-rgb),.64))!important;
+  padding-left:54px!important;
+  clip-path:polygon(28px 0,100% 0,100% 100%,0 100%)!important;
+  z-index:1!important;
+}
+.header-page-title{color:#fff!important;text-shadow:0 1px 2px rgba(0,0,0,.38)!important}
+.header-page-sub{color:#fff!important;opacity:.95!important}
+
+/* Laptop proportion refinement */
+@media(max-width:1350px){
+  .header-lockup{grid-template-columns:15% 33% 52%!important}
+  .header-app-name{font-size:23px!important;padding:0 14px!important}
+  .header-page-lockup{padding-left:44px!important}
+}
+@media(max-width:900px){
+  .header-lockup{grid-template-columns:14% 34% 52%!important;min-width:760px!important}
+  .header-app-name{font-size:18px!important}
+  .header-page-title{font-size:16px!important}
+}
+
+/* Global active navigation style: accent background + WHITE text */
+.main-nav .nav-btn.active,
+.main-nav .nav-btn[aria-current="page"]{
+  background:var(--accent)!important;
+  color:#fff!important;
+  border-color:rgba(255,255,255,.45)!important;
+  font-weight:900!important;
+  text-shadow:0 1px 2px rgba(0,0,0,.55)!important;
+  box-shadow:0 0 15px rgba(var(--accent-rgb),.34)!important;
+}
+.main-nav .nav-btn.active *,
+.main-nav .nav-btn[aria-current="page"] *{color:#fff!important}
+
+/* Home live-card interaction matches Tool Countdown card language */
+.cc-live-card512,
+.home500 .home-card500,
+.home500 .metric-card{
+  cursor:pointer!important;
+  transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease,background .18s ease!important;
+  will-change:transform;
+}
+.cc-live-card512:hover,
+.home500 .home-card500:hover,
+.home500 .metric-card:hover{
+  transform:translateY(-4px)!important;
+  border-color:var(--accent)!important;
+  background:
+    linear-gradient(180deg,rgba(var(--accent-rgb),.09),rgba(var(--accent-rgb),.025)),
+    #081725!important;
+  box-shadow:
+    0 0 0 1px rgba(var(--accent-rgb),.16),
+    0 0 18px rgba(var(--accent-rgb),.34),
+    0 10px 24px rgba(0,0,0,.30)!important;
+}
+.cc-live-card512:hover b,
+.cc-live-card512:hover strong,
+.cc-live-card512:hover span,
+.home500 .home-card500:hover b,
+.home500 .home-card500:hover strong{
+  filter:brightness(1.12);
+}

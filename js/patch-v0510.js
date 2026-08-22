@@ -1,7 +1,7 @@
 /* B7 FI Command Center v0.51.0 — Friday Field-Test Consolidated */
 (function(){
 'use strict';
-const VERSION='0.51.0';
+const VERSION='0.51.2';
 const esc51=(v)=>typeof esc==='function'?esc(String(v??'')):String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const nowISO51=()=>new Date().toISOString();
 const today51=()=>{let d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
@@ -479,6 +479,96 @@ render=function(){
 document.querySelectorAll('.nav-btn').forEach(b=>b.onclick=()=>setView(b.dataset.view));
 
 /* Add branded report header to generated report windows through the existing Report Center button. */
+
+/* ---------------- v0.51.2 Global navigation-state + home-card polish ---------------- */
+function syncActiveNav512(targetView){
+ const v=targetView||view||document.body.dataset.theme||'home';
+ document.querySelectorAll('.nav-btn').forEach(btn=>{
+   const active=btn.dataset.view===v;
+   btn.classList.toggle('active',active);
+   btn.setAttribute('aria-current',active?'page':'false');
+ });
+}
+
+/* Keep active navigation correct even for pages rendered directly by patched functions. */
+const _meetingCenter512=meetingCenter51;
+meetingCenter51=function(){
+ _meetingCenter512();
+ syncActiveNav512('meetingcenter');
+};
+
+const _knowledge512=knowledgePage51;
+knowledgePage51=function(){
+ _knowledge512();
+ syncActiveNav512('knowledge');
+};
+
+const _references512=referencesPage;
+referencesPage=function(){
+ _references512();
+ syncActiveNav512('references');
+};
+
+const _actionCenter512=actionCenter51;
+actionCenter51=function(){
+ _actionCenter512();
+ syncActiveNav512('actions');
+};
+
+const _admin512=admin;
+admin=function(section='home'){
+ _admin512(section);
+ syncActiveNav512('admin');
+};
+
+const _workspace512=workspace;
+workspace=function(tab='tasks'){
+ _workspace512(tab);
+ syncActiveNav512('workspace');
+};
+
+const _weekend512=weekend;
+weekend=function(){
+ _weekend512();
+ syncActiveNav512('weekend');
+};
+
+const _morning512=morning;
+morning=function(){
+ _morning512();
+ syncActiveNav512('meeting');
+};
+
+const _toolStatus512=toolStatus;
+toolStatus=function(id){
+ _toolStatus512(id);
+ syncActiveNav512('systems');
+};
+
+/* Final router guard: active state always follows the requested view. */
+const _setView512=setView;
+setView=function(v){
+ _setView512(v);
+ setTimeout(()=>syncActiveNav512(v),0);
+};
+
+/* Every clickable Home live card uses the same interaction language as Tool Countdown cards. */
+function homeHoverPolish512(){
+ document.querySelectorAll('.home-card500,.home500 .metric-card,.home500 [data-home-view]').forEach(card=>{
+   if(card.dataset.hover512==='1')return;
+   card.dataset.hover512='1';
+   card.classList.add('cc-live-card512');
+ });
+}
+const _enhanceHome512=enhanceHome51;
+enhanceHome51=function(){
+ _enhanceHome512();
+ homeHoverPolish512();
+};
+
+/* Initial sync */
+setTimeout(()=>{syncActiveNav512(view||'home');homeHoverPolish512();},120);
+
 document.title=`B7 FI Command Center v${VERSION}`;
 let ver=document.getElementById('appVersionLabel');if(ver)ver.textContent=`B7 FI Command Center v${VERSION}`;
 /* index.html must always open on Operations Home.
