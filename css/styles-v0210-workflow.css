@@ -12,3 +12,56 @@
 @media(max-width:1000px){.v21-task-create{grid-template-columns:1fr 1fr!important}.v21-task{grid-template-columns:5px 1fr 1fr!important}.task-main{grid-column:2/-1}.handoff-grid{grid-template-columns:1fr 1fr}.customer-req-grid{grid-template-columns:1fr}.v21-countdown{grid-template-columns:repeat(3,1fr)!important}.meeting-action-builder{grid-template-columns:1fr}.change-history-row{grid-template-columns:1fr}.packing-banner{align-items:flex-start;flex-direction:column}}
 /* v0.21.1 Weekend day separation */
 .weekend-volunteer-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px}.weekend-day-block{border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden}.weekend-day-title{margin:0;padding:12px 14px;background:#10243a;color:var(--accent);letter-spacing:.04em}.weekend-day-block .table-wrap{margin:0}.weekend-day-block table{margin:0}@media(max-width:900px){.weekend-volunteer-grid{grid-template-columns:1fr}}
+
+
+/* =========================================================
+   v0.51.5 SOLID DIAGONAL HEADER DIVIDERS
+   Preserve v0.51.4 proportions and continuous panels.
+   Add one clean black diagonal transition at each boundary.
+   ========================================================= */
+.header-lockup{position:relative!important;overflow:hidden!important}
+
+/* Each panel remains continuous; dividers overlay the joins. */
+.kla-brand-block,
+.header-app-name,
+.header-page-lockup{position:relative!important}
+
+/* Thin solid black slash at KLA -> Command Center boundary */
+.kla-brand-block::after{
+  content:""!important;
+  position:absolute!important;
+  top:-8%!important;
+  right:-8px!important;
+  width:16px!important;
+  height:116%!important;
+  background:#080a0f!important;
+  transform:skewX(-16deg)!important;
+  transform-origin:center!important;
+  z-index:20!important;
+  pointer-events:none!important;
+}
+
+/* Thin solid black slash at Command Center -> active page boundary */
+.header-app-name::after{
+  content:""!important;
+  position:absolute!important;
+  top:-8%!important;
+  right:-8px!important;
+  width:16px!important;
+  height:116%!important;
+  background:#080a0f!important;
+  transform:skewX(-16deg)!important;
+  transform-origin:center!important;
+  z-index:20!important;
+  pointer-events:none!important;
+}
+
+/* Keep titles safely clear of the diagonal dividers. */
+.header-app-name{padding-left:24px!important;padding-right:32px!important}
+.header-page-lockup{padding-left:52px!important}
+
+@media(max-width:1350px){
+  .kla-brand-block::after,.header-app-name::after{width:14px!important;right:-7px!important}
+  .header-app-name{padding-right:28px!important}
+  .header-page-lockup{padding-left:46px!important}
+}
