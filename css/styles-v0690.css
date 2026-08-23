@@ -1,0 +1,33 @@
+/* v0.69.0 — stable three-zone Action Status bar */
+:root{--v69-action-label:112px;--v69-action-right:156px;--v69-divider-h:26px}
+/* Legacy pseudo label must never consume Operations toolbar space. */
+#floatingActions.page-toolbar::before,.page-toolbar::before{content:none!important;display:none!important}
+/* Operations keeps the structural page bar, but only Screenshot/Report on the right. */
+body[data-center="home"] #floatingActions.page-toolbar{justify-content:flex-end!important;padding-left:28px!important;padding-right:28px!important}
+body[data-center="home"] #floatingActions.page-toolbar>button{margin-left:8px!important}
+/* Action bar owns exactly two outer zones: beacon + current action. */
+.top-action-bar{grid-template-columns:var(--v69-action-label) minmax(0,1fr)!important;border-top:2px solid var(--center-color)!important;border-bottom:2px solid var(--center-color)!important;overflow:hidden!important}
+.v66-action-status-label{grid-column:1!important;min-width:0!important;width:auto!important;padding:0 10px!important;gap:7px!important;justify-content:center!important;overflow:hidden!important;text-align:center!important}
+.v66-action-status-label::after{height:var(--v69-divider-h)!important}
+.v69-lamp{width:8px;height:8px;flex:0 0 8px;border-radius:50%;background:#738191;box-shadow:0 0 4px rgba(160,175,190,.4)}
+.v66-action-status-label[data-status="critical"] .v69-lamp{background:#ff4058;box-shadow:0 0 8px #ff4058,0 0 17px rgba(255,64,88,.85);animation:v69CriticalBeacon 2.7s ease-in-out infinite}
+.v66-action-status-label[data-status="critical"]{color:#ff5268!important}
+.v66-action-status-label[data-status="attention"] .v69-lamp{background:#ff8a2b;box-shadow:0 0 10px rgba(255,138,43,.9)}
+.v66-action-status-label[data-status="attention"]{color:#ff9a42!important}
+.v66-action-status-label[data-status="reminder"] .v69-lamp{background:#e4bd32;box-shadow:0 0 10px rgba(228,189,50,.85)}
+.v66-action-status-label[data-status="reminder"]{color:#e4bd32!important}
+.v66-action-status-label[data-status="information"] .v69-lamp{background:#4f9cff;box-shadow:0 0 10px rgba(79,156,255,.85)}
+.v66-action-status-label[data-status="information"]{color:#65aaff!important}
+@keyframes v69CriticalBeacon{0%,100%{opacity:.68;box-shadow:0 0 6px #ff4058,0 0 12px rgba(255,64,88,.5)}50%{opacity:1;box-shadow:0 0 11px #ff4058,0 0 24px rgba(255,64,88,.95)}}
+/* No transform/width/padding animation: prevents ticker jitter. */
+.top-action-current{grid-column:2!important;display:grid!important;grid-template-columns:max-content minmax(0,1fr) var(--v69-action-right)!important;align-items:center!important;width:100%!important;min-width:0!important;margin:0!important;padding:0 12px!important;gap:12px!important;overflow:hidden!important;box-sizing:border-box!important;transform:none!important}
+.v69-severity{font-size:10px!important;font-weight:900!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;max-width:210px!important;justify-self:start!important}
+.v69-message{display:block!important;min-width:0!important;width:100%!important;text-align:center!important;justify-self:stretch!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+.v69-nav{position:relative!important;justify-self:stretch!important;text-align:center!important;white-space:nowrap!important;color:var(--center-color)!important;font-weight:900!important;font-size:11px!important;padding-left:12px!important;box-sizing:border-box!important}
+.v69-nav::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);width:1px;height:var(--v69-divider-h);background:var(--center-color);opacity:.9}
+.top-action-all{display:none!important}
+/* Old v0.68 beacon transform animation can no longer influence layout. */
+.v68-lamp{animation:none!important;transform:none!important}
+@media(prefers-reduced-motion:reduce){.v69-lamp{animation:none!important}}
+@media(max-width:900px){:root{--v69-action-label:102px;--v69-action-right:128px}.v69-severity{max-width:145px!important}.top-action-current{gap:7px!important;padding:0 8px!important}.v69-message{font-size:12px!important}}
+@media(max-width:760px){.v66-action-status-label{display:none!important}.top-action-bar{grid-template-columns:1fr!important}.top-action-current{grid-column:1!important;grid-template-columns:minmax(0,1fr) 116px!important}.v69-severity{display:none!important}.v69-nav{grid-column:2!important}.v69-message{grid-column:1!important}}
