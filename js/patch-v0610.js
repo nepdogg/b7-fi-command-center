@@ -45,6 +45,6 @@ function genericEditor61(){let saveMeet=qs('#saveMeet51');if(saveMeet&&!document
 function decorate61(){let c=document.body.dataset.center||'home';theme61(c);removeShippingHelp61();dormantToolSummary61();genericEditor61();if(c==='action'){qsa('#app section.panel').forEach(s=>{if(/Add Manual Reminder/i.test(s.textContent))s.remove()});actionNav61()}if(c==='status'&&!document.body.classList.contains('v61-focused-editor')){let bar=qs('#floatingActions');if(bar&&!qs('.v61-weekend-btn',bar)){let btn=document.createElement('button');btn.className='btn v61-weekend-btn';btn.textContent='WEEKEND MORNING STATUS';btn.onclick=()=>weekendStatus61(false);let report=qsa('button',bar).find(x=>x.textContent.trim()==='REPORT');bar.insertBefore(btn,bar.firstChild)}}}
 
 let oldSetView=window.setView;window.setView=function(v){document.body.classList.remove('v61-focused-editor');oldSetView(v);setTimeout(decorate61,0)};
-let obsBusy=false;new MutationObserver(()=>{if(obsBusy)return;obsBusy=true;requestAnimationFrame(()=>{decorate61();obsBusy=false})}).observe(document.getElementById('app'),{childList:true,subtree:false});
+// v0.80.1 performance: setView wrapper already decorates after navigation; continuous DOM observer removed.
 setTimeout(decorate61,50);
 })();

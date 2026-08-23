@@ -80,8 +80,6 @@ function stabilize(){toolbarRules();removeBodyDuplicates();paintFleet();ensureVe
 const prior=window.setView;if(typeof prior==='function'){window.setView=function(v){const r=prior(v);syncUrl(v);setTimeout(stabilize,0);setTimeout(stabilize,80);return r}}
 // Main navigation always uses the wrapped router.
 $$('.main-nav .nav-btn').forEach(b=>{b.onclick=()=>window.setView(b.dataset.view)});
-const app=$('#app');if(app)new MutationObserver(()=>setTimeout(stabilize,10)).observe(app,{childList:true,subtree:false});
-const tool=$('#floatingActions');if(tool)new MutationObserver(()=>setTimeout(toolbarRules,10)).observe(tool,{childList:true,subtree:false});
-const fleet=$('#operationsBar');if(fleet)new MutationObserver(()=>setTimeout(paintFleet,20)).observe(fleet,{childList:true,subtree:true,characterData:true});
-setTimeout(()=>{restoreUrl();stabilize()},360);setInterval(paintFleet,1500);
+// v0.80.1 performance: legacy continuous observers/painter removed.
+setTimeout(()=>{restoreUrl();stabilize()},360);
 })();

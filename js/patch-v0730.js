@@ -37,9 +37,8 @@ function paint(){
   }finally{painting=false}
 }
 function toolbar(){const bar=$('#floatingActions');if(!bar)return;const buttons=$$(':scope > button',bar);const nav=buttons.filter(b=>b.classList.contains('v70-page-nav')||b.dataset.v57tab);const actions=buttons.filter(b=>!nav.includes(b));buttons.forEach(b=>{b.classList.toggle('v70-page-nav',nav.includes(b));b.classList.toggle('v70-page-action',actions.includes(b));b.classList.remove('v70-first-action');b.style.marginTop='';b.style.marginBottom=''});nav.forEach(b=>bar.appendChild(b));actions.forEach(b=>bar.appendChild(b));if(actions[0])actions[0].classList.add('v70-first-action')}
-function version(){const v=$('#appVersionLabel');if(v)v.textContent='B7 FI COMMAND CENTER v0.79.0'}
+function version(){const v=$('#appVersionLabel');if(v)v.textContent='B7 FI COMMAND CENTER v0.80.1'}
 function run(){paint();toolbar();version()}
-const obs=new MutationObserver(()=>requestAnimationFrame(run));
-['#topActionBar','#operationsBar'].forEach(sel=>{const el=$(sel);if(el)obs.observe(el,{childList:true,subtree:true,characterData:true})});
-setTimeout(run,80);setTimeout(run,300);setTimeout(run,900);setInterval(paint,1600);
+// v0.80.1 performance: no continuous status observer/painter.
+setTimeout(run,80);setTimeout(run,300);setTimeout(run,900);
 })();

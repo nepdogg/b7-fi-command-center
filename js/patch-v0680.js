@@ -18,6 +18,6 @@ function universalReference(){if(document.body.dataset.center!=='reference')retu
 }
 function footer(){const v=$('#appVersionLabel');if(v)v.textContent='B7 FI COMMAND CENTER v0.68.0';const r=$('.v66-footer-right');if(r){const b=$('b',r);if(b&&/COMMAND CENTER/i.test(b.textContent))b.remove()}}
 function stabilize(){compactAction();paintBeacons();universalReference();footer()}
-const app=$('#app');if(app)new MutationObserver(()=>setTimeout(stabilize,0)).observe(app,{childList:true,subtree:true});const top=$('#topActionBar');if(top)new MutationObserver(()=>setTimeout(stabilize,0)).observe(top,{childList:true,subtree:true});const fleet=$('#operationsBar');if(fleet)new MutationObserver(()=>setTimeout(stabilize,0)).observe(fleet,{childList:true,subtree:true,characterData:true});
-setInterval(paintBeacons,1000);setTimeout(stabilize,300);
+// v0.80.1 performance: legacy continuous observers/painter removed; later framework owns status bars.
+setTimeout(stabilize,300);
 })();

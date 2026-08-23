@@ -44,8 +44,6 @@ function fixToolbar(){
 }
 function version(){const v=$('#appVersionLabel');if(v)v.textContent='B7 FI COMMAND CENTER v0.79.0'}
 function stabilize(){stabilizeStatus();fixToolbar();version()}
-const top=$('#topActionBar');if(top)new MutationObserver(()=>requestAnimationFrame(stabilizeStatus)).observe(top,{childList:true,subtree:true,attributes:true,attributeFilter:['class','data-status']});
-const fleet=$('#operationsBar');if(fleet)new MutationObserver(()=>requestAnimationFrame(stabilizeStatus)).observe(fleet,{childList:true,subtree:true,characterData:true});
-const toolbar=$('#floatingActions');if(toolbar)new MutationObserver(()=>requestAnimationFrame(fixToolbar)).observe(toolbar,{childList:true,subtree:false});
-setTimeout(stabilize,120);setTimeout(stabilize,500);setInterval(stabilizeStatus,1800);
+// v0.80.1 performance: continuous framework observers/poller removed.
+setTimeout(stabilize,120);setTimeout(stabilize,500);
 })();

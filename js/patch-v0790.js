@@ -1,9 +1,9 @@
-/* B7 FI Command Center v0.79.0 — framework lock candidate.
+/* B7 FI Command Center v0.80.1 — framework lock candidate.
    Bounded startup normalization only; no MutationObserver and no recurring timer.
 */
 (function(){
 'use strict';
-window.VERSION='0.79.0';
+window.VERSION='0.80.1';
 const $=(s,r=document)=>r.querySelector(s);
 
 function txt(el){return (el&&el.textContent||'').trim();}
@@ -41,7 +41,7 @@ function buildFooter(){
     <div class="v79-footer-center"><img src="assets/kla-plus-official.png" alt="KLA+"></div>
     <div class="v79-footer-right">
       <div class="v79-footer-mode"><span class="v79-footer-dot" aria-hidden="true"></span><span>Local Production Mode</span></div>
-      <div id="appVersionLabel" class="v79-footer-version">B7 FI COMMAND CENTER v0.79.0</div>
+      <div id="appVersionLabel" class="v79-footer-version">B7 FI COMMAND CENTER v0.80.1</div>
     </div>`;
   const btn=$('#administrationCenterFooter');
   if(btn && !btn.dataset.v79Bound){

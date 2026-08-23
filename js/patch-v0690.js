@@ -41,8 +41,7 @@ function cleanupOperationsToolbar(){
 }
 function version(){const v=$('#appVersionLabel');if(v)v.textContent='B7 FI COMMAND CENTER v0.69.0'}
 function stabilize(){normalizeActionBar();cleanupOperationsToolbar();version()}
-const top=$('#topActionBar');if(top)new MutationObserver(()=>setTimeout(normalizeActionBar,25)).observe(top,{childList:true,subtree:false});
-const app=$('#app');if(app)new MutationObserver(()=>setTimeout(cleanupOperationsToolbar,25)).observe(app,{childList:true,subtree:true});
+// v0.80.1 performance: continuous DOM observers removed; navigation wrapper below performs bounded cleanup.
 const oldSet=window.setView;if(typeof oldSet==='function'){window.setView=function(v){const r=oldSet(v);setTimeout(stabilize,40);setTimeout(stabilize,160);return r}}
-setTimeout(stabilize,350);setInterval(normalizeActionBar,1200);
+setTimeout(stabilize,350);
 })();

@@ -201,8 +201,8 @@ function renderTicker51(reset=false){
  clearTimeout(tickerTimer51);
  tickerTimer51=setTimeout(()=>{tickerIndex51=(tickerIndex51+1)%items.length;renderTicker51(false)},Math.max(3,Math.min(60,Number(ctl.seconds)||8))*1000);
 }
-const tickerObserver51=new MutationObserver(()=>{if(!renderingTicker51)setTimeout(()=>renderTicker51(false),0)});
-setTimeout(()=>{let b=document.getElementById('topActionBar');if(b){tickerObserver51.observe(b,{childList:true,subtree:true});renderTicker51(true)}},100);
+// v0.80.1 performance: ticker uses its own bounded rotation timer; no DOM observer.
+setTimeout(()=>{let b=document.getElementById('topActionBar');if(b)renderTicker51(true)},100);
 
 function actionControlHtml51(a){
  let {k,d}=control51(a),s=displaySeverity51(a,k),age=ageDays51(k);
