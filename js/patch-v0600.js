@@ -141,7 +141,7 @@ function renderHome(){
     ['status','STATUS CENTER','Morning status · leads extra status','OPEN STATUS CENTER →'],
     ['meeting','MEETING CENTER','Meetings · notes · actions · history','OPEN MEETING CENTER →'],
     ['reference','REFERENCE CENTER','FI knowledge · procedures · reference files','OPEN REFERENCE CENTER →'],
-    ['wallboard','WALLBOARD','Launch the live operations display','OPEN WALLBOARD →'],
+    ['wallboard','LIVE STATUS CENTER','Live B7 FI operational status display','OPEN LIVE STATUS CENTER →'],
     ['backup','DATA & BACKUP','Backup · shared data · synchronization controls','OPEN DATA & BACKUP →']
   ];
   app.innerHTML=`<section class="v57-operations-grid">${cards.map(c=>{
