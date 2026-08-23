@@ -1,0 +1,323 @@
+/* B7 FI Command Center v0.79.0 — framework lock candidate
+   Final alert naming/geometry + simplified three-zone footer.
+   This file intentionally overrides legacy shell/status/footer rules loaded before it.
+*/
+:root{
+  --v79-status-h:68px;
+  --v79-label-w:220px;
+  --v79-context-w:220px;
+  --v79-gap:10px;
+}
+
+/* ===== FINAL SHARED STATUS GEOMETRY ===== */
+.header-status-stack{
+  grid-template-rows:var(--v79-status-h) var(--v79-status-h) 52px!important;
+  gap:var(--v79-gap)!important;
+}
+.header-status-stack>#topActionBar,
+.header-status-stack>#operationsBar{
+  position:relative!important;
+  display:grid!important;
+  grid-template-columns:var(--v79-label-w) minmax(0,1fr) var(--v79-context-w)!important;
+  grid-template-rows:var(--v79-status-h)!important;
+  align-items:stretch!important;
+  width:100%!important;
+  height:var(--v79-status-h)!important;
+  min-height:var(--v79-status-h)!important;
+  max-height:var(--v79-status-h)!important;
+  padding:0!important;
+  margin:0!important;
+  overflow:hidden!important;
+  box-sizing:border-box!important;
+}
+
+/* Severity is owned only by each alert bar, never by the current Center theme. */
+.header-status-stack>#topActionBar,
+.header-status-stack>#operationsBar{--v79-color:#7d8a99;--v79-rgb:125,138,153}
+.header-status-stack>#topActionBar:has(.v70-action-beacon[data-status="red"]),
+.header-status-stack>#topActionBar:has(.v70-action-beacon[data-status="critical"]),
+.header-status-stack>#topActionBar:has(.v70-action-beacon.red),
+.header-status-stack>#operationsBar:has(.v65-fleet-label[data-status="red"]),
+.header-status-stack>#operationsBar:has(.v65-fleet-label[data-status="critical"]),
+.header-status-stack>#operationsBar:has(.v65-fleet-label.red){--v79-color:#ff304f;--v79-rgb:255,48,79}
+.header-status-stack>#topActionBar:has(.v70-action-beacon[data-status="orange"]),
+.header-status-stack>#topActionBar:has(.v70-action-beacon[data-status="attention"]),
+.header-status-stack>#topActionBar:has(.v70-action-beacon.orange),
+.header-status-stack>#operationsBar:has(.v65-fleet-label[data-status="orange"]),
+.header-status-stack>#operationsBar:has(.v65-fleet-label[data-status="attention"]),
+.header-status-stack>#operationsBar:has(.v65-fleet-label.orange){--v79-color:#ff8a2b;--v79-rgb:255,138,43}
+.header-status-stack>#topActionBar:has(.v70-action-beacon[data-status="yellow"]),
+.header-status-stack>#topActionBar:has(.v70-action-beacon[data-status="reminder"]),
+.header-status-stack>#topActionBar:has(.v70-action-beacon.yellow),
+.header-status-stack>#operationsBar:has(.v65-fleet-label[data-status="yellow"]),
+.header-status-stack>#operationsBar:has(.v65-fleet-label[data-status="reminder"]),
+.header-status-stack>#operationsBar:has(.v65-fleet-label.yellow){--v79-color:#e4bd32;--v79-rgb:228,189,50}
+.header-status-stack>#topActionBar:has(.v70-action-beacon[data-status="blue"]),
+.header-status-stack>#topActionBar:has(.v70-action-beacon[data-status="information"]),
+.header-status-stack>#topActionBar:has(.v70-action-beacon.blue),
+.header-status-stack>#operationsBar:has(.v65-fleet-label[data-status="blue"]),
+.header-status-stack>#operationsBar:has(.v65-fleet-label[data-status="information"]),
+.header-status-stack>#operationsBar:has(.v65-fleet-label.blue){--v79-color:#4f9cff;--v79-rgb:79,156,255}
+.header-status-stack>#topActionBar:has(.v70-action-beacon[data-status="green"]),
+.header-status-stack>#topActionBar:has(.v70-action-beacon[data-status="good"]),
+.header-status-stack>#topActionBar:has(.v70-action-beacon.green),
+.header-status-stack>#operationsBar:has(.v65-fleet-label[data-status="green"]),
+.header-status-stack>#operationsBar:has(.v65-fleet-label[data-status="good"]),
+.header-status-stack>#operationsBar:has(.v65-fleet-label.green){--v79-color:#32d583;--v79-rgb:50,213,131}
+
+.header-status-stack>#topActionBar,
+.header-status-stack>#operationsBar{
+  border:2px solid var(--v79-color)!important;
+  border-radius:11px!important;
+  background:linear-gradient(90deg,rgba(var(--v79-rgb),.15),rgba(6,14,24,.99) 34%,rgba(6,14,24,.99) 70%,rgba(var(--v79-rgb),.09))!important;
+  box-shadow:inset 0 0 20px rgba(var(--v79-rgb),.08),0 0 9px rgba(var(--v79-rgb),.34),0 0 22px rgba(var(--v79-rgb),.11)!important;
+}
+
+/* Make the Action button's children participate in the exact same grid as System Status. */
+.header-status-stack #topActionBar .top-action-current{
+  display:contents!important;
+  position:static!important;
+  inset:auto!important;
+  transform:none!important;
+  width:auto!important;
+  height:auto!important;
+  padding:0!important;
+  margin:0!important;
+  border:0!important;
+  background:none!important;
+  box-shadow:none!important;
+}
+.header-status-stack #topActionBar .top-action-label,
+.header-status-stack #topActionBar .top-action-count,
+.header-status-stack #topActionBar .top-action-open{display:none!important}
+
+/* Left identity block — identical dimensions/divider on both rows. */
+.header-status-stack #topActionBar .v70-action-beacon,
+.header-status-stack #operationsBar .v65-fleet-label{
+  position:relative!important;
+  inset:auto!important;
+  transform:none!important;
+  grid-column:1!important;
+  grid-row:1!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:none!important;
+  height:100%!important;
+  min-height:0!important;
+  max-height:none!important;
+  margin:0!important;
+  padding:10px 18px!important;
+  display:grid!important;
+  grid-template-columns:28px minmax(0,1fr)!important;
+  grid-template-rows:1fr 1fr!important;
+  column-gap:10px!important;
+  align-items:center!important;
+  box-sizing:border-box!important;
+  border:0!important;
+  border-right:4px solid var(--v79-color)!important;
+  border-radius:0!important;
+  outline:0!important;
+  background:linear-gradient(90deg,rgba(var(--v79-rgb),.17),rgba(var(--v79-rgb),.025))!important;
+  box-shadow:none!important;
+  color:var(--v79-color)!important;
+  z-index:20!important;
+}
+.header-status-stack #topActionBar .v70-beacon-lamp,
+.header-status-stack #operationsBar .v70-fleet-lamp{
+  background:var(--v79-color)!important;
+  box-shadow:0 0 9px var(--v79-color),0 0 20px rgba(var(--v79-rgb),.9)!important;
+}
+.header-status-stack #topActionBar .v72-beacon-status,
+.header-status-stack #operationsBar .v72-beacon-status{color:var(--v79-color)!important}
+
+/* Center message — exact geometric center and common typography. */
+.header-status-stack #topActionBar .v70-action-message,
+.header-status-stack #topActionBar .top-action-current strong,
+.header-status-stack #operationsBar .v65-fleet-ticker{
+  position:relative!important;
+  inset:auto!important;
+  transform:none!important;
+  grid-column:2!important;
+  grid-row:1!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:none!important;
+  height:100%!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0 28px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  box-sizing:border-box!important;
+  border:0!important;
+  border-radius:0!important;
+  outline:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  color:#f5f8fc!important;
+  font-size:15px!important;
+  font-weight:900!important;
+  line-height:1.15!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  z-index:20!important;
+}
+.header-status-stack #operationsBar .v65-fleet-ticker #opsTickerText{
+  position:static!important;
+  transform:none!important;
+  width:100%!important;
+  height:auto!important;
+  margin:0!important;
+  padding:0!important;
+  display:block!important;
+  border:0!important;
+  background:none!important;
+  font:inherit!important;
+  line-height:inherit!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+
+/* Right counter — same width, divider and typography. */
+.header-status-stack #topActionBar .v70-action-nav,
+.header-status-stack #operationsBar .v65-fleet-summary{
+  position:relative!important;
+  inset:auto!important;
+  transform:none!important;
+  grid-column:3!important;
+  grid-row:1!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:none!important;
+  height:100%!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0 16px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  box-sizing:border-box!important;
+  border:0!important;
+  border-left:4px solid var(--v79-color)!important;
+  border-radius:0!important;
+  outline:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  color:var(--v79-color)!important;
+  font-size:12px!important;
+  font-weight:950!important;
+  line-height:1!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  z-index:20!important;
+}
+.header-status-stack #operationsBar .v65-fleet-summary{font-size:0!important}
+.header-status-stack #operationsBar .v65-fleet-summary>*{display:none!important}
+.header-status-stack #operationsBar .v65-fleet-summary::before{
+  content:"← OPEN 1 OF " attr(data-v79-count)!important;
+  display:block!important;
+  color:var(--v79-color)!important;
+  font-size:12px!important;
+  font-weight:950!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}
+
+/* Keep legacy Center-color rails/pseudos out of both alert components. */
+.header-status-stack #topActionBar .v70-action-beacon::before,
+.header-status-stack #topActionBar .v70-action-beacon::after,
+.header-status-stack #operationsBar .v65-fleet-label::before,
+.header-status-stack #operationsBar .v65-fleet-label::after,
+.header-status-stack #operationsBar .v65-fleet-ticker::before,
+.header-status-stack #operationsBar .v65-fleet-ticker::after{content:none!important;display:none!important}
+
+/* Existing v78 tracers inherit the final status color. */
+.header-status-stack .v78-perimeter-tracer{
+  background:linear-gradient(90deg,transparent,rgba(var(--v79-rgb),.22),var(--v79-color),#fff,var(--v79-color),rgba(var(--v79-rgb),.22),transparent)!important;
+  box-shadow:0 0 7px var(--v79-color),0 0 15px rgba(var(--v79-rgb),.92)!important;
+}
+
+/* ===== FINAL FOOTER: LEFT / TRUE CENTER / RIGHT ===== */
+body>footer.v57-footer{
+  position:relative!important;
+  inset:auto!important;
+  transform:none!important;
+  width:min(calc(100% - (var(--v78-shell-gutter,20px) * 2)),var(--v78-shell-max,1600px))!important;
+  max-width:var(--v78-shell-max,1600px)!important;
+  height:88px!important;
+  min-height:88px!important;
+  flex:0 0 88px!important;
+  margin:0 auto!important;
+  padding:10px 22px!important;
+  display:grid!important;
+  grid-template-columns:1fr auto 1fr!important;
+  grid-template-rows:1fr!important;
+  align-items:center!important;
+  gap:20px!important;
+  box-sizing:border-box!important;
+  visibility:visible!important;
+  opacity:1!important;
+  overflow:hidden!important;
+  background:#06121d!important;
+  border:1px solid #294157!important;
+  border-bottom:2px solid var(--center-color)!important;
+  color:#9bb5cc!important;
+  box-shadow:none!important;
+  z-index:30!important;
+}
+.v79-footer-left{grid-column:1!important;justify-self:start!important;display:flex!important;align-items:center!important}
+.v79-footer-center{grid-column:2!important;justify-self:center!important;display:flex!important;align-items:center!important;justify-content:center!important}
+.v79-footer-center img{display:block!important;height:46px!important;width:auto!important}
+.v79-footer-right{grid-column:3!important;justify-self:end!important;display:flex!important;flex-direction:column!important;align-items:flex-end!important;justify-content:center!important;gap:7px!important;text-align:right!important;white-space:nowrap!important}
+.v79-footer-mode{display:flex!important;align-items:center!important;gap:7px!important;color:#a9c8e3!important;font-size:11px!important}
+.v79-footer-dot{width:9px!important;height:9px!important;border-radius:50%!important;background:#32d583!important;box-shadow:0 0 10px rgba(50,213,131,.8)!important;flex:0 0 auto!important}
+.v79-footer-version{color:#72a9ff!important;font-size:11px!important;font-weight:900!important;letter-spacing:.01em!important}
+
+@media(max-width:1180px){
+  :root{--v79-label-w:190px;--v79-context-w:190px}
+  .header-status-stack #topActionBar .v70-action-message,
+  .header-status-stack #topActionBar .top-action-current strong,
+  .header-status-stack #operationsBar .v65-fleet-ticker{font-size:13px!important;padding-left:18px!important;padding-right:18px!important}
+}
+@media(max-width:760px){
+  :root{--v79-label-w:124px;--v79-context-w:132px;--v79-status-h:64px;--v79-gap:6px}
+  .header-status-stack #topActionBar .v70-action-beacon,
+  .header-status-stack #operationsBar .v65-fleet-label{grid-template-columns:14px minmax(0,1fr)!important;column-gap:6px!important;padding:8px!important}
+  .header-status-stack #topActionBar .v70-action-message,
+  .header-status-stack #topActionBar .top-action-current strong,
+  .header-status-stack #operationsBar .v65-fleet-ticker{font-size:10px!important;padding:0 9px!important}
+  .header-status-stack #topActionBar .v70-action-nav,
+  .header-status-stack #operationsBar .v65-fleet-summary::before{font-size:9px!important}
+  body>footer.v57-footer{height:92px!important;min-height:92px!important;grid-template-columns:1fr auto 1fr!important;padding:8px 10px!important;gap:8px!important}
+  .v79-footer-center img{height:34px!important}
+  .v79-footer-mode,.v79-footer-version{font-size:8px!important}
+}
+
+/* Parent data-status fallback set by the legacy live ticker painters. */
+.header-status-stack>#topActionBar[data-status="red"],
+.header-status-stack>#topActionBar[data-status="critical"],
+.header-status-stack>#operationsBar[data-status="red"],
+.header-status-stack>#operationsBar[data-status="critical"]{--v79-color:#ff304f;--v79-rgb:255,48,79}
+.header-status-stack>#topActionBar[data-status="orange"],
+.header-status-stack>#topActionBar[data-status="attention"],
+.header-status-stack>#operationsBar[data-status="orange"],
+.header-status-stack>#operationsBar[data-status="attention"]{--v79-color:#ff8a2b;--v79-rgb:255,138,43}
+.header-status-stack>#topActionBar[data-status="yellow"],
+.header-status-stack>#topActionBar[data-status="reminder"],
+.header-status-stack>#operationsBar[data-status="yellow"],
+.header-status-stack>#operationsBar[data-status="reminder"]{--v79-color:#e4bd32;--v79-rgb:228,189,50}
+.header-status-stack>#topActionBar[data-status="blue"],
+.header-status-stack>#topActionBar[data-status="information"],
+.header-status-stack>#operationsBar[data-status="blue"],
+.header-status-stack>#operationsBar[data-status="information"]{--v79-color:#4f9cff;--v79-rgb:79,156,255}
+.header-status-stack>#topActionBar[data-status="green"],
+.header-status-stack>#topActionBar[data-status="good"],
+.header-status-stack>#operationsBar[data-status="green"],
+.header-status-stack>#operationsBar[data-status="good"]{--v79-color:#32d583;--v79-rgb:50,213,131}

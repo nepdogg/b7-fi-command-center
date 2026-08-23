@@ -24,20 +24,20 @@ function paint(){
     const a=$('#topActionBar');
     if(a){
       const s=actionStatus();if(a.dataset.status!==s)a.dataset.status=s;
-      const b=$('.v70-action-beacon',a);if(b){if(b.dataset.status!==s)b.dataset.status=s;const wanted=LABEL[s]||'NORMAL';if(!b.querySelector('.v72-beacon-title')||text(b.querySelector('.v72-beacon-status'))!==wanted)b.innerHTML=beacon('ACTION STATUS',s,'v70-beacon-lamp')}
+      const b=$('.v70-action-beacon',a);if(b){if(b.dataset.status!==s)b.dataset.status=s;const wanted=LABEL[s]||'NORMAL';if(!b.querySelector('.v72-beacon-title')||text(b.querySelector('.v72-beacon-status'))!==wanted)b.innerHTML=beacon('LEAD ALERTS',s,'v70-beacon-lamp')}
       ensureSweeps(a);
     }
     const f=$('#operationsBar');
     if(f){
       const s=fleetStatus();if(f.dataset.status!==s)f.dataset.status=s;
-      const b=$('.v65-fleet-label',f);if(b){if(b.dataset.status!==s)b.dataset.status=s;const wanted=LABEL[s]||'NORMAL';if(!b.querySelector('.v72-beacon-title')||text(b.querySelector('.v72-beacon-status'))!==wanted)b.innerHTML=beacon('FLEET STATUS',s,'v70-fleet-lamp')}
+      const b=$('.v65-fleet-label',f);if(b){if(b.dataset.status!==s)b.dataset.status=s;const wanted=LABEL[s]||'NORMAL';if(!b.querySelector('.v72-beacon-title')||text(b.querySelector('.v72-beacon-status'))!==wanted)b.innerHTML=beacon('SYSTEM STATUS',s,'v70-fleet-lamp')}
       const sum=$('.v65-fleet-summary',f);if(sum){const n=fleetCount();const phrase=`${n} FLEET MESSAGE${n===1?'':'S'}`;if(text(sum)!==phrase)sum.innerHTML=`<span class="v73-fleet-count">${phrase}</span>`}
       ensureSweeps(f);
     }
   }finally{painting=false}
 }
 function toolbar(){const bar=$('#floatingActions');if(!bar)return;const buttons=$$(':scope > button',bar);const nav=buttons.filter(b=>b.classList.contains('v70-page-nav')||b.dataset.v57tab);const actions=buttons.filter(b=>!nav.includes(b));buttons.forEach(b=>{b.classList.toggle('v70-page-nav',nav.includes(b));b.classList.toggle('v70-page-action',actions.includes(b));b.classList.remove('v70-first-action');b.style.marginTop='';b.style.marginBottom=''});nav.forEach(b=>bar.appendChild(b));actions.forEach(b=>bar.appendChild(b));if(actions[0])actions[0].classList.add('v70-first-action')}
-function version(){const v=$('#appVersionLabel');if(v)v.textContent='B7 FI COMMAND CENTER v0.73.0'}
+function version(){const v=$('#appVersionLabel');if(v)v.textContent='B7 FI COMMAND CENTER v0.79.0'}
 function run(){paint();toolbar();version()}
 const obs=new MutationObserver(()=>requestAnimationFrame(run));
 ['#topActionBar','#operationsBar'].forEach(sel=>{const el=$(sel);if(el)obs.observe(el,{childList:true,subtree:true,characterData:true})});

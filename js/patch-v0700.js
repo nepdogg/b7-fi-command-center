@@ -10,7 +10,7 @@ function label(b){return (b?.textContent||'').trim().replace(/^\+\s*/,'').toUppe
 function isActionLabel(t){return /^(EDIT|UPDATE|ADD|START|SCREENSHOT|REPORT|CANCEL|SAVE|OPEN|REFRESH|REPLACE|CHANGE|CLOSE)/.test(t)}
 function fleetKind(){const t=($('#opsTickerText')?.textContent||'').toLowerCase();if(/blocked|critical|behind\s+(?:[4-9]|\d{2,})/.test(t))return 'critical';if(/behind|overdue/.test(t))return 'attention';if(/at risk|risk/.test(t))return 'reminder';if(/ahead/.test(t))return 'information';if(/on schedule|complete|shipped/.test(t))return 'good';return 'normal'}
 function paintFleet(){const l=$('.v65-fleet-label');if(!l)return;l.dataset.status=fleetKind();if(!$('.v70-fleet-lamp',l))l.insertAdjacentHTML('afterbegin','<span class="v70-fleet-lamp" aria-hidden="true"></span>');}
-function ensureVersion(){const v=$('#appVersionLabel');if(v)v.textContent='B7 FI COMMAND CENTER v0.70.0';const r=$('.v66-footer-right');if(r){$$('b',r).forEach(b=>{if(/COMMAND CENTER/i.test(b.textContent||''))b.remove()})}}
+function ensureVersion(){const v=$('#appVersionLabel');if(v)v.textContent='B7 FI COMMAND CENTER v0.79.0';const r=$('.v66-footer-right');if(r){$$('b',r).forEach(b=>{if(/COMMAND CENTER/i.test(b.textContent||''))b.remove()})}}
 function removeBodyDuplicates(){
  const c=document.body.dataset.center||'';
  if(c==='meeting')$$('#app .start-now51').forEach(x=>x.remove());

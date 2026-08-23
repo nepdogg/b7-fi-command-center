@@ -42,7 +42,7 @@ function fixToolbar(){
   $$('.v70-first-action',bar).forEach(b=>b.classList.remove('v70-first-action'));
   if(first)first.classList.add('v70-first-action');
 }
-function version(){const v=$('#appVersionLabel');if(v)v.textContent='B7 FI COMMAND CENTER v0.71.0'}
+function version(){const v=$('#appVersionLabel');if(v)v.textContent='B7 FI COMMAND CENTER v0.79.0'}
 function stabilize(){stabilizeStatus();fixToolbar();version()}
 const top=$('#topActionBar');if(top)new MutationObserver(()=>requestAnimationFrame(stabilizeStatus)).observe(top,{childList:true,subtree:true,attributes:true,attributeFilter:['class','data-status']});
 const fleet=$('#operationsBar');if(fleet)new MutationObserver(()=>requestAnimationFrame(stabilizeStatus)).observe(fleet,{childList:true,subtree:true,characterData:true});
