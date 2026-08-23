@@ -1,0 +1,279 @@
+/* B7 FI Command Center v0.72.0 — Shared Page Navigation + Status Framework */
+:root{
+  --v72-status-h:62px;
+  --v72-toolbar-h:48px;
+  --v72-status-label:132px;
+  --v72-action-meta:180px;
+  --v72-action-nav:172px;
+  --v72-fleet-summary:clamp(270px,24vw,380px);
+  --v72-status-color:#7d8a99;
+  --v72-status-rgb:125,138,153;
+}
+
+/* ONE SHARED HEADER FRAMEWORK — pages may not add their own gap above content. */
+.header-status-stack{
+  display:flex!important;
+  flex-direction:column!important;
+  gap:0!important;
+  row-gap:0!important;
+  margin:0!important;
+  padding:0!important;
+  height:auto!important;
+  min-height:0!important;
+}
+body:not(.screenshot-mode)>main#app{
+  margin-top:0!important;
+  padding-top:12px!important;
+  transform:none!important;
+}
+body:not(.screenshot-mode)>main#app>:first-child{margin-top:0!important}
+body:not(.screenshot-mode)>main#app>.page-title:first-child,
+body:not(.screenshot-mode)>main#app>section:first-child,
+body:not(.screenshot-mode)>main#app>div:first-child{margin-top:0!important}
+
+/* PAGE NAVIGATION — fixed height on every Center, destinations left / actions right. */
+body #floatingActions.page-toolbar,
+body .page-toolbar{
+  display:flex!important;
+  flex:0 0 var(--v72-toolbar-h)!important;
+  height:var(--v72-toolbar-h)!important;
+  min-height:var(--v72-toolbar-h)!important;
+  max-height:var(--v72-toolbar-h)!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:9px!important;
+  margin:0!important;
+  padding:6px 52px!important;
+  position:relative!important;
+  inset:auto!important;
+  width:100%!important;
+  max-width:none!important;
+  box-sizing:border-box!important;
+  overflow:hidden!important;
+  background:#071522!important;
+  border:0!important;
+  border-bottom:1px solid rgba(var(--center-rgb),.72)!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  z-index:1800!important;
+  pointer-events:auto!important;
+}
+body #floatingActions.page-toolbar:empty,body .page-toolbar:empty{display:flex!important}
+#floatingActions>button{
+  flex:0 0 auto!important;
+  height:34px!important;
+  min-height:34px!important;
+  max-height:34px!important;
+  margin-top:0!important;
+  margin-bottom:0!important;
+  line-height:1!important;
+  position:relative!important;
+  z-index:1801!important;
+}
+#floatingActions .v70-page-nav{order:10!important;margin-left:0!important;margin-right:0!important}
+#floatingActions .v70-page-action{order:20!important;margin-left:0!important;margin-right:0!important}
+#floatingActions .v72-first-action{margin-left:auto!important}
+body[data-center="home"] #floatingActions{justify-content:flex-end!important}
+
+/* SAME OUTER GEOMETRY FOR ACTION STATUS AND FLEET STATUS. */
+.top-action-bar,.operations-bar{
+  width:100%!important;
+  height:var(--v72-status-h)!important;
+  min-height:var(--v72-status-h)!important;
+  max-height:var(--v72-status-h)!important;
+  margin:0!important;
+  padding:0!important;
+  box-sizing:border-box!important;
+  align-items:stretch!important;
+  position:relative!important;
+  overflow:hidden!important;
+  background:#071522!important;
+  border-top:2px solid var(--v72-status-color)!important;
+  border-bottom:2px solid var(--v72-status-color)!important;
+  box-shadow:
+    inset 0 1px 0 rgba(var(--v72-status-rgb),.18),
+    inset 0 -1px 0 rgba(var(--v72-status-rgb),.18),
+    0 0 14px rgba(var(--v72-status-rgb),.18)!important;
+}
+.top-action-bar{grid-template-columns:var(--v72-status-label) minmax(0,1fr)!important}
+.operations-bar{grid-template-columns:var(--v72-status-label) minmax(0,1fr) var(--v72-fleet-summary)!important}
+
+/* Message status is the single source of color truth for both bars. */
+.top-action-bar[data-status="red"],.operations-bar[data-status="critical"]{--v72-status-color:#ff4058;--v72-status-rgb:255,64,88}
+.top-action-bar[data-status="orange"],.operations-bar[data-status="attention"]{--v72-status-color:#ff8a2b;--v72-status-rgb:255,138,43}
+.top-action-bar[data-status="yellow"],.operations-bar[data-status="reminder"]{--v72-status-color:#e4bd32;--v72-status-rgb:228,189,50}
+.top-action-bar[data-status="blue"],.operations-bar[data-status="information"]{--v72-status-color:#4f9cff;--v72-status-rgb:79,156,255}
+.top-action-bar[data-status="green"],.operations-bar[data-status="good"]{--v72-status-color:#32d583;--v72-status-rgb:50,213,131}
+.top-action-bar[data-status="normal"],.operations-bar[data-status="normal"]{--v72-status-color:#7d8a99;--v72-status-rgb:125,138,153}
+
+/* Edge beacons/sweeps follow current message status — never Center accent. */
+.top-action-bar::before,.top-action-bar::after,.operations-bar::before,.operations-bar::after{
+  background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.08) 18%,#fff 46%,var(--v72-status-color) 62%,rgba(255,255,255,.10) 80%,transparent 100%)!important;
+  filter:drop-shadow(0 0 7px rgba(var(--v72-status-rgb),.95))!important;
+}
+
+/* LEFT STATUS BEACONS — same treatment for Action and Fleet. */
+.v70-action-beacon,.v65-fleet-label{
+  height:100%!important;
+  min-height:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  margin:0!important;
+  padding:0 10px!important;
+  box-sizing:border-box!important;
+  position:relative!important;
+  overflow:hidden!important;
+  color:var(--v72-status-color)!important;
+  background:linear-gradient(90deg,rgba(var(--v72-status-rgb),.19),rgba(var(--v72-status-rgb),.06))!important;
+  box-shadow:inset -1px 0 0 rgba(var(--v72-status-rgb),.88)!important;
+  text-shadow:0 0 9px rgba(var(--v72-status-rgb),.55)!important;
+}
+.v70-action-beacon::after,.v65-fleet-label::after{background:var(--v72-status-color)!important}
+.v70-beacon-lamp,.v70-fleet-lamp{
+  width:10px!important;height:10px!important;flex:0 0 10px!important;border-radius:50%!important;
+  background:var(--v72-status-color)!important;
+  box-shadow:0 0 7px var(--v72-status-color),0 0 15px rgba(var(--v72-status-rgb),.75)!important;
+}
+.v65-fleet-label{flex-wrap:wrap!important;align-content:center!important;line-height:1!important}
+.v65-fleet-label b{flex:0 0 auto!important}
+.v72-fleet-class{
+  flex:0 0 100%!important;
+  margin-top:-3px!important;
+  padding-left:18px!important;
+  text-align:center!important;
+  font-size:8px!important;
+  line-height:1!important;
+  letter-spacing:.10em!important;
+  opacity:.82!important;
+  color:var(--v72-status-color)!important;
+  white-space:nowrap!important;
+}
+
+/* ACTION STATUS: message truly centered vertically and horizontally. */
+.top-action-current{
+  height:100%!important;
+  min-height:0!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0 12px!important;
+  display:grid!important;
+  grid-template-columns:var(--v72-action-meta) minmax(0,1fr) var(--v72-action-nav)!important;
+  gap:8px!important;
+  align-items:stretch!important;
+  box-sizing:border-box!important;
+  transform:none!important;
+  animation:none!important;
+  overflow:hidden!important;
+}
+.top-action-label,.v70-action-message,.top-action-current strong,.v70-action-nav,.top-action-clear{
+  height:100%!important;
+  min-height:0!important;
+  margin:0!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+}
+.top-action-label{justify-content:flex-start!important;padding:0!important;line-height:1.15!important}
+.v70-action-message,.top-action-current strong{
+  justify-content:center!important;
+  padding:0 8px!important;
+  text-align:center!important;
+  line-height:1.2!important;
+  white-space:normal!important;
+  overflow:hidden!important;
+}
+.v70-action-nav{
+  justify-content:center!important;
+  padding:0 0 0 10px!important;
+  text-align:center!important;
+  color:var(--v72-status-color)!important;
+  white-space:nowrap!important;
+}
+.v70-action-nav::before{background:var(--v72-status-color)!important}
+.top-action-clear{justify-content:center!important;text-align:center!important}
+
+/* FLEET STATUS: centered message + right summary may wrap instead of clipping. */
+.v65-fleet-ticker,.v65-fleet-summary{
+  height:100%!important;
+  min-height:0!important;
+  max-height:100%!important;
+  margin:0!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  line-height:1.18!important;
+  min-width:0!important;
+  overflow:hidden!important;
+}
+.v65-fleet-ticker{padding:0 18px!important}
+.v65-fleet-ticker::after{background:var(--v72-status-color)!important}
+.v65-fleet-ticker #opsTickerText{
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  height:100%!important;
+  margin:0!important;
+  padding:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  line-height:1.2!important;
+  white-space:normal!important;
+  overflow:hidden!important;
+}
+.v65-fleet-summary{
+  padding:0 14px!important;
+  gap:6px!important;
+  flex-wrap:wrap!important;
+  align-content:center!important;
+  white-space:normal!important;
+  overflow-wrap:anywhere!important;
+  word-break:normal!important;
+}
+.v65-fleet-summary #opsTaskCount,.v65-fleet-summary #opsPresence,.v65-fleet-summary .ops-divider{
+  flex:0 1 auto!important;
+  max-width:100%!important;
+  white-space:normal!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+}
+
+/* Critical is attention-getting, but does not flash or resize the bars. */
+.top-action-bar[data-status="red"] .v70-beacon-lamp,
+.operations-bar[data-status="critical"] .v70-fleet-lamp{animation:v72CriticalBeacon 2.8s ease-in-out infinite!important}
+.top-action-bar[data-status="orange"] .v70-beacon-lamp,
+.operations-bar[data-status="attention"] .v70-fleet-lamp{animation:v72AttentionBeacon 4s ease-in-out infinite!important}
+@keyframes v72CriticalBeacon{
+  0%,100%{opacity:.72;box-shadow:0 0 6px var(--v72-status-color),0 0 13px rgba(var(--v72-status-rgb),.48)}
+  50%{opacity:1;box-shadow:0 0 13px var(--v72-status-color),0 0 28px rgba(var(--v72-status-rgb),.98)}
+}
+@keyframes v72AttentionBeacon{
+  0%,100%{opacity:.78;box-shadow:0 0 6px var(--v72-status-color),0 0 12px rgba(var(--v72-status-rgb),.42)}
+  50%{opacity:1;box-shadow:0 0 10px var(--v72-status-color),0 0 19px rgba(var(--v72-status-rgb),.76)}
+}
+
+@media(max-width:1180px){
+  :root{--v72-status-label:118px;--v72-action-meta:152px;--v72-action-nav:148px;--v72-fleet-summary:clamp(230px,25vw,300px)}
+  body #floatingActions.page-toolbar{padding-left:18px!important;padding-right:18px!important}
+}
+@media(max-width:900px){
+  :root{--v72-action-meta:135px;--v72-action-nav:126px;--v72-fleet-summary:230px}
+  .v65-fleet-summary{font-size:10px!important}
+}
+@media(max-width:760px){
+  /* Mobile remains compact but Page Navigation height stays fixed. */
+  body #floatingActions.page-toolbar,body .page-toolbar{height:var(--v72-toolbar-h)!important;min-height:var(--v72-toolbar-h)!important;max-height:var(--v72-toolbar-h)!important;overflow-x:auto!important;overflow-y:hidden!important}
+  .top-action-bar,.operations-bar{height:auto!important;min-height:var(--v72-status-h)!important;max-height:none!important}
+  .operations-bar{grid-template-columns:1fr!important}
+  .v65-fleet-label,.v65-fleet-ticker,.v65-fleet-summary{grid-column:1!important;min-height:40px!important;height:auto!important}
+  .v65-fleet-label::after,.v65-fleet-ticker::after{display:none!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .v70-beacon-lamp,.v70-fleet-lamp,.top-action-bar::before,.top-action-bar::after,.operations-bar::before,.operations-bar::after{animation:none!important}
+}
