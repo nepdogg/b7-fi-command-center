@@ -1,0 +1,373 @@
+/* B7 FI Command Center v0.77.0 — status twins + flow footer + full-width page rails */
+:root{
+  --v77-status-h:68px;
+  --v77-label-w:220px;
+  --v77-context-w:260px;
+  --v77-gap:10px;
+  --v77-shell-max:1600px;
+  --v77-shell-gutter:20px;
+}
+
+/* Keep the application as a centered console, but let the footer live in normal flow. */
+html{min-height:100%!important;background:#1d1f21!important}
+body{
+  width:100%!important;
+  min-height:100vh!important;
+  min-height:100dvh!important;
+  height:auto!important;
+  margin:0!important;
+  padding:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  background:#1d1f21!important;
+}
+body>.sticky-header,
+body>main#app,
+body>footer.v57-footer{
+  width:min(calc(100% - (var(--v77-shell-gutter) * 2)),var(--v77-shell-max))!important;
+  max-width:var(--v77-shell-max)!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  box-sizing:border-box!important;
+}
+body>.sticky-header{flex:0 0 auto!important}
+body>main#app{
+  flex:1 0 auto!important;
+  min-height:240px!important;
+  height:auto!important;
+  overflow:visible!important;
+  padding-top:14px!important;
+  padding-bottom:24px!important;
+  background:#06131f!important;
+  border-left:1px solid #294157!important;
+  border-right:1px solid #294157!important;
+}
+
+/* Header remains framed with slightly reduced titles and even breathing room. */
+.v57-header-left,.v57-header-right{
+  font-size:36px!important;
+  line-height:1!important;
+  padding-top:18px!important;
+  padding-bottom:18px!important;
+}
+.v57-header-left{padding-left:30px!important;padding-right:46px!important}
+.v57-header-right{padding-left:46px!important;padding-right:30px!important}
+
+/* Shared awareness stack: two alert modules plus a true rail-style page navigation row. */
+.header-status-stack{
+  position:relative!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  grid-template-rows:var(--v77-status-h) var(--v77-status-h) 52px!important;
+  gap:var(--v77-gap)!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:calc((var(--v77-status-h) * 2) + 52px + (var(--v77-gap) * 4))!important;
+  max-height:none!important;
+  margin:0!important;
+  padding:var(--v77-gap) 14px 0!important;
+  box-sizing:border-box!important;
+  overflow:visible!important;
+  background:#06111b!important;
+}
+.header-status-stack>#topActionBar{grid-row:1!important}
+.header-status-stack>#operationsBar{grid-row:2!important}
+.header-status-stack>#floatingActions{grid-row:3!important}
+
+/* One authoritative color source for BOTH bars. Page/Center accent colors may not leak in. */
+.header-status-stack>.top-action-bar,
+.header-status-stack>.operations-bar{
+  --v77-color:#7d8a99;
+  --v77-rgb:125,138,153;
+  position:relative!important;
+  isolation:isolate!important;
+  width:100%!important;
+  height:var(--v77-status-h)!important;
+  min-height:var(--v77-status-h)!important;
+  max-height:var(--v77-status-h)!important;
+  margin:0!important;
+  padding:0!important;
+  display:grid!important;
+  grid-template-columns:var(--v77-label-w) minmax(0,1fr) var(--v77-context-w)!important;
+  align-items:stretch!important;
+  overflow:hidden!important;
+  box-sizing:border-box!important;
+  border:2px solid var(--v77-color)!important;
+  border-radius:11px!important;
+  background:linear-gradient(90deg,rgba(var(--v77-rgb),.15),rgba(6,14,24,.99) 34%,rgba(6,14,24,.99) 70%,rgba(var(--v77-rgb),.09))!important;
+  box-shadow:inset 0 0 20px rgba(var(--v77-rgb),.08),0 0 9px rgba(var(--v77-rgb),.34),0 0 22px rgba(var(--v77-rgb),.11)!important;
+}
+.top-action-bar[data-status="red"],.top-action-bar[data-status="critical"],
+.operations-bar[data-status="red"],.operations-bar[data-status="critical"]{--v77-color:#ff304f;--v77-rgb:255,48,79}
+.top-action-bar[data-status="orange"],.top-action-bar[data-status="attention"],
+.operations-bar[data-status="orange"],.operations-bar[data-status="attention"]{--v77-color:#ff8a2b;--v77-rgb:255,138,43}
+.top-action-bar[data-status="yellow"],.top-action-bar[data-status="reminder"],
+.operations-bar[data-status="yellow"],.operations-bar[data-status="reminder"]{--v77-color:#e4bd32;--v77-rgb:228,189,50}
+.top-action-bar[data-status="blue"],.top-action-bar[data-status="information"],
+.operations-bar[data-status="blue"],.operations-bar[data-status="information"]{--v77-color:#4f9cff;--v77-rgb:79,156,255}
+.top-action-bar[data-status="green"],.top-action-bar[data-status="good"],
+.operations-bar[data-status="green"],.operations-bar[data-status="good"]{--v77-color:#32d583;--v77-rgb:50,213,131}
+
+/* Disable every older sweep/tracer implementation. */
+.v73-sweep,.v75-perimeter-tracer,.v76-perimeter-tracer{display:none!important;animation:none!important}
+
+/* Two bright perimeter pulses. The gradient angle moves; the rectangle itself never rotates,
+   so the light remains locked to the rounded perimeter. */
+@property --v77-cw-angle{syntax:"<angle>";inherits:false;initial-value:0deg}
+@property --v77-ccw-angle{syntax:"<angle>";inherits:false;initial-value:180deg}
+.header-status-stack>.top-action-bar::before,
+.header-status-stack>.top-action-bar::after,
+.header-status-stack>.operations-bar::before,
+.header-status-stack>.operations-bar::after{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:70!important;
+  pointer-events:none!important;
+  padding:2px!important;
+  border-radius:10px!important;
+  box-sizing:border-box!important;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0)!important;
+  -webkit-mask-composite:xor!important;
+  mask-composite:exclude!important;
+  opacity:.98!important;
+}
+.header-status-stack>.top-action-bar::before,
+.header-status-stack>.operations-bar::before{
+  background:conic-gradient(from var(--v77-cw-angle) at 50% 50%,
+    transparent 0deg 321deg,
+    rgba(var(--v77-rgb),.10) 324deg,
+    var(--v77-color) 331deg,
+    #fff 338deg,
+    var(--v77-color) 345deg,
+    rgba(var(--v77-rgb),.10) 352deg,
+    transparent 358deg 360deg)!important;
+  filter:drop-shadow(0 0 4px var(--v77-color)) drop-shadow(0 0 9px rgba(var(--v77-rgb),.80))!important;
+  animation:v77AngleCW 5.2s linear infinite!important;
+}
+.header-status-stack>.top-action-bar::after,
+.header-status-stack>.operations-bar::after{
+  background:conic-gradient(from var(--v77-ccw-angle) at 50% 50%,
+    transparent 0deg 321deg,
+    rgba(var(--v77-rgb),.10) 324deg,
+    var(--v77-color) 331deg,
+    #fff 338deg,
+    var(--v77-color) 345deg,
+    rgba(var(--v77-rgb),.10) 352deg,
+    transparent 358deg 360deg)!important;
+  filter:drop-shadow(0 0 4px var(--v77-color)) drop-shadow(0 0 9px rgba(var(--v77-rgb),.80))!important;
+  animation:v77AngleCCW 5.2s linear infinite!important;
+}
+/* Fleet is phase shifted so the two bars never march in lock-step. */
+.header-status-stack>.operations-bar::before{animation-delay:-1.15s!important}
+.header-status-stack>.operations-bar::after{animation-delay:-1.15s!important}
+@keyframes v77AngleCW{from{--v77-cw-angle:0deg}to{--v77-cw-angle:360deg}}
+@keyframes v77AngleCCW{from{--v77-ccw-angle:180deg}to{--v77-ccw-angle:-180deg}}
+
+/* Keep content above the animation ring and make Action/Fleet exact geometry twins. */
+.header-status-stack>.top-action-bar>*:not(.v73-sweep):not(.v75-perimeter-tracer):not(.v76-perimeter-tracer),
+.header-status-stack>.operations-bar>*:not(.v73-sweep):not(.v75-perimeter-tracer):not(.v76-perimeter-tracer){position:relative!important;z-index:50!important}
+.header-status-stack .v70-action-beacon,
+.header-status-stack .v65-fleet-label{
+  grid-column:1!important;
+  width:auto!important;
+  min-width:0!important;
+  height:100%!important;
+  margin:0!important;
+  padding:10px 18px!important;
+  display:grid!important;
+  grid-template-columns:28px minmax(0,1fr)!important;
+  grid-template-rows:1fr 1fr!important;
+  column-gap:10px!important;
+  align-items:center!important;
+  box-sizing:border-box!important;
+  border:0!important;
+  border-right:4px solid var(--v77-color)!important;
+  background:linear-gradient(90deg,rgba(var(--v77-rgb),.16),rgba(var(--v77-rgb),.025))!important;
+  color:var(--v77-color)!important;
+  box-shadow:none!important;
+}
+.header-status-stack .top-action-current{
+  grid-column:2 / span 2!important;
+  width:100%!important;
+  height:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) var(--v77-context-w)!important;
+  align-items:stretch!important;
+  border:0!important;
+  outline:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  overflow:hidden!important;
+}
+.header-status-stack .v70-action-message,
+.header-status-stack .top-action-current strong,
+.header-status-stack .v65-fleet-ticker{
+  height:100%!important;
+  min-height:0!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0 24px!important;
+  box-sizing:border-box!important;
+  display:grid!important;
+  place-items:center!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  background:transparent!important;
+  color:#f4f7fb!important;
+  font-size:14px!important;
+  font-weight:900!important;
+  line-height:1!important;
+  letter-spacing:0!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+.header-status-stack .v70-action-message,
+.header-status-stack .top-action-current strong{grid-column:1!important}
+.header-status-stack .v65-fleet-ticker{grid-column:2!important}
+.header-status-stack .v65-fleet-ticker #opsTickerText{
+  width:100%!important;
+  height:100%!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  position:static!important;
+  transform:none!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  background:transparent!important;
+  color:#f4f7fb!important;
+  font:inherit!important;
+  line-height:1!important;
+  text-align:center!important;
+}
+.header-status-stack .v70-action-nav,
+.header-status-stack .v65-fleet-summary{
+  width:auto!important;
+  min-width:0!important;
+  height:100%!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0 16px!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border:0!important;
+  border-left:4px solid var(--v77-color)!important;
+  outline:0!important;
+  box-shadow:none!important;
+  background:transparent!important;
+  color:var(--v77-color)!important;
+  font-size:12px!important;
+  font-weight:950!important;
+  line-height:1!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+.header-status-stack .v70-action-nav{grid-column:2!important}
+.header-status-stack .v65-fleet-summary{grid-column:3!important;font-size:0!important}
+.header-status-stack .v65-fleet-summary>*{display:none!important}
+.header-status-stack .v65-fleet-summary::before{
+  content:"← OPEN 1 OF " attr(data-v77-count)!important;
+  display:block!important;
+  color:var(--v77-color)!important;
+  font-size:12px!important;
+  font-weight:950!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}
+.header-status-stack .v70-beacon-lamp,
+.header-status-stack .v70-fleet-lamp{background:var(--v77-color)!important;box-shadow:0 0 9px var(--v77-color),0 0 20px rgba(var(--v77-rgb),.9)!important}
+.header-status-stack .v72-beacon-status{color:var(--v77-color)!important}
+
+/* Page navigation: like main navigation — full-width rails, no enclosing rounded card. */
+body #floatingActions,
+body #floatingActions.page-toolbar,
+body .header-status-stack .page-toolbar{
+  position:relative!important;
+  width:calc(100% + 28px)!important;
+  max-width:none!important;
+  height:52px!important;
+  min-height:52px!important;
+  max-height:52px!important;
+  margin:0 -14px!important;
+  padding:6px 18px!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  border:0!important;
+  border-top:1px solid rgba(var(--center-rgb),.70)!important;
+  border-bottom:1px solid rgba(var(--center-rgb),.70)!important;
+  border-radius:0!important;
+  background:#071522!important;
+  box-shadow:none!important;
+}
+
+/* Footer: a real global footer in document flow — never overlays page cards. */
+body>footer.v57-footer{
+  position:relative!important;
+  left:auto!important;
+  right:auto!important;
+  top:auto!important;
+  bottom:auto!important;
+  transform:none!important;
+  flex:0 0 92px!important;
+  z-index:100!important;
+  width:min(calc(100% - (var(--v77-shell-gutter) * 2)),var(--v77-shell-max))!important;
+  max-width:var(--v77-shell-max)!important;
+  height:92px!important;
+  min-height:92px!important;
+  margin:0 auto!important;
+  padding:10px 22px!important;
+  display:grid!important;
+  grid-template-columns:minmax(220px,1.05fr) minmax(190px,.9fr) auto minmax(245px,1.1fr) minmax(270px,1.2fr)!important;
+  align-items:center!important;
+  gap:22px!important;
+  box-sizing:border-box!important;
+  visibility:visible!important;
+  opacity:1!important;
+  overflow:hidden!important;
+  background:#06121d!important;
+  border:1px solid #294157!important;
+  border-top:1px solid #294157!important;
+  border-bottom:2px solid var(--center-color)!important;
+  color:#9bb5cc!important;
+  box-shadow:none!important;
+}
+
+@media(max-width:1180px){
+  :root{--v77-label-w:190px;--v77-context-w:210px;--v77-shell-gutter:12px}
+  .v57-header-left,.v57-header-right{font-size:29px!important;padding-left:20px!important;padding-right:20px!important}
+  body>footer.v57-footer{grid-template-columns:1fr auto 1fr!important}
+  .v74-footer-version,.v74-footer-location{display:none!important}
+}
+@media(max-width:760px){
+  :root{--v77-label-w:124px;--v77-context-w:132px;--v77-status-h:64px;--v77-shell-gutter:6px;--v77-gap:6px}
+  .v57-header-left,.v57-header-right{font-size:18px!important;padding:12px 10px!important}
+  .header-status-stack{padding-left:6px!important;padding-right:6px!important}
+  body #floatingActions,body #floatingActions.page-toolbar,body .header-status-stack .page-toolbar{width:calc(100% + 12px)!important;margin-left:-6px!important;margin-right:-6px!important}
+  .header-status-stack .v70-action-beacon,.header-status-stack .v65-fleet-label{grid-template-columns:14px 1fr!important;column-gap:6px!important;padding:8px!important}
+  .header-status-stack .v70-action-message,.header-status-stack .top-action-current strong,.header-status-stack .v65-fleet-ticker{font-size:10px!important;padding-left:10px!important;padding-right:10px!important}
+  .header-status-stack .v70-action-nav,.header-status-stack .v65-fleet-summary::before{font-size:9px!important}
+  body>footer.v57-footer{height:auto!important;min-height:86px!important;flex-basis:auto!important;grid-template-columns:1fr!important;justify-items:center!important;text-align:center!important;gap:6px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .header-status-stack>.top-action-bar::before,.header-status-stack>.top-action-bar::after,
+  .header-status-stack>.operations-bar::before,.header-status-stack>.operations-bar::after{animation:none!important;display:none!important}
+}
