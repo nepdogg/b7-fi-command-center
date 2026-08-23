@@ -1,7 +1,7 @@
-/* B7 FI Command Center v0.72.0 — unified status beacons + locked page navigation */
+/* B7 FI Command Center v0.72.1 — unified status beacons + locked page navigation */
 (function(){
 'use strict';
-window.VERSION='0.72.0';
+window.VERSION='0.72.1';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const names={red:'CRITICAL',critical:'CRITICAL',orange:'ATTENTION',attention:'ATTENTION',yellow:'REMINDER',reminder:'REMINDER',blue:'INFORMATION',information:'INFORMATION',green:'ON TRACK',good:'ON TRACK',normal:'NORMAL'};
 function txt(el){return (el?.textContent||'').trim()}
@@ -33,9 +33,9 @@ function paint(){
   try{
     const a=$('#topActionBar');
     if(a){
-      const s=actionStatus();a.dataset.status=s;
+      const s=actionStatus();if(a.dataset.status!==s)a.dataset.status=s;
       const b=$('.v70-action-beacon',a);
-      if(b){b.dataset.status=s;const desired=names[s]||'NORMAL';if(!b.querySelector('.v72-beacon-status')||txt(b.querySelector('.v72-beacon-status'))!==desired)b.innerHTML=beaconHTML('ACTION STATUS',s,'v70-beacon-lamp')}
+      if(b){if(b.dataset.status!==s)b.dataset.status=s;const desired=names[s]||'NORMAL';if(!b.querySelector('.v72-beacon-status')||txt(b.querySelector('.v72-beacon-status'))!==desired)b.innerHTML=beaconHTML('ACTION STATUS',s,'v70-beacon-lamp')}
       const nav=$('.v70-action-nav',a);
       if(nav){
         const age=actionAge();
@@ -45,9 +45,9 @@ function paint(){
     }
     const f=$('#operationsBar');
     if(f){
-      const s=fleetStatus();f.dataset.status=s;
+      const s=fleetStatus();if(f.dataset.status!==s)f.dataset.status=s;
       const b=$('.v65-fleet-label',f);
-      if(b){b.dataset.status=s;const desired=names[s]||'NORMAL';if(!b.querySelector('.v72-beacon-status')||txt(b.querySelector('.v72-beacon-status'))!==desired)b.innerHTML=beaconHTML('FLEET STATUS',s,'v70-fleet-lamp')}
+      if(b){if(b.dataset.status!==s)b.dataset.status=s;const desired=names[s]||'NORMAL';if(!b.querySelector('.v72-beacon-status')||txt(b.querySelector('.v72-beacon-status'))!==desired)b.innerHTML=beaconHTML('FLEET STATUS',s,'v70-fleet-lamp')}
     }
   }finally{busy=false}
 }
@@ -59,9 +59,9 @@ function toolbar(){
   buttons.forEach(b=>{b.classList.toggle('v70-page-nav',nav.includes(b));b.classList.toggle('v70-page-action',actions.includes(b));b.classList.remove('v70-first-action');b.style.marginTop='';b.style.marginBottom=''});
   nav.forEach(b=>bar.appendChild(b));actions.forEach(b=>bar.appendChild(b));if(actions[0])actions[0].classList.add('v70-first-action');
 }
-function version(){const v=$('#appVersionLabel');if(v)v.textContent='B7 FI COMMAND CENTER v0.72.0'}
+function version(){const v=$('#appVersionLabel');if(v)v.textContent='B7 FI COMMAND CENTER v0.72.1'}
 function run(){paint();toolbar();version()}
 const obs=new MutationObserver(()=>requestAnimationFrame(run));
-['#topActionBar','#operationsBar'].forEach(s=>{const el=$(s);if(el)obs.observe(el,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:['class','data-status']})});
+['#topActionBar','#operationsBar'].forEach(s=>{const el=$(s);if(el)obs.observe(el,{childList:true,subtree:true,characterData:true})});
 setTimeout(run,80);setTimeout(run,300);setTimeout(run,900);setInterval(paint,1600);
 })();
