@@ -1,0 +1,354 @@
+/* B7 FI Command Center v0.78.0 — final shared status geometry + reliable footer flow.
+   Visual motion is CSS-only. No timers/observers are used for animation.
+*/
+:root{
+  --v78-status-h:68px;
+  --v78-label-w:220px;
+  --v78-context-w:260px;
+  --v78-status-gap:10px;
+  --v78-shell-max:1600px;
+  --v78-shell-gutter:20px;
+}
+
+/* ---------- SHELL / FOOTER FLOW ---------- */
+html{min-height:100%!important;background:#1d1f21!important}
+body{
+  min-height:100vh!important;
+  min-height:100dvh!important;
+  height:auto!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  margin:0!important;
+  padding:0!important;
+  background:#1d1f21!important;
+}
+body>.sticky-header,
+body>main#app,
+body>footer.v57-footer{
+  width:min(calc(100% - (var(--v78-shell-gutter) * 2)),var(--v78-shell-max))!important;
+  max-width:var(--v78-shell-max)!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  box-sizing:border-box!important;
+}
+body>.sticky-header{flex:0 0 auto!important}
+body>main#app{
+  position:relative!important;
+  flex:1 0 auto!important;
+  height:auto!important;
+  min-height:max(520px,calc(100dvh - 470px))!important;
+  overflow:visible!important;
+  padding-top:14px!important;
+  padding-bottom:28px!important;
+  background:#06131f!important;
+  border-left:1px solid #294157!important;
+  border-right:1px solid #294157!important;
+}
+body>footer.v57-footer{
+  position:relative!important;
+  inset:auto!important;
+  transform:none!important;
+  flex:0 0 92px!important;
+  z-index:100!important;
+  height:92px!important;
+  min-height:92px!important;
+  margin:0 auto!important;
+  padding:10px 22px!important;
+  display:grid!important;
+  grid-template-columns:minmax(220px,1.05fr) minmax(190px,.9fr) auto minmax(245px,1.1fr) minmax(270px,1.2fr)!important;
+  align-items:center!important;
+  gap:22px!important;
+  visibility:visible!important;
+  opacity:1!important;
+  overflow:hidden!important;
+  box-sizing:border-box!important;
+  background:#06121d!important;
+  border:1px solid #294157!important;
+  border-top:1px solid #294157!important;
+  border-bottom:2px solid var(--center-color)!important;
+  color:#9bb5cc!important;
+  box-shadow:none!important;
+}
+.v74-footer-admin{justify-self:start!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:7px!important}
+.v74-footer-version{justify-self:center!important;color:#72a9ff!important;font-size:12px!important;font-weight:900!important;white-space:nowrap!important}
+.v74-footer-brand{justify-self:center!important;padding:0 30px!important;border-left:1px solid rgba(255,255,255,.05)!important;border-right:1px solid rgba(255,255,255,.05)!important}
+.v74-footer-brand img{display:block!important;width:auto!important;height:46px!important}
+.v74-footer-system{justify-self:end!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:6px!important;font-size:11px!important;color:#a9c8e3!important;white-space:nowrap!important}
+.v74-footer-location{justify-self:end!important;text-align:right!important;color:#9fc3df!important;font-size:11px!important;white-space:nowrap!important}
+.v74-footer-live{display:flex!important;align-items:center!important;gap:7px!important}
+.v74-footer-dot{width:9px!important;height:9px!important;border-radius:50%!important;background:#32d583!important;box-shadow:0 0 10px rgba(50,213,131,.8)!important}
+
+/* ---------- SHARED STATUS STACK ---------- */
+.header-status-stack{
+  position:relative!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  grid-template-rows:var(--v78-status-h) var(--v78-status-h) 52px!important;
+  gap:var(--v78-status-gap)!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:calc((var(--v78-status-h) * 2) + 52px + (var(--v78-status-gap) * 3))!important;
+  margin:0!important;
+  padding:var(--v78-status-gap) 14px 0!important;
+  overflow:visible!important;
+  box-sizing:border-box!important;
+  background:#06111b!important;
+}
+.header-status-stack>#topActionBar{grid-row:1!important}
+.header-status-stack>#operationsBar{grid-row:2!important}
+.header-status-stack>#floatingActions{grid-row:3!important}
+
+/* Exact same 3-column geometry for both bars. */
+.header-status-stack>.top-action-bar,
+.header-status-stack>.operations-bar{
+  --v78-color:#7d8a99;
+  --v78-rgb:125,138,153;
+  position:relative!important;
+  isolation:isolate!important;
+  display:grid!important;
+  grid-template-columns:var(--v78-label-w) minmax(0,1fr) var(--v78-context-w)!important;
+  align-items:stretch!important;
+  width:100%!important;
+  height:var(--v78-status-h)!important;
+  min-height:var(--v78-status-h)!important;
+  max-height:var(--v78-status-h)!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+  box-sizing:border-box!important;
+  border:2px solid var(--v78-color)!important;
+  border-radius:11px!important;
+  background:linear-gradient(90deg,rgba(var(--v78-rgb),.15),rgba(6,14,24,.99) 34%,rgba(6,14,24,.99) 70%,rgba(var(--v78-rgb),.09))!important;
+  box-shadow:inset 0 0 20px rgba(var(--v78-rgb),.08),0 0 9px rgba(var(--v78-rgb),.34),0 0 22px rgba(var(--v78-rgb),.11)!important;
+}
+
+/* Severity comes from the beacon that the existing ticker renderer already updates.
+   :has() prevents page/Center accent colors from ever driving status colors. */
+.header-status-stack>.top-action-bar:has(.v70-action-beacon[data-status="red"]),
+.header-status-stack>.top-action-bar:has(.v70-action-beacon[data-status="critical"]),
+.header-status-stack>.operations-bar:has(.v65-fleet-label[data-status="red"]),
+.header-status-stack>.operations-bar:has(.v65-fleet-label[data-status="critical"]){--v78-color:#ff304f;--v78-rgb:255,48,79}
+.header-status-stack>.top-action-bar:has(.v70-action-beacon[data-status="orange"]),
+.header-status-stack>.top-action-bar:has(.v70-action-beacon[data-status="attention"]),
+.header-status-stack>.operations-bar:has(.v65-fleet-label[data-status="orange"]),
+.header-status-stack>.operations-bar:has(.v65-fleet-label[data-status="attention"]){--v78-color:#ff8a2b;--v78-rgb:255,138,43}
+.header-status-stack>.top-action-bar:has(.v70-action-beacon[data-status="yellow"]),
+.header-status-stack>.top-action-bar:has(.v70-action-beacon[data-status="reminder"]),
+.header-status-stack>.operations-bar:has(.v65-fleet-label[data-status="yellow"]),
+.header-status-stack>.operations-bar:has(.v65-fleet-label[data-status="reminder"]){--v78-color:#e4bd32;--v78-rgb:228,189,50}
+.header-status-stack>.top-action-bar:has(.v70-action-beacon[data-status="blue"]),
+.header-status-stack>.top-action-bar:has(.v70-action-beacon[data-status="information"]),
+.header-status-stack>.operations-bar:has(.v65-fleet-label[data-status="blue"]),
+.header-status-stack>.operations-bar:has(.v65-fleet-label[data-status="information"]){--v78-color:#4f9cff;--v78-rgb:79,156,255}
+.header-status-stack>.top-action-bar:has(.v70-action-beacon[data-status="green"]),
+.header-status-stack>.top-action-bar:has(.v70-action-beacon[data-status="good"]),
+.header-status-stack>.operations-bar:has(.v65-fleet-label[data-status="green"]),
+.header-status-stack>.operations-bar:has(.v65-fleet-label[data-status="good"]){--v78-color:#32d583;--v78-rgb:50,213,131}
+/* Fallback when parent data-status exists. */
+.top-action-bar[data-status="red"],.top-action-bar[data-status="critical"],.operations-bar[data-status="red"],.operations-bar[data-status="critical"]{--v78-color:#ff304f;--v78-rgb:255,48,79}
+.top-action-bar[data-status="orange"],.top-action-bar[data-status="attention"],.operations-bar[data-status="orange"],.operations-bar[data-status="attention"]{--v78-color:#ff8a2b;--v78-rgb:255,138,43}
+.top-action-bar[data-status="yellow"],.top-action-bar[data-status="reminder"],.operations-bar[data-status="yellow"],.operations-bar[data-status="reminder"]{--v78-color:#e4bd32;--v78-rgb:228,189,50}
+.top-action-bar[data-status="blue"],.top-action-bar[data-status="information"],.operations-bar[data-status="blue"],.operations-bar[data-status="information"]{--v78-color:#4f9cff;--v78-rgb:79,156,255}
+.top-action-bar[data-status="green"],.top-action-bar[data-status="good"],.operations-bar[data-status="green"],.operations-bar[data-status="good"]{--v78-color:#32d583;--v78-rgb:50,213,131}
+
+/* Kill every older border animation so only the reliable v78 tracers remain. */
+.header-status-stack>.top-action-bar::before,
+.header-status-stack>.top-action-bar::after,
+.header-status-stack>.operations-bar::before,
+.header-status-stack>.operations-bar::after{content:none!important;display:none!important;animation:none!important}
+.v73-sweep,.v75-perimeter-tracer,.v76-perimeter-tracer{display:none!important;animation:none!important}
+
+/* Two real tracer elements travel the same rounded perimeter in opposite directions. */
+.v78-perimeter-tracer{
+  position:absolute!important;
+  left:0!important;
+  top:0!important;
+  z-index:90!important;
+  display:block!important;
+  width:72px!important;
+  height:4px!important;
+  margin:0!important;
+  padding:0!important;
+  pointer-events:none!important;
+  border:0!important;
+  border-radius:999px!important;
+  background:linear-gradient(90deg,transparent,rgba(var(--v78-rgb),.25),var(--v78-color),#fff,var(--v78-color),rgba(var(--v78-rgb),.25),transparent)!important;
+  box-shadow:0 0 7px var(--v78-color),0 0 15px rgba(var(--v78-rgb),.92)!important;
+  offset-path:inset(3px round 9px)!important;
+  offset-rotate:auto!important;
+  transform-origin:center!important;
+}
+.v78-tracer-cw{animation:v78CW 5.6s linear infinite!important}
+.v78-tracer-ccw{animation:v78CCW 5.6s linear infinite!important;animation-delay:-2.8s!important}
+.operations-bar .v78-tracer-cw{animation-delay:-1.15s!important}
+.operations-bar .v78-tracer-ccw{animation-delay:-3.95s!important}
+@keyframes v78CW{from{offset-distance:0%}to{offset-distance:100%}}
+@keyframes v78CCW{from{offset-distance:100%}to{offset-distance:0%}}
+
+/* Action current becomes contents of the same parent grid as Fleet, eliminating divider drift. */
+.header-status-stack .top-action-current{
+  display:contents!important;
+  width:auto!important;
+  height:auto!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.header-status-stack .top-action-current .top-action-label,
+.header-status-stack .top-action-current .top-action-count,
+.header-status-stack .top-action-current .top-action-open{display:none!important}
+
+.header-status-stack .v70-action-beacon,
+.header-status-stack .v65-fleet-label{
+  grid-column:1!important;
+  width:100%!important;
+  min-width:0!important;
+  height:100%!important;
+  margin:0!important;
+  padding:10px 18px!important;
+  display:grid!important;
+  grid-template-columns:28px minmax(0,1fr)!important;
+  grid-template-rows:1fr 1fr!important;
+  column-gap:10px!important;
+  align-items:center!important;
+  box-sizing:border-box!important;
+  border:0!important;
+  border-right:4px solid var(--v78-color)!important;
+  background:linear-gradient(90deg,rgba(var(--v78-rgb),.16),rgba(var(--v78-rgb),.025))!important;
+  color:var(--v78-color)!important;
+  box-shadow:none!important;
+  z-index:50!important;
+}
+.header-status-stack .v70-action-message,
+.header-status-stack .top-action-current strong,
+.header-status-stack .v65-fleet-ticker{
+  grid-column:2!important;
+  width:100%!important;
+  min-width:0!important;
+  height:100%!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0 24px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  box-sizing:border-box!important;
+  border:0!important;
+  outline:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  color:#f4f7fb!important;
+  font-size:14px!important;
+  font-weight:900!important;
+  line-height:1!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  z-index:50!important;
+}
+.header-status-stack .v65-fleet-ticker #opsTickerText{
+  width:100%!important;
+  margin:0!important;
+  padding:0!important;
+  display:block!important;
+  position:static!important;
+  transform:none!important;
+  border:0!important;
+  background:transparent!important;
+  font:inherit!important;
+  line-height:1!important;
+  text-align:center!important;
+}
+.header-status-stack .v70-action-nav,
+.header-status-stack .v65-fleet-summary{
+  grid-column:3!important;
+  width:100%!important;
+  min-width:0!important;
+  height:100%!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0 16px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  box-sizing:border-box!important;
+  border:0!important;
+  border-left:4px solid var(--v78-color)!important;
+  outline:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  color:var(--v78-color)!important;
+  font-size:12px!important;
+  font-weight:950!important;
+  line-height:1!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  z-index:50!important;
+}
+.header-status-stack .v65-fleet-summary{font-size:0!important}
+.header-status-stack .v65-fleet-summary>*{display:none!important}
+.header-status-stack .v65-fleet-summary::before{
+  content:"← OPEN 1 OF " attr(data-v78-count)!important;
+  display:block!important;
+  color:var(--v78-color)!important;
+  font-size:12px!important;
+  font-weight:950!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}
+.header-status-stack .v70-beacon-lamp,
+.header-status-stack .v70-fleet-lamp{
+  background:var(--v78-color)!important;
+  box-shadow:0 0 9px var(--v78-color),0 0 20px rgba(var(--v78-rgb),.9)!important;
+}
+.header-status-stack .v72-beacon-status{color:var(--v78-color)!important}
+
+/* Page navigation remains a full-width rail, not an enclosed card. */
+body #floatingActions,
+body #floatingActions.page-toolbar,
+body .header-status-stack .page-toolbar{
+  position:relative!important;
+  inset:auto!important;
+  width:calc(100% + 28px)!important;
+  max-width:none!important;
+  height:52px!important;
+  min-height:52px!important;
+  max-height:52px!important;
+  margin:0 -14px!important;
+  padding:6px 18px!important;
+  display:flex!important;
+  align-items:center!important;
+  box-sizing:border-box!important;
+  border:0!important;
+  border-top:1px solid rgba(var(--center-rgb),.70)!important;
+  border-bottom:1px solid rgba(var(--center-rgb),.70)!important;
+  border-radius:0!important;
+  background:#071522!important;
+  box-shadow:none!important;
+}
+
+@media(max-width:1180px){
+  :root{--v78-label-w:190px;--v78-context-w:210px;--v78-shell-gutter:12px}
+  body>footer.v57-footer{grid-template-columns:1fr auto 1fr!important}
+  .v74-footer-version,.v74-footer-location{display:none!important}
+}
+@media(max-width:760px){
+  :root{--v78-label-w:124px;--v78-context-w:132px;--v78-status-h:64px;--v78-status-gap:6px;--v78-shell-gutter:6px}
+  body>main#app{min-height:520px!important}
+  .header-status-stack{padding-left:6px!important;padding-right:6px!important}
+  .header-status-stack .v70-action-beacon,.header-status-stack .v65-fleet-label{grid-template-columns:14px 1fr!important;column-gap:6px!important;padding:8px!important}
+  .header-status-stack .v70-action-message,.header-status-stack .top-action-current strong,.header-status-stack .v65-fleet-ticker{font-size:10px!important;padding:0 10px!important}
+  .header-status-stack .v70-action-nav,.header-status-stack .v65-fleet-summary::before{font-size:9px!important}
+  body>footer.v57-footer{height:auto!important;min-height:86px!important;flex-basis:auto!important;grid-template-columns:1fr!important;justify-items:center!important;text-align:center!important;gap:6px!important}
+  .v74-footer-admin,.v74-footer-brand,.v74-footer-system{grid-column:1!important;justify-self:center!important;align-items:center!important}
+  .v74-footer-version,.v74-footer-location{display:none!important}
+}
+@media(prefers-reduced-motion:reduce){.v78-perimeter-tracer{display:none!important;animation:none!important}}
