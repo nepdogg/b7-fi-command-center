@@ -1,7 +1,7 @@
-/* B7 FI Command Center v0.80.3 — Live Status unified responsive shell + read-only tool modal. */
+/* B7 FI Command Center v0.80.5 — Live Status independent tool card + multi-progress display. */
 (function(){
 'use strict';
-window.VERSION='0.80.3';
+window.VERSION='0.80.5';
 const $=(s,r=document)=>r.querySelector(s);
 let liveTimer=null, liveIndex=0, livePaused=false, modalWasPaused=false;
 let statusHome=null;
@@ -14,6 +14,30 @@ function progress(t){
  try{if(typeof routeProgress==='function')return Math.max(0,Math.min(100,Number(routeProgress(t))||0))}catch(e){}
  const candidates=[t.progress,t.fiProgress,t.testingProgress,t.percentComplete,t.completion];
  for(const v of candidates){const n=Number(v);if(Number.isFinite(n))return Math.max(0,Math.min(100,n<=1?n*100:n))}return 0;
+}
+function liveProgressInfo(t){
+ const clamp=n=>Math.max(0,Math.min(100,Number(n)||0));
+ let fi=clamp(progress(t));
+ let lead=0;
+ try{if(typeof adminProgress==='function')lead=clamp(adminProgress(t))}catch(e){}
+ let micro={pct:0,set:false,label:'TARGET NOT SET'};
+ try{if(typeof microScheduleInfo==='function'){
+   const m=microScheduleInfo(t)||{};
+   micro={pct:clamp(m.plannedPct),set:!!m.set,label:safe(m.label,'TARGET NOT SET')};
+ }}catch(e){}
+ let packing=0,packingRelevant=false;
+ const status=String(t.quarterStatus||t.status||'').toLowerCase();
+ try{if(typeof packingProgress==='function')packing=clamp(packingProgress(t))}catch(e){}
+ try{if(typeof packingActive==='function'&&packingActive(t))packingRelevant=true}catch(e){}
+ if(status.includes('packing')||status.includes('shipped')||packing>0)packingRelevant=true;
+ if(status.includes('shipped'))packing=100;
+ return {fi,lead,micro,packing,packingRelevant};
+}
+function progressRow(label,value,tone='fi',detail=''){
+ const numeric=Number.isFinite(Number(value));
+ const pct=numeric?Math.max(0,Math.min(100,Number(value))):0;
+ const valueText=numeric?`${Math.round(pct)}%`:'—';
+ return `<div class="v805-progress-row ${esc(tone)}"><div class="v805-progress-label"><span>${esc(label)}${detail?` <em>· ${esc(detail)}</em>`:''}</span><b>${valueText}</b></div><div class="v805-progress-track"><i style="width:${pct}%"></i></div></div>`;
 }
 function imageFor(t){const key=String(t.toolType||t.model||t.type||'').trim(),map=window.B7_PRODUCT_IMAGES||{};return map[key]||t.productImage||t.image||'assets/kla-plus-official.png'}
 function fmtDate(v){try{return typeof fmt==='function'?fmt(v):safe(v)}catch(e){return safe(v)}}
@@ -62,8 +86,15 @@ function drawTool(){
  const host=$('#v802ToolHost'),list=activeTools(),counter=$('#v802Counter');if(!host)return;
  if(counter)counter.textContent=list.length?`${liveIndex+1} OF ${list.length}`:'0 TOOLS';
  if(!list.length){host.innerHTML='<div class="v802-empty">No active tools. Add or activate tools in Tool Center to populate Live Status.</div>';return}
- liveIndex=(liveIndex+list.length)%list.length;const t=list[liveIndex],p=progress(t),title=safe(t.utid||t.id,'SYSTEM'),subtitle=[t.toolType||t.model||t.type,t.customer].filter(Boolean).join(' · ');
- host.innerHTML=`<button type="button" class="v802-tool-slide" aria-label="Open read-only detail for tool ${esc(title)}"><div class="v802-tool-visual"><img src="${esc(imageFor(t))}" alt="${esc(safe(t.toolType||t.model||'KLA system'))}"></div><div class="v802-tool-body"><div class="v802-tool-kicker">ACTIVE B7 FI SYSTEM</div><h2>${esc(title)}</h2><div class="v802-tool-sub">${esc(subtitle||'B7 Final Integration')}</div><div class="v802-tool-grid">${fields(t).map(([k,v])=>`<div class="v802-tool-field"><span>${esc(k)}</span><b>${esc(k==='Ship Date'?fmtDate(v):safe(v))}</b></div>`).join('')}</div><div class="v802-progress"><div class="v802-progress-top"><span>FI TESTING PROGRESS</span><b>${Math.round(p)}%</b></div><div class="v802-progress-track"><div class="v802-progress-fill" style="width:${p}%"></div></div></div><div class="v802-open-hint">CLICK SYSTEM FOR READ-ONLY TOOL DETAIL</div></div></button>`;
+ liveIndex=(liveIndex+list.length)%list.length;
+ const t=list[liveIndex],title=safe(t.utid||t.id,'SYSTEM'),subtitle=[t.toolType||t.model||t.type,t.customer].filter(Boolean).join(' · '),pi=liveProgressInfo(t);
+ const progressHtml=[
+   progressRow('FI TESTING',pi.fi,'fi'),
+   progressRow('LEAD / ADMIN',pi.lead,'lead'),
+   progressRow('MICRO SCHEDULE',pi.micro.set?pi.micro.pct:NaN,'micro',pi.micro.label),
+   pi.packingRelevant?progressRow('PACKING / SHIPPING',pi.packing,'packing'):''
+ ].join('');
+ host.innerHTML=`<button type="button" class="v802-tool-slide" aria-label="Open read-only detail for tool ${esc(title)}"><div class="v802-tool-visual"><img src="${esc(imageFor(t))}" alt="${esc(safe(t.toolType||t.model||'KLA system'))}"></div><div class="v802-tool-body"><div class="v805-tool-top"><div class="v805-tool-identity"><div class="v802-tool-kicker">ACTIVE B7 FI SYSTEM</div><h2>${esc(title)}</h2><div class="v802-tool-sub">${esc(subtitle||'B7 Final Integration')}</div></div><div class="v805-progress-stack">${progressHtml}</div></div><div class="v802-tool-grid">${fields(t).map(([k,v])=>`<div class="v802-tool-field"><span>${esc(k)}</span><b>${esc(k==='Ship Date'?fmtDate(v):safe(v))}</b></div>`).join('')}</div><div class="v802-open-hint">CLICK SYSTEM FOR READ-ONLY TOOL DETAIL</div></div></button>`;
  const img=host.querySelector('img');if(img)img.onerror=()=>{img.onerror=null;img.src='assets/kla-plus-official.png'};
  host.querySelector('.v802-tool-slide').onclick=()=>openToolModal(t);
 }
@@ -81,12 +112,12 @@ function renderLive(){
 function leaveLive(){if(!document.body.classList.contains('v802-live-status'))return;stopTimer();closeModal();statusBarsHome();document.body.classList.remove('v802-live-status');livePaused=false}
 window.setView=function(v){
  if(v==='livestatus'||v==='live-status'){renderLive();return}
- leaveLive();const r=oldSetView?oldSetView(v):undefined;requestAnimationFrame(()=>{const label=$('#appVersionLabel');if(label)label.textContent='B7 FI COMMAND CENTER V0.80.3'});return r;
+ leaveLive();const r=oldSetView?oldSetView(v):undefined;requestAnimationFrame(()=>{const label=$('#appVersionLabel');if(label)label.textContent='B7 FI COMMAND CENTER V0.80.5'});return r;
 };
 /* Ensure the Operations Live Status card routes to the dedicated display even if a legacy handler is still attached. */
 document.addEventListener('click',e=>{const card=e.target.closest('.v57-live-card');if(!card)return;const text=(card.textContent||'').toUpperCase();if(text.includes('LIVE STATUS CENTER')){e.preventDefault();e.stopImmediatePropagation();window.setView('livestatus')}},true);
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#v802ToolModal'))closeModal()});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)stopTimer();else if(document.body.classList.contains('v802-live-status')&&!livePaused)schedule()});
-function startup(){const label=$('#appVersionLabel');if(label)label.textContent='B7 FI COMMAND CENTER V0.80.3';document.title='B7 FI Command Center v0.80.3'}
+function startup(){const label=$('#appVersionLabel');if(label)label.textContent='B7 FI COMMAND CENTER V0.80.5';document.title='B7 FI Command Center v0.80.5'}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',startup,{once:true});else startup();
 })();
