@@ -1,0 +1,93 @@
+/* B7 FI Command Center v0.80.21 — status stack placement + duplicate-shell cleanup */
+
+/* Main Command Center: fixed framework order is Navigation -> status stack -> Page Actions. */
+body:not(.v802-live-status) .sticky-header .header-status-stack{
+  display:flex!important;
+  flex-direction:column!important;
+  gap:0!important;
+  height:auto!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:visible!important;
+}
+body:not(.v802-live-status) .sticky-header .header-status-stack>#b7StatusStack{
+  order:1!important;
+  flex:0 0 auto!important;
+  width:100%!important;
+  margin:0!important;
+  padding:8px 14px!important;
+  box-sizing:border-box!important;
+}
+body:not(.v802-live-status) .sticky-header .header-status-stack>#floatingActions{
+  order:2!important;
+  flex:0 0 auto!important;
+  width:100%!important;
+  margin:0!important;
+  position:relative!important;
+  inset:auto!important;
+  z-index:1!important;
+}
+
+/* Retired status DOM stays completely outside layout. */
+#topActionBar,#operationsBar{
+  display:none!important;
+  visibility:hidden!important;
+  opacity:0!important;
+  height:0!important;
+  min-height:0!important;
+  max-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  overflow:hidden!important;
+  position:absolute!important;
+  pointer-events:none!important;
+}
+
+/* Live Status: the mount may only display the new permanent B7 status stack.
+   This removes the two legacy/blank rows without touching the working bars. */
+body.v802-live-status #v802StatusMount{
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  margin:0 0 12px!important;
+  padding:0!important;
+  overflow:visible!important;
+  background:transparent!important;
+  border:0!important;
+}
+body.v802-live-status #v802StatusMount::before,
+body.v802-live-status #v802StatusMount::after{
+  display:none!important;
+  content:none!important;
+}
+body.v802-live-status #v802StatusMount>*:not(#b7StatusStack){
+  display:none!important;
+  visibility:hidden!important;
+  height:0!important;
+  min-height:0!important;
+  max-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  overflow:hidden!important;
+}
+body.v802-live-status #v802StatusMount>#b7StatusStack{
+  display:grid!important;
+  width:100%!important;
+  margin:0!important;
+  padding:0!important;
+  gap:9px!important;
+}
+
+/* Keep the new bars untouched geometrically, just ensure they cannot overlap Page Actions/content. */
+#b7StatusStack{position:relative!important;inset:auto!important;z-index:2!important}
+#b7StatusStack .b7s-bar{position:relative!important;inset:auto!important}
+
+/* Live metrics follow immediately after the real two-bar stack. */
+body.v802-live-status .v803-live-shell>.v802-live-metrics{
+  margin-top:0!important;
+}
