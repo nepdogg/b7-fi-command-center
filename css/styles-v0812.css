@@ -1,0 +1,64 @@
+/* B7 FI Command Center v0.80.12 — calm status glow + critical popup + viewer parity */
+:root{--v812-red:#ff3557;--v812-orange:#ff922f;--v812-yellow:#e8c33d;--v812-blue:#55a4ff;--v812-green:#39d98a}
+
+/* Retire all traveling perimeter tracers. The status bars now use a calm breathing glow. */
+.header-status-stack>#topActionBar::before,
+.header-status-stack>#topActionBar::after,
+.header-status-stack>#operationsBar::before,
+.header-status-stack>#operationsBar::after,
+.v73-sweep,.v75-perimeter-tracer,.v76-perimeter-tracer,.v78-perimeter-tracer{display:none!important;animation:none!important;content:none!important}
+
+.header-status-stack>#topActionBar,.header-status-stack>#operationsBar{
+  animation:none!important;
+  transition:border-color .22s ease,box-shadow .22s ease,background-color .22s ease!important;
+}
+/* Severity is the only authority for border, divider, lamp and glow color. */
+.header-status-stack>#topActionBar:has([data-status="red"]),
+.header-status-stack>#topActionBar:has([data-status="critical"]),
+.header-status-stack>#operationsBar:has([data-status="red"]),
+.header-status-stack>#operationsBar:has([data-status="critical"]){--v80-color:var(--v812-red)!important;--v80-rgb:255,53,87!important;border-color:var(--v812-red)!important;animation:v812CriticalGlow 2.8s ease-in-out infinite!important}
+.header-status-stack>#topActionBar:has([data-status="orange"]),
+.header-status-stack>#topActionBar:has([data-status="attention"]),
+.header-status-stack>#operationsBar:has([data-status="orange"]),
+.header-status-stack>#operationsBar:has([data-status="attention"]){--v80-color:var(--v812-orange)!important;--v80-rgb:255,146,47!important;border-color:var(--v812-orange)!important;animation:v812AttentionGlow 4s ease-in-out infinite!important}
+.header-status-stack>#topActionBar:has([data-status="yellow"]),
+.header-status-stack>#topActionBar:has([data-status="reminder"]),
+.header-status-stack>#operationsBar:has([data-status="yellow"]),
+.header-status-stack>#operationsBar:has([data-status="reminder"]){--v80-color:var(--v812-yellow)!important;--v80-rgb:232,195,61!important;border-color:var(--v812-yellow)!important;box-shadow:0 0 9px rgba(232,195,61,.25),inset 0 0 18px rgba(232,195,61,.05)!important}
+.header-status-stack>#topActionBar:has([data-status="blue"]),
+.header-status-stack>#topActionBar:has([data-status="information"]),
+.header-status-stack>#operationsBar:has([data-status="blue"]),
+.header-status-stack>#operationsBar:has([data-status="information"]){--v80-color:var(--v812-blue)!important;--v80-rgb:85,164,255!important;border-color:var(--v812-blue)!important;box-shadow:0 0 8px rgba(85,164,255,.22),inset 0 0 16px rgba(85,164,255,.045)!important}
+.header-status-stack>#topActionBar:has([data-status="green"]),
+.header-status-stack>#topActionBar:has([data-status="good"]),
+.header-status-stack>#topActionBar:has([data-status="normal"]),
+.header-status-stack>#operationsBar:has([data-status="green"]),
+.header-status-stack>#operationsBar:has([data-status="good"]),
+.header-status-stack>#operationsBar:has([data-status="normal"]){--v80-color:var(--v812-green)!important;--v80-rgb:57,217,138!important;border-color:var(--v812-green)!important;box-shadow:0 0 7px rgba(57,217,138,.18),inset 0 0 14px rgba(57,217,138,.04)!important}
+
+@keyframes v812CriticalGlow{0%,100%{box-shadow:0 0 8px rgba(255,53,87,.28),inset 0 0 16px rgba(255,53,87,.055)}50%{box-shadow:0 0 18px rgba(255,53,87,.68),0 0 30px rgba(255,53,87,.18),inset 0 0 22px rgba(255,53,87,.10)}}
+@keyframes v812AttentionGlow{0%,100%{box-shadow:0 0 7px rgba(255,146,47,.22),inset 0 0 14px rgba(255,146,47,.045)}50%{box-shadow:0 0 14px rgba(255,146,47,.48),0 0 24px rgba(255,146,47,.12),inset 0 0 18px rgba(255,146,47,.075)}}
+
+/* All informational text stays white; only the severity word is status-colored. */
+.header-status-stack .v72-beacon-title,
+.header-status-stack .v70-action-message,
+.header-status-stack .top-action-current strong,
+.header-status-stack .v70-action-nav,
+.header-status-stack .v65-fleet-ticker,
+.header-status-stack .v65-fleet-summary{color:#fff!important}
+.header-status-stack .v72-beacon-status{color:var(--v80-color)!important}
+
+/* Viewer-only page keeps the same two-bar geometry as lead Live Status. */
+body.v808-viewer-only #v802StatusMount{display:flex!important;flex-direction:column!important;gap:10px!important;width:100%!important}
+body.v808-viewer-only #v802StatusMount>#topActionBar,
+body.v808-viewer-only #v802StatusMount>#operationsBar{display:grid!important;width:100%!important;visibility:visible!important;opacity:1!important}
+
+/* Critical lead alert popup — Command Center only. */
+.v812-critical-backdrop{position:fixed;inset:0;background:rgba(0,7,13,.76);display:flex;align-items:center;justify-content:center;z-index:10050;padding:24px}
+.v812-critical-modal{width:min(680px,94vw);border:2px solid var(--v812-red);border-radius:12px;background:#081622;color:#fff;box-shadow:0 0 28px rgba(255,53,87,.42);overflow:hidden}
+.v812-critical-head{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid rgba(255,53,87,.45);background:rgba(255,53,87,.09)}
+.v812-critical-lamp{width:15px;height:15px;border-radius:50%;background:var(--v812-red);box-shadow:0 0 10px var(--v812-red),0 0 22px rgba(255,53,87,.8);flex:none}
+.v812-critical-head strong{font-size:16px;letter-spacing:.05em}.v812-critical-head span{color:var(--v812-red);font-size:11px;font-weight:900;letter-spacing:.08em}
+.v812-critical-body{padding:22px 20px;font-size:16px;font-weight:800;line-height:1.45;text-align:center}
+.v812-critical-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding:0 20px 20px}.v812-critical-actions button{min-height:42px;padding:9px 15px;border-radius:7px;border:1px solid #36536a;background:#0b2132;color:#fff;font-weight:900;cursor:pointer}.v812-critical-actions .primary{border-color:var(--v812-red);background:rgba(255,53,87,.16)}
+@media(prefers-reduced-motion:reduce){.header-status-stack>#topActionBar,.header-status-stack>#operationsBar{animation:none!important}}
