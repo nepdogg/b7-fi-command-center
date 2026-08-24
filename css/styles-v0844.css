@@ -1,0 +1,45 @@
+/* B7 FI Command Center v0.80.44 — repaired Mini Tool Card + complete Tool Center status summary */
+.v837-summary-grid.v844-summary-grid{
+  display:grid!important;
+  grid-template-columns:repeat(7,minmax(0,1fr))!important;
+  gap:10px!important;
+}
+.v837-summary-grid.v844-summary-grid .metric{
+  min-width:0!important;
+  border:1px solid rgba(148,163,184,.22)!important;
+  background:rgba(15,31,47,.78)!important;
+  transition:opacity .15s ease,border-color .15s ease,box-shadow .15s ease!important;
+}
+.v837-summary-grid.v844-summary-grid .metric.v844-inactive{
+  opacity:.38!important;
+  filter:saturate(.45)!important;
+}
+.v837-summary-grid.v844-summary-grid .metric.v844-active{opacity:1!important}
+.v837-summary-grid.v844-summary-grid .v844-total{border-color:#38bdf8!important}
+.v837-summary-grid.v844-summary-grid .v844-waiting.v844-active{border-color:#fb7185!important;box-shadow:inset 0 2px 0 rgba(251,113,133,.9)!important}
+.v837-summary-grid.v844-summary-grid .v844-infi.v844-active{border-color:#facc15!important;box-shadow:inset 0 2px 0 rgba(250,204,21,.9)!important}
+.v837-summary-grid.v844-summary-grid .v844-packing.v844-active{border-color:#38bdf8!important;box-shadow:inset 0 2px 0 rgba(56,189,248,.9)!important}
+.v837-summary-grid.v844-summary-grid .v844-shipped.v844-active{border-color:#34d399!important;box-shadow:inset 0 2px 0 rgba(52,211,153,.9)!important}
+.v837-summary-grid.v844-summary-grid .v844-pulled.v844-active{border-color:#22c55e!important;box-shadow:inset 0 2px 0 rgba(34,197,94,.9)!important}
+.v837-summary-grid.v844-summary-grid .v844-pushed.v844-active{border-color:#fb7185!important;box-shadow:inset 0 2px 0 rgba(251,113,133,.9)!important}
+
+/* Keep the repaired v0.80.43 density targets deterministic. */
+.v837-tool-dashboard .v3-system-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:12px!important}
+.v842-mini-tool-card{padding:12px!important;gap:7px!important}
+.v842-utid{font-size:22px!important}
+.v842-plan,.v842-plan-placeholder{height:18px!important}
+.v842-progress-grid{gap:5px!important}
+.v842-fields{gap:6px 10px!important;padding-top:7px!important}
+
+@media(max-width:1550px){
+  .v837-summary-grid.v844-summary-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+}
+@media(max-width:1450px){.v837-tool-dashboard .v3-system-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:1050px){
+  .v837-tool-dashboard .v3-system-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .v837-summary-grid.v844-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:700px){
+  .v837-tool-dashboard .v3-system-grid{grid-template-columns:1fr!important}
+  .v837-summary-grid.v844-summary-grid{grid-template-columns:1fr!important}
+}
