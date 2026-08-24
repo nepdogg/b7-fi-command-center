@@ -1,0 +1,78 @@
+/* B7 FI Command Center v0.80.31 — final Operations + standalone Live Status parity lock. */
+:root{--v831-live-edge:12px;--v831-live-gap:10px}
+
+/* Standalone viewer: override the older v0.80.29 one-column rule and restore the same photo bay as Operations. */
+body.v802-live-status.v829-live-final .v802-tool-slide,
+body.v802-live-status .v802-tool-slide{
+  display:grid!important;
+  grid-template-columns:minmax(220px,28%) minmax(0,72%)!important;
+  height:100%!important;min-height:0!important
+}
+body.v802-live-status.v829-live-final .v802-tool-visual,
+body.v802-live-status .v802-tool-visual{
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  min-width:0!important;height:100%!important;padding:clamp(14px,1.6vw,24px)!important;
+  border-right:1px solid #294a60!important;border-bottom:0!important;
+  background:linear-gradient(150deg,#07121c,#0c2637)!important;box-sizing:border-box!important
+}
+body.v802-live-status.v829-live-final .v802-tool-visual.v830-photo-fallback img,
+body.v802-live-status .v802-tool-visual.v830-photo-fallback img{display:none!important}
+body.v802-live-status.v829-live-final .v802-tool-visual img,
+body.v802-live-status .v802-tool-visual img{width:auto!important;height:auto!important;max-width:88%!important;max-height:220px!important;object-fit:contain!important}
+
+/* Operations: override the older v0.80.29 hide rule too. */
+body.v825-operations-dashboard.v829-operations-final .v825-operations-carousel .v802-tool-slide,
+body.v825-operations-dashboard .v825-operations-carousel .v802-tool-slide{
+  display:grid!important;grid-template-columns:minmax(220px,28%) minmax(0,72%)!important
+}
+body.v825-operations-dashboard.v829-operations-final .v825-operations-carousel .v802-tool-visual,
+body.v825-operations-dashboard .v825-operations-carousel .v802-tool-visual{
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  min-width:0!important;padding:clamp(14px,1.6vw,24px)!important;border-right:1px solid #294a60!important;
+  border-bottom:0!important;background:linear-gradient(150deg,#07121c,#0c2637)!important;box-sizing:border-box!important
+}
+
+/* Final alignment grid: KPI row, quarter progress and carousel share the status-bar edges. */
+body.v825-operations-dashboard .v825-operations-live,
+body.v802-live-status .v803-live-shell{width:100%!important;max-width:none!important;box-sizing:border-box!important}
+body.v825-operations-dashboard .v825-operations-live>.v802-live-metrics,
+body.v825-operations-dashboard .v825-operations-live>.v829-quarter-progress,
+body.v825-operations-dashboard .v825-operations-live>.v802-carousel,
+body.v802-live-status .v802-live-metrics,
+body.v802-live-status .v829-quarter-progress,
+body.v802-live-status .v802-carousel{
+  width:auto!important;max-width:none!important;margin-left:var(--v831-live-edge)!important;margin-right:var(--v831-live-edge)!important;
+  box-sizing:border-box!important
+}
+body.v825-operations-dashboard .v825-operations-live>.v802-live-metrics,
+body.v802-live-status .v802-live-metrics{margin-bottom:var(--v831-live-gap)!important}
+body.v825-operations-dashboard .v825-operations-live>.v829-quarter-progress,
+body.v802-live-status .v829-quarter-progress{margin-bottom:var(--v831-live-gap)!important}
+
+/* Keep the compact one-screen viewer while using the restored photo bay. */
+body.v802-live-status #v802ToolHost{min-height:0!important;overflow:hidden!important}
+body.v802-live-status .v802-tool-body{justify-content:center!important;gap:10px!important;padding:14px 20px!important;box-sizing:border-box!important}
+body.v802-live-status .v805-tool-top{gap:18px!important;margin:0!important}
+body.v802-live-status .v805-progress-stack{gap:7px!important;padding-top:0!important}
+body.v802-live-status .v807-requirements{margin:0!important;padding:8px 10px!important}
+body.v802-live-status .v802-tool-grid{gap:8px!important}
+body.v802-live-status .v802-tool-field{padding:9px 10px!important}
+body.v802-live-status .v802-open-hint{margin:0!important;padding-top:0!important}
+
+@media(max-height:760px) and (min-width:901px){
+ body.v802-live-status.v829-live-final .v802-tool-slide,body.v802-live-status .v802-tool-slide{grid-template-columns:minmax(185px,26%) minmax(0,74%)!important}
+ body.v802-live-status .v802-tool-body{gap:7px!important;padding:9px 16px!important}
+ body.v802-live-status .v805-tool-top{gap:12px!important}
+ body.v802-live-status .v805-progress-stack{gap:5px!important}
+ body.v802-live-status .v807-requirements{padding:6px 8px!important}
+ body.v802-live-status .v802-tool-grid{gap:6px!important}
+ body.v802-live-status .v802-tool-field{padding:7px 8px!important}
+ body.v802-live-status .v802-tool-visual{padding:10px!important}
+ body.v802-live-status .v802-tool-visual img{max-height:175px!important}
+}
+@media(max-width:900px){
+ body.v802-live-status.v829-live-final .v802-tool-slide,body.v802-live-status .v802-tool-slide,
+ body.v825-operations-dashboard.v829-operations-final .v825-operations-carousel .v802-tool-slide,body.v825-operations-dashboard .v825-operations-carousel .v802-tool-slide{grid-template-columns:1fr!important;height:auto!important}
+ body.v802-live-status.v829-live-final .v802-tool-visual,body.v802-live-status .v802-tool-visual,
+ body.v825-operations-dashboard.v829-operations-final .v825-operations-carousel .v802-tool-visual,body.v825-operations-dashboard .v825-operations-carousel .v802-tool-visual{min-height:160px!important;height:auto!important;border-right:0!important;border-bottom:1px solid #294a60!important}
+}
