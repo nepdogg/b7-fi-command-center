@@ -1,0 +1,6 @@
+/* B7 FI Command Center v0.80.39 — authoritative Center theme + Tool plan UX */
+.v839-disabled{opacity:.48}
+#v839-new-ship:disabled,#v839-new-quarter:disabled{cursor:not-allowed}
+body[data-center="tool"],body[data-center="toolfinal"],body[data-theme="toolcenter"]{--page-accent:#8E5AE8!important;--page-accent-rgb:142,90,232!important;--center-color:#8E5AE8!important;--center-rgb:142,90,232!important}
+body[data-center="tool"] #floatingActions,body[data-center="toolfinal"] #floatingActions{border-color:rgba(142,90,232,.72)!important}
+body[data-center="tool"] #floatingActions .btn.primary,body[data-center="toolfinal"] #floatingActions .btn.primary{background:#8E5AE8!important;border-color:#b994ff!important}
