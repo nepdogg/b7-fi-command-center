@@ -1,8 +1,8 @@
-/* B7 FI Command Center v0.80.9 — shared status naming + Live viewer parity + automatic active-quarter titles.
+/* B7 FI Command Center v0.80.10 — shared status naming + Live viewer parity + automatic active-quarter titles.
    Bounded reconciliation only: no MutationObserver, no setInterval, no recurring polling. */
 (function(){
 'use strict';
-const VERSION='0.80.9';
+const VERSION='0.80.10';
 window.VERSION=VERSION;
 const $=(s,r=document)=>r.querySelector(s);
 const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
