@@ -5,6 +5,7 @@
   /* ---------- Top Action Center ticker repair ---------- */
   let v46ActionIndex=0;
   function refreshTopActions46(advance=false){
+    if(window.B7AlertEngine817)return;
     const bar=document.getElementById('topActionBar');
     if(!bar || typeof v3Alerts!=='function')return;
     const items=v3Alerts()||[];

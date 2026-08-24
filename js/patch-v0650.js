@@ -22,6 +22,7 @@ function make(label,fn,cls=''){
 
 /* Bottom bar is now operational only: Fleet Status. System/admin state belongs in footer. */
 function rebuildFleetBar(){
+  if(window.B7AlertEngine817)return;
   const bar=$('#operationsBar');if(!bar)return;
   if(!bar.dataset.v65){
     const tickerText=$('#opsTickerText'); const task=$('#opsTaskCount'); const presence=$('#opsPresence');

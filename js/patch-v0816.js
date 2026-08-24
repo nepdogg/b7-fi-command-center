@@ -34,11 +34,13 @@ function shell(bar,title,sev,message,countText,click){
  const b=bar.querySelector('.v816-status-message');if(click)b.onclick=click;else b.disabled=true;
 }
 function renderLead(reset=false){
+ if(window.B7AlertEngine817)return;
  clearTimeout(leadTimer);const q=leadQueue();if(reset)leadIndex=0;if(!q.length){leadIndex=0;shell($('#topActionBar'),'LEAD ALERTS','green','NO ACTIVE LEAD ALERTS','0 OPEN');syncQueueDiag(q);return}
  leadIndex%=q.length;const a=q[leadIndex],k=a._k,d=a._d;lastLeadKey=k;const owner=d.assignee?` · Owner ${d.assignee}`:'';shell($('#topActionBar'),'LEAD ALERTS',a._sev,`${a.text||''}${owner}`,`← OPEN ${leadIndex+1} OF ${q.length}`,()=>{if(typeof window.actionTarget==='function')window.actionTarget(a)});syncQueueDiag(q);
  leadTimer=setTimeout(()=>{const next=leadQueue();if(!next.length){renderLead(true);return}const pos=Math.max(0,next.findIndex(x=>x._k===lastLeadKey));leadIndex=(pos+1)%next.length;renderLead(false)},Math.max(3,Math.min(60,Number(d.seconds)||8))*1000);
 }
 function renderSystem(reset=false){
+ if(window.B7AlertEngine817)return;
  clearTimeout(systemTimer);const q=systemQueue();if(reset)systemIndex=0;if(!q.length){systemIndex=0;shell($('#operationsBar'),'SYSTEM STATUS','green','ALL ACTIVE SYSTEMS WITHIN CURRENT STATUS RULES','0 OPEN');return}
  systemIndex%=q.length;const a=q[systemIndex];lastSystemKey=`${a.toolId}|${a.text}`;shell($('#operationsBar'),'SYSTEM STATUS',a._sev,a.text||'SYSTEM STATUS AVAILABLE',`← OPEN ${systemIndex+1} OF ${q.length}`,()=>{if(a.toolId&&typeof window.toolStatus==='function')window.toolStatus(a.toolId)});
  systemTimer=setTimeout(()=>{const next=systemQueue();if(!next.length){renderSystem(true);return}const pos=Math.max(0,next.findIndex(x=>`${x.toolId}|${x.text}`===lastSystemKey));systemIndex=(pos+1)%next.length;renderSystem(false)},8000);
