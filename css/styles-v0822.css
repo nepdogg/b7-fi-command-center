@@ -1,0 +1,193 @@
+/* B7 FI Command Center v0.80.22 — shared status placement + Tool editor recovery */
+
+/* -------------------------------------------------------------------------
+   GLOBAL COMMAND CENTER STATUS FRAMEWORK
+   Navigation -> Lead Alerts -> System Status -> Page Actions, with no
+   legacy spacer/pseudo rows. The v0.80.20 bar component itself is unchanged.
+   ------------------------------------------------------------------------- */
+body:not(.v802-live-status) .sticky-header{
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  gap:0!important;
+}
+body:not(.v802-live-status) .sticky-header>.main-nav{
+  margin-bottom:0!important;
+}
+body:not(.v802-live-status) .sticky-header>.header-status-stack{
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:flex-start!important;
+  align-items:stretch!important;
+  gap:0!important;
+  row-gap:0!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  margin:0!important;
+  padding:0!important;
+  position:relative!important;
+  inset:auto!important;
+  overflow:visible!important;
+}
+body:not(.v802-live-status) .sticky-header>.header-status-stack::before,
+body:not(.v802-live-status) .sticky-header>.header-status-stack::after{
+  display:none!important;
+  content:none!important;
+  width:0!important;
+  height:0!important;
+  min-height:0!important;
+  flex:0 0 0!important;
+}
+body:not(.v802-live-status) .sticky-header>.header-status-stack>#b7StatusStack{
+  order:1!important;
+  flex:0 0 auto!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:8px 14px 7px!important;
+  box-sizing:border-box!important;
+}
+body:not(.v802-live-status) .sticky-header>.header-status-stack>#floatingActions{
+  order:2!important;
+  flex:0 0 auto!important;
+  width:100%!important;
+  min-height:50px!important;
+  height:auto!important;
+  max-height:none!important;
+  margin:0!important;
+  padding-top:7px!important;
+  padding-bottom:8px!important;
+  position:relative!important;
+  inset:auto!important;
+  transform:none!important;
+}
+
+/* Retired status elements must never reserve layout space. */
+#topActionBar,#operationsBar{
+  display:none!important;
+  visibility:hidden!important;
+  opacity:0!important;
+  position:absolute!important;
+  width:0!important;
+  height:0!important;
+  min-height:0!important;
+  max-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  overflow:hidden!important;
+  pointer-events:none!important;
+}
+
+/* -------------------------------------------------------------------------
+   BOTH LIVE STATUS PAGES
+   Use the exact v0.80.20 status component geometry and keep metrics directly
+   beneath the status pair. The only UI difference remains the Return button.
+   ------------------------------------------------------------------------- */
+body.v802-live-status #v802StatusMount{
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  overflow:visible!important;
+}
+body.v802-live-status #v802StatusMount::before,
+body.v802-live-status #v802StatusMount::after{
+  display:none!important;
+  content:none!important;
+}
+body.v802-live-status #v802StatusMount>*:not(#b7StatusStack){
+  display:none!important;
+  visibility:hidden!important;
+  position:absolute!important;
+  width:0!important;
+  height:0!important;
+  min-height:0!important;
+  max-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  overflow:hidden!important;
+}
+body.v802-live-status #v802StatusMount>#b7StatusStack{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  gap:9px!important;
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:0!important;
+}
+body.v802-live-status #b7StatusStack .b7s-bar{
+  grid-template-columns:240px minmax(0,1fr) 205px!important;
+  min-height:68px!important;
+  height:68px!important;
+}
+body.v802-live-status .v803-live-shell>.v802-live-status-stack{
+  margin-top:0!important;
+  margin-bottom:12px!important;
+  padding:0!important;
+  min-height:0!important;
+  height:auto!important;
+  gap:0!important;
+}
+body.v802-live-status .v803-live-shell>.v802-live-metrics{
+  margin-top:0!important;
+  margin-bottom:14px!important;
+}
+
+/* -------------------------------------------------------------------------
+   TOOL EDITOR RECOVERY
+   v0.61 focused-editor CSS hid the Tool Information / Tool Progress /
+   Lead-Admin / Shipping / NC / Custom Field tabs. Restore those tabs only for
+   Tool editing so checklist and workflow values can be changed again.
+   ------------------------------------------------------------------------- */
+body.v61-focused-editor[data-center="tool"] #app>.admin-tabs,
+body.v61-focused-editor[data-center="tool"] #app .admin-tabs{
+  display:flex!important;
+  position:relative!important;
+  top:auto!important;
+  left:auto!important;
+  right:auto!important;
+  z-index:20!important;
+  flex-wrap:wrap!important;
+  align-items:center!important;
+  gap:7px!important;
+  width:100%!important;
+  margin:0 0 12px!important;
+  padding:9px!important;
+  box-sizing:border-box!important;
+}
+body.v61-focused-editor[data-center="tool"] #taBody{
+  display:block!important;
+  width:100%!important;
+  min-height:0!important;
+}
+body.v61-focused-editor[data-center="tool"] .admin-tab{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-height:34px!important;
+}
+
+/* Keep the Tool editor identity banner below the recovered tabs instead of
+   allowing sticky offsets from historical CSS to cover controls. */
+body.v61-focused-editor[data-center="tool"] .tool-edit-identity{
+  position:relative!important;
+  top:auto!important;
+  z-index:1!important;
+}
+
+@media(max-width:1050px){
+  body.v802-live-status #b7StatusStack .b7s-bar{
+    grid-template-columns:205px minmax(0,1fr) 165px!important;
+  }
+}
