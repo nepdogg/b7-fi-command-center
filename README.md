@@ -32,7 +32,7 @@ This build is based directly on the user's working v0.20.1 repository. It preser
 ### Important
 A successful direct REST diagnostic does not yet enable full live write synchronization. Authenticated production synchronization will be implemented only after the exact IT-provided Entra configuration is known. A failed direct REST test is also useful because it identifies browser/authentication/CORS limitations without risking production local data.
 
-## v0.80.14 — Status System Stabilization
+## v0.80.15 — Status System Stabilization
 - Permanent Lead Alerts/System Status shells across rotating messages.
 - Severity now owns border, divider, beacon, category text, and glow colors.
 - Larger centered System Status and Lead Alerts message typography.
