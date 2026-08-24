@@ -1,7 +1,7 @@
 /* B7 FI Command Center v0.80.15 — Action Center save/edit controls for status-bar testing. */
 (function(){
 'use strict';
-const VERSION='0.80.15';
+const VERSION='0.80.19';
 window.VERSION=VERSION;
 const $=(s,r=document)=>r.querySelector(s);
 const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
@@ -67,12 +67,12 @@ function addTaskModal(){
     const item={id,toolId:$('#v815Tool').value,severity:$('#v815Sev').value,text,manual:true,complete:false,createdAt:new Date().toISOString()};
     state.manualReminders.unshift(item);
     const mode=$('#v815UntilMode').value, custom=$('#v815Until').value;
-    state.actionDisplay[id]={
+    state.actionDisplay['manual:'+id]={
       show:$('#v815Show').value==='on',seconds:Number($('#v815Seconds').value)||10,order:Number($('#v815Order').value)||999,
       assignee:$('#v815Owner').value.trim(),pin:$('#v815Pin').checked,ack:$('#v815Ack').checked,
       displayUntil:mode==='while-open'?'while-open':mode==='today'?today():(custom||'while-open')
     };
-    state.actionFirstSeen[id]=item.createdAt;
+    state.actionFirstSeen['manual:'+id]=item.createdAt;
     if(typeof save==='function')save();close();
     if(typeof setView==='function')setView('actions');
     toast('Task added and saved');

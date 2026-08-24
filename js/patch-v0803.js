@@ -128,12 +128,12 @@ function renderLive(){
 function leaveLive(){if(!document.body.classList.contains('v802-live-status'))return;stopTimer();closeModal();statusBarsHome();document.body.classList.remove('v802-live-status');livePaused=false}
 window.setView=function(v){
  if(v==='livestatus'||v==='live-status'){renderLive();return}
- leaveLive();const r=oldSetView?oldSetView(v):undefined;requestAnimationFrame(()=>{const label=$('#appVersionLabel');if(label)label.textContent='B7 FI COMMAND CENTER V0.80.7'});return r;
+ leaveLive();const r=oldSetView?oldSetView(v):undefined;requestAnimationFrame(()=>{const label=$('#appVersionLabel');if(label)label.textContent='B7 FI COMMAND CENTER V0.80.19'});return r;
 };
 /* Ensure the Operations Live Status card routes to the dedicated display even if a legacy handler is still attached. */
 document.addEventListener('click',e=>{const card=e.target.closest('.v57-live-card');if(!card)return;const text=(card.textContent||'').toUpperCase();if(text.includes('LIVE STATUS CENTER')){e.preventDefault();e.stopImmediatePropagation();window.setView('livestatus')}},true);
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#v802ToolModal'))closeModal()});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)stopTimer();else if(document.body.classList.contains('v802-live-status')&&!livePaused)schedule()});
-function startup(){const label=$('#appVersionLabel');if(label)label.textContent='B7 FI COMMAND CENTER V0.80.7';document.title='B7 FI Command Center v0.80.7'}
+function startup(){const label=$('#appVersionLabel');if(label)label.textContent='B7 FI COMMAND CENTER V0.80.19';document.title='B7 FI Command Center v0.80.19'}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',startup,{once:true});else startup();
 })();
