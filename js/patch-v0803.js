@@ -60,7 +60,7 @@ function fmtDate(v){try{return typeof fmt==='function'?fmt(v):safe(v)}catch(e){r
 function metricCounts(list){const c={shipped:0,infi:0,packing:0,waiting:0};list.forEach(t=>{const s=String(t.quarterStatus||t.status||'').toLowerCase();if(s.includes('shipped'))c.shipped++;else if(s.includes('packing'))c.packing++;else if(s.includes('in fi')||s==='fi')c.infi++;else if(s.includes('waiting'))c.waiting++});return c}
 function fields(t){return [['UTID',t.utid||t.id],['Tool / Model',t.toolType||t.model||t.type],['Customer',t.customer],['Sales Order',t.salesOrder||t.so],['Current Checklist',t.currentChecklist||t.checklist],['Ship Date',t.shipDate||t.ship],['Driver',t.driver||t.assignedDriver],['Cleanroom',t.cleanroom||t.room||t.location],['Phase',t.quarterStatus||t.status]]}
 function stopTimer(){if(liveTimer){clearTimeout(liveTimer);liveTimer=null}}
-function schedule(){stopTimer();if(livePaused||!document.body.classList.contains('v802-live-status')||$('#v802ToolModal'))return;liveTimer=setTimeout(()=>{const list=activeTools();if(list.length){liveIndex=(liveIndex+1)%list.length;drawTool()}schedule()},12000)}
+function schedule(){stopTimer();if(livePaused||(!document.body.classList.contains('v802-live-status')&&!document.body.classList.contains('v825-operations-dashboard'))||$('#v802ToolModal'))return;liveTimer=setTimeout(()=>{const list=activeTools();if(list.length){liveIndex=(liveIndex+1)%list.length;drawTool()}schedule()},12000)}
 function statusBarsToLive(){
  const mount=$('#v802StatusMount'),top=$('#topActionBar'),sys=$('#operationsBar'),home=$('.sticky-header .header-status-stack');
  if(!mount||!top||!sys)return;
@@ -113,6 +113,7 @@ function drawTool(){
  host.innerHTML=`<button type="button" class="v802-tool-slide" aria-label="Open read-only detail for tool ${esc(title)}"><div class="v802-tool-visual"><img src="${esc(imageFor(t))}" alt="${esc(safe(t.toolType||t.model||'KLA system'))}"></div><div class="v802-tool-body"><div class="v805-tool-top"><div class="v805-tool-identity"><div class="v802-tool-kicker">ACTIVE B7 FI SYSTEM</div><h2>${esc(title)}</h2><div class="v802-tool-sub">${esc(subtitle||'B7 Final Integration')}</div>${scheduleBadge805(t)}</div><div class="v805-progress-stack">${progressHtml}</div></div>${requirements805(t)}<div class="v802-tool-grid">${fields(t).map(([k,v])=>`<div class="v802-tool-field"><span>${esc(k)}</span><b>${esc(k==='Ship Date'?fmtDate(v):safe(v))}</b></div>`).join('')}</div><div class="v802-open-hint">CLICK SYSTEM FOR READ-ONLY TOOL DETAIL</div></div></button>`;
  const img=host.querySelector('img');if(img)img.onerror=()=>{img.onerror=null;img.src='assets/kla-plus-official.png'};
  host.querySelector('.v802-tool-slide').onclick=()=>openToolModal(t);
+ try{document.dispatchEvent(new CustomEvent('b7fi:live-tool-change',{detail:{tool:t,index:liveIndex,total:list.length}}))}catch(e){}
 }
 function renderLive(){
  document.body.classList.remove('v801-live-status');document.body.classList.add('v802-live-status');stopTimer();window.scrollTo(0,0);
@@ -134,6 +135,16 @@ window.setView=function(v){
 document.addEventListener('click',e=>{const card=e.target.closest('.v57-live-card');if(!card)return;const text=(card.textContent||'').toUpperCase();if(text.includes('LIVE STATUS CENTER')){e.preventDefault();e.stopImmediatePropagation();window.setView('livestatus')}},true);
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#v802ToolModal'))closeModal()});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)stopTimer();else if(document.body.classList.contains('v802-live-status')&&!livePaused)schedule()});
+window.B7LiveStatusCore={
+ activeTools,metricCounts,drawTool,schedule,stopTimer,openToolModal,renderLive,
+ currentTool:()=>{const list=activeTools();return list.length?list[(liveIndex+list.length)%list.length]:null},
+ currentIndex:()=>liveIndex,
+ previous:()=>{const n=activeTools().length;if(n){liveIndex=(liveIndex-1+n)%n;drawTool()}schedule()},
+ next:()=>{const n=activeTools().length;if(n){liveIndex=(liveIndex+1)%n;drawTool()}schedule()},
+ togglePause:()=>{livePaused=!livePaused;if(livePaused)stopTimer();else schedule();return livePaused},
+ setPaused:v=>{livePaused=!!v;if(livePaused)stopTimer();else schedule();return livePaused},
+ isPaused:()=>livePaused
+};
 function startup(){const label=$('#appVersionLabel');if(label)label.textContent='B7 FI COMMAND CENTER V0.80.19';document.title='B7 FI Command Center v0.80.19'}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',startup,{once:true});else startup();
 })();
