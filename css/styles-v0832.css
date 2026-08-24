@@ -1,0 +1,76 @@
+/* B7 FI Command Center v0.80.32 — Operations/Live Status edge alignment + page-nav convention lock. */
+:root{--v832-live-edge:14px}
+
+/* Operations live dashboard: remove the older inner 16px wrapper so the live modules line up
+   with the Lead Alerts / System Status rails above. */
+body.v825-operations-dashboard .v825-operations-live{
+  width:100%!important;
+  max-width:none!important;
+  margin-left:0!important;
+  margin-right:0!important;
+  padding-left:0!important;
+  padding-right:0!important;
+  box-sizing:border-box!important;
+}
+body.v825-operations-dashboard .v825-operations-live>.v802-live-metrics,
+body.v825-operations-dashboard .v825-operations-live>.v829-quarter-progress,
+body.v825-operations-dashboard .v825-operations-live>.v802-carousel{
+  width:calc(100% - (var(--v832-live-edge) * 2))!important;
+  max-width:none!important;
+  margin-left:var(--v832-live-edge)!important;
+  margin-right:var(--v832-live-edge)!important;
+  box-sizing:border-box!important;
+}
+
+/* Standalone Live Status uses the same edge grid as its status bars. */
+body.v802-live-status .v803-live-shell{width:100%!important;max-width:none!important;margin-inline:0!important;padding-inline:0!important;box-sizing:border-box!important}
+body.v802-live-status #v802StatusMount,
+body.v802-live-status .v802-live-metrics,
+body.v802-live-status .v829-quarter-progress,
+body.v802-live-status .v802-carousel{
+  width:calc(100% - (var(--v832-live-edge) * 2))!important;
+  max-width:none!important;
+  margin-left:var(--v832-live-edge)!important;
+  margin-right:var(--v832-live-edge)!important;
+  box-sizing:border-box!important;
+}
+
+/* PAGE NAVIGATION CONVENTION — destinations/context navigation LEFT, page actions RIGHT.
+   This is intentionally robust even if older scripts switch the toolbar between flex/grid. */
+body[data-center="home"] #floatingActions,
+body.v825-operations-dashboard #floatingActions{
+  display:flex!important;
+  align-items:center!important;
+  width:calc(100% + 28px)!important;
+  max-width:none!important;
+}
+body[data-center="home"] #floatingActions #v826OpenCurrentTool,
+body.v825-operations-dashboard #floatingActions #v826OpenCurrentTool{
+  order:1!important;
+  margin-left:0!important;
+  margin-right:auto!important;
+  justify-self:start!important;
+  flex:0 0 auto!important;
+}
+body[data-center="home"] #floatingActions #v825Screenshot,
+body.v825-operations-dashboard #floatingActions #v825Screenshot{
+  order:90!important;
+  margin-left:0!important;
+  margin-right:0!important;
+  justify-self:end!important;
+  flex:0 0 auto!important;
+}
+body[data-center="home"] #floatingActions #v825Report,
+body.v825-operations-dashboard #floatingActions #v825Report{
+  order:91!important;
+  margin-left:0!important;
+  margin-right:0!important;
+  justify-self:end!important;
+  flex:0 0 auto!important;
+}
+
+@media(max-width:900px){
+  :root{--v832-live-edge:8px}
+  body.v825-operations-dashboard .v825-operations-live{padding-inline:0!important}
+  body[data-center="home"] #floatingActions,body.v825-operations-dashboard #floatingActions{flex-wrap:wrap!important;height:auto!important;min-height:52px!important;max-height:none!important}
+}
