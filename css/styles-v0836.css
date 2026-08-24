@@ -1,0 +1,5 @@
+/* v0.80.36 */
+.v836-countdown tbody tr{cursor:pointer}.v836-countdown tbody tr:hover{background:rgba(168,85,247,.08)}
+.v836-plan-editor{margin-top:14px;border-color:rgba(168,85,247,.45)}
+.v836-modal{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.78);display:grid;place-items:center;padding:24px}.v836-modal>.panel{width:min(680px,92vw)}.v836-modal select{width:100%;padding:12px;background:#080b13;color:#fff;border:1px solid rgba(168,85,247,.55);border-radius:6px}
+body[data-theme="systems"]{--page-accent:#a855f7;--page-accent-rgb:168,85,247}
