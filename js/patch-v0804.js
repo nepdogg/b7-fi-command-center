@@ -1,7 +1,7 @@
-/* B7 FI Command Center v0.80.5 — active-quarter identity + Live Status spacing polish. */
+/* B7 FI Command Center v0.80.33 — active-quarter identity + Live Status spacing polish. */
 (function(){
 'use strict';
-window.VERSION='0.80.5';
+window.VERSION=window.B7_APP_VERSION||'0.80.33';
 const $=(s,r=document)=>r.querySelector(s);
 const QUARTER_CENTERS={toolcenter:'TOOL CENTER',shipping:'SHIPPING CENTER',priorities:'PRIORITY CENTER',statuscenter:'STATUS CENTER'};
 function currentQuarter(){
@@ -31,7 +31,7 @@ function decorateQuarterTitle(v){
  const key=QUARTER_CENTERS[v]?v:viewName();
  if(QUARTER_CENTERS[key])title.textContent=`${QUARTER_CENTERS[key]} — ${currentQuarter()}`;
 }
-function version(){const l=$('#appVersionLabel');if(l)l.textContent='B7 FI COMMAND CENTER V0.80.5';document.title='B7 FI Command Center v0.80.5'}
+function version(){const l=$('#appVersionLabel');if(l)l.textContent='B7 FI COMMAND CENTER V0.80.33';document.title='B7 FI Command Center v0.80.33'}
 /* Wrap the newest setView last so quarter-aware titles survive older theme renderers. */
 const previousSetView=window.setView;
 window.setView=function(v){

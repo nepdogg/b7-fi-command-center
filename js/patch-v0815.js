@@ -1,7 +1,7 @@
-/* B7 FI Command Center v0.80.15 — Action Center save/edit controls for status-bar testing. */
+/* B7 FI Command Center v0.80.33 — Action Center save/edit controls for status-bar testing. */
 (function(){
 'use strict';
-const VERSION='0.80.19';
+const VERSION=window.B7_APP_VERSION||'0.80.33';
 window.VERSION=VERSION;
 const $=(s,r=document)=>r.querySelector(s);
 const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));

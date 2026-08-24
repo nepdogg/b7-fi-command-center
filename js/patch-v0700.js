@@ -1,7 +1,7 @@
-/* B7 FI Command Center v0.70.0 — Framework Lock */
+/* B7 FI Command Center v0.80.33 — Framework Lock */
 (function(){
 'use strict';
-window.VERSION='0.70.0';
+window.VERSION=window.B7_APP_VERSION||'0.80.33';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const viewToCenter={home:'operations',toolcenter:'tool',shipping:'shipping',priorities:'priority',statuscenter:'status',meetingcenter:'meeting',actions:'action',referencecenter:'reference',searchcenter:'search',admincenter:'admin'};
 const centerToView={operations:'home',tool:'toolcenter',shipping:'shipping',priority:'priorities',status:'statuscenter',meeting:'meetingcenter',action:'actions',reference:'referencecenter',search:'searchcenter',admin:'admincenter'};

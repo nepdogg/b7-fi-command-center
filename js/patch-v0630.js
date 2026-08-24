@@ -1,7 +1,7 @@
-/* B7 FI Command Center v0.63.0 — navigation reliability / global chrome / status workflow */
+/* B7 FI Command Center v0.80.33 — navigation reliability / global chrome / status workflow */
 (function(){
 'use strict';
-window.VERSION='0.63.0';
+window.VERSION=window.B7_APP_VERSION||'0.80.33';
 const C={home:['#176FA8','23,111,168'],tool:['#8E5AE8','142,90,232'],shipping:['#27AE60','39,174,96'],priority:['#D4A72C','212,167,44'],status:['#F28C28','242,140,40'],meeting:['#19B9D1','25,185,209'],action:['#E54848','229,72,72'],reference:['#E94A9A','233,74,154'],search:['#4F6BFF','79,107,255'],admin:['#A6AFBC','166,175,188']};
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 function center(){return document.body.dataset.center||'home'}
@@ -12,7 +12,7 @@ function hardTheme(){
  ['--accent-rgb','--page-accent-rgb','--fleet-rgb','--live-page-rgb'].forEach(v=>document.documentElement.style.setProperty(v,c[1]));
  document.body.style.setProperty('--center-color',c[0]);document.body.style.setProperty('--center-rgb',c[1]);
  const ob=$('#operationsBar'),ft=$('footer.v57-footer'); if(ob){ob.style.setProperty('border-color',c[0],'important')} if(ft){ft.style.setProperty('border-color',c[0],'important')}
- const v=$('#appVersionLabel');if(v)v.textContent='B7 FI Command Center v0.63.0';
+ const v=$('#appVersionLabel');if(v)v.textContent='B7 FI Command Center v0.80.33';
 }
 function btn(label,fn,primary=false,cls=''){
  const b=document.createElement('button');b.className='btn '+cls+(primary?' primary':'');b.textContent=label;b.dataset.worktab='page-action';b.onclick=fn;return b;

@@ -1,7 +1,7 @@
-/* B7 FI Command Center v0.80.19 — single-source Alert Engine + dirty-save Action Center */
+/* B7 FI Command Center v0.80.33 — single-source Alert Engine + dirty-save Action Center */
 (function(){
 'use strict';
-const VERSION='0.80.19';
+const VERSION=window.B7_APP_VERSION||'0.80.33';
 window.VERSION=VERSION;
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 const viewerOnly=document.body?.dataset?.liveViewerOnly==='true';

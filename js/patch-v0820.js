@@ -1,7 +1,7 @@
-/* B7 FI Command Center v0.80.20 — independent permanent status shell + Action Center stabilization */
+/* B7 FI Command Center v0.80.33 — independent permanent status shell + Action Center stabilization */
 (function(){
 'use strict';
-const VERSION='0.80.20';
+const VERSION=window.B7_APP_VERSION||'0.80.33';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 const viewerOnly=()=>document.body?.dataset?.liveViewerOnly==='true';
 let leadTimer=null,systemTimer=null,leadIndex=0,systemIndex=0,lastLead='',lastSystem='';

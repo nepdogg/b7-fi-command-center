@@ -1,7 +1,7 @@
-/* B7 FI Command Center v0.80.30 — tool-photo bay + final live spacing support. */
+/* B7 FI Command Center v0.80.33 — tool-photo bay + final live spacing support. */
 (function(){
 'use strict';
-const VERSION='0.80.30';
+const VERSION=window.B7_APP_VERSION||'0.80.33';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 function viewerOnly(){return document.body?.dataset?.liveViewerOnly==='true'}
 function setVersion(){

@@ -1,7 +1,7 @@
-/* B7 FI Command Center v0.73.0 — deterministic status rails + compact page navigation */
+/* B7 FI Command Center v0.80.33 — deterministic status rails + compact page navigation */
 (function(){
 'use strict';
-window.VERSION='0.73.0';
+window.VERSION=window.B7_APP_VERSION||'0.80.33';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const LABEL={red:'CRITICAL',critical:'CRITICAL',orange:'ATTENTION',attention:'ATTENTION',yellow:'REMINDER',reminder:'REMINDER',blue:'INFORMATION',information:'INFORMATION',green:'ON TRACK',good:'ON TRACK',normal:'NORMAL'};
 function text(el){return (el?.textContent||'').trim()}

@@ -1,11 +1,11 @@
-/* B7 FI Command Center v0.80.25 — Operations Live Dashboard + shared viewer data sync.
+/* B7 FI Command Center v0.80.33 — Operations Live Dashboard + shared viewer data sync.
    - Operations Center becomes the live operational dashboard (no redundant home cards).
    - Standalone live-status-view consumes the same canonical state as the Command Center.
    - Same-origin tabs synchronize through BroadcastChannel + storage events.
 */
 (function(){
 'use strict';
-const VERSION='0.80.25';
+const VERSION=window.B7_APP_VERSION||'0.80.33';
 const STATE_KEY='b7fi-v0210-state';
 const SNAP_KEY='b7fi-live-status-snapshot-v1';
 const CHANNEL='b7fi-live-sync-v1';

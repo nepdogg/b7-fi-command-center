@@ -1,6 +1,6 @@
-/* B7 FI Command Center v0.48.0 — Navigation + Statusbar QA */
+/* B7 FI Command Center v0.80.33 — Navigation + Statusbar QA */
 (function(){
-  const VERSION='0.48.0';
+  const VERSION=window.B7_APP_VERSION||'0.80.33';
   let ticker48=0;
 
   function knowledgePage48(){

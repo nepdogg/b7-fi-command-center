@@ -1,7 +1,7 @@
-/* B7 FI Command Center v0.80.21 — status placement / duplicate-container cleanup only */
+/* B7 FI Command Center v0.80.33 — status placement / duplicate-container cleanup only */
 (function(){
 'use strict';
-const VERSION='0.80.21';
+const VERSION=window.B7_APP_VERSION||'0.80.33';
 const $=(s,r=document)=>r.querySelector(s);
 
 function version(){

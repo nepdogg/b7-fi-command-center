@@ -1,4 +1,4 @@
-/* B7 FI Command Center v0.80.26 — Operations Center cleanup + contextual tool navigation.
+/* B7 FI Command Center v0.80.33 — Operations Center cleanup + contextual tool navigation.
    - Operations Center toolbar becomes contextual navigation, not generic Page Actions.
    - Current rotating system becomes a real navigation button that follows the carousel.
    - Remove visible alert queue diagnostics from normal Action Center use.
@@ -6,7 +6,7 @@
 */
 (function(){
 'use strict';
-const VERSION='0.80.26';
+const VERSION=window.B7_APP_VERSION||'0.80.33';
 const $=(s,r=document)=>r.querySelector(s);
 const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 const viewerOnly=()=>document.body?.dataset?.liveViewerOnly==='true';

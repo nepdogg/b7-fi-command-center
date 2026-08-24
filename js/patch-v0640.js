@@ -1,7 +1,7 @@
-/* B7 FI Command Center v0.64.0 — Monday field-test shell stabilization + Search Center */
+/* B7 FI Command Center v0.80.33 — Monday field-test shell stabilization + Search Center */
 (function(){
 'use strict';
-window.VERSION='0.64.0';
+window.VERSION=window.B7_APP_VERSION||'0.80.33';
 const SEARCH_COLOR='#4F6BFF', SEARCH_RGB='79,107,255';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 
@@ -9,7 +9,7 @@ function setVars(color,rgb){
   ['--center-color','--accent','--page-accent','--fleet-accent','--live-page-accent'].forEach(v=>{document.documentElement.style.setProperty(v,color);document.body.style.setProperty(v,color)});
   ['--center-rgb','--accent-rgb','--page-accent-rgb','--fleet-rgb','--live-page-rgb'].forEach(v=>{document.documentElement.style.setProperty(v,rgb);document.body.style.setProperty(v,rgb)});
 }
-function setVersion(){const v=$('#appVersionLabel');if(v)v.textContent='B7 FI Command Center v0.64.0'}
+function setVersion(){const v=$('#appVersionLabel');if(v)v.textContent='B7 FI Command Center v0.80.33'}
 function screenshot(){
   try{
     if(typeof window.enterScreenshot==='function') return window.enterScreenshot();

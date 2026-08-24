@@ -1,9 +1,9 @@
-/* B7 FI Command Center v0.77.0 — bounded shell/status finishing patch.
+/* B7 FI Command Center v0.80.33 — bounded shell/status finishing patch.
    No MutationObserver. No recurring interval.
 */
 (function(){
 'use strict';
-window.VERSION='0.77.0';
+window.VERSION=window.B7_APP_VERSION||'0.80.33';
 const $=(s,r=document)=>r.querySelector(s);
 function text(el){return (el?.textContent||'').trim()}
 function fleetCount(){

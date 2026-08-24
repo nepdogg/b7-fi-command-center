@@ -1,4 +1,4 @@
-/* B7 FI Command Center v0.80.27 — quarter-aware Operations + compact Live Status parity. */
+/* B7 FI Command Center v0.80.33 — quarter-aware Operations + compact Live Status parity. */
 (function(){
 'use strict';
 const VERSION='0.80.27',$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>Array.from(r.querySelectorAll(s));

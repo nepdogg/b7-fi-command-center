@@ -1,7 +1,7 @@
-/* B7 FI Command Center v0.80.24 — final frame/layout guard */
+/* B7 FI Command Center v0.80.33 — final frame/layout guard */
 (function(){
 'use strict';
-const VERSION='0.80.24';
+const VERSION=window.B7_APP_VERSION||'0.80.33';
 const $=(s,r=document)=>r.querySelector(s);
 const viewerOnly=()=>document.body?.dataset?.liveViewerOnly==='true';
 function normalize(){

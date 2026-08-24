@@ -1,10 +1,10 @@
-/* B7 FI Command Center v0.74.1 — stable top status stack hotfix
+/* B7 FI Command Center v0.80.33 — stable top status stack hotfix
    IMPORTANT: no MutationObserver, no recurring re-parent loop, no polling timer.
    The header/status/footer shell is persistent in this SPA, so these changes are applied once.
 */
 (function(){
 'use strict';
-window.VERSION='0.74.1';
+window.VERSION=window.B7_APP_VERSION||'0.80.33';
 const $=(s,r=document)=>r.querySelector(s);
 
 function moveFleetTopOnce(){

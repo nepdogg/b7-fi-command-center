@@ -1,4 +1,4 @@
-/* B7 FI Command Center v0.80.29 — Operations / Live Status final cleanup.
+/* B7 FI Command Center v0.80.33 — Operations / Live Status final cleanup.
    - Exactly one Current Quarter Shipping Progress rail in each live view.
    - Standalone viewer removes redundant large KLA tool-card artwork.
    - Standalone bottom rail: KLA+ mathematically centered; carousel controls anchored right.

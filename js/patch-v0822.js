@@ -1,7 +1,7 @@
-/* B7 FI Command Center v0.80.22 — placement, Live Status parity, Tool editor recovery */
+/* B7 FI Command Center v0.80.33 — placement, Live Status parity, Tool editor recovery */
 (function(){
 'use strict';
-const VERSION='0.80.22';
+const VERSION=window.B7_APP_VERSION||'0.80.33';
 const $=(s,r=document)=>r.querySelector(s);
 
 function viewerOnly(){return document.body?.dataset?.liveViewerOnly==='true'}

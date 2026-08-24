@@ -1,6 +1,6 @@
-/* B7 FI Command Center v0.46.0 — Framework + Weekend Operations Polish */
+/* B7 FI Command Center v0.80.33 — Framework + Weekend Operations Polish */
 (function(){
-  const VERSION='0.46.0';
+  const VERSION=window.B7_APP_VERSION||'0.80.33';
 
   /* ---------- Top Action Center ticker repair ---------- */
   let v46ActionIndex=0;

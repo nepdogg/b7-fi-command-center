@@ -1,6 +1,6 @@
-/* B7 FI Command Center v0.49.0 — Knowledge Base + Framework Fix */
+/* B7 FI Command Center v0.80.33 — Knowledge Base + Framework Fix */
 (function(){
-  const VERSION='0.49.0';
+  const VERSION=window.B7_APP_VERSION||'0.80.33';
 
   function ensureKnowledge49(){
     state.knowledgeNotes=Array.isArray(state.knowledgeNotes)?state.knowledgeNotes:[];

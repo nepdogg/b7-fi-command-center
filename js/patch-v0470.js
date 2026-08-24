@@ -1,6 +1,6 @@
-/* B7 FI Command Center v0.47.0 — Meeting Notes + Legacy Reference + Framework QA */
+/* B7 FI Command Center v0.80.33 — Meeting Notes + Legacy Reference + Framework QA */
 (function(){
-const VERSION='0.47.0';
+const VERSION=window.B7_APP_VERSION||'0.80.33';
 function today47(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
 function ensure47(){
  state.meetings=state.meetings||{}; state.meetingHistory=Array.isArray(state.meetingHistory)?state.meetingHistory:[];

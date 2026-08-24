@@ -1,4 +1,4 @@
-/* B7 FI Command Center v0.80.10 — standalone Live Status viewer boot.
+/* B7 FI Command Center v0.80.33 — standalone Live Status viewer boot.
    Viewer-only entry uses the exact same Live Status renderer as the Command Center,
    but boots it ONCE and removes only the Return control. No delayed rerender/re-parent pass. */
 (function(){

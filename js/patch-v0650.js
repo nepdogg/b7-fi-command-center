@@ -1,7 +1,7 @@
-/* B7 FI Command Center v0.65.0 — status/footer architecture + toolbar reliability */
+/* B7 FI Command Center v0.80.33 — status/footer architecture + toolbar reliability */
 (function(){
 'use strict';
-window.VERSION='0.65.0';
+window.VERSION=window.B7_APP_VERSION||'0.80.33';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const COLORS={home:['#176FA8','23,111,168'],tool:['#8E5AE8','142,90,232'],shipping:['#27AE60','39,174,96'],priority:['#D4A72C','212,167,44'],status:['#F28C28','242,140,40'],meeting:['#19B9D1','25,185,209'],action:['#E54848','229,72,72'],reference:['#E94A9A','233,74,154'],search:['#4F6BFF','79,107,255'],admin:['#A6AFBC','166,175,188']};
 

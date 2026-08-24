@@ -1,6 +1,6 @@
-/* B7 FI Command Center v0.49.1 — Header / Page Actions Final Layout Fix */
+/* B7 FI Command Center v0.80.33 — Header / Page Actions Final Layout Fix */
 (function(){
-  const VERSION='0.49.1';
+  const VERSION=window.B7_APP_VERSION||'0.80.33';
 
   function normalizeHeader491(){
     const stack=document.querySelector('.header-status-stack');

@@ -1,6 +1,6 @@
-/* B7 FI Command Center v0.49.2 — Action Center Manual Reminder Control */
+/* B7 FI Command Center v0.80.33 — Action Center Manual Reminder Control */
 (function(){
-  const VERSION='0.49.2';
+  const VERSION=window.B7_APP_VERSION||'0.80.33';
   const baseV3Alerts492=v3Alerts;
 
   function ensureManual492(){

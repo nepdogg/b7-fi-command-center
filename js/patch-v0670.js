@@ -1,7 +1,7 @@
-/* B7 FI Command Center v0.67.0 — final framework/navigation stabilization */
+/* B7 FI Command Center v0.80.33 — final framework/navigation stabilization */
 (function(){
 'use strict';
-window.VERSION='0.67.0';
+window.VERSION=window.B7_APP_VERSION||'0.80.33';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const COLORS={home:['#176FA8','23,111,168','OPERATIONS CENTER'],tool:['#8E5AE8','142,90,232','TOOL CENTER'],shipping:['#27AE60','39,174,96','SHIPPING CENTER'],priority:['#D4A72C','212,167,44','PRIORITY CENTER'],status:['#F28C28','242,140,40','STATUS CENTER'],meeting:['#19B9D1','25,185,209','MEETING CENTER'],action:['#E54848','229,72,72','ACTION CENTER'],reference:['#E94A9A','233,74,154','REFERENCE CENTER'],search:['#4F6BFF','79,107,255','SEARCH CENTER'],admin:['#A6AFBC','166,175,188','ADMINISTRATION CENTER']};
 function center(){return document.body.dataset.center||'home'}

@@ -1,9 +1,9 @@
-/* B7 FI Command Center v0.76.0 — stable shared shell/status/footer polish.
+/* B7 FI Command Center v0.80.33 — stable shared shell/status/footer polish.
    No MutationObserver. No recurring interval. Pure CSS motion only.
 */
 (function(){
 'use strict';
-window.VERSION='0.76.0';
+window.VERSION=window.B7_APP_VERSION||'0.80.33';
 const $=(s,r=document)=>r.querySelector(s);
 
 function ensureTwinTracers(bar){

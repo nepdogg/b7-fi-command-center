@@ -1,6 +1,6 @@
-/* B7 FI Command Center v0.50.0 — Home + Report Center + Meeting Actions + Exceptions QA */
+/* B7 FI Command Center v0.80.33 — Home + Report Center + Meeting Actions + Exceptions QA */
 (function(){
-const VERSION='0.50.0';
+const VERSION=window.B7_APP_VERSION||'0.80.33';
 const oldSetView500=setView;
 const oldRender500=render;
 const oldCountdown500=countdown;

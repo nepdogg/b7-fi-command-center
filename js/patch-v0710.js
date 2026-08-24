@@ -1,7 +1,7 @@
-/* B7 FI Command Center v0.71.0 — independent status colors + geometry stabilization */
+/* B7 FI Command Center v0.80.33 — independent status colors + geometry stabilization */
 (function(){
 'use strict';
-window.VERSION='0.71.0';
+window.VERSION=window.B7_APP_VERSION||'0.80.33';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 function text(el){return (el?.textContent||'').trim()}
 function actionStatus(){

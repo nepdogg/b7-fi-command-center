@@ -1,9 +1,9 @@
-/* B7 FI Command Center v0.75.0 — stable shell polish
+/* B7 FI Command Center v0.80.33 — stable shell polish
    No MutationObserver. No recurring timers. Only bounded startup passes.
 */
 (function(){
 'use strict';
-window.VERSION='0.75.0';
+window.VERSION=window.B7_APP_VERSION||'0.80.33';
 const $=(s,r=document)=>r.querySelector(s);
 
 function ensurePerimeter(bar){

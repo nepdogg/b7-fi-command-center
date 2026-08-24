@@ -1,6 +1,6 @@
-/* B7 FI Command Center v0.44.0 — Countdown Lifecycle Finalization */
+/* B7 FI Command Center v0.80.33 — Countdown Lifecycle Finalization */
 (function(){
-const VERSION='0.44.0';
+const VERSION=window.B7_APP_VERSION||'0.80.33';
 function quarterOpts(sel){
   const vals=[sel,...(typeof QUARTERS!=='undefined'?QUARTERS:[]),...tools.map(t=>t.quarter),...tools.map(t=>t.originalQuarter)].filter(Boolean);
   return [...new Set(vals)].map(x=>`<option value="${esc(x)}" ${x===sel?'selected':''}>${esc(x)}</option>`).join('');

@@ -1,10 +1,10 @@
-/* B7 FI Command Center v0.60.0
+/* B7 FI Command Center v0.80.33
    Authoritative router + theme controller.
    This replaces the v0.52-v0.56 stacked shell patches that caused route flicker.
 */
 (function(){
 'use strict';
-window.VERSION='0.60.0';
+window.VERSION=window.B7_APP_VERSION||'0.80.33';
 
 const CENTER={
   home:      {name:'OPERATIONS CENTER', color:'#176FA8', rgb:'23,111,168'},
@@ -58,7 +58,7 @@ function setCenterTheme(key){
 
   const title=document.getElementById('headerPageTitle');
   if(title) title.textContent=c.name;
-  document.title='B7 FI Command Center · '+c.name;
+  document.title='B7 FI Command Center v'+(window.B7_APP_VERSION||'0.80.33');
 
   document.querySelectorAll('.main-nav .nav-btn').forEach(b=>{
     const active=NAV_VIEW[b.dataset.view]===key;
@@ -68,7 +68,7 @@ function setCenterTheme(key){
   const af=document.getElementById('administrationCenterFooter');
   if(af) af.classList.toggle('active',key==='admin');
   const ver=document.getElementById('appVersionLabel');
-  if(ver) ver.textContent='B7 FI Command Center v0.60.0';
+  if(ver) ver.textContent='B7 FI Command Center v0.80.33';
 }
 function cleanLegacyHeading(){
   const candidates=document.querySelectorAll('#app .report-title,#app > .page-title,#app .page-head');

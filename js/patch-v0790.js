@@ -1,9 +1,9 @@
-/* B7 FI Command Center v0.80.1 — framework lock candidate.
+/* B7 FI Command Center v0.80.33 — framework lock candidate.
    Bounded startup normalization only; no MutationObserver and no recurring timer.
 */
 (function(){
 'use strict';
-window.VERSION='0.80.1';
+window.VERSION=window.B7_APP_VERSION||'0.80.33';
 const $=(s,r=document)=>r.querySelector(s);
 
 function txt(el){return (el&&el.textContent||'').trim();}

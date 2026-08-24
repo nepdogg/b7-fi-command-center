@@ -1,7 +1,7 @@
-/* B7 FI Command Center v0.80.32 — final Operations/Live Status edge + toolbar lock. */
+/* B7 FI Command Center v0.80.33 — final Operations/Live Status edge + toolbar lock. */
 (function(){
 'use strict';
-const VERSION='0.80.32';
+const VERSION=window.B7_APP_VERSION||'0.80.33';
 const $=(s,r=document)=>r.querySelector(s);
 function viewerOnly(){return document.body?.dataset?.liveViewerOnly==='true'}
 function stamp(){

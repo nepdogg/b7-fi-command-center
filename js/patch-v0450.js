@@ -1,6 +1,6 @@
-/* B7 FI Command Center v0.45.0 — Status + Workflow Polish */
+/* B7 FI Command Center v0.80.33 — Status + Workflow Polish */
 (function(){
-  const VERSION='0.45.0';
+  const VERSION=window.B7_APP_VERSION||'0.80.33';
 
   function clampPct(v){ return Math.max(0,Math.min(100,Number(v)||0)); }
   function sourcePct(status){

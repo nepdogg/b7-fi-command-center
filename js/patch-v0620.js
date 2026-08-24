@@ -1,10 +1,10 @@
-/* B7 FI Command Center v0.62.0 — Center Navigation / Page Actions Standardization */
+/* B7 FI Command Center v0.80.33 — Center Navigation / Page Actions Standardization */
 (function(){
 'use strict';
-window.VERSION='0.62.0';
+window.VERSION=window.B7_APP_VERSION||'0.80.33';
 const qs=(s,r=document)=>r.querySelector(s), qsa=(s,r=document)=>[...r.querySelectorAll(s)];
 const ACTION_RX=/^(EDIT |\+?\s*ADD |\+?\s*START |MORNING QUICK UPDATE|LEAD WORKSPACE|REPORT$|CANCEL$|SAVE CHANGES$)/i;
-function version62(){let v=qs('#appVersionLabel');if(v)v.textContent='B7 FI Command Center v0.62.0'}
+function version62(){let v=qs('#appVersionLabel');if(v)v.textContent='B7 FI Command Center v0.80.33'}
 function proxyButton(label,source,primary=false){
  const b=document.createElement('button');b.className='btn v62-page-action'+(primary?' primary':'');b.textContent=label;
  b.onclick=()=>source.click();return b;

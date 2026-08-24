@@ -1,4 +1,4 @@
-/* B7 FI Command Center v0.80.28 — finalize Operations + standalone Live Status parity.
+/* B7 FI Command Center v0.80.33 — finalize Operations + standalone Live Status parity.
    - Standalone viewer receives the compact quarter/progress/control-rail design.
    - Operations toolbar positions are deterministic after refresh/render.
    - Operations carousel removes redundant KLA system image; footer/header already brand the Command Center.

@@ -1,6 +1,6 @@
-/* B7 FI Command Center v0.41.0 — Unified QA Corrections */
+/* B7 FI Command Center v0.80.33 — Unified QA Corrections */
 (function(){
-  const VERSION='0.42.0';
+  const VERSION=window.B7_APP_VERSION||'0.80.33';
 
   function qOptions(selected){
     const now=calendarQuarter();

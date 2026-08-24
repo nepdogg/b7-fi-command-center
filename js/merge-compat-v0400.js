@@ -1,5 +1,5 @@
 /*
- * B7 FI Command Center v0.40.0 Unified Master Compatibility Layer
+ * B7 FI Command Center v0.80.33 Unified Master Compatibility Layer
  * ---------------------------------------------------------------
  * Functional baseline: v0.21.1 Weekend Operations Test
  * Visual / framework baseline: v0.31.8 Consolidated Test Build
@@ -79,8 +79,8 @@
   window.B7_UNIFIED_VERSION='0.40.0';
   try{
     state.appVersion='0.40.0';
-    const el=document.getElementById('appVersionLabel');if(el)el.textContent='B7 FI Command Center v0.40.0';
-    document.title='B7 FI Command Center v0.40.0';
+    const el=document.getElementById('appVersionLabel');if(el)el.textContent='B7 FI Command Center v0.80.33';
+    document.title='B7 FI Command Center v0.80.33';
   }catch(e){}
 
   try{updateOperationsBar()}catch(e){}

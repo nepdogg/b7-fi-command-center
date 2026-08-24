@@ -1,8 +1,8 @@
-/* B7 FI Command Center v0.80.6 — Live Status lock + persistent footer/version guard.
+/* B7 FI Command Center v0.80.33 — Live Status lock + persistent footer/version guard.
    Bounded updates only: no MutationObserver and no recurring interval. */
 (function(){
 'use strict';
-const VERSION='0.80.6';
+const VERSION=window.B7_APP_VERSION||'0.80.33';
 window.VERSION=VERSION;
 const $=(s,r=document)=>r.querySelector(s);
 function syncVersion(){

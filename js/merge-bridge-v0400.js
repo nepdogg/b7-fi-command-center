@@ -1,4 +1,4 @@
-/* B7 FI Command Center v0.40.0 merge bridge
+/* B7 FI Command Center v0.80.33 merge bridge
  * Saves the v0.31.8 framework functions before the v0.21.1 workflow layer loads.
  */
 window.__B7_V31_FRAMEWORK__={

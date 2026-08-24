@@ -1,7 +1,7 @@
-/* B7 FI Command Center v0.80.1 — performance/stability hotfix + real Live Status Center. */
+/* B7 FI Command Center v0.80.33 — performance/stability hotfix + real Live Status Center. */
 (function(){
 'use strict';
-window.VERSION='0.80.1';
+window.VERSION=window.B7_APP_VERSION||'0.80.33';
 const $=(s,r=document)=>r.querySelector(s);
 let liveTimer=null, liveIndex=0, livePaused=false;
 function safe(v,f='—'){return v===undefined||v===null||String(v).trim()===''?f:String(v)}
@@ -28,7 +28,7 @@ function fields(t){
 function footer(){
  const f=$('footer.v57-footer'),app=$('main#app');if(!f||!app)return;
  if(f.previousElementSibling!==app)app.insertAdjacentElement('afterend',f);
- f.innerHTML='<div class="v80-footer-left"><button id="administrationCenterFooter" class="v57-admin-footer-btn">ADMINISTRATION CENTER</button></div><div class="v80-footer-center"><img src="assets/kla-plus-official.png" alt="KLA+"></div><div class="v80-footer-right"><div class="v80-footer-mode">Local Production Mode · SharePoint live sync pending</div><div id="appVersionLabel" class="v80-footer-version">B7 FI COMMAND CENTER V0.80.1</div></div>';
+ f.innerHTML='<div class="v80-footer-left"><button id="administrationCenterFooter" class="v57-admin-footer-btn">ADMINISTRATION CENTER</button></div><div class="v80-footer-center"><img src="assets/kla-plus-official.png" alt="KLA+"></div><div class="v80-footer-right"><div class="v80-footer-mode">Local Production Mode · SharePoint live sync pending</div><div id="appVersionLabel" class="v80-footer-version">B7 FI COMMAND CENTER V0.80.33</div></div>';
  const b=$('#administrationCenterFooter');if(b)b.onclick=()=>window.setView&&window.setView('admincenter');
 }
 function stopLiveTimer(){if(liveTimer){clearTimeout(liveTimer);liveTimer=null}}
@@ -62,7 +62,7 @@ window.setView=function(v){if(v==='livestatus'||v==='live-status'){renderLiveSta
 document.addEventListener('click',e=>{const card=e.target.closest('.v57-live-card');if(!card)return;const text=(card.textContent||'').toUpperCase();if(card.dataset.dest==='wallboard'&&text.includes('LIVE STATUS CENTER')){e.preventDefault();e.stopImmediatePropagation();window.setView('livestatus')}},true);
 /* Pause costly decorative animation when the tab is not visible. */
 document.addEventListener('visibilitychange',()=>document.body.classList.toggle('v801-tab-hidden',document.hidden));
-function startup(){footer();document.title='B7 FI Command Center v0.80.1'}
+function startup(){footer();document.title='B7 FI Command Center v0.80.33'}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',startup,{once:true});else startup();
 requestAnimationFrame(startup);
 })();
