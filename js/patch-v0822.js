@@ -31,11 +31,12 @@ function placeStatus(){
     }
     if(viewerOnly()) $('#v802Exit')?.remove();
   }else{
-    const host=$('.sticky-header>.header-status-stack');
-    const toolbar=$('#floatingActions');
-    if(host){
-      if(stack.parentElement!==host) host.insertBefore(stack,toolbar||null);
-      else if(toolbar && stack.nextElementSibling!==toolbar) host.insertBefore(stack,toolbar);
+    const header=$('.sticky-header');
+    const nav=$('.sticky-header>.main-nav');
+    if(header && nav){
+      if(stack.parentElement!==header || stack.previousElementSibling!==nav){
+        nav.insertAdjacentElement('afterend',stack);
+      }
     }
   }
   setVersion();

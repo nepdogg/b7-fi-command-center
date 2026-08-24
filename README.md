@@ -38,3 +38,7 @@ A successful direct REST diagnostic does not yet enable full live write synchron
 - Larger centered System Status and Lead Alerts message typography.
 - Viewer-only Live Status retains both status bars.
 - Moving pulse tracers remain removed; calm glow retained.
+
+
+## v0.80.23
+Status-bar placement/parity and beacon urgency finalization pass. See README-v0.80.23.txt.

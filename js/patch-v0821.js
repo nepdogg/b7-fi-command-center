@@ -29,16 +29,14 @@ function cleanLiveMount(){
 
 function cleanCommandMount(){
   if(document.body.classList.contains('v802-live-status')) return;
-  const host=$('.sticky-header .header-status-stack');
+  const header=$('.sticky-header');
+  const nav=$('.sticky-header>.main-nav');
   const stack=$('#b7StatusStack');
-  const toolbar=$('#floatingActions');
-  if(!host||!stack) return;
-  /* Physically enforce the framework order, not just CSS order. */
-  if(stack.parentElement!==host) host.appendChild(stack);
-  if(toolbar && toolbar.parentElement===host){
-    host.insertBefore(stack,toolbar);
-  }else if(host.firstElementChild!==stack){
-    host.prepend(stack);
+  if(!header||!nav||!stack) return;
+  /* v0.80.23 framework: status is a direct sticky-header row immediately after main nav.
+     This isolates it from the historical header-status-stack grid/spacer rules. */
+  if(stack.parentElement!==header || stack.previousElementSibling!==nav){
+    nav.insertAdjacentElement('afterend',stack);
   }
 }
 
