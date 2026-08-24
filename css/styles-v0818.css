@@ -1,0 +1,47 @@
+/* B7 FI Command Center v0.80.18 — permanent empty-state shells + strict severity styling */
+#topActionBar,#operationsBar{
+  --v817-status:#3bd48b;--v817-rgb:59,212,139;
+  display:grid!important;grid-template-columns:220px minmax(0,1fr) 220px!important;
+  min-height:64px!important;height:64px!important;visibility:visible!important;opacity:1!important;
+  border:2px solid var(--v817-status)!important;border-radius:10px!important;overflow:hidden!important;
+  background:linear-gradient(90deg,rgba(var(--v817-rgb),.12),#071522 20%,#071522 80%,rgba(var(--v817-rgb),.08))!important;
+  box-shadow:0 0 10px rgba(var(--v817-rgb),.28),inset 0 0 16px rgba(var(--v817-rgb),.04)!important;
+}
+#topActionBar[data-v817-severity="critical"],#operationsBar[data-v817-severity="critical"]{--v817-status:#ff315b!important;--v817-rgb:255,49,91!important}
+#topActionBar[data-v817-severity="attention"],#operationsBar[data-v817-severity="attention"]{--v817-status:#ff932e!important;--v817-rgb:255,147,46!important}
+#topActionBar[data-v817-severity="reminder"],#operationsBar[data-v817-severity="reminder"]{--v817-status:#f2c94c!important;--v817-rgb:242,201,76!important}
+#topActionBar[data-v817-severity="information"],#operationsBar[data-v817-severity="information"]{--v817-status:#36a8ff!important;--v817-rgb:54,168,255!important}
+#topActionBar[data-v817-severity="normal"],#operationsBar[data-v817-severity="normal"]{--v817-status:#3bd48b!important;--v817-rgb:59,212,139!important}
+#topActionBar .v817-status-left,#operationsBar .v817-status-left{
+  height:100%!important;display:flex!important;align-items:center!important;gap:12px!important;padding:0 18px!important;
+  border:0!important;border-right:3px solid var(--v817-status)!important;background:rgba(var(--v817-rgb),.075)!important;
+}
+#topActionBar .v817-status-copy,#operationsBar .v817-status-copy{height:100%!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:center!important;gap:4px!important;line-height:1!important}
+#topActionBar .v817-status-title,#operationsBar .v817-status-title{color:#fff!important;font-size:14px!important;font-weight:1000!important;line-height:1!important;margin:0!important}
+#topActionBar .v817-status-severity,#operationsBar .v817-status-severity{color:var(--v817-status)!important;font-size:11px!important;font-weight:1000!important;line-height:1!important;margin:0!important}
+#topActionBar .v817-status-message,#operationsBar .v817-status-message{
+  height:100%!important;width:100%!important;display:flex!important;align-items:center!important;justify-content:center!important;
+  padding:0 26px!important;margin:0!important;border:0!important;background:transparent!important;color:#fff!important;
+  font-size:18px!important;font-weight:1000!important;line-height:1.2!important;text-align:center!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;
+}
+#topActionBar .v817-status-count,#operationsBar .v817-status-count{
+  height:100%!important;display:flex!important;align-items:center!important;justify-content:center!important;
+  border:0!important;border-left:3px solid var(--v817-status)!important;background:rgba(var(--v817-rgb),.04)!important;color:#fff!important;font-size:12px!important;font-weight:1000!important;
+}
+#topActionBar .v817-status-lamp,#operationsBar .v817-status-lamp{background:var(--v817-status)!important;box-shadow:0 0 9px var(--v817-status),0 0 20px rgba(var(--v817-rgb),.45)!important}
+/* Kill all legacy divider/pseudo layers so there is exactly one divider per side. */
+#topActionBar::before,#topActionBar::after,#operationsBar::before,#operationsBar::after,
+#topActionBar .v70-action-beacon::after,#operationsBar .v65-fleet-label::after,
+#topActionBar .top-action-current::before,#operationsBar .v65-fleet-ticker::before{display:none!important;content:none!important}
+body.v802-live-status #v802StatusMount{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:8px!important;width:100%!important;min-height:136px!important;margin:0 0 12px!important;padding:0!important;visibility:visible!important}
+body.v802-live-status #topActionBar,body.v802-live-status #operationsBar{display:grid!important;width:100%!important;margin:0!important;visibility:visible!important}
+
+/* Action Center controls stay inside cards. */
+body[data-center="action"] .auto-action51{overflow:hidden!important;min-width:0!important}
+body[data-center="action"] .auto-controls51{display:grid!important;grid-template-columns:minmax(120px,1.25fr) 95px 90px 82px minmax(105px,1fr) 125px!important;gap:8px 10px!important;align-items:end!important;padding:10px 12px!important;overflow:hidden!important}
+body[data-center="action"] .auto-controls51 label,body[data-center="action"] .auto-controls51 input,body[data-center="action"] .auto-controls51 select{min-width:0!important;max-width:100%!important}
+.v818-actions{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:8px!important;flex-wrap:wrap!important;padding:0 12px 12px!important}
+.v818-rule{margin-right:auto;color:#86a4b8;font-size:10px;font-weight:900;letter-spacing:.035em}.v818-resolve{background:#145c40!important;border-color:#3bd48b!important}.v818-delete{background:#7c1730!important;border-color:#ff315b!important;color:#fff!important}
+.v818-alert-off{opacity:.52}.v818-diag{margin:10px 16px 14px;padding:10px 12px;border:1px solid #28506a;border-radius:6px;background:#071827;color:#d2e7f2;font-size:11px;font-weight:1000;letter-spacing:.035em}
+@media(max-width:1250px){#topActionBar,#operationsBar{grid-template-columns:200px minmax(0,1fr) 180px!important}body[data-center="action"] .auto-controls51{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:760px){#topActionBar,#operationsBar{grid-template-columns:165px minmax(0,1fr) 135px!important}#topActionBar .v817-status-message,#operationsBar .v817-status-message{font-size:13px!important;padding:0 10px!important}body[data-center="action"] .auto-controls51{grid-template-columns:1fr 1fr!important}}
