@@ -1,0 +1,33 @@
+/* v0.80.28 — final Operations / standalone Live Status parity */
+.v828-quarter-progress{margin:0 0 10px;padding:8px 12px 9px;border:1px solid #294a60;border-radius:10px;background:#0b1b2b;box-sizing:border-box}
+.v828-quarter-progress-head{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#d9efff;font-size:12px}.v828-quarter-progress-head b{color:#fff;font-weight:900}.v828-progress-track{height:10px;margin-top:6px;border-radius:999px;background:#20364e;overflow:hidden}.v828-progress-track i{display:block;height:100%;border-radius:inherit;background:#42cc8b}
+/* Operations page toolbar: one deterministic left nav zone + two right actions. */
+body[data-center="home"] #floatingActions.v828-ops-toolbar-lock,body.v825-operations-dashboard #floatingActions.v828-ops-toolbar-lock{display:grid!important;grid-template-columns:minmax(0,1fr) auto auto!important;align-items:center!important;column-gap:10px!important;width:100%!important;box-sizing:border-box!important}
+body[data-center="home"] #floatingActions.v828-ops-toolbar-lock #v826OpenCurrentTool,body.v825-operations-dashboard #floatingActions.v828-ops-toolbar-lock #v826OpenCurrentTool{margin:0!important;justify-self:start!important;order:initial!important}
+body[data-center="home"] #floatingActions.v828-ops-toolbar-lock #v825Screenshot,body.v825-operations-dashboard #floatingActions.v828-ops-toolbar-lock #v825Screenshot{margin:0!important;justify-self:end!important;order:initial!important}
+body[data-center="home"] #floatingActions.v828-ops-toolbar-lock #v825Report,body.v825-operations-dashboard #floatingActions.v828-ops-toolbar-lock #v825Report{margin:0!important;justify-self:end!important;order:initial!important}
+/* Command Center Operations carousel: remove the third redundant KLA image and let system data use the full card. */
+body.v828-operations-final .v825-operations-carousel .v802-tool-slide{grid-template-columns:1fr!important}
+body.v828-operations-final .v825-operations-carousel .v802-tool-visual{display:none!important}
+body.v828-operations-final .v825-operations-carousel .v802-tool-body{padding:22px 30px!important}
+body.v828-operations-final .v825-operations-carousel .v802-tool-body h2{font-size:36px!important}
+body.v828-operations-final .v825-operations-carousel .v802-carousel-foot .v827-control-brand,body.v828-operations-final .v825-operations-carousel .v802-carousel-foot .v828-control-brand{display:none!important}
+/* Dedicated viewer: no conventional header row; one screen, one KLA mark in the bottom control rail. */
+body.v802-live-status{overflow:hidden!important}
+body.v802-live-status main#app{height:100vh!important;min-height:100vh!important;overflow:hidden!important}
+body.v802-live-status .v802-live{height:100vh!important;min-height:0!important;padding:7px 0!important;box-sizing:border-box!important;overflow:hidden!important}
+body.v802-live-status .v803-live-shell{height:calc(100vh - 14px)!important;min-height:0!important;display:flex!important;flex-direction:column!important}
+body.v802-live-status .v802-live-top{display:none!important}
+body.v802-live-status #v802StatusMount{flex:0 0 auto!important;margin-bottom:8px!important}
+body.v802-live-status .v802-live-metrics{flex:0 0 auto!important;margin-bottom:7px!important}
+body.v802-live-status .v828-quarter-progress{flex:0 0 auto!important;margin-bottom:7px!important;padding-block:6px!important}
+body.v802-live-status .v802-carousel{flex:1 1 auto!important;min-height:0!important;display:flex!important;flex-direction:column!important;margin-bottom:0!important}
+body.v802-live-status #v802ToolHost{flex:1 1 auto!important;min-height:0!important;overflow:hidden!important}
+body.v802-live-status .v802-tool-slide{height:100%!important;min-height:0!important}
+body.v802-live-status .v802-tool-body{padding-top:14px!important;padding-bottom:14px!important}
+body.v802-live-status .v802-carousel-foot{position:relative!important;flex:0 0 44px!important;min-height:44px!important;padding-block:5px!important}
+.v828-control-brand{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);height:36px;width:auto;object-fit:contain;background:#080a0f;padding:3px 10px;box-sizing:border-box;z-index:1}
+body.v802-live-status .v802-tool-kicker{display:none!important}
+body.v802-live-status .v802-tool-body h2{margin-top:0!important}
+@media(max-height:760px) and (min-width:901px){body.v802-live-status .v802-live-metric{padding-top:7px!important;padding-bottom:7px!important}body.v802-live-status .v802-tool-body{padding-top:10px!important;padding-bottom:10px!important}.v828-quarter-progress{padding-top:5px!important;padding-bottom:5px!important}.v828-control-brand{height:32px}}
+@media(max-width:900px){body.v802-live-status{overflow:auto!important}body.v802-live-status main#app,body.v802-live-status .v802-live,body.v802-live-status .v803-live-shell{height:auto!important;min-height:100vh!important;overflow:visible!important}.v828-control-brand{position:static;transform:none;justify-self:center}.v828-quarter-progress-head{flex-wrap:wrap}body[data-center="home"] #floatingActions.v828-ops-toolbar-lock{grid-template-columns:1fr auto auto!important}}
