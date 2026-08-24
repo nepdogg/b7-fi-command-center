@@ -402,7 +402,7 @@ function updateOperationsBar(){
   let tx=document.getElementById('opsTickerText');if(tx){if(!alerts.length)tx.textContent='No pending Lead / Admin items — all tracked work is complete';else{opsTickerIndex%=alerts.length;tx.textContent=alerts[opsTickerIndex].text}}
 }
 function rotateOperationsTicker(){let tx=document.getElementById('opsTickerText');if(!tx)return;let alerts=operationalAlerts();if(!alerts.length){updateOperationsBar();return}tx.style.opacity='.15';setTimeout(()=>{opsTickerIndex=(opsTickerIndex+1)%alerts.length;updateOperationsBar();tx.style.opacity='1'},180)}
-setInterval(rotateOperationsTicker,6500);
+/* v0.80.16: legacy System Status interval disabled; unified alert engine owns rotation. */
 function render(){renderEditControls();setTimeout(enhanceDateInputs,0);setTimeout(updateOperationsBar,0);if(view==='countdown')countdown();else if(view==='shipping')shipping();else if(view==='daily')daily();else if(view==='meeting')morning();else if(view==='weekend')weekend();else if(view==='workspace')workspace();else if(view==='systems')systems();else if(view==='archive')archive();else if(view==='shared')sharedData();else admin()}
 
 document.addEventListener('click',e=>{if(editMode)return;const el=e.target.closest('button,input,select,textarea');if(!el)return;if(el.id==='enableEditingBtn'||el.id==='resumeEditingBtn'||el.id==='releaseEditingBtn'||el.closest('.edit-control-bar'))return;if(el.matches('.nav-btn,[data-view],.admin-tab,[data-admin],[data-worktab]'))return;const text=(el.textContent||'').trim().toLowerCase();const allowed=['administration','tool countdown','tools','morning status','weekday priorities','weekend priorities','shipping schedule','archive','shared data','lead workspace','tasks','reference','screenshot mode'];if(el.tagName==='BUTTON'&&allowed.includes(text))return;e.preventDefault();e.stopImmediatePropagation();alert('Read Only mode is active. Click Enable Editing in the header before making changes.');},true);
@@ -477,7 +477,7 @@ function v3Alerts(){
 function severityIcon(s){return s==='red'?'●':s==='orange'?'▲':s==='yellow'?'◆':'●'}
 let actionTickerIndex=0;
 function renderTopActionBar(){let bar=document.getElementById('topActionBar');if(!bar)return;let a=v3Alerts();if(!a.length){bar.innerHTML=`<div class="top-action-clear">✓ ACTION CENTER · No generated critical/attention items</div>`;return}actionTickerIndex%=a.length;let x=a[actionTickerIndex];bar.innerHTML=`<button id="topActionCurrent" class="top-action-current ${x.severity}"><span class="top-action-label">${severityIcon(x.severity)} B7 FI ACTIONS</span><strong>${esc(x.text)}</strong><span class="top-action-count">${actionTickerIndex+1} / ${a.length}</span><span class="top-action-open">OPEN →</span></button><button id="topActionAll" class="top-action-all">ALL ${a.length}</button>`;$('#topActionCurrent').onclick=()=>actionTarget(x);$('#topActionAll').onclick=()=>setView('actions')}
-setInterval(()=>{let a=v3Alerts();if(a.length){actionTickerIndex=(actionTickerIndex+1)%a.length;renderTopActionBar()}},7000);
+/* v0.80.16: legacy Lead Alerts interval disabled; unified alert engine owns rotation. */
 const _oldUpdateOperationsBar=updateOperationsBar;
 updateOperationsBar=function(){
  let alerts=v3Alerts();let bar=document.getElementById('operationsBar');if(!bar)return;

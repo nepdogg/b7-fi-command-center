@@ -187,20 +187,9 @@ function tickerItems51(){
 let tickerIndex51=0,tickerTimer51=null,renderingTicker51=false;
 function severityLabel51(s){return s==='red'?'CRITICAL':s==='orange'?'ATTENTION':s==='blue'?'INFORMATION':'REMINDER'}
 function renderTicker51(reset=false){
- let bar=document.getElementById('topActionBar');if(!bar)return;
- let items=tickerItems51();
- if(!items.length){renderingTicker51=true;bar.innerHTML='<div class="v70-action-beacon green" data-status="green"><span class="v70-beacon-lamp" aria-hidden="true"></span><b>ACTION STATUS</b></div><div class="top-action-clear v70-action-clear">NO ACTIVE ACTIONS</div>';renderingTicker51=false;return}
- if(reset)tickerIndex51=0;tickerIndex51%=items.length;let a=items[tickerIndex51],ctl=a._ctl51,s=a._severity51,age=a._age51;
- let ageText=s==='red'&&age>0?` · ${age===1?'DAY 1':`OVERDUE ${age} DAYS`}`:'';
- let owner=ctl.assignee?` · OWNER: ${ctl.assignee}`:'';
- renderingTicker51=true;
- bar.innerHTML=`<div class="v70-action-beacon ${s}" data-status="${s}"><span class="v70-beacon-lamp" aria-hidden="true"></span><b>ACTION STATUS</b></div><button class="top-action-current v51 ${s}" id="tickerOpen51"><span class="top-action-label">${s==='red'?'●':s==='orange'?'▲':s==='blue'?'ⓘ':'◆'} B7 FI ${severityLabel51(s)}${ageText}</span><strong class="v70-action-message">${esc51(a.text||'')}${esc51(owner)}</strong><span class="v70-action-nav">← OPEN ${tickerIndex51+1} OF ${items.length}</span></button>`;
- renderingTicker51=false;
- document.getElementById('tickerOpen51').onclick=()=>{if(typeof actionTarget==='function')actionTarget(a)};
- /* v0.70: ALL button removed; right zone is the stable OPEN x OF y indicator. */
- clearTimeout(tickerTimer51);
- tickerTimer51=setTimeout(()=>{tickerIndex51=(tickerIndex51+1)%items.length;renderTicker51(false)},Math.max(3,Math.min(60,Number(ctl.seconds)||8))*1000);
+ if(window.B7AlertEngine816){window.B7AlertEngine816.refreshLead(!!reset);return}
 }
+
 // v0.80.1 performance: ticker uses its own bounded rotation timer; no DOM observer.
 setTimeout(()=>{let b=document.getElementById('topActionBar');if(b)renderTicker51(true)},100);
 
