@@ -1,0 +1,50 @@
+/* B7 FI Command Center v0.80.13 — final calm status framework + viewer status lock */
+:root{--v813-red:#ff3557;--v813-orange:#ff922f;--v813-yellow:#e8c33d;--v813-blue:#55a4ff;--v813-green:#39d98a;--v813-neutral:#7d8a99}
+
+/* One deterministic severity variable owns every alert visual. */
+.header-status-stack>#topActionBar,.header-status-stack>#operationsBar,
+#v802StatusMount>#topActionBar,#v802StatusMount>#operationsBar{
+  --v813-color:var(--v813-neutral);--v813-rgb:125,138,153;
+  border-color:var(--v813-color)!important;
+  box-shadow:0 0 8px rgba(var(--v813-rgb),.22),inset 0 0 18px rgba(var(--v813-rgb),.05)!important;
+  background:linear-gradient(90deg,rgba(var(--v813-rgb),.13),rgba(6,14,24,.99) 32%,rgba(6,14,24,.99) 72%,rgba(var(--v813-rgb),.075))!important;
+}
+.header-status-stack>#topActionBar[data-v813-severity="critical"],.header-status-stack>#operationsBar[data-v813-severity="critical"],#v802StatusMount>#topActionBar[data-v813-severity="critical"],#v802StatusMount>#operationsBar[data-v813-severity="critical"]{--v813-color:var(--v813-red);--v813-rgb:255,53,87;animation:v813CriticalGlow 3.2s ease-in-out infinite!important}
+.header-status-stack>#topActionBar[data-v813-severity="attention"],.header-status-stack>#operationsBar[data-v813-severity="attention"],#v802StatusMount>#topActionBar[data-v813-severity="attention"],#v802StatusMount>#operationsBar[data-v813-severity="attention"]{--v813-color:var(--v813-orange);--v813-rgb:255,146,47;animation:v813AttentionGlow 4.2s ease-in-out infinite!important}
+.header-status-stack>#topActionBar[data-v813-severity="reminder"],.header-status-stack>#operationsBar[data-v813-severity="reminder"],#v802StatusMount>#topActionBar[data-v813-severity="reminder"],#v802StatusMount>#operationsBar[data-v813-severity="reminder"]{--v813-color:var(--v813-yellow);--v813-rgb:232,195,61}
+.header-status-stack>#topActionBar[data-v813-severity="information"],.header-status-stack>#operationsBar[data-v813-severity="information"],#v802StatusMount>#topActionBar[data-v813-severity="information"],#v802StatusMount>#operationsBar[data-v813-severity="information"]{--v813-color:var(--v813-blue);--v813-rgb:85,164,255}
+.header-status-stack>#topActionBar[data-v813-severity="normal"],.header-status-stack>#operationsBar[data-v813-severity="normal"],#v802StatusMount>#topActionBar[data-v813-severity="normal"],#v802StatusMount>#operationsBar[data-v813-severity="normal"],.header-status-stack>#topActionBar[data-v813-severity="on-track"],.header-status-stack>#operationsBar[data-v813-severity="on-track"]{--v813-color:var(--v813-green);--v813-rgb:57,217,138}
+@keyframes v813CriticalGlow{0%,100%{box-shadow:0 0 8px rgba(255,53,87,.28),inset 0 0 18px rgba(255,53,87,.055)}50%{box-shadow:0 0 18px rgba(255,53,87,.58),0 0 30px rgba(255,53,87,.14),inset 0 0 23px rgba(255,53,87,.09)}}
+@keyframes v813AttentionGlow{0%,100%{box-shadow:0 0 7px rgba(255,146,47,.22),inset 0 0 16px rgba(255,146,47,.045)}50%{box-shadow:0 0 14px rgba(255,146,47,.46),0 0 24px rgba(255,146,47,.10),inset 0 0 20px rgba(255,146,47,.07)}}
+
+/* Dividers, beacon and lamp always follow severity. */
+.header-status-stack #topActionBar .v70-action-beacon,.header-status-stack #operationsBar .v65-fleet-label,
+#v802StatusMount #topActionBar .v70-action-beacon,#v802StatusMount #operationsBar .v65-fleet-label{border-right-color:var(--v813-color)!important}
+.header-status-stack #topActionBar .v70-action-nav,.header-status-stack #operationsBar .v65-fleet-summary,
+#v802StatusMount #topActionBar .v70-action-nav,#v802StatusMount #operationsBar .v65-fleet-summary{border-left-color:var(--v813-color)!important}
+.header-status-stack .v70-beacon-lamp,.header-status-stack .v70-fleet-lamp,#v802StatusMount .v70-beacon-lamp,#v802StatusMount .v70-fleet-lamp{background:var(--v813-color)!important;box-shadow:0 0 9px var(--v813-color),0 0 20px rgba(var(--v813-rgb),.86)!important}
+.header-status-stack .v72-beacon-status,#v802StatusMount .v72-beacon-status{color:var(--v813-color)!important}
+.header-status-stack .v72-beacon-title,#v802StatusMount .v72-beacon-title,.header-status-stack .v70-action-nav,.header-status-stack .v65-fleet-summary,#v802StatusMount .v70-action-nav,#v802StatusMount .v65-fleet-summary{color:#fff!important}
+
+/* Final shared message geometry — large, white, vertically and horizontally centered. */
+.header-status-stack #topActionBar .v70-action-message,.header-status-stack #topActionBar .top-action-current strong,
+.header-status-stack #operationsBar .v65-fleet-ticker,#v802StatusMount #topActionBar .v70-action-message,#v802StatusMount #topActionBar .top-action-current strong,#v802StatusMount #operationsBar .v65-fleet-ticker{
+  grid-column:2!important;grid-row:1!important;align-self:stretch!important;justify-self:stretch!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;
+  min-width:0!important;width:100%!important;height:100%!important;margin:0!important;padding:0 28px!important;
+  color:#fff!important;font-size:18px!important;font-weight:900!important;line-height:1.2!important;box-sizing:border-box!important;
+}
+.header-status-stack #operationsBar .v65-fleet-ticker #opsTickerText,#v802StatusMount #operationsBar .v65-fleet-ticker #opsTickerText{display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;width:100%!important;height:100%!important;margin:0!important;padding:0!important;color:#fff!important;font-size:18px!important;font-weight:900!important;line-height:1.2!important}
+
+/* Viewer-only Live Status: two real shared bars stay mounted as a permanent pair. */
+body.v808-viewer-only.v802-live-status #v802StatusMount{display:flex!important;flex-direction:column!important;gap:10px!important;visibility:visible!important;opacity:1!important;min-height:146px!important}
+body.v808-viewer-only.v802-live-status #v802StatusMount>#topActionBar,
+body.v808-viewer-only.v802-live-status #v802StatusMount>#operationsBar{display:grid!important;visibility:visible!important;opacity:1!important;position:relative!important;width:100%!important}
+
+/* No moving perimeter tracers anywhere. */
+.v73-sweep,.v75-perimeter-tracer,.v76-perimeter-tracer,.v78-perimeter-tracer,.header-status-stack>#topActionBar::before,.header-status-stack>#topActionBar::after,.header-status-stack>#operationsBar::before,.header-status-stack>#operationsBar::after,#v802StatusMount>#topActionBar::before,#v802StatusMount>#topActionBar::after,#v802StatusMount>#operationsBar::before,#v802StatusMount>#operationsBar::after{display:none!important;animation:none!important;content:none!important}
+
+/* Popup wording polish. */
+.v813-reminder-note{font-size:10px;color:#8fb2cc;text-align:center;margin-top:-6px;padding-bottom:16px;letter-spacing:.04em}
+@media(max-width:1180px){.header-status-stack #topActionBar .v70-action-message,.header-status-stack #topActionBar .top-action-current strong,.header-status-stack #operationsBar .v65-fleet-ticker,#v802StatusMount #topActionBar .v70-action-message,#v802StatusMount #topActionBar .top-action-current strong,#v802StatusMount #operationsBar .v65-fleet-ticker,#v802StatusMount #operationsBar .v65-fleet-ticker #opsTickerText{font-size:16px!important}}
+@media(prefers-reduced-motion:reduce){.header-status-stack>#topActionBar,.header-status-stack>#operationsBar,#v802StatusMount>#topActionBar,#v802StatusMount>#operationsBar{animation:none!important}}

@@ -83,11 +83,11 @@ function closePopup(){document.querySelector('.v812-critical-backdrop')?.remove(
 function showCriticalPopup(info){
   if(!info||shown.has(info.key)||document.querySelector('.v812-critical-backdrop'))return;shown.add(info.key);
   const back=document.createElement('div');back.className='v812-critical-backdrop';
-  back.innerHTML=`<section class="v812-critical-modal" role="alertdialog" aria-modal="true" aria-label="Critical Lead Alert"><div class="v812-critical-head"><i class="v812-critical-lamp"></i><div><strong>LEAD ALERTS</strong><br><span>CRITICAL — REQUIRES ATTENTION</span></div></div><div class="v812-critical-body"></div><div class="v812-critical-actions"><button type="button" class="primary" data-v812-ack>ACKNOWLEDGE / WORKING</button><button type="button" data-v812-open>OPEN ACTION CENTER</button><button type="button" data-v812-later>REMIND ME LATER</button></div></section>`;
+  back.innerHTML=`<section class="v812-critical-modal" role="alertdialog" aria-modal="true" aria-label="Critical Lead Alert"><div class="v812-critical-head"><i class="v812-critical-lamp"></i><div><strong>LEAD ALERTS</strong><br><span>CRITICAL — REQUIRES ATTENTION</span></div></div><div class="v812-critical-body"></div><div class="v812-critical-actions"><button type="button" class="primary" data-v812-ack>ACKNOWLEDGE & WORKING</button><button type="button" data-v812-open>OPEN ACTION CENTER</button><button type="button" data-v812-later>REMIND ME LATER</button></div></section>`;
   back.querySelector('.v812-critical-body').textContent=info.message;
-  back.querySelector('[data-v812-ack]').onclick=()=>{try{window.state.actionDisplay=window.state.actionDisplay||{};window.state.actionDisplay[info.key]=window.state.actionDisplay[info.key]||{};window.state.actionDisplay[info.key].ack=true;if(typeof window.save==='function')window.save()}catch(e){}closePopup();bounded('')};
+  back.querySelector('[data-v812-ack]').onclick=()=>{try{window.state.actionDisplay=window.state.actionDisplay||{};window.state.actionDisplay[info.key]=window.state.actionDisplay[info.key]||{};window.state.actionDisplay[info.key].ack=true;window.state.actionDisplay[info.key].working=true;window.state.actionDisplay[info.key].acknowledgedAt=new Date().toISOString();if(typeof window.save==='function')window.save()}catch(e){}closePopup();bounded('')};
   back.querySelector('[data-v812-open]').onclick=()=>{closePopup();try{window.setView('actions')}catch(e){}};
-  back.querySelector('[data-v812-later]').onclick=()=>{closePopup();shown.delete(info.key);criticalTimer=setTimeout(()=>{const x=visibleCritical();if(x)showCriticalPopup(x)},5*60*1000)};
+  back.querySelector('[data-v812-later]').onclick=()=>{closePopup();shown.delete(info.key);criticalTimer=setTimeout(()=>{const x=visibleCritical();if(x)showCriticalPopup(x)},30*60*1000)};
   document.body.appendChild(back);
 }
 function scheduleCriticalCheck(){
