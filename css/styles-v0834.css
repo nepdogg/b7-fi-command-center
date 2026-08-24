@@ -1,0 +1,35 @@
+/* B7 FI Command Center v0.80.34 — shared conditional requirement mini progress bars.
+   Main four lifecycle bars stay unchanged at upper-right. Customer Source + STR occupy
+   the open space under the UTID/model identity on the upper-left of both live cards. */
+.v834-mini-requirements{
+  display:grid;grid-template-columns:1fr;gap:8px;margin-top:16px;width:100%;max-width:360px;box-sizing:border-box
+}
+.v834-mini-req{min-width:0}
+.v834-mini-req-head{display:flex;align-items:center;justify-content:space-between;gap:10px;min-width:0}
+.v834-mini-req-head span{font-size:10px;font-weight:900;letter-spacing:.07em;color:#80cfff;white-space:nowrap}
+.v834-mini-req-head b{font-size:10px;font-weight:900;color:#fff;text-align:right;white-space:nowrap}
+.v834-mini-req.inactive .v834-mini-req-head b{color:#c8d6e2}
+.v834-mini-req-track{height:5px;margin-top:4px;border:1px solid #31536b;border-radius:999px;background:#071925;overflow:hidden}
+.v834-mini-req-track i{display:block;height:100%;border-radius:inherit;transition:width .25s ease}
+.v834-mini-req.source .v834-mini-req-track i{background:#27d795}
+.v834-mini-req.str .v834-mini-req-track i{background:#a78bfa}
+
+/* The legacy full-width Special Requirements panel is superseded on live cards. */
+body.v802-live-status #v802ToolHost .v807-requirements,
+body.v825-operations-dashboard #v802ToolHost .v807-requirements{display:none!important}
+
+/* Preserve the right-side primary progress stack exactly where it is while giving identity
+   enough room for two compact conditional indicators beneath the UTID/model. */
+body.v802-live-status .v805-tool-identity,
+body.v825-operations-dashboard .v805-tool-identity{align-self:start!important;min-width:0!important}
+body.v802-live-status .v805-tool-top,
+body.v825-operations-dashboard .v805-tool-top{align-items:start!important}
+
+@media(max-height:760px) and (min-width:901px){
+  .v834-mini-requirements{gap:5px;margin-top:9px;max-width:320px}
+  .v834-mini-req-head span,.v834-mini-req-head b{font-size:9px}
+  .v834-mini-req-track{height:4px;margin-top:3px}
+}
+@media(max-width:900px){
+  .v834-mini-requirements{max-width:none;margin-top:10px}
+}

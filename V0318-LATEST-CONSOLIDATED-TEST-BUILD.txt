@@ -1,0 +1,24 @@
+B7 FI Command Center v0.31.8
+Latest Consolidated Test Build
+
+Built directly from v0.31.7 and preserves the latest tested design/workflow framework:
+- 50/50 page-colored header with white diagonal separator.
+- Page-specific active navigation and page-action colors.
+- Full-width B7 FI Actions top bar driven by Action Center.
+- Fleet Status bottom bar for high-level tool status.
+- Opposing status-bar animation treatment.
+- Compact right-aligned Page Actions controls with final spacing/alignment.
+- Tool Countdown family summaries: Total / Waiting FI / In FI / Shipped.
+- Action Center grouping and manual reminders.
+- Lead Workspace task integration into Action Center.
+- Micro Schedule target / planned progress architecture.
+- Actual Tool Progress + Planned/Micro Schedule + Lead/Admin progress architecture.
+- Conditional supplemental process concept for Lamp Swap / Daily Monitor.
+- Reference Files workflow and browser workbook preview framework.
+- Wallboard Mode for rotating operational pages.
+- Full backup/import migration workflow.
+- Existing local-production behavior retained for continued testing.
+
+Important:
+- Multi-user live synchronization still depends on the SharePoint / Microsoft Lists connection.
+- Wallboard can use local test data now; true live cross-PC updates will use the shared-data layer once connected.

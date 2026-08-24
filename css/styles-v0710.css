@@ -1,0 +1,128 @@
+/* B7 FI Command Center v0.71.0 — Status Intelligence + Compact Page Toolbar */
+:root{
+  --v71-status-h:62px;
+  --v71-status-label:126px;
+  --v71-action-meta:178px;
+  --v71-action-nav:168px;
+  --v71-fleet-summary:290px;
+  --v71-toolbar-h:40px;
+  --v71-status-color:#7d8a99;
+  --v71-status-rgb:125,138,153;
+}
+
+/* The page toolbar is a real framework row, immediately after Action Status. */
+.header-status-stack{gap:0!important;row-gap:0!important}
+body #floatingActions.page-toolbar,body .page-toolbar{
+  flex:0 0 var(--v71-toolbar-h)!important;
+  height:var(--v71-toolbar-h)!important;
+  min-height:var(--v71-toolbar-h)!important;
+  margin:0!important;
+  padding:3px 52px!important;
+  align-items:center!important;
+  background:#071522!important;
+}
+#floatingActions>button{min-height:30px!important;height:30px!important;line-height:1!important}
+body>main#app{padding-top:8px!important}
+
+/* One geometry for both persistent status bars. */
+.top-action-bar,.operations-bar{
+  height:var(--v71-status-h)!important;
+  min-height:var(--v71-status-h)!important;
+  max-height:var(--v71-status-h)!important;
+  box-sizing:border-box!important;
+  border-top:2px solid var(--v71-status-color)!important;
+  border-bottom:2px solid var(--v71-status-color)!important;
+  background:#071522!important;
+  overflow:hidden!important;
+}
+.top-action-bar{
+  grid-template-columns:var(--v71-status-label) minmax(0,1fr)!important;
+}
+.operations-bar{
+  grid-template-columns:var(--v71-status-label) minmax(0,1fr) var(--v71-fleet-summary)!important;
+}
+
+/* Status colors represent CONDITION, never the current Center. */
+.top-action-bar[data-status="red"],.operations-bar[data-status="critical"]{--v71-status-color:#ff4058;--v71-status-rgb:255,64,88}
+.top-action-bar[data-status="orange"],.operations-bar[data-status="attention"]{--v71-status-color:#ff8a2b;--v71-status-rgb:255,138,43}
+.top-action-bar[data-status="yellow"],.operations-bar[data-status="reminder"]{--v71-status-color:#e4bd32;--v71-status-rgb:228,189,50}
+.top-action-bar[data-status="blue"],.operations-bar[data-status="information"]{--v71-status-color:#4f9cff;--v71-status-rgb:79,156,255}
+.top-action-bar[data-status="green"],.operations-bar[data-status="good"]{--v71-status-color:#32d583;--v71-status-rgb:50,213,131}
+.top-action-bar[data-status="normal"],.operations-bar[data-status="normal"]{--v71-status-color:#7d8a99;--v71-status-rgb:125,138,153}
+
+/* Animated edge light follows status severity, but never moves layout geometry. */
+.top-action-bar::before,.top-action-bar::after,.operations-bar::before,.operations-bar::after{
+  background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.08) 18%,#fff 46%,var(--v71-status-color) 61%,rgba(255,255,255,.12) 80%,transparent 100%)!important;
+  filter:drop-shadow(0 0 7px rgba(var(--v71-status-rgb),.92))!important;
+}
+
+/* ACTION STATUS — fixed four-zone internal layout; no transform/width animation. */
+.v70-action-beacon{
+  width:auto!important;min-width:0!important;height:100%!important;
+  color:var(--v71-status-color)!important;
+}
+.v70-action-beacon::after{background:var(--v71-status-color)!important}
+.top-action-current{
+  height:100%!important;min-height:0!important;
+  grid-template-columns:var(--v71-action-meta) minmax(0,1fr) var(--v71-action-nav)!important;
+  padding:0 12px!important;gap:8px!important;
+  align-items:center!important;transform:none!important;animation:none!important;
+}
+.top-action-label{
+  display:flex!important;align-items:center!important;height:100%!important;
+  max-width:var(--v71-action-meta)!important;margin:0!important;padding:0!important;
+  line-height:1.15!important;
+}
+.v70-action-message,.top-action-current strong{
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  height:100%!important;margin:0!important;padding:0 6px!important;
+  line-height:1.2!important;text-align:center!important;
+}
+.v70-action-nav{
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  height:100%!important;margin:0!important;padding:0 0 0 10px!important;
+  color:var(--v71-status-color)!important;
+}
+.v70-action-nav::before{background:var(--v71-status-color)!important}
+
+/* Beacon lamp carries the strongest attention treatment. */
+.v70-action-beacon.red .v70-beacon-lamp{animation:v71CriticalBeacon 2.8s ease-in-out infinite!important}
+@keyframes v71CriticalBeacon{
+  0%,100%{opacity:.72;box-shadow:0 0 6px #ff4058,0 0 12px rgba(255,64,88,.45)}
+  50%{opacity:1;box-shadow:0 0 12px #ff4058,0 0 26px rgba(255,64,88,.95)}
+}
+
+/* FLEET STATUS — same height and true vertical centering as Action Status. */
+.v65-fleet-label,.v65-fleet-ticker,.v65-fleet-summary{
+  height:100%!important;min-height:0!important;max-height:none!important;
+  display:flex!important;align-items:center!important;box-sizing:border-box!important;
+  margin:0!important;line-height:1.2!important;
+}
+.v65-fleet-label{
+  justify-content:center!important;color:var(--v71-status-color)!important;padding:0 10px!important;
+}
+.v65-fleet-label::after,.v65-fleet-ticker::after{background:var(--v71-status-color)!important}
+.v65-fleet-ticker{
+  justify-content:center!important;text-align:center!important;padding:0 16px!important;
+}
+.v65-fleet-ticker #opsTickerText{
+  height:100%!important;display:flex!important;align-items:center!important;justify-content:center!important;
+  margin:0!important;padding:0!important;line-height:1.2!important;text-align:center!important;
+}
+.v65-fleet-summary{
+  justify-content:center!important;text-align:center!important;padding:0 12px!important;
+}
+
+/* Page navigation convention: destinations left, actions right. */
+#floatingActions .v70-page-nav{order:10!important;margin-left:0!important}
+#floatingActions .v70-page-action{order:20!important}
+#floatingActions .v70-first-action{margin-left:auto!important}
+body[data-center="home"] #floatingActions{justify-content:flex-end!important}
+
+@media(max-width:1180px){
+  :root{--v71-status-label:112px;--v71-action-meta:150px;--v71-action-nav:145px;--v71-fleet-summary:235px}
+  body #floatingActions.page-toolbar{padding-left:18px!important;padding-right:18px!important}
+}
+@media(max-width:760px){
+  .top-action-bar,.operations-bar{height:auto!important;max-height:none!important}
+}

@@ -1,0 +1,44 @@
+/* v0.80.26 — Operations Center contextual navigation cleanup */
+
+/* Operations Center no longer shows the generic PAGE ACTIONS label. */
+body[data-center="home"] #floatingActions.page-toolbar::before,
+body[data-center="home"] #floatingActions::before,
+body.v825-operations-dashboard #floatingActions.page-toolbar::before,
+body.v825-operations-dashboard #floatingActions::before{content:none!important;display:none!important}
+
+body[data-center="home"] #floatingActions.v826-operations-toolbar,
+body.v825-operations-dashboard #floatingActions.v826-operations-toolbar{
+  justify-content:flex-start!important;
+  gap:10px!important;
+}
+body[data-center="home"] #floatingActions.v826-operations-toolbar .v826-current-tool-btn,
+body.v825-operations-dashboard #floatingActions.v826-operations-toolbar .v826-current-tool-btn{
+  order:1!important;
+  margin-right:auto!important;
+  min-width:170px!important;
+  border-color:#7ea3bd!important;
+  background:#0b1b29!important;
+  color:#fff!important;
+}
+body[data-center="home"] #floatingActions.v826-operations-toolbar .v826-current-tool-btn:hover,
+body.v825-operations-dashboard #floatingActions.v826-operations-toolbar .v826-current-tool-btn:hover{
+  background:#10283a!important;
+  box-shadow:0 0 12px rgba(126,163,189,.28)!important;
+}
+body[data-center="home"] #floatingActions.v826-operations-toolbar .v826-context-action,
+body.v825-operations-dashboard #floatingActions.v826-operations-toolbar .v826-context-action{order:2!important}
+
+/* The quarter now lives directly on the Active Tools card. */
+.v825-quarter-strip{display:none!important}
+.v825-operations-live{padding-top:0!important}
+
+/* Diagnostic queue rows are debugging aids only and should not appear in normal Action Center use. */
+#v817QueueDiag,#v819QueueDiag,#b7xQueueDiag,
+.v817-queue-diag,.v819-queue-diag,.b7x-queue-diag{display:none!important}
+
+@media(max-width:900px){
+  body[data-center="home"] #floatingActions.v826-operations-toolbar,
+  body.v825-operations-dashboard #floatingActions.v826-operations-toolbar{flex-wrap:wrap!important}
+  body[data-center="home"] #floatingActions.v826-operations-toolbar .v826-current-tool-btn,
+  body.v825-operations-dashboard #floatingActions.v826-operations-toolbar .v826-current-tool-btn{width:100%!important;margin-right:0!important}
+}

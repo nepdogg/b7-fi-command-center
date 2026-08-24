@@ -1,0 +1,9 @@
+/* B7 FI Command Center v0.80.8 — dedicated view-only Live Status entry page */
+body.v808-viewer-only .v802-live-exit{display:none!important}
+body.v808-viewer-only .v802-live-top{grid-template-columns:1fr auto 1fr!important}
+body.v808-viewer-only .v802-live-brand{grid-column:2!important;justify-self:center!important}
+/* Keep viewer display strictly presentation-only. */
+body.v808-viewer-only .sticky-header,
+body.v808-viewer-only>footer.v57-footer,
+body.v808-viewer-only>#wallboardControls,
+body.v808-viewer-only>#screenshotExit{display:none!important}

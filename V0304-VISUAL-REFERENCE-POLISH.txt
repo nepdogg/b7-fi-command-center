@@ -1,0 +1,18 @@
+B7 FI Command Center v0.30.4
+
+Changes in this test build:
+- Active navigation button now uses white text on the page accent color.
+- Header diagonal is now a thick white divider band.
+- Top Action Center bar has a stronger bottom separator.
+- Top and bottom status/action bars have opposing animated glow sweeps.
+- Spreadsheet preview happens automatically after Load/Replace; redundant Preview button removed.
+- Added Refresh Preview control.
+- Browser workbook renderer now makes a best-effort attempt to preserve merged cells, column widths, row heights, alignment, wrapping, fonts, fills and borders when the workbook parser exposes those styles.
+- Exact Excel fidelity still requires Open Original.
+
+Recommended home tests:
+1. Load B7 FI Status and compare formatting/column widths/merged cells with Excel.
+2. Switch worksheet tabs and use Filter visible rows.
+3. Confirm the active navigation text is white on every page color.
+4. Confirm the white diagonal header divider looks balanced at normal zoom.
+5. Confirm top and bottom animated lines are visible but not distracting.

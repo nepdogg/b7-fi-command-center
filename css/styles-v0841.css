@@ -1,0 +1,16 @@
+/* v0.80.41 — Tool Center live-card exception badges + Tool editor save feedback */
+.v841-card-badges{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin:-1px 0 8px;min-height:0}
+.v841-state-badge{display:inline-flex;align-items:center;justify-content:center;padding:3px 7px;border:1px solid currentColor;border-radius:5px;font-size:9px;font-weight:900;line-height:1.05;letter-spacing:.35px;white-space:nowrap;background:rgba(5,13,25,.72)}
+.v841-state-badge.plan.pull{color:#35d48a}.v841-state-badge.plan.push{color:#ff6464}.v841-state-badge.plan.date{color:#ffd34d}
+.v841-state-badge.source{color:#30d6c6}.v841-state-badge.str{color:#a78bfa}.v841-state-badge.packing{color:#41d98f}
+.v841-save-state{display:inline-flex;align-items:center;height:30px;padding:0 9px;border-radius:5px;border:1px solid rgba(148,163,184,.4);font-size:10px;font-weight:900;letter-spacing:.35px;white-space:nowrap}
+.v841-save-state.saved{color:#47df91;border-color:rgba(71,223,145,.5);background:rgba(19,78,55,.25)}
+.v841-save-state.dirty{color:#ffd34d;border-color:rgba(255,211,77,.55);background:rgba(113,74,0,.24)}
+.v841-save-state.saving{color:#55c7ff;border-color:rgba(85,199,255,.55);background:rgba(14,67,95,.28)}
+.v841-save-state.neutral{color:#cbd5e1;background:rgba(51,65,85,.28)}
+.v841-toast{position:fixed;right:24px;bottom:24px;z-index:99999;transform:translateY(18px);opacity:0;pointer-events:none;padding:11px 15px;border-radius:7px;border:1px solid rgba(148,163,184,.45);background:#071727;color:#eef7ff;font-weight:900;font-size:12px;box-shadow:0 10px 30px rgba(0,0,0,.38);transition:opacity .18s ease,transform .18s ease}
+.v841-toast.show{opacity:1;transform:translateY(0)}.v841-toast.saved{border-color:#35d48a;color:#78f0b3}.v841-toast.neutral{border-color:#718096;color:#d8e1ec}
+.v841-latest-plan{display:grid;grid-template-columns:auto auto 1fr;align-items:center;gap:10px;margin:8px 0 14px;padding:9px 11px;border-left:3px solid currentColor;background:rgba(13,25,41,.7);font-size:11px}
+.v841-latest-plan>span{font-size:9px;font-weight:900;letter-spacing:.6px;color:#8fb9dc}.v841-latest-plan>b{font-size:11px}.v841-latest-plan>small{color:#d4e1ec;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.v841-latest-plan.pull{color:#35d48a}.v841-latest-plan.push{color:#ff6464}.v841-latest-plan.date{color:#ffd34d}
+@media(max-width:1050px){.v841-latest-plan{grid-template-columns:1fr}.v841-latest-plan>small{white-space:normal}.v841-save-state{order:-1}}

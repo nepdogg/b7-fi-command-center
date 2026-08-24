@@ -1,0 +1,27 @@
+/* B7 FI Command Center v0.80.25 — Operations live dashboard + viewer sync polish */
+body.v825-operations-dashboard:not(.v802-live-status) > main#app{
+  padding-top:10px!important;
+  padding-bottom:18px!important;
+}
+body.v825-operations-dashboard .v825-operations-live{
+  width:100%;max-width:1500px;margin:0 auto;padding:0 16px 18px;box-sizing:border-box;
+}
+.v825-quarter-strip{display:flex;align-items:center;justify-content:space-between;min-height:34px;margin:0 0 10px;padding:0 2px;color:#7fa6bf;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+.v825-quarter-strip strong{color:#d9f2ff;font-size:14px;letter-spacing:.1em}
+body.v825-operations-dashboard .v802-live-metrics{max-width:none!important;margin:0 0 12px!important}
+body.v825-operations-dashboard .v802-carousel{max-width:none!important;margin:0!important}
+body.v825-operations-dashboard .v802-tool-slide{min-height:430px}
+.v825-current-system{display:flex;align-items:center;min-height:34px;padding:0 12px;color:#d6eaf7;font-size:11px;font-weight:900;letter-spacing:.05em;white-space:nowrap;margin-right:auto}
+.v825-page-action{min-height:34px!important}
+/* Operations Center keeps the standard shared framework and page-actions rail. */
+body.v825-operations-dashboard > .sticky-header > #b7StatusStack{margin-top:8px!important;margin-bottom:8px!important}
+body.v825-operations-dashboard > .sticky-header > .header-status-stack{margin-top:0!important}
+body.v825-operations-dashboard > .sticky-header > .header-status-stack > #floatingActions{display:flex!important}
+/* Standalone viewer must use exactly the same Live Status content dimensions as the normal Live Status page. */
+body.v808-viewer-only.v802-live-status .v803-live-shell,
+body.v802-live-status .v803-live-shell{width:min(1500px,calc(100% - 32px))!important;max-width:1500px!important;margin-inline:auto!important}
+body.v808-viewer-only.v802-live-status #v802StatusMount,
+body.v802-live-status #v802StatusMount{width:100%!important;max-width:none!important;margin:0 0 14px!important}
+body.v808-viewer-only.v802-live-status #v802StatusMount>#b7StatusStack,
+body.v802-live-status #v802StatusMount>#b7StatusStack{width:100%!important;max-width:none!important}
+@media(max-width:900px){.v825-current-system{width:100%;order:-1}.v825-quarter-strip{flex-wrap:wrap;gap:4px}.v825-operations-live{padding-inline:10px!important}}

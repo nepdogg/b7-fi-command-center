@@ -1,0 +1,35 @@
+/* B7 FI Command Center v0.80.6 — Live Status final spacing lock + shared shell version polish */
+/* Remove inherited Command Center grid rows from the read-only Live Status status mount.
+   This is the phantom space that remained below SYSTEM STATUS. */
+body.v802-live-status:not(.wallboard-mode) .v803-live-shell .v802-live-status-stack.header-status-stack{
+  display:flex!important;
+  flex-direction:column!important;
+  grid-template-columns:none!important;
+  grid-template-rows:none!important;
+  grid-auto-rows:auto!important;
+  align-content:flex-start!important;
+  justify-content:flex-start!important;
+  gap:8px!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  margin:0 0 12px!important;
+  padding:0!important;
+  overflow:visible!important;
+}
+body.v802-live-status:not(.wallboard-mode) .v803-live-shell .v802-live-status-stack.header-status-stack::before,
+body.v802-live-status:not(.wallboard-mode) .v803-live-shell .v802-live-status-stack.header-status-stack::after{
+  display:none!important;
+  content:none!important;
+}
+body.v802-live-status .v803-live-shell>.v802-live-metrics{
+  margin-top:0!important;
+  margin-bottom:14px!important;
+}
+/* Keep the two shared bars compact in Live Status with no inherited toolbar row. */
+body.v802-live-status .v802-live-status-stack>#topActionBar,
+body.v802-live-status .v802-live-status-stack>#operationsBar{
+  flex:0 0 auto!important;
+  align-self:stretch!important;
+  margin:0!important;
+}

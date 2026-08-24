@@ -1,0 +1,10 @@
+B7 FI Command Center v0.30.8
+
+Focused visual-polish build based on v0.30.7.
+
+Changes:
+- Header page-color panel now deliberately overlaps beneath the white diagonal separator to eliminate the small dark seam/gap at fractional browser widths and zoom levels.
+- White diagonal separator widened and positioned above both header halves for a continuous black / white / page-color transition.
+- Top B7 FI Actions strip now has a stronger permanent page-color bottom border plus a white inset separator.
+- Top Action strip moving highlights are explicitly retained on both edges: top left-to-right and bottom right-to-left.
+- Wallboard and operational functionality from v0.30.7 preserved.

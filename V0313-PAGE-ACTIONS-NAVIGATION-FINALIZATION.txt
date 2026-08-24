@@ -1,0 +1,9 @@
+B7 FI Command Center v0.31.3
+
+Final overall design-framework navigation polish:
+- Preserves the corrected B7 FI Actions bar and animated lower separator.
+- Adds a dedicated 12px spacer beneath the Action Center separator.
+- Moves Page Actions fully below the status bar so its top edge is no longer clipped.
+- Gives Page Actions a fixed minimum height and vertically centered controls.
+- Keeps the Tool Countdown family-summary cleanup from v0.31.2.
+- No changes to Wallboard, Action Center, Fleet Status, Reference Files, or shared-data logic.

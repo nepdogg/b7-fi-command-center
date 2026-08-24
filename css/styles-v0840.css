@@ -1,0 +1,9 @@
+/* v0.80.40 — final Tool Center page-navigation and view/edit state */
+.v840-page-toolbar{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;align-items:center!important;width:100%!important}
+.v840-toolbar-left,.v840-toolbar-right{display:flex!important;align-items:center!important;gap:8px!important;min-width:0}
+.v840-toolbar-left{justify-content:flex-start!important}
+.v840-toolbar-right{justify-content:flex-end!important}
+.v840-delete-tool{margin-left:12px!important;border-color:#ef4444!important;color:#fff!important;background:rgba(127,29,29,.58)!important}
+.v838-master-tool.v840-readonly input:disabled,.v838-master-tool.v840-readonly select:disabled,.v838-master-tool.v840-readonly textarea:disabled{opacity:1!important;color:#eef2ff!important;-webkit-text-fill-color:#eef2ff!important;cursor:default!important;background:rgba(9,14,28,.78)!important;border-color:rgba(139,92,246,.28)!important}
+.v838-master-tool.v840-readonly textarea:disabled{resize:none!important}
+@media(max-width:1050px){.v840-page-toolbar{grid-template-columns:1fr!important;gap:8px!important}.v840-toolbar-right{justify-content:flex-start!important;flex-wrap:wrap!important}}

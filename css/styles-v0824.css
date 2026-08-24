@@ -1,0 +1,115 @@
+/* B7 FI Command Center v0.80.24 — shell collapse + frame alignment cleanup */
+
+/* Keep every non-Live-Status Center on one common 1680px application frame. */
+body:not(.v802-live-status) > .sticky-header,
+body:not(.v802-live-status) > main#app,
+body:not(.v802-live-status) > footer.v57-footer{
+  width:min(100%,1680px)!important;
+  max-width:1680px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  box-sizing:border-box!important;
+}
+
+/* The header is a simple vertical stack. No historical grid row may reserve
+   the former location of the status bars. */
+body:not(.v802-live-status) > .sticky-header{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  justify-content:flex-start!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  gap:0!important;
+  row-gap:0!important;
+  overflow:visible!important;
+}
+body:not(.v802-live-status) > .sticky-header > .hero,
+body:not(.v802-live-status) > .sticky-header > .main-nav,
+body:not(.v802-live-status) > .sticky-header > #b7StatusStack,
+body:not(.v802-live-status) > .sticky-header > .header-status-stack{
+  flex:0 0 auto!important;
+  position:relative!important;
+  inset:auto!important;
+  transform:none!important;
+  margin-top:0!important;
+  margin-bottom:0!important;
+}
+
+/* Navigation -> status pair -> Page Actions with no phantom spacer. */
+body:not(.v802-live-status) > .sticky-header > #b7StatusStack{
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  margin:0!important;
+  padding:9px 14px 8px!important;
+  gap:9px!important;
+  box-sizing:border-box!important;
+}
+body:not(.v802-live-status) > .sticky-header > .header-status-stack{
+  display:block!important;
+  width:100%!important;
+  height:50px!important;
+  min-height:50px!important;
+  max-height:50px!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:visible!important;
+  grid-template-rows:none!important;
+  gap:0!important;
+  row-gap:0!important;
+}
+body:not(.v802-live-status) > .sticky-header > .header-status-stack > #topActionBar,
+body:not(.v802-live-status) > .sticky-header > .header-status-stack > #operationsBar,
+body:not(.v802-live-status) > .sticky-header > .header-status-stack > #b7StatusStack{
+  display:none!important;
+  position:absolute!important;
+  width:0!important;height:0!important;min-height:0!important;max-height:0!important;
+  margin:0!important;padding:0!important;border:0!important;overflow:hidden!important;
+}
+body:not(.v802-live-status) > .sticky-header > .header-status-stack > #floatingActions{
+  display:flex!important;
+  position:relative!important;
+  inset:auto!important;
+  transform:none!important;
+  width:100%!important;
+  height:50px!important;
+  min-height:50px!important;
+  max-height:50px!important;
+  margin:0!important;
+  padding-top:6px!important;
+  padding-bottom:7px!important;
+  box-sizing:border-box!important;
+  overflow:visible!important;
+}
+
+/* Pull the Center body directly underneath Page Actions and keep it aligned
+   to the same frame as header/status/page-actions. */
+body:not(.v802-live-status) > main#app{
+  position:relative!important;
+  inset:auto!important;
+  transform:none!important;
+  margin-top:0!important;
+  padding-top:12px!important;
+  box-sizing:border-box!important;
+}
+body:not(.v802-live-status)[data-center="home"] > main#app{
+  padding-top:12px!important;
+}
+
+/* Live Status views keep a balanced breathing gap around the two status bars. */
+body.v802-live-status #v802StatusMount{
+  margin-bottom:14px!important;
+}
+body.v802-live-status .v803-live-shell > .v802-live-metrics{
+  margin-top:0!important;
+}
+
+@media(max-width:760px){
+  body:not(.v802-live-status) > .sticky-header > .header-status-stack,
+  body:not(.v802-live-status) > .sticky-header > .header-status-stack > #floatingActions{
+    height:auto!important;min-height:46px!important;max-height:none!important;
+  }
+}

@@ -1,0 +1,99 @@
+/* B7 FI Command Center v0.73.0 — Status Rails + Page Navigation hard lock */
+:root{
+  --v73-status-h:72px;
+  --v73-label-w:258px;
+  --v73-context-w:258px;
+  --v73-toolbar-h:54px;
+}
+
+/* Shared top framework: Action Status immediately followed by Page Navigation. */
+.header-status-stack{
+  display:grid!important;
+  grid-template-rows:var(--v73-status-h) var(--v73-toolbar-h)!important;
+  gap:0!important;
+  row-gap:0!important;
+  height:calc(var(--v73-status-h) + var(--v73-toolbar-h))!important;
+  min-height:calc(var(--v73-status-h) + var(--v73-toolbar-h))!important;
+  max-height:calc(var(--v73-status-h) + var(--v73-toolbar-h))!important;
+  margin:0!important;padding:0!important;overflow:hidden!important;
+}
+body #floatingActions,
+body #floatingActions.page-toolbar,
+body .page-toolbar{
+  position:relative!important;inset:auto!important;
+  width:100%!important;height:var(--v73-toolbar-h)!important;
+  min-height:var(--v73-toolbar-h)!important;max-height:var(--v73-toolbar-h)!important;
+  margin:0!important;padding:6px 26px!important;box-sizing:border-box!important;
+  display:flex!important;align-items:center!important;justify-content:flex-start!important;
+  gap:10px!important;background:#071522!important;border:0!important;
+  border-bottom:1px solid var(--center-color)!important;border-radius:0!important;box-shadow:none!important;
+  overflow:hidden!important;z-index:1800!important;
+}
+#floatingActions>button{height:36px!important;min-height:36px!important;max-height:36px!important;margin:0!important;display:inline-flex!important;align-items:center!important;justify-content:center!important}
+#floatingActions .v70-page-nav{order:10!important}
+#floatingActions .v70-page-action{order:20!important}
+#floatingActions .v70-first-action{margin-left:auto!important}
+body[data-center="home"] #floatingActions{justify-content:flex-end!important}
+body>main#app{margin-top:0!important;padding-top:14px!important}
+
+/* ONE geometry for both status rails. */
+.top-action-bar,.operations-bar{
+  --v73-color:#7d8a99;--v73-rgb:125,138,153;
+  position:relative!important;width:100%!important;
+  height:var(--v73-status-h)!important;min-height:var(--v73-status-h)!important;max-height:var(--v73-status-h)!important;
+  flex:0 0 var(--v73-status-h)!important;margin:0!important;padding:0!important;box-sizing:border-box!important;
+  display:grid!important;grid-template-columns:var(--v73-label-w) minmax(0,1fr) var(--v73-context-w)!important;
+  align-items:stretch!important;background:#08131f!important;overflow:hidden!important;
+  border:0!important;
+  box-shadow:inset 0 2px 0 var(--v73-color),inset 0 -2px 0 var(--v73-color),inset 0 0 26px rgba(var(--v73-rgb),.10)!important;
+}
+.top-action-bar[data-status="red"],.top-action-bar[data-status="critical"],.operations-bar[data-status="red"],.operations-bar[data-status="critical"]{--v73-color:#ff304f;--v73-rgb:255,48,79}
+.top-action-bar[data-status="orange"],.top-action-bar[data-status="attention"],.operations-bar[data-status="orange"],.operations-bar[data-status="attention"]{--v73-color:#ff8a2b;--v73-rgb:255,138,43}
+.top-action-bar[data-status="yellow"],.top-action-bar[data-status="reminder"],.operations-bar[data-status="yellow"],.operations-bar[data-status="reminder"]{--v73-color:#e4bd32;--v73-rgb:228,189,50}
+.top-action-bar[data-status="blue"],.top-action-bar[data-status="information"],.operations-bar[data-status="blue"],.operations-bar[data-status="information"]{--v73-color:#4f9cff;--v73-rgb:79,156,255}
+.top-action-bar[data-status="green"],.top-action-bar[data-status="good"],.operations-bar[data-status="green"],.operations-bar[data-status="good"]{--v73-color:#32d583;--v73-rgb:50,213,131}
+
+/* Explicit sweep nodes avoid legacy pseudo-element collisions. */
+.v73-sweep{position:absolute!important;left:-26%;width:26%;height:3px!important;z-index:50!important;pointer-events:none!important;opacity:1!important;background:linear-gradient(90deg,transparent,rgba(var(--v73-rgb),.22) 22%,var(--v73-color) 47%,#fff 55%,var(--v73-color) 64%,rgba(var(--v73-rgb),.22) 80%,transparent)!important;filter:drop-shadow(0 0 8px rgba(var(--v73-rgb),.95))!important}
+.v73-sweep-top{top:0!important;animation:v73LTR 4.8s linear infinite!important}
+.v73-sweep-bottom{bottom:0!important;animation:v73RTL 4.8s linear infinite!important}
+@keyframes v73LTR{from{transform:translateX(0)}to{transform:translateX(485%)}}
+@keyframes v73RTL{from{transform:translateX(485%)}to{transform:translateX(0)}}
+.top-action-bar::before,.top-action-bar::after,.operations-bar::before,.operations-bar::after{content:none!important;display:none!important}
+
+/* Exact same left beacon for Action and Fleet. */
+.v70-action-beacon,.v65-fleet-label{
+  grid-column:1!important;height:100%!important;min-height:0!important;box-sizing:border-box!important;
+  display:grid!important;grid-template-columns:30px minmax(0,1fr)!important;grid-template-rows:1fr 1fr!important;
+  column-gap:12px!important;align-items:center!important;padding:12px 20px!important;
+  background:linear-gradient(90deg,rgba(var(--v73-rgb),.16),rgba(var(--v73-rgb),.035))!important;
+  color:var(--v73-color)!important;border-right:4px solid var(--v73-color)!important;
+  text-align:left!important;white-space:nowrap!important;box-shadow:inset -12px 0 24px rgba(var(--v73-rgb),.05)!important;
+}
+.v70-action-beacon::after,.v65-fleet-label::after{content:none!important;display:none!important}
+.v70-beacon-lamp,.v70-fleet-lamp{grid-column:1!important;grid-row:1 / span 2!important;width:17px!important;height:17px!important;border-radius:50%!important;background:var(--v73-color)!important;border:2px solid rgba(255,255,255,.22)!important;box-shadow:0 0 8px var(--v73-color),0 0 20px rgba(var(--v73-rgb),.88)!important}
+.v72-beacon-title{grid-column:2!important;grid-row:1!important;align-self:end!important;font-size:15px!important;font-weight:950!important;letter-spacing:.02em!important;line-height:1.05!important;color:#f4f7fb!important}
+.v72-beacon-status{grid-column:2!important;grid-row:2!important;align-self:start!important;font-size:12px!important;font-weight:950!important;letter-spacing:.05em!important;line-height:1.05!important;color:var(--v73-color)!important}
+.top-action-bar[data-status="red"] .v70-beacon-lamp,.top-action-bar[data-status="critical"] .v70-beacon-lamp,.operations-bar[data-status="red"] .v70-fleet-lamp,.operations-bar[data-status="critical"] .v70-fleet-lamp{animation:v73Critical 1.8s ease-in-out infinite!important}
+.top-action-bar[data-status="orange"] .v70-beacon-lamp,.top-action-bar[data-status="attention"] .v70-beacon-lamp,.operations-bar[data-status="orange"] .v70-fleet-lamp,.operations-bar[data-status="attention"] .v70-fleet-lamp{animation:v73Attention 2.6s ease-in-out infinite!important}
+@keyframes v73Critical{0%,100%{transform:scale(.90);opacity:.75;box-shadow:0 0 7px var(--v73-color),0 0 15px rgba(var(--v73-rgb),.55)}50%{transform:scale(1.18);opacity:1;box-shadow:0 0 13px var(--v73-color),0 0 30px rgba(var(--v73-rgb),1)}}
+@keyframes v73Attention{0%,100%{opacity:.78}50%{opacity:1;box-shadow:0 0 12px var(--v73-color),0 0 24px rgba(var(--v73-rgb),.9)}}
+
+/* Center + context: same divider weight and same widths on both bars. */
+.top-action-current{grid-column:2 / span 2!important;width:100%!important;height:100%!important;min-width:0!important;margin:0!important;padding:0!important;display:grid!important;grid-template-columns:minmax(0,1fr) var(--v73-context-w)!important;align-items:stretch!important;background:transparent!important;border:0!important;box-shadow:none!important;overflow:hidden!important;transform:none!important;animation:none!important}
+.top-action-label{display:none!important}
+.v70-action-message,.top-action-current strong,.v65-fleet-ticker{height:100%!important;min-width:0!important;margin:0!important;padding:0 28px!important;box-sizing:border-box!important;display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;color:#f4f7fb!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;line-height:1.15!important}
+.v70-action-message,.top-action-current strong{grid-column:1!important}
+.v70-action-nav,.v65-fleet-summary{height:100%!important;min-width:0!important;margin:0!important;padding:0 16px!important;box-sizing:border-box!important;display:flex!important;align-items:center!important;justify-content:center!important;border-left:4px solid var(--v73-color)!important;color:var(--v73-color)!important;font-weight:900!important;text-align:center!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+.v70-action-nav{grid-column:2!important}
+.v65-fleet-ticker{grid-column:2!important;position:relative!important}
+.v65-fleet-ticker::after{content:none!important;display:none!important}
+.v65-fleet-ticker #opsTickerText{width:100%!important;display:block!important;text-align:center!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+.v65-fleet-summary{grid-column:3!important}
+.v65-fleet-summary .ops-divider,#opsPresence{display:none!important}
+.v73-fleet-count{display:block!important;color:var(--v73-color)!important}
+.top-action-clear{grid-column:2 / span 2!important;height:100%!important;display:flex!important;align-items:center!important;justify-content:center!important}
+
+@media(max-width:1180px){:root{--v73-label-w:210px;--v73-context-w:220px}.v70-action-beacon,.v65-fleet-label{padding-left:14px!important;padding-right:14px!important}.v72-beacon-title{font-size:13px!important}}
+@media(max-width:760px){:root{--v73-label-w:124px;--v73-context-w:132px;--v73-status-h:66px;--v73-toolbar-h:50px}.v70-action-beacon,.v65-fleet-label{grid-template-columns:14px 1fr!important;column-gap:6px!important;padding:8px!important}.v70-beacon-lamp,.v70-fleet-lamp{width:9px!important;height:9px!important}.v72-beacon-title{font-size:9px!important}.v72-beacon-status{font-size:7px!important}.v70-action-message,.top-action-current strong,.v65-fleet-ticker{padding-left:10px!important;padding-right:10px!important}}
+@media(prefers-reduced-motion:reduce){.v73-sweep,.v70-beacon-lamp,.v70-fleet-lamp{animation:none!important}}

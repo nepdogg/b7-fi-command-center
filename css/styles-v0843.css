@@ -1,0 +1,12 @@
+/* v0.80.43 Tool Center Mini Card density + status-color refinement */
+.v837-tool-dashboard .v3-system-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:12px!important}
+.v842-mini-tool-card{padding:12px!important;gap:7px!important}
+.v842-utid{font-size:22px!important}.v842-plan,.v842-plan-placeholder{height:18px!important}.v842-progress-grid{gap:5px!important}
+.v842-fields{gap:6px 10px!important;padding-top:7px!important}
+.v842-mini-tool-card.v843-waiting{border-left-color:#fb7185!important}.v842-mini-tool-card.v843-waiting .v842-status{color:#fb7185!important;border-color:#fb7185!important}
+.v842-mini-tool-card.v843-infi{border-left-color:#facc15!important}.v842-mini-tool-card.v843-infi .v842-status{color:#facc15!important;border-color:#facc15!important}
+.v842-mini-tool-card.v843-packing{border-left-color:#38bdf8!important}.v842-mini-tool-card.v843-packing .v842-status{color:#38bdf8!important;border-color:#38bdf8!important}
+.v842-mini-tool-card.v843-shipped{border-left-color:#34d399!important}.v842-mini-tool-card.v843-shipped .v842-status{color:#34d399!important;border-color:#34d399!important}
+@media(max-width:1450px){.v837-tool-dashboard .v3-system-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:1050px){.v837-tool-dashboard .v3-system-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:700px){.v837-tool-dashboard .v3-system-grid{grid-template-columns:1fr!important}}

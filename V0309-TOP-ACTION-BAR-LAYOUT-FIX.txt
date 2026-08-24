@@ -1,0 +1,9 @@
+B7 FI Command Center v0.30.9
+
+Focused regular-mode top Action bar fix:
+- Reserves a dedicated 7px edge lane between B7 FI Actions and Page Actions.
+- Restores a visible permanent lower white border.
+- Bottom glow runs right-to-left in the reserved lane.
+- Top glow continues left-to-right.
+- Wallboard layout is intentionally left unchanged.
+- Page Actions remain below the Action bar instead of visually covering its lower edge.

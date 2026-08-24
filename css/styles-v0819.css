@@ -1,0 +1,51 @@
+/* B7 FI Command Center v0.80.19 — authoritative Alert System + Action Center controls */
+:root{--v819-normal:#39d98a;--v819-information:#39a8ff;--v819-reminder:#f0c84b;--v819-attention:#ff982f;--v819-critical:#ff315b}
+#topActionBar,#operationsBar{
+  --v819-status-color:var(--v819-normal);
+  display:grid!important;grid-template-columns:240px minmax(0,1fr) 205px!important;
+  min-height:68px!important;height:68px!important;width:100%!important;overflow:hidden!important;
+  border:1.5px solid var(--v819-status-color)!important;border-radius:11px!important;
+  background:linear-gradient(90deg,color-mix(in srgb,var(--v819-status-color) 12%,#071725) 0%,#071725 28%,#071725 72%,color-mix(in srgb,var(--v819-status-color) 7%,#071725) 100%)!important;
+  box-shadow:0 0 10px color-mix(in srgb,var(--v819-status-color) 28%,transparent)!important;
+  animation:v819StatusGlow 3.2s ease-in-out infinite!important;
+  padding:0!important;margin:0!important;align-items:stretch!important;
+}
+#topActionBar[data-v819-severity="critical"],#operationsBar[data-v819-severity="critical"]{--v819-status-color:var(--v819-critical)}
+#topActionBar[data-v819-severity="attention"],#operationsBar[data-v819-severity="attention"]{--v819-status-color:var(--v819-attention)}
+#topActionBar[data-v819-severity="reminder"],#operationsBar[data-v819-severity="reminder"]{--v819-status-color:var(--v819-reminder)}
+#topActionBar[data-v819-severity="information"],#operationsBar[data-v819-severity="information"]{--v819-status-color:var(--v819-information)}
+#topActionBar[data-v819-severity="normal"],#operationsBar[data-v819-severity="normal"]{--v819-status-color:var(--v819-normal)}
+@keyframes v819StatusGlow{0%,100%{box-shadow:0 0 6px color-mix(in srgb,var(--v819-status-color) 20%,transparent)}50%{box-shadow:0 0 16px color-mix(in srgb,var(--v819-status-color) 45%,transparent)}}
+@media (prefers-reduced-motion:reduce){#topActionBar,#operationsBar{animation:none!important}}
+.v819-status-left,.v819-status-message,.v819-status-count{min-width:0;height:100%;box-sizing:border-box}
+.v819-status-left{display:flex!important;align-items:center!important;gap:13px!important;padding:0 18px!important;border-right:3px solid var(--v819-status-color)!important;background:color-mix(in srgb,var(--v819-status-color) 7%,transparent)!important}
+.v819-status-lamp{width:16px;height:16px;border-radius:999px;flex:0 0 16px;background:var(--v819-status-color);box-shadow:0 0 6px var(--v819-status-color),0 0 14px color-mix(in srgb,var(--v819-status-color) 70%,transparent)}
+.v819-status-copy{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;line-height:1.05;min-width:0}
+.v819-status-title{font-size:14px!important;font-weight:1000!important;letter-spacing:.015em;color:#fff!important;white-space:nowrap}
+.v819-status-severity{font-size:11px!important;font-weight:1000!important;letter-spacing:.08em;color:var(--v819-status-color)!important;margin-top:4px;white-space:nowrap}
+.v819-status-message{appearance:none!important;border:0!important;background:transparent!important;color:#fff!important;display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;padding:0 22px!important;font:1000 17px/1.18 inherit!important;letter-spacing:.005em!important;white-space:normal!important;overflow:hidden!important;text-overflow:ellipsis!important;cursor:pointer!important}
+.v819-status-message:disabled{cursor:default!important;opacity:1!important}
+.v819-status-count{display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;padding:0 14px!important;border-left:3px solid var(--v819-status-color)!important;color:#fff!important;font-size:12px!important;font-weight:1000!important;white-space:nowrap!important;background:color-mix(in srgb,var(--v819-status-color) 4%,transparent)!important}
+/* Suppress every earlier divider/pulse/beacon layer. The v819 shell owns the complete bar. */
+#topActionBar>:not(.v819-status-left):not(.v819-status-message):not(.v819-status-count),#operationsBar>:not(.v819-status-left):not(.v819-status-message):not(.v819-status-count){display:none!important}
+#topActionBar::before,#topActionBar::after,#operationsBar::before,#operationsBar::after{content:none!important;display:none!important}
+body.v802-live-status #v802StatusMount{display:grid!important;gap:10px!important;width:100%!important;margin:0 0 12px!important;min-height:146px!important}
+body.v802-live-status #topActionBar,body.v802-live-status #operationsBar{display:grid!important}
+/* Action Center: controls stay inside cards and manual lifecycle buttons are visible. */
+body[data-center="action"] .auto-action51{overflow:hidden!important;position:relative!important}
+body[data-center="action"] .auto-controls51{display:grid!important;grid-template-columns:1.25fr .86fr .78fr .70fr .95fr 1.05fr!important;gap:8px 10px!important;align-items:end!important;padding:10px 12px 12px!important;box-sizing:border-box!important;width:100%!important}
+body[data-center="action"] .auto-controls51>label{min-width:0!important;margin:0!important}
+body[data-center="action"] .auto-controls51 input:not([type="checkbox"]),body[data-center="action"] .auto-controls51 select{width:100%!important;min-width:0!important;box-sizing:border-box!important}
+body[data-center="action"] .auto-controls51 .check51{grid-column:span 2!important;display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:8px!important;min-height:32px!important;white-space:normal!important}
+body[data-center="action"] .auto-controls51 .check51 input[type="checkbox"]{width:16px!important;height:16px!important;margin:0!important;flex:0 0 16px!important}
+.v819-card-actions{grid-column:1/-1!important;display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:8px!important;border-top:1px solid #244258!important;padding-top:9px!important;margin-top:1px!important;min-width:0!important}
+.v819-card-note{margin-right:auto!important;color:#83a8c0!important;font-size:10px!important;font-weight:900!important;letter-spacing:.06em!important}
+.v819-dirty-badge{display:none;color:#ffd66b;font-size:10px;font-weight:1000;letter-spacing:.07em}
+.auto-action51.v819-dirty .v819-dirty-badge{display:inline-block}
+.v819-save,.v819-resolve,.v819-delete{white-space:nowrap!important;min-height:34px!important}
+.v819-delete{border-color:#ff315b!important;color:#ff9eb2!important}.v819-resolve{border-color:#39d98a!important;color:#8ef0bd!important}
+.v819-alert-off{opacity:.56!important}.v819-alert-off .auto-open51::after{content:"LEAD ALERTS OFF";display:block;color:#8fa7ba;font-size:10px;font-weight:1000;margin-top:5px}
+.v819-queue-diag{margin:10px 0 4px;padding:9px 12px;border:1px solid #34516a;border-radius:7px;color:#a9cbe2;font-size:11px}.v819-queue-diag strong{color:#fff}
+.v819-toast{position:fixed;right:20px;bottom:20px;z-index:99999;padding:11px 15px;border:1px solid #4b6c83;border-radius:8px;background:#071725;color:#fff;font-weight:800;opacity:0;transform:translateY(8px);transition:.18s}.v819-toast.show{opacity:1;transform:none}
+.v819-critical-backdrop{position:fixed;inset:0;z-index:100000;background:rgba(0,8,16,.82);display:flex;align-items:center;justify-content:center;padding:20px}.v819-critical-modal{width:min(660px,94vw);background:#071a29;border:2px solid var(--v819-critical);border-radius:13px;box-shadow:0 0 28px rgba(255,49,91,.35);overflow:hidden}.v819-critical-head{display:flex;align-items:center;gap:12px;padding:17px 20px;background:rgba(255,49,91,.09);border-bottom:1px solid var(--v819-critical)}.v819-critical-head strong{color:#fff}.v819-critical-head span{color:var(--v819-critical);font-size:12px;font-weight:1000}.v819-critical-body{padding:24px 24px 16px;text-align:center;color:#fff;font-size:17px;font-weight:900}.v819-critical-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding:8px 18px 20px}.v819-critical-actions button{min-height:42px}
+@media(max-width:1000px){#topActionBar,#operationsBar{grid-template-columns:200px minmax(0,1fr) 160px!important}.v819-status-message{font-size:15px!important}body[data-center="action"] .auto-controls51{grid-template-columns:repeat(3,minmax(0,1fr))!important}.v819-card-actions{grid-column:1/-1!important}}

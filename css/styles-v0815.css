@@ -1,0 +1,24 @@
+/* v0.80.15 — Action Center save/edit usability */
+body[data-center="action"] .auto-action51{overflow:visible}
+body[data-center="action"] .auto-controls51{
+  display:grid!important;
+  grid-template-columns:minmax(150px,1.3fr) minmax(105px,.8fr) minmax(95px,.75fr) minmax(90px,.65fr) minmax(115px,.9fr) minmax(130px,1fr);
+  gap:9px 10px!important;align-items:end!important;padding:10px 12px 12px!important;
+}
+body[data-center="action"] .auto-controls51 label{min-width:0}
+body[data-center="action"] .auto-controls51 .check51{align-self:center;padding:8px 0 2px!important;white-space:normal!important}
+body[data-center="action"] .auto-controls51 .v815-save{min-height:34px;white-space:nowrap;align-self:end}
+body[data-center="action"] .auto-action51.v815-disabled{opacity:.6}
+body[data-center="action"] .auto-action51.v815-disabled .auto-open51::after{content:"LEAD ALERTS OFF";margin-left:auto;color:#8fa5b8;font-size:10px;font-weight:900;letter-spacing:.08em}
+#v815SaveAll{white-space:nowrap}
+.v815-toast{position:fixed;right:24px;bottom:24px;z-index:300000;background:#0c2233;border:1px solid #55c7ff;color:#fff;padding:11px 16px;border-radius:7px;font-weight:900;opacity:0;transform:translateY(8px);pointer-events:none;transition:.18s ease}
+.v815-toast.show{opacity:1;transform:none}
+.v815-modal-card{width:min(860px,95vw)!important;max-height:90vh;overflow:auto}
+.v815-modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;border-bottom:1px solid #294359;padding-bottom:10px;margin-bottom:10px}
+.v815-modal-head h3{margin:0}.v815-modal-head p{margin:4px 0 0;color:#9db4c7;font-size:12px}
+.v815-x{background:transparent;border:0;color:#fff;font-size:28px;line-height:1;cursor:pointer;padding:2px 6px}
+.v815-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px 16px}.v815-span2{grid-column:1/-1}
+.v815-check{display:flex!important;flex-direction:row!important;align-items:center!important;gap:8px!important;padding-top:18px}.v815-check input{width:auto!important}
+.v815-modal-actions{justify-content:flex-end;margin-top:10px}
+@media(max-width:1150px){body[data-center="action"] .auto-controls51{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:700px){body[data-center="action"] .auto-controls51,.v815-form-grid{grid-template-columns:1fr}.v815-span2{grid-column:auto}}

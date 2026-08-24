@@ -1,0 +1,14 @@
+/* v0.80.4 — Live Status quarter identity + tighter status-to-metrics rhythm */
+.v804-live-quarter{
+ position:absolute;left:0;top:50%;transform:translateY(-50%);
+ color:#fff;font-weight:900;font-size:clamp(18px,1.55vw,25px);letter-spacing:.08em;
+ text-shadow:0 2px 8px rgba(0,0,0,.5);white-space:nowrap;
+}
+.v803-live-shell>.v802-live-status-stack{margin-bottom:14px!important}
+.v803-live-shell>.v802-live-metrics{margin-top:0!important}
+@media(max-width:900px){
+ .v804-live-quarter{position:static;transform:none;margin-right:auto;font-size:16px}
+ .v803-live-shell .v802-live-top{display:grid!important;grid-template-columns:1fr auto 1fr!important;gap:8px!important}
+ .v803-live-shell .v802-live-brand{position:static!important;transform:none!important;justify-self:center!important}
+ .v803-live-shell .v802-live-exit{justify-self:end!important;margin-left:0!important}
+}

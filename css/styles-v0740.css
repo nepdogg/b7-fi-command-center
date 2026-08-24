@@ -1,0 +1,147 @@
+/* B7 FI Command Center v0.74.0 — Top Command Awareness Zone + footer polish */
+:root{
+  --v74-status-h:72px;
+  --v74-toolbar-h:54px;
+  --v74-label-w:258px;
+  --v74-context-w:258px;
+}
+
+/* Permanent top framework: Action Status / Fleet Status / Page Navigation. */
+body:not(.wallboard-mode) .header-status-stack,
+.header-status-stack{
+  position:relative!important;
+  display:grid!important;
+  grid-template-rows:var(--v74-status-h) var(--v74-status-h) var(--v74-toolbar-h)!important;
+  gap:0!important;
+  row-gap:0!important;
+  width:100%!important;
+  height:calc(var(--v74-status-h) * 2 + var(--v74-toolbar-h))!important;
+  min-height:calc(var(--v74-status-h) * 2 + var(--v74-toolbar-h))!important;
+  max-height:calc(var(--v74-status-h) * 2 + var(--v74-toolbar-h))!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+}
+.header-status-stack>#topActionBar{grid-row:1!important}
+.header-status-stack>#operationsBar{grid-row:2!important}
+.header-status-stack>#floatingActions{grid-row:3!important}
+
+/* Action and Fleet are true twins: same size, columns and visual rails. */
+.header-status-stack>.top-action-bar,
+.header-status-stack>.operations-bar{
+  width:100%!important;
+  max-width:none!important;
+  height:var(--v74-status-h)!important;
+  min-height:var(--v74-status-h)!important;
+  max-height:var(--v74-status-h)!important;
+  margin:0!important;
+  padding:0!important;
+  flex:none!important;
+  align-self:stretch!important;
+  grid-template-columns:var(--v74-label-w) minmax(0,1fr) var(--v74-context-w)!important;
+  overflow:hidden!important;
+}
+
+/* Fleet message: exact geometric center of the middle cell. */
+.header-status-stack .v65-fleet-ticker{
+  grid-column:2!important;
+  position:relative!important;
+  inset:auto!important;
+  width:100%!important;
+  height:100%!important;
+  min-width:0!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0 28px!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  overflow:hidden!important;
+  transform:none!important;
+}
+.header-status-stack .v65-fleet-ticker #opsTickerText{
+  position:static!important;
+  inset:auto!important;
+  transform:none!important;
+  margin:0!important;
+  padding:0!important;
+  width:100%!important;
+  height:auto!important;
+  line-height:1.15!important;
+  display:block!important;
+  text-align:center!important;
+  align-self:center!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+.header-status-stack .v65-fleet-summary{
+  grid-column:3!important;
+  height:100%!important;
+  margin:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+
+/* Page Navigation begins immediately under Fleet Status. */
+body #floatingActions,
+body #floatingActions.page-toolbar,
+body .header-status-stack .page-toolbar{
+  height:var(--v74-toolbar-h)!important;
+  min-height:var(--v74-toolbar-h)!important;
+  max-height:var(--v74-toolbar-h)!important;
+  margin:0!important;
+  padding-top:6px!important;
+  padding-bottom:6px!important;
+  border-top:0!important;
+}
+body>main#app{margin-top:0!important;padding-top:14px!important}
+
+/* Bottom is now footer only; Fleet Status must never be fixed/pushed back down there. */
+body>.operations-bar{display:none!important}
+
+/* Footer layout inspired by the approved mockup. */
+body>footer.v57-footer{
+  width:min(100%,1680px)!important;
+  max-width:1680px!important;
+  min-height:86px!important;
+  margin:0 auto!important;
+  padding:10px 22px!important;
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:minmax(210px,1.1fr) minmax(170px,.9fr) auto minmax(240px,1.15fr) minmax(250px,1.15fr)!important;
+  align-items:center!important;
+  gap:22px!important;
+  background:#06121d!important;
+  border-top:1px solid #294157!important;
+  border-bottom:2px solid var(--center-color)!important;
+  color:#9bb5cc!important;
+}
+.v74-footer-admin{justify-self:start!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:7px!important}
+.v74-footer-version{justify-self:center!important;color:#72a9ff!important;font-size:11px!important;font-weight:800!important;letter-spacing:.02em!important;white-space:nowrap!important}
+.v74-footer-brand{justify-self:center!important;padding:0 28px!important;border-left:1px solid rgba(255,255,255,.05)!important;border-right:1px solid rgba(255,255,255,.05)!important}
+.v74-footer-brand img{display:block!important;width:auto!important;height:42px!important;object-fit:contain!important}
+.v74-footer-system{justify-self:end!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:5px!important;font-size:11px!important;color:#a9c8e3!important;white-space:nowrap!important}
+.v74-footer-live{display:flex!important;align-items:center!important;gap:7px!important;color:#d6e4ef!important}
+.v74-footer-dot{width:9px!important;height:9px!important;border-radius:50%!important;background:#32d583!important;box-shadow:0 0 9px rgba(50,213,131,.75)!important;flex:0 0 auto!important}
+.v74-footer-location{justify-self:end!important;text-align:right!important;color:#9fc3df!important;font-size:11px!important;white-space:nowrap!important}
+.v74-footer-admin .v57-admin-footer-btn{margin:0!important}
+
+@media(max-width:1180px){
+  :root{--v74-label-w:210px;--v74-context-w:220px}
+  body>footer.v57-footer{grid-template-columns:1fr auto 1fr!important}
+  .v74-footer-version{display:none!important}
+  .v74-footer-brand{grid-column:2!important}
+  .v74-footer-system{grid-column:3!important;justify-self:end!important}
+  .v74-footer-location{display:none!important}
+}
+@media(max-width:760px){
+  :root{--v74-status-h:66px;--v74-toolbar-h:50px;--v74-label-w:124px;--v74-context-w:132px}
+  .header-status-stack .v65-fleet-ticker{padding:0 10px!important}
+  body>footer.v57-footer{grid-template-columns:1fr!important;justify-items:center!important;text-align:center!important;gap:8px!important}
+  .v74-footer-admin,.v74-footer-system,.v74-footer-brand{grid-column:1!important;justify-self:center!important;align-items:center!important}
+  .v74-footer-version,.v74-footer-location{display:none!important}
+}

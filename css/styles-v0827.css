@@ -1,0 +1,19 @@
+/* v0.80.27 — compact Live Status + Operations parity */
+.v827-quarter-progress{margin:0 0 12px;padding:10px 14px;border:1px solid #294a60;border-radius:10px;background:#0d1e30;box-sizing:border-box}
+.v827-quarter-progress>div:first-child{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#d9efff;font-size:12px}.v827-quarter-progress b{font-weight:900;color:#fff}.v827-progress-track{height:10px;margin-top:6px;border-radius:999px;background:#20364e;overflow:hidden}.v827-progress-track i{display:block;height:100%;border-radius:inherit;background:#42cc8b}
+.v827-control-brand{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);height:42px;width:auto;object-fit:contain;background:#080a0f;padding:3px 10px;box-sizing:border-box}
+.v802-carousel-foot{position:relative!important}.v802-tool-kicker{display:none!important}.v802-tool-body h2{margin-top:0!important}
+/* Dedicated Live Status: remove redundant top rail and use every available laptop pixel for live data. */
+body.v802-live-status .v802-live-top{display:none!important}
+body.v802-live-status .v802-live{padding-top:10px!important;padding-bottom:8px!important;min-height:100vh!important;box-sizing:border-box}
+body.v802-live-status .v803-live-shell{display:flex!important;flex-direction:column!important;min-height:calc(100vh - 18px)!important}
+body.v802-live-status #v802StatusMount{margin-bottom:10px!important}
+body.v802-live-status .v802-live-metrics{margin-bottom:8px!important}
+body.v802-live-status .v827-quarter-progress{margin-bottom:8px!important;padding-block:7px!important}
+body.v802-live-status .v802-carousel{flex:1!important;display:flex!important;flex-direction:column!important;min-height:0!important}
+body.v802-live-status #v802ToolHost{flex:1!important;min-height:0!important}
+body.v802-live-status .v802-tool-slide{height:100%!important;min-height:0!important}
+/* Operations keeps the normal Command Center shell but mirrors Live Status information order. */
+body.v825-operations-dashboard .v827-quarter-progress{max-width:none!important}
+@media(max-height:850px) and (min-width:901px){body.v802-live-status .v802-live{padding-top:6px!important}.v802-live-metric{padding-top:9px!important;padding-bottom:9px!important}.v802-tool-body{padding-top:16px!important;padding-bottom:16px!important}.v802-carousel-foot{min-height:40px!important;padding-block:5px!important}.v827-control-brand{height:36px}}
+@media(max-width:900px){.v827-control-brand{position:static;transform:none;justify-self:center}.v827-quarter-progress>div:first-child{flex-wrap:wrap}}

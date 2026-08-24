@@ -1,0 +1,79 @@
+/* B7 FI Command Center v0.80.23 — status position, Live Status parity, beacon urgency */
+
+/* MAIN COMMAND CENTER: status stack is its own direct row immediately below main nav. */
+body:not(.v802-live-status) .sticky-header{
+  display:block!important;
+  height:auto!important;min-height:0!important;max-height:none!important;
+  padding:0!important;margin:0!important;
+}
+body:not(.v802-live-status) .sticky-header>.main-nav{margin:0!important;position:relative!important;inset:auto!important}
+body:not(.v802-live-status) .sticky-header>#b7StatusStack{
+  display:grid!important;position:relative!important;inset:auto!important;
+  width:100%!important;height:auto!important;min-height:0!important;
+  margin:0!important;padding:9px 14px 8px!important;box-sizing:border-box!important;
+  gap:9px!important;z-index:5!important;
+}
+/* Historical header-status-stack is now only the Page Actions row. */
+body:not(.v802-live-status) .sticky-header>.header-status-stack{
+  display:block!important;position:relative!important;inset:auto!important;
+  width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;
+  margin:0!important;padding:0!important;grid-template-rows:none!important;gap:0!important;overflow:visible!important;
+}
+body:not(.v802-live-status) .sticky-header>.header-status-stack>#b7StatusStack{display:none!important}
+body:not(.v802-live-status) .sticky-header>.header-status-stack>#floatingActions{
+  display:flex!important;position:relative!important;inset:auto!important;transform:none!important;
+  width:100%!important;height:auto!important;min-height:50px!important;max-height:none!important;
+  margin:0!important;padding-top:7px!important;padding-bottom:8px!important;box-sizing:border-box!important;
+}
+
+/* LIVE STATUS: regular + viewer-only use exactly the same status geometry and balanced spacing. */
+body.v802-live-status .v803-live-shell>.v802-live-top{margin-bottom:14px!important}
+body.v802-live-status #v802StatusMount,
+body.v802-live-status .v803-live-shell>.v802-live-status-stack{
+  display:block!important;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;
+  margin:0 0 14px!important;padding:0!important;border:0!important;background:transparent!important;overflow:visible!important;
+}
+body.v802-live-status #v802StatusMount>#b7StatusStack{
+  display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:9px!important;
+  width:100%!important;margin:0!important;padding:0!important;
+}
+body.v802-live-status #v802StatusMount>*:not(#b7StatusStack){
+  display:none!important;visibility:hidden!important;position:absolute!important;
+  width:0!important;height:0!important;min-height:0!important;max-height:0!important;
+  margin:0!important;padding:0!important;border:0!important;overflow:hidden!important;
+}
+body.v802-live-status #b7StatusStack .b7s-bar{
+  grid-template-columns:240px minmax(0,1fr) 205px!important;
+  min-height:68px!important;height:68px!important;margin:0!important;
+}
+body.v802-live-status .v803-live-shell>.v802-live-metrics{
+  margin:0 0 14px!important;padding:0!important;
+}
+/* Viewer-only must not have a second custom status size/layout. */
+body.v808-viewer-only.v802-live-status #v802StatusMount,
+body.v808-viewer-only.v802-live-status #v802StatusMount>#b7StatusStack,
+body.v808-viewer-only.v802-live-status #b7StatusStack .b7s-bar{
+  max-width:none!important;
+}
+
+/* BEACON URGENCY: calm glow at low severity, stronger/slower pulse as urgency rises. */
+.b7s-lamp{
+  position:relative!important;
+  box-shadow:0 0 10px var(--b7s-color),0 0 22px color-mix(in srgb,var(--b7s-color) 78%,transparent),0 0 34px color-mix(in srgb,var(--b7s-color) 38%,transparent)!important;
+  animation:b7BeaconGlow 3.2s ease-in-out infinite!important;
+  will-change:box-shadow,transform;
+}
+.b7s-bar[data-severity="normal"] .b7s-lamp{animation-duration:4.4s!important}
+.b7s-bar[data-severity="information"] .b7s-lamp{animation-duration:3.8s!important}
+.b7s-bar[data-severity="reminder"] .b7s-lamp{animation-duration:3.1s!important}
+.b7s-bar[data-severity="attention"] .b7s-lamp{animation-duration:2.5s!important}
+.b7s-bar[data-severity="critical"] .b7s-lamp{animation-duration:1.9s!important}
+@keyframes b7BeaconGlow{
+  0%,100%{transform:scale(1);box-shadow:0 0 8px var(--b7s-color),0 0 18px color-mix(in srgb,var(--b7s-color) 68%,transparent),0 0 28px color-mix(in srgb,var(--b7s-color) 30%,transparent)}
+  50%{transform:scale(1.08);box-shadow:0 0 13px var(--b7s-color),0 0 28px color-mix(in srgb,var(--b7s-color) 92%,transparent),0 0 45px color-mix(in srgb,var(--b7s-color) 52%,transparent)}
+}
+@media(prefers-reduced-motion:reduce){.b7s-lamp{animation:none!important;transform:none!important}}
+
+@media(max-width:1050px){
+  body.v802-live-status #b7StatusStack .b7s-bar{grid-template-columns:205px minmax(0,1fr) 165px!important}
+}

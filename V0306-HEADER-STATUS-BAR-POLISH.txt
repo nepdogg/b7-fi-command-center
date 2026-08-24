@@ -1,0 +1,10 @@
+B7 FI Command Center v0.30.6
+
+Focused visual update:
+- Rebuilt the 50/50 header transition so the white diagonal and page-color panel share one geometry.
+- Added permanent top and bottom borders to B7 FI Actions and Fleet Status.
+- Top edge glow moves left-to-right.
+- Bottom edge glow moves right-to-left.
+- Added a stronger lower separator to the top Action Center bar.
+- TARGET NOT SET Fleet Status is highlighted as a warning.
+- Preserved v0.30.5 Action Center, Fleet Status, Micro Schedule and data behavior.
