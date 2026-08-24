@@ -1,0 +1,105 @@
+/* B7 FI Command Center v0.80.30 — Operations + Live Status final photo/spacing pass.
+   Restores the dedicated tool-photo region without giving up the one-screen viewer,
+   and gives the live dashboard one shared, even spacing rhythm. */
+
+:root{--v830-live-gap:10px}
+
+/* Both live presentations use the same tool-card geometry. */
+body.v825-operations-dashboard:not(.v802-live-status) .v825-operations-carousel .v802-tool-slide,
+body.v802-live-status .v802-tool-slide{
+  display:grid!important;
+  grid-template-columns:minmax(220px,28%) minmax(0,72%)!important;
+  min-width:0!important;
+}
+body.v825-operations-dashboard:not(.v802-live-status) .v825-operations-carousel .v802-tool-visual,
+body.v802-live-status .v802-tool-visual{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-width:0!important;
+  padding:clamp(14px,1.6vw,24px)!important;
+  border-right:1px solid #294a60!important;
+  border-bottom:0!important;
+  background:linear-gradient(150deg,#07121c,#0c2637)!important;
+  box-sizing:border-box!important;
+}
+body.v825-operations-dashboard:not(.v802-live-status) .v825-operations-carousel .v802-tool-visual img,
+body.v802-live-status .v802-tool-visual img{
+  display:block;
+  width:auto!important;
+  height:auto!important;
+  max-width:88%!important;
+  max-height:230px!important;
+  object-fit:contain!important;
+}
+
+/* If a product image has not been configured, preserve the photo bay with a neutral placeholder
+   instead of showing another redundant KLA logo. */
+.v802-tool-visual.v830-photo-fallback img{display:none!important}
+.v830-tool-photo-placeholder{
+  display:flex;align-items:center;justify-content:center;
+  width:min(78%,280px);aspect-ratio:4/3;
+  border:1px dashed #365b73;border-radius:10px;
+  background:rgba(8,29,43,.72);color:#6f9bb6;
+  font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;
+  text-align:center;padding:14px;box-sizing:border-box
+}
+
+/* One consistent vertical rhythm inside the live system card. */
+body.v825-operations-dashboard:not(.v802-live-status) .v825-operations-carousel .v802-tool-body,
+body.v802-live-status .v802-tool-body{
+  justify-content:center!important;
+  gap:12px!important;
+  padding:18px 24px!important;
+  box-sizing:border-box!important;
+}
+body.v825-operations-dashboard:not(.v802-live-status) .v825-operations-carousel .v805-tool-top,
+body.v802-live-status .v805-tool-top{
+  gap:20px!important;
+  margin:0!important;
+}
+body.v825-operations-dashboard:not(.v802-live-status) .v825-operations-carousel .v805-progress-stack,
+body.v802-live-status .v805-progress-stack{gap:8px!important;padding-top:0!important}
+body.v825-operations-dashboard:not(.v802-live-status) .v825-operations-carousel .v807-requirements,
+body.v802-live-status .v807-requirements{margin:0!important;padding:9px 11px!important}
+body.v825-operations-dashboard:not(.v802-live-status) .v825-operations-carousel .v802-tool-grid,
+body.v802-live-status .v802-tool-grid{gap:9px!important}
+body.v825-operations-dashboard:not(.v802-live-status) .v825-operations-carousel .v802-tool-field,
+body.v802-live-status .v802-tool-field{padding:10px 11px!important}
+body.v825-operations-dashboard:not(.v802-live-status) .v825-operations-carousel .v802-open-hint,
+body.v802-live-status .v802-open-hint{margin:0!important;padding-top:1px!important}
+body.v825-operations-dashboard:not(.v802-live-status) .v825-operations-carousel .v802-tool-sub,
+body.v802-live-status .v802-tool-sub{margin-bottom:0!important}
+
+/* Shared outer spacing: status -> metrics -> quarter progress -> carousel. */
+body.v825-operations-dashboard .v825-operations-live>.v802-live-metrics{margin-bottom:var(--v830-live-gap)!important}
+body.v825-operations-dashboard .v825-operations-live>.v829-quarter-progress{margin-bottom:var(--v830-live-gap)!important}
+body.v802-live-status #v802StatusMount{margin-bottom:var(--v830-live-gap)!important}
+body.v802-live-status .v802-live-metrics{margin-bottom:var(--v830-live-gap)!important}
+body.v802-live-status .v829-quarter-progress{margin-bottom:var(--v830-live-gap)!important}
+
+/* Preserve the dedicated viewer's one-screen contract. */
+body.v802-live-status #v802ToolHost{min-height:0!important;overflow:hidden!important}
+body.v802-live-status .v802-tool-slide{height:100%!important;min-height:0!important}
+body.v802-live-status .v802-tool-visual{height:100%!important}
+
+@media(max-height:760px) and (min-width:901px){
+  body.v802-live-status .v802-tool-slide{grid-template-columns:minmax(190px,26%) minmax(0,74%)!important}
+  body.v802-live-status .v802-tool-body{gap:8px!important;padding:10px 18px!important}
+  body.v802-live-status .v805-tool-top{gap:14px!important}
+  body.v802-live-status .v805-progress-stack{gap:6px!important}
+  body.v802-live-status .v807-requirements{padding:7px 9px!important}
+  body.v802-live-status .v802-tool-grid{gap:7px!important}
+  body.v802-live-status .v802-tool-field{padding:8px 9px!important}
+  body.v802-live-status .v802-tool-visual{padding:12px!important}
+  body.v802-live-status .v802-tool-visual img{max-height:190px!important}
+}
+
+@media(max-width:900px){
+  body.v825-operations-dashboard:not(.v802-live-status) .v825-operations-carousel .v802-tool-slide,
+  body.v802-live-status .v802-tool-slide{grid-template-columns:1fr!important;height:auto!important}
+  body.v825-operations-dashboard:not(.v802-live-status) .v825-operations-carousel .v802-tool-visual,
+  body.v802-live-status .v802-tool-visual{min-height:170px!important;height:auto!important;border-right:0!important;border-bottom:1px solid #294a60!important}
+  body.v825-operations-dashboard:not(.v802-live-status) .v825-operations-carousel .v802-tool-body,
+  body.v802-live-status .v802-tool-body{padding:16px!important}
+}
