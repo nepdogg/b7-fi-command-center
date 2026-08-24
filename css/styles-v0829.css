@@ -1,0 +1,26 @@
+/* v0.80.29 — final live summary/control-rail cleanup */
+.v829-quarter-progress{margin:0 0 10px;padding:8px 12px 9px;border:1px solid #294a60;border-radius:10px;background:#0b1b2b;box-sizing:border-box}
+.v829-quarter-progress-head{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#d9efff;font-size:12px}
+.v829-quarter-progress-head b{color:#fff;font-weight:900}
+.v829-progress-track{height:10px;margin-top:6px;border-radius:999px;background:#20364e;overflow:hidden}
+.v829-progress-track i{display:block;height:100%;border-radius:inherit;background:#42cc8b}
+/* Safety: older injected progress rails never render beside the canonical v829 rail. */
+.v825-operations-live .v827-quarter-progress,.v825-operations-live .v828-quarter-progress,
+body.v802-live-status .v827-quarter-progress,body.v802-live-status .v828-quarter-progress{display:none!important}
+/* Operations keeps the compact full-width information card with no redundant KLA artwork. */
+body.v829-operations-final .v825-operations-carousel .v802-tool-slide{grid-template-columns:1fr!important}
+body.v829-operations-final .v825-operations-carousel .v802-tool-visual{display:none!important}
+/* Standalone viewer also uses the information card without the large redundant KLA artwork. */
+body.v802-live-status.v829-live-final .v802-tool-slide{grid-template-columns:1fr!important}
+body.v802-live-status.v829-live-final .v802-tool-visual{display:none!important}
+body.v802-live-status.v829-live-final .v802-tool-body{padding-left:28px!important;padding-right:28px!important}
+/* One-screen viewer progress rail. */
+body.v802-live-status .v829-quarter-progress{flex:0 0 auto!important;margin-bottom:7px!important;padding-block:6px!important}
+/* Bottom control rail: local-data status left, KLA+ true center, controls and counter on right. */
+body.v802-live-status .v802-carousel-foot{position:relative!important;display:block!important;min-height:44px!important;padding:5px 14px!important;box-sizing:border-box!important}
+body.v802-live-status .v802-carousel-foot>span{position:absolute!important;left:14px!important;top:50%!important;transform:translateY(-50%)!important;white-space:nowrap!important}
+.v829-control-brand{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);height:36px;width:auto;object-fit:contain;background:#080a0f;padding:3px 10px;box-sizing:border-box;z-index:2}
+body.v802-live-status .v802-carousel-controls{position:absolute!important;right:76px!important;top:50%!important;transform:translateY(-50%)!important;display:flex!important;gap:7px!important;justify-self:auto!important;z-index:2}
+body.v802-live-status .v802-carousel-foot>b{position:absolute!important;right:14px!important;top:50%!important;transform:translateY(-50%)!important;white-space:nowrap!important}
+@media(max-height:760px) and (min-width:901px){body.v802-live-status .v829-quarter-progress{padding-top:5px!important;padding-bottom:5px!important}.v829-control-brand{height:32px}}
+@media(max-width:900px){.v829-quarter-progress-head{flex-wrap:wrap}.v829-control-brand{height:32px}body.v802-live-status .v802-carousel-foot{display:grid!important;grid-template-columns:1fr!important;gap:8px!important;height:auto!important;min-height:120px!important;text-align:center!important}body.v802-live-status .v802-carousel-foot>span,.v829-control-brand,body.v802-live-status .v802-carousel-controls,body.v802-live-status .v802-carousel-foot>b{position:static!important;transform:none!important;justify-self:center!important;margin:auto!important}}
