@@ -1,0 +1,16 @@
+/* B7 FI Command Center v0.80.7 — Live Status fixed four-bar template + special requirements */
+.v805-progress-stack{grid-template-rows:repeat(4,minmax(0,auto))}
+.v807-schedule-badge{display:inline-flex;margin-top:9px;padding:4px 8px;border:1px solid #e4b84d;border-radius:4px;color:#fff;font-size:10px;font-weight:900;letter-spacing:.05em;background:rgba(228,184,77,.08)}
+.v807-schedule-badge.pull{border-color:#41c77b;background:rgba(65,199,123,.08)}
+.v807-schedule-badge.push{border-color:#ef6b67;background:rgba(239,107,103,.08)}
+.v807-requirements{margin:2px 0 14px;padding:10px 12px;border:1px solid #254559;border-radius:7px;background:rgba(5,20,30,.42)}
+.v807-req-title{margin-bottom:7px;color:#6ec8f4;font-size:9px;font-weight:900;letter-spacing:.12em}
+.v807-req-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.v807-req{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;min-width:0}
+.v807-req span{color:#9fc6dc;font-size:9px;font-weight:800;letter-spacing:.055em}
+.v807-req b{color:#fff;font-size:10px;text-align:right}
+.v807-req em{font-style:normal;color:#7fa8c1;font-size:9px;white-space:nowrap}
+.v807-req-track{grid-column:1/-1;height:5px;border:1px solid #254559;background:#041019;border-radius:999px;overflow:hidden}
+.v807-req-track i{display:block;height:100%;background:#32c5d2;border-radius:999px}
+.v807-req.str.active{border-left:2px solid #e4b84d;padding-left:9px}
+@media(max-width:900px){.v807-req-grid{grid-template-columns:1fr}.v807-req{grid-template-columns:auto 1fr auto}}
