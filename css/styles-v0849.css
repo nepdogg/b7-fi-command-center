@@ -1,0 +1,84 @@
+/* B7 FI Command Center v0.80.49 — shared KPI summary + canonical tool identity */
+
+/* One summary design on Tool Center, Operations Live Status and standalone Live Status. */
+.v849-summary,
+.v845-summary-grid.v849-summary,
+.v845-live-summary.v849-summary,
+.v837-summary-grid.v844-summary-grid.v849-summary{
+  display:grid!important;
+  grid-template-columns:repeat(8,minmax(0,1fr))!important;
+  gap:8px!important;
+  width:100%!important;
+  align-items:stretch!important;
+}
+.v849-summary .metric,
+.v849-summary .v845-metric{
+  min-width:0!important;
+  min-height:64px!important;
+  padding:8px 7px!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+}
+.v849-summary .metric span,
+.v849-summary .v845-metric span{
+  width:100%!important;
+  margin:0!important;
+  font-size:9px!important;
+  line-height:1.15!important;
+  letter-spacing:.055em!important;
+  text-align:center!important;
+  white-space:normal!important;
+}
+.v849-summary .metric strong,
+.v849-summary .v845-metric strong{
+  display:block!important;
+  margin:5px 0 0!important;
+  font-size:28px!important;
+  line-height:.95!important;
+  text-align:center!important;
+  font-weight:950!important;
+}
+
+/* Full card: identity is UTID -> Code Name -> Model. */
+.v805-tool-identity .v802-tool-kicker{display:none!important}
+.v805-tool-identity>h2{margin-top:0!important;margin-bottom:7px!important}
+.v805-tool-identity>.v802-tool-sub{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  gap:2px!important;
+  max-width:none!important;
+  color:#9ec0d6!important;
+}
+.v849-code-name{font-size:16px!important;font-weight:850!important;color:#dbeafe!important;line-height:1.1!important}
+.v849-model-name{font-size:14px!important;font-weight:700!important;color:#79bfe8!important;line-height:1.1!important}
+
+/* Keep every existing structured field, add Code Name, and fit 10 boxes cleanly. */
+.v802-tool-grid.v849-full-fields{
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  gap:8px!important;
+}
+.v802-tool-grid.v849-full-fields .v802-tool-field{padding:9px 10px!important}
+.v802-tool-grid.v849-full-fields .v802-tool-field span{font-size:9px!important}
+.v802-tool-grid.v849-full-fields .v802-tool-field b{font-size:13px!important}
+
+/* Mini card: same identity language, no photo. */
+.v849-mini-identity{display:flex;flex-direction:column;gap:1px;margin-top:4px;line-height:1.05}
+.v849-mini-code{font-size:11px;font-weight:900;color:#e5eef5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v849-mini-model{font-size:9px;font-weight:800;color:#86b9d8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v842-fields.v849-mini-fields{grid-template-columns:1fr 1fr!important;gap:6px 9px!important}
+.v842-fields.v849-mini-fields span{font-size:7.5px!important}
+.v842-fields.v849-mini-fields b{font-size:9.5px!important}
+
+@media(max-width:1100px){
+  .v849-summary,.v845-summary-grid.v849-summary,.v845-live-summary.v849-summary,.v837-summary-grid.v844-summary-grid.v849-summary{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+  .v802-tool-grid.v849-full-fields{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:650px){
+  .v849-summary,.v845-summary-grid.v849-summary,.v845-live-summary.v849-summary,.v837-summary-grid.v844-summary-grid.v849-summary{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .v849-summary .metric strong,.v849-summary .v845-metric strong{font-size:24px!important}
+}
