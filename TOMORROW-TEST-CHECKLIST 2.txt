@@ -1,0 +1,41 @@
+B7 FI COMMAND CENTER v0.21.0 — TOMORROW'S ONE-SHOT TEST
+
+LOCATION
+Copy the CONTENTS of this folder into:
+OneDrive - KLA Corporation / B7 FI Command Center
+
+TEST ORDER
+1. Open index.html.
+2. Verify Tool Countdown opens normally.
+3. Verify Administration opens and your local tools/data are still present.
+4. Open Shared Data.
+5. Click Export Full Backup JSON FIRST.
+6. Verify:
+   SharePoint Site:
+   https://kla-my.sharepoint.com/personal/neptune_garcia_kla_com
+   List:
+   B7 FI Command Center
+7. If IT has supplied a Tenant ID and Client/Application ID, enter them and click
+   Save Integration Configuration.
+   DO NOT enter or store a client secret in the Command Center.
+8. Click Test Direct SharePoint REST.
+9. Save a screenshot of the exact result.
+10. Click Copy Diagnostic Report and save/paste the report somewhere safe.
+11. Click Open Microsoft List to confirm the List opens in the same browser session.
+12. If direct REST fails, this is still a valid test result.
+13. Optional fallback:
+    Microsoft Lists -> Export to CSV
+    Shared Data -> Import Microsoft List CSV
+    Verify the List tools appear on Tool Countdown / Tools.
+
+DATA SAFETY
+- Do not delete the older Downloads copy.
+- Full Backup JSON preserves the local Command Center state.
+- Export Microsoft Lists Migration CSV creates a migration-ready copy of current local tool data.
+- v0.21.0 automatically imports local state from the v0.20.1/v0.19 storage key when opened in the same browser profile.
+
+WHAT TO SEND BACK TO CHATGPT
+- Screenshot of Shared Data after opening v0.21.0
+- Screenshot of Direct SharePoint REST result
+- Diagnostic Report text
+- Any new IT Entra completion email/details (hide any secret)

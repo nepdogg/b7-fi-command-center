@@ -1,0 +1,9 @@
+B7 FI Command Center v0.31.0
+
+Structural fixes:
+- Rebuilt header seam as two rectangular halves with one white diagonal overlay.
+- Removed clip-path/offset dependency from header transition.
+- Wrapped B7 FI Actions and Page Actions in a real two-row header-status-stack.
+- Top Action bar owns a full 64px row and cannot be clipped by Page Actions.
+- Top edge sweep moves left-to-right; bottom edge sweep moves right-to-left.
+- Wallboard mode keeps its existing behavior.

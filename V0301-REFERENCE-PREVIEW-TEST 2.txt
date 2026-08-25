@@ -1,0 +1,16 @@
+B7 FI Command Center v0.30.1 — Reference Files Preview Test
+
+1. Open Reference Files.
+2. Load an XLSX test workbook under Micro Schedule.
+3. The Command Center should automatically attempt a browser preview.
+4. Confirm the worksheet tabs appear and can be selected.
+5. Type text into Filter visible rows to confirm rows can be filtered.
+6. Test an XLS file if available.
+7. Optional offline/fallback test: save one worksheet as CSV and load it. CSV preview does not need the SheetJS CDN.
+
+IMPORTANT
+- XLSX/XLS/XLSM preview requires access to https://cdn.sheetjs.com in the browser for this test build.
+- If the corporate network blocks the CDN, the preview will show a clear error instead of a blank white box.
+- Changing XLSX to XLS will NOT make Edge natively display it. Both require a spreadsheet parser/viewer.
+- CSV will preview easily, but it only contains one worksheet and loses workbook tabs and much Excel formatting.
+- Keep the original XLSX format for Micro Schedule and Shipping Tracker if you need multiple worksheet tabs.

@@ -1,0 +1,7 @@
+B7 FI Command Center v0.31.7
+
+Focused Page Actions correction:
+- Restores the compact, right-aligned Page Actions button grouping.
+- Removes the v0.31.6 spacing that spread buttons across the entire row.
+- Moves PAGE ACTIONS text and buttons slightly downward so visual space above and below matches.
+- Preserves the corrected B7 FI Actions bar, separator animations, header, Fleet Status, Wallboard, and operational logic.

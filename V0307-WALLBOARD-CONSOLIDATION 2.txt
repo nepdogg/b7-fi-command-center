@@ -1,0 +1,14 @@
+B7 FI Command Center v0.30.7
+
+Added:
+- Wallboard / large monitor mode with configurable page rotation
+- Read-only presentation layout with pause, previous, next, exit and full-screen controls
+- Live Action Center top bar retained in Wallboard Mode
+- Fleet Status bottom bar retained in Wallboard Mode
+- Storage-event refresh for same-browser-profile local testing; architecture is ready for shared-data refresh later
+- Final 50/50 header seam cleanup
+- Permanent top and bottom status borders with opposing animated sweeps
+- Page action buttons inherit page accent color
+- Existing Actual / Micro Schedule / Lead-Admin / conditional Supplemental tool-card progress preserved
+
+Important: automatic updates between different computers still require the planned shared Microsoft Lists/SharePoint data layer. Wallboard Mode currently demonstrates the display/rotation architecture with local data.

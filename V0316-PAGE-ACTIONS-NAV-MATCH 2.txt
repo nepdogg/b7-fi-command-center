@@ -1,0 +1,7 @@
+B7 FI Command Center v0.31.6
+
+Focused navigation-spacing refinement:
+- Page Actions now uses fixed-height flex centering to match the regular navigation bar.
+- Equal visual space above and below the Page Actions label/buttons.
+- Removed the asymmetric top/bottom padding behavior from v0.31.5.
+- B7 FI Actions bar, separator animation, header, Fleet Status, Wallboard, and operational logic are unchanged.
