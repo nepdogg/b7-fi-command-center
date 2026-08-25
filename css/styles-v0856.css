@@ -1,0 +1,9 @@
+/* v0.80.56 — one visible secondary navigation/action bar */
+#floatingActions.b7v856-legacy-toolbar{display:none!important;visibility:hidden!important;height:0!important;min-height:0!important;padding:0!important;margin:0!important;border:0!important;overflow:hidden!important}
+#b7PageToolbar.b7v856-toolbar{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:14px!important;width:100%!important;min-height:46px!important;padding:6px 14px!important;box-sizing:border-box!important;border-top:1px solid rgba(var(--page-accent-rgb),.55)!important;border-bottom:1px solid rgba(var(--page-accent-rgb),.55)!important;background:#071726!important}
+#b7PageToolbar .b7v856-left,#b7PageToolbar .b7v856-right{display:flex!important;align-items:center!important;gap:8px!important;flex-wrap:nowrap!important;min-width:0!important}
+#b7PageToolbar .b7v856-left{justify-content:flex-start!important}
+#b7PageToolbar .b7v856-right{justify-content:flex-end!important;margin-left:auto!important}
+#b7PageToolbar .btn{white-space:nowrap!important}
+.b7v856-meeting-intro{display:none!important}
+@media(max-width:1100px){#b7PageToolbar{overflow-x:auto!important}#b7PageToolbar .b7v856-left,#b7PageToolbar .b7v856-right{flex-shrink:0!important}}
