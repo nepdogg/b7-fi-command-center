@@ -1,0 +1,99 @@
+/* B7 FI Command Center v0.80.47 — compact shared quarter metrics, strict Tool Center page-toolbar split, actionable alert messages. */
+
+/* Tool Center + Live Status use one compact eight-metric language on desktop. */
+.v845-summary-grid,
+.v845-live-summary{
+  display:grid!important;
+  grid-template-columns:repeat(8,minmax(0,1fr))!important;
+  gap:8px!important;
+  width:100%!important;
+  align-items:stretch!important;
+}
+.v845-summary-grid .v845-metric,
+.v845-live-summary .v845-metric,
+.v845-summary-grid .metric,
+.v845-live-summary .metric{
+  min-width:0!important;
+  min-height:54px!important;
+  height:auto!important;
+  padding:8px 10px!important;
+  box-sizing:border-box!important;
+}
+.v845-summary-grid .v845-metric span,
+.v845-live-summary .v845-metric span,
+.v845-summary-grid .metric span,
+.v845-live-summary .metric span{
+  display:block!important;
+  font-size:9px!important;
+  line-height:1.12!important;
+  letter-spacing:.045em!important;
+  white-space:normal!important;
+}
+.v845-summary-grid .v845-metric strong,
+.v845-live-summary .v845-metric strong,
+.v845-summary-grid .metric strong,
+.v845-live-summary .metric strong{
+  display:block!important;
+  margin-top:3px!important;
+  font-size:18px!important;
+  line-height:1!important;
+}
+
+/* Tool Center convention: navigation is always left, contextual actions always right. */
+#floatingActions.v847-tool-toolbar,
+#floatingActions.v846-toolbar,
+#floatingActions.v837-page-toolbar{
+  display:flex!important;
+  flex-flow:row nowrap!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  width:100%!important;
+  max-width:none!important;
+  box-sizing:border-box!important;
+}
+#floatingActions .v847-toolbar-left,
+#floatingActions .v846-nav-left,
+#floatingActions .v837-toolbar-left{
+  display:flex!important;
+  flex:0 0 auto!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:9px!important;
+  min-width:0!important;
+}
+#floatingActions .v847-toolbar-right,
+#floatingActions .v846-actions-right,
+#floatingActions .v837-toolbar-right{
+  display:flex!important;
+  flex:0 0 auto!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:9px!important;
+  margin-left:auto!important;
+  min-width:0!important;
+}
+
+/* Alerts are operational links in the editable Command Center. */
+body:not([data-live-viewer-only="true"]) .b7s-message,
+body:not([data-live-viewer-only="true"]) .v817-status-message{
+  cursor:pointer!important;
+  transition:background-color .14s ease,box-shadow .14s ease,filter .14s ease!important;
+}
+body:not([data-live-viewer-only="true"]) .b7s-message:hover,
+body:not([data-live-viewer-only="true"]) .b7s-message:focus-visible,
+body:not([data-live-viewer-only="true"]) .v817-status-message:hover,
+body:not([data-live-viewer-only="true"]) .v817-status-message:focus-visible{
+  background:rgba(255,255,255,.035)!important;
+  filter:brightness(1.13)!important;
+  box-shadow:inset 0 0 24px rgba(255,255,255,.025)!important;
+  outline:none!important;
+}
+
+@media(max-width:1050px){
+  .v845-summary-grid,.v845-live-summary{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+  #floatingActions.v847-tool-toolbar,#floatingActions.v846-toolbar,#floatingActions.v837-page-toolbar{flex-wrap:wrap!important}
+}
+@media(max-width:650px){
+  .v845-summary-grid,.v845-live-summary{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  #floatingActions .v847-toolbar-right,#floatingActions .v846-actions-right,#floatingActions .v837-toolbar-right{width:100%!important;margin-left:0!important;justify-content:flex-end!important}
+}
