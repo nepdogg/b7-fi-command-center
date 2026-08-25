@@ -1,0 +1,12 @@
+/* v0.80.51 Tool Center final framework */
+.v851-flat-panel{padding:16px 18px!important;margin-top:18px!important}
+.v851-archive .v851-flat-panel{padding-top:12px!important}
+.v851-archive-table{margin-top:0!important}
+.v851-archive-table tbody tr.v851-open-tool{cursor:pointer}
+.v851-archive-table tbody tr.v851-open-tool:hover td{background:rgba(139,92,246,.08)}
+.v851-empty{text-align:left;padding:18px 12px!important}
+.v851-archive-mode select{min-width:150px}
+.v851-save-notice{margin-top:12px;min-height:20px;font-weight:800}
+.v851-save-notice.show.neutral{color:#94a3b8}
+.v851-global-ack{margin:14px 18px 0;padding:11px 14px;border:1px solid #34d399;border-radius:8px;background:rgba(52,211,153,.09);color:#6ee7b7;font-weight:900}
+.v851-tool-toolbar .v850-tool-actions{margin-left:auto}

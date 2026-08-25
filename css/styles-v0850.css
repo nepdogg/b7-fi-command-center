@@ -1,0 +1,52 @@
+/* B7 FI Command Center v0.80.50 — final Tool Center toolbar + shared KPI status language */
+
+/* Tool Center page navigation: destinations left, page actions right, never center. */
+#floatingActions.v850-tool-toolbar{
+  display:flex!important;align-items:center!important;justify-content:space-between!important;gap:14px!important;
+  width:100%!important;max-width:none!important;box-sizing:border-box!important;flex-wrap:nowrap!important;
+}
+#floatingActions.v850-tool-toolbar>.v850-tool-nav,
+#floatingActions.v850-tool-toolbar>.v850-tool-actions{
+  display:flex!important;align-items:center!important;gap:9px!important;min-width:0!important;flex:0 0 auto!important;
+}
+#floatingActions.v850-tool-toolbar>.v850-tool-nav{justify-content:flex-start!important}
+#floatingActions.v850-tool-toolbar>.v850-tool-actions{justify-content:flex-end!important;margin-left:auto!important}
+#floatingActions.v850-tool-toolbar>button{display:none!important}
+
+/* Same eight KPI/status cards on Tool Center + Operations/Live Status + standalone Live Status. */
+.v850-summary{
+  display:grid!important;grid-template-columns:repeat(8,minmax(0,1fr))!important;gap:8px!important;width:100%!important;
+}
+.v850-summary .metric,.v850-summary .v845-metric{
+  min-width:0!important;min-height:64px!important;padding:8px 6px!important;
+  display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important;
+  background:#0d1d2d!important;border:1.5px solid #2b5872!important;border-radius:10px!important;box-sizing:border-box!important;
+  opacity:1!important;transition:opacity .15s ease,border-color .15s ease,box-shadow .15s ease!important;
+}
+.v850-summary .metric span,.v850-summary .v845-metric span{
+  text-align:center!important;font-size:9px!important;line-height:1.12!important;letter-spacing:.055em!important;margin:0!important;width:100%!important;
+}
+.v850-summary .metric strong,.v850-summary .v845-metric strong{
+  text-align:center!important;font-size:29px!important;line-height:.95!important;font-weight:950!important;margin:6px 0 0!important;color:#fff!important;
+}
+.v850-summary .v850-kpi-total{border-color:#2daee8!important;box-shadow:inset 0 2px 0 rgba(45,174,232,.45)!important}
+.v850-summary .v850-kpi-planned{border-color:#8b5cf6!important;box-shadow:inset 0 2px 0 rgba(139,92,246,.40)!important}
+.v850-summary .v850-kpi-waiting{border-color:#ff5265!important;box-shadow:inset 0 2px 0 rgba(255,82,101,.45)!important}
+.v850-summary .v850-kpi-infi{border-color:#f5c62f!important;box-shadow:inset 0 2px 0 rgba(245,198,47,.48)!important}
+.v850-summary .v850-kpi-packing{border-color:#22c6e8!important;box-shadow:inset 0 2px 0 rgba(34,198,232,.48)!important}
+.v850-summary .v850-kpi-shipped{border-color:#2fd38a!important;box-shadow:inset 0 2px 0 rgba(47,211,138,.48)!important}
+.v850-summary .v850-kpi-pullin{border-color:#22c998!important;box-shadow:inset 0 2px 0 rgba(34,201,152,.46)!important}
+.v850-summary .v850-kpi-pushout{border-color:#ff635f!important;box-shadow:inset 0 2px 0 rgba(255,99,95,.46)!important}
+.v850-summary .v850-kpi-muted{opacity:.34!important;border-color:#31404b!important;box-shadow:none!important}
+
+/* Preserve compact one-row desktop layout on the laptop-size shell. */
+@media(max-width:1050px){
+  .v850-summary{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+  #floatingActions.v850-tool-toolbar{flex-wrap:wrap!important}
+  #floatingActions.v850-tool-toolbar>.v850-tool-actions{margin-left:auto!important}
+}
+@media(max-width:650px){
+  .v850-summary{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .v850-summary .metric strong,.v850-summary .v845-metric strong{font-size:25px!important}
+  #floatingActions.v850-tool-toolbar>.v850-tool-actions{width:100%!important;justify-content:flex-end!important}
+}

@@ -1,0 +1,8 @@
+/* v0.80.46 Tool Center navigation/lifecycle */
+.v846-toolbar{display:flex!important;align-items:center!important;justify-content:space-between!important;width:100%!important}
+.v846-nav-left,.v846-actions-right{display:flex!important;align-items:center!important;gap:10px!important}
+.v846-actions-right{margin-left:auto!important;justify-content:flex-end!important}
+.v846-archive-row{cursor:pointer}.v846-archive-row:hover{background:rgba(139,92,246,.10)}
+.lifecycle-badge.packing,.state-chip.packing,.v842-mini-tool-card.v843-packing{--status-accent:#22d3ee}
+.lifecycle-badge.packing,.state-chip.packing{border-color:#22d3ee!important;color:#67e8f9!important}
+@media(max-width:900px){.v846-toolbar{align-items:flex-start!important}.v846-nav-left,.v846-actions-right{flex-wrap:wrap!important}}

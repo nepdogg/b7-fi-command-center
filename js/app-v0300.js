@@ -110,7 +110,9 @@ function normalize(t){
  n.family='29XX';
  if(n.quarterStatus==='Active in FI')n.quarterStatus='In FI';
  if(n.quarterStatus==='Waiting for FI handoff'||n.quarterStatus==='Planned')n.quarterStatus='Waiting for FI';
- if(!['Waiting for FI','In FI','Shipped','Archive'].includes(n.quarterStatus))n.quarterStatus='In FI';
+ if(n.quarterStatus==='Waiting to be Handed to FI')n.quarterStatus='Waiting for FI';
+ if(n.quarterStatus==='Packing'||n.quarterStatus==='Packing / Shipping')n.quarterStatus='Packing and Shipping';
+ if(!['Waiting for FI','In FI','Packing and Shipping','Shipped','Archive'].includes(n.quarterStatus))n.quarterStatus='In FI';
  let r=routeFor(n),legacyIndex=Math.max(0,r.findIndex(x=>x[0]===n.checklist));
  if(!Object.keys(n.checklistStates).length){
   r.forEach((x,i)=>n.checklistStates[x[0]]=n.quarterStatus==='Shipped'?'Complete':i<legacyIndex?'Complete':i===legacyIndex?'In Progress':'Need to Complete')
@@ -140,19 +142,22 @@ function save(){state.tools=tools;state.config=normalizeConfig(state.config);sta
 function current(){return tools.filter(t=>t.quarterStatus!=='Archive')}
 function waitingTools(){return tools.filter(t=>t.quarterStatus==='Waiting for FI')}
 function inFiTools(){return tools.filter(t=>t.quarterStatus==='In FI')}
+function packingTools(){return tools.filter(t=>t.quarterStatus==='Packing and Shipping')}
 function shippedTools(){return tools.filter(t=>t.quarterStatus==='Shipped')}
-function toolPageTools(){return tools.filter(t=>t.quarterStatus==='In FI'||t.quarterStatus==='Shipped')}
+function toolPageTools(){return tools.filter(t=>['In FI','Packing and Shipping','Shipped'].includes(t.quarterStatus))}
 function archiveTools(){return tools.filter(t=>t.quarterStatus==='Archive')}
-function lifecycleBadge(t){let s=qState(t);return `<span class="lifecycle-badge ${s}">${t.quarterStatus==='Waiting for FI'?'WAITING FOR FI':t.quarterStatus==='In FI'?'IN FI':t.quarterStatus==='Shipped'?'SHIPPED':'ARCHIVE'}</span>`}
+function lifecycleBadge(t){let s=qState(t);return `<span class="lifecycle-badge ${s}">${t.quarterStatus==='Waiting for FI'?'WAITING TO BE HANDED TO FI':t.quarterStatus==='In FI'?'IN FI':t.quarterStatus==='Packing and Shipping'?'PACKING AND SHIPPING':t.quarterStatus==='Shipped'?'SHIPPED':'ARCHIVE'}</span>`}
 function lifecycleClass(status){
   return status==='Waiting for FI'?'waiting':
          status==='In FI'?'infi':
+         status==='Packing and Shipping'?'packing':
          status==='Shipped'?'shipped':'archive';
 }
 function lifecycleSelect(t,cls='cd-status'){
   return `<select class="${cls} lifecycle-select ${lifecycleClass(t.quarterStatus)}">
-    <option value="Waiting for FI" ${t.quarterStatus==='Waiting for FI'?'selected':''}>Waiting for FI</option>
+    <option value="Waiting for FI" ${t.quarterStatus==='Waiting for FI'?'selected':''}>Waiting to be Handed to FI</option>
     <option value="In FI" ${t.quarterStatus==='In FI'?'selected':''}>In FI</option>
+    <option value="Packing and Shipping" ${t.quarterStatus==='Packing and Shipping'?'selected':''}>Packing and Shipping</option>
     <option value="Shipped" ${t.quarterStatus==='Shipped'?'selected':''}>Shipped</option>
     <option value="Archive" ${t.quarterStatus==='Archive'?'selected':''}>Archive</option>
   </select>`;
@@ -165,7 +170,7 @@ function pageTools(page){
     case 'morning': return tools.filter(t=>t.quarterStatus==='In FI');
     case 'weekday': return tools.filter(t=>t.quarterStatus==='In FI');
     case 'weekend': return tools.filter(t=>t.quarterStatus==='In FI');
-    case 'shipping': return tools.filter(t=>t.quarterStatus==='In FI'||(t.quarterStatus==='Shipped'&&(t.schedule?.publish!=='N/A'||t.schedule?.subsystems||t.schedule?.is)));
+    case 'shipping': return tools.filter(t=>t.quarterStatus==='In FI'||t.quarterStatus==='Packing and Shipping'||(t.quarterStatus==='Shipped'&&(t.schedule?.publish!=='N/A'||t.schedule?.subsystems||t.schedule?.is)));
     case 'archive': return tools.filter(t=>t.quarterStatus==='Archive');
     default: return tools.filter(t=>t.quarterStatus!=='Archive');
   }
@@ -173,7 +178,7 @@ function pageTools(page){
 
 function quarterLabel(){let c={};tools.forEach(t=>c[t.quarter]=(c[t.quarter]||0)+1);return Object.entries(c).sort((a,b)=>b[1]-a[1])[0]?.[0]||'Quarter Not Set'}
 function pct(a,b){return b?Math.round(a/b*100):0}
-function qState(t){return t.quarterStatus==='Archive'?'archived':t.quarterStatus==='Shipped'?'shipped':t.quarterStatus==='Waiting for FI'?'waiting':'infi'}
+function qState(t){return t.quarterStatus==='Archive'?'archived':t.quarterStatus==='Shipped'?'shipped':t.quarterStatus==='Packing and Shipping'?'packing':t.quarterStatus==='Waiting for FI'?'waiting':'infi'}
 function tone(t){if(t.quarterStatus==='Shipped')return'good';if(t.fiStatus==='Line Down'||t.ncs.some(n=>n.blocking))return'bad';if(t.fiStatus==='Performing POA'||/trouble|waiting/i.test(t.activity))return'warn';return'good'}
 function adminProgress(t){let tasks=activeLeadTasks().filter(x=>x.countProgress!==false),vals=tasks.map(x=>t.leadAdmin?.[x.id]??'Not Started').filter(x=>x!=='N/A'),done=vals.filter(x=>x==='Complete').length;return pct(done,vals.length)}
 function routeIndex(t){return Math.max(0,routeFor(t).findIndex(x=>x[0]===t.checklist))}
