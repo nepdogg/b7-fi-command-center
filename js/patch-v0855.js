@@ -1,0 +1,111 @@
+/* B7 FI Command Center v0.80.55 — Stable Page Navigation + Morning Status Recovery
+   Final authority for global active-center state and secondary page toolbar.
+   Left = page/view navigation. Right = contextual actions. No duplicate toolbar writers.
+*/
+(function(){'use strict';
+const VERSION='0.80.55';
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+window.B7_APP_VERSION=VERSION; window.VERSION=VERSION;
+const legacySetView=window.setView, legacyToolStatus=window.toolStatus, legacyToolAdmin=window.toolAdmin;
+const COLORS={
+ home:['OPERATIONS CENTER','#2477ad','36,119,173'], tool:['TOOL CENTER','#8e5ae8','142,90,232'],
+ shipping:['SHIPPING CENTER','#27ae60','39,174,96'], priority:['PRIORITY CENTER','#d4a72c','212,167,44'],
+ status:['STATUS CENTER','#f28c28','242,140,40'], meeting:['MEETING CENTER','#f28c28','242,140,40'],
+ action:['ACTION CENTER','#ef4b4b','239,75,75'], reference:['REFERENCE CENTER','#e94a9a','233,74,154'],
+ search:['SEARCH CENTER','#536dfe','83,109,254']
+};
+let nav={center:'home',view:'home',mode:'view',toolId:null,meeting:'LEADS MEETING'};
+let savedAction=null, deleteAction=null, observer=null, applying=false;
+function q(){try{return String(window.getB7ActiveQuarter?.()||window.quarterLabel?.()||'CY26Q3').toUpperCase()}catch(e){return'CY26Q3'}}
+function allTools(){try{return Array.isArray(window.tools)?window.tools:(Array.isArray(tools)?tools:[])}catch(e){return[]}}
+function shot(){try{return window.enterScreenshotMode?.()}catch(e){}try{return window.enterScreenshot?.()}catch(e){}window.print()}
+function report(){try{return window.openReport530?.()}catch(e){}window.print()}
+function saveStore(){try{return window.save?.()}catch(e){try{return save()}catch(_){}}}
+function callAdmin(section){try{if(typeof window.admin==='function')return window.admin(section);if(typeof admin==='function')return admin(section)}catch(e){}}
+function btn(label,fn,active=false,danger=false){const b=document.createElement('button');b.type='button';b.className='btn'+(active?' primary':'')+(danger?' danger':'');b.textContent=label;b.onclick=e=>{e.preventDefault();e.stopPropagation();fn?.()};return b}
+function desiredToolbar(){
+ const L=[],R=[]; const add=(a,b)=>{a.forEach(x=>L.push(x));b.forEach(x=>R.push(x))};
+ if(nav.center==='home'){add([], [btn(nav.toolId?`OPEN TOOL ${nav.toolId}`:'OPEN TOOL —',()=>nav.toolId&&window.toolStatus?.(nav.toolId)),btn('SCREENSHOT',shot),btn('REPORT',report)]);}
+ else if(nav.center==='tool'){
+  add([btn(`${q()} TOOLS`,()=>go('tool','tools'),nav.view==='tools'),btn('TOOL COUNTDOWN',()=>go('tool','countdown'),nav.view==='countdown'),btn('TOOL ARCHIVE',()=>go('tool','archive'),nav.view==='archive')],[]);
+  if(nav.mode==='edit')R.push(btn('SAVE TOOL',()=>savedAction?.(),true),btn('CANCEL',()=>nav.toolId?window.toolStatus(nav.toolId):go('tool','tools')),nav.toolId?btn('DELETE TOOL',()=>deleteAction?.(),false,true):null);
+  else if(nav.view==='archive')R.push(btn('ARCHIVE TOOL',()=>startArchiveMode(),true),btn('SCREENSHOT',shot),btn('REPORT',report));
+  else if(nav.view==='detail')R.push(btn('EDIT TOOL',()=>window.toolAdmin?.(nav.toolId),true),btn('SCREENSHOT',shot),btn('REPORT',report));
+  else R.push(btn('ADD TOOL',()=>window.toolAdmin?.(),true),btn('SCREENSHOT',shot),btn('REPORT',report));
+ }
+ else if(nav.center==='shipping'){
+  if(nav.mode==='edit')add([], [btn('SAVE',()=>savedAction?.(),true),btn('CANCEL',()=>go('shipping','shipping'))]);
+  else add([], [btn('EDIT SHIP SCHEDULE',openShippingChooser,true),btn('SCREENSHOT',shot),btn('REPORT',report)]);
+ }
+ else if(nav.center==='priority'){
+  add([btn('WEEKDAY PRIORITIES',()=>go('priority','weekday'),nav.view==='weekday'),btn('WEEKEND PRIORITIES',()=>go('priority','weekend'),nav.view==='weekend')],[]);
+  if(nav.mode==='edit')R.push(btn('SAVE',()=>savedAction?.(),true),btn('CANCEL',()=>go('priority',nav.view)));
+  else R.push(btn(nav.view==='weekend'?'EDIT WEEKEND PRIORITIES':'EDIT WEEKDAY PRIORITIES',()=>editPriority(nav.view),true),btn('SCREENSHOT',shot),btn('REPORT',report));
+ }
+ else if(nav.center==='status'){
+  add([btn('WEEKDAY MORNING STATUS',()=>go('status','weekday'),nav.view==='weekday'),btn('LEADS EXTRA STATUS',()=>go('status','extra'),nav.view==='extra'),btn('WEEKEND MORNING STATUS',()=>go('status','weekend'),nav.view==='weekend')],[]);
+  if(nav.mode==='edit')R.push(btn('SAVE',()=>savedAction?.(),true),btn('CANCEL',()=>go('status',nav.view)));
+  else R.push(btn(nav.view==='extra'?'EDIT LEADS EXTRA STATUS':nav.view==='weekend'?'EDIT WEEKEND MORNING STATUS':'EDIT WEEKDAY MORNING STATUS',()=>editStatus(nav.view),true),btn('SCREENSHOT',shot),btn('REPORT',report));
+ }
+ else if(nav.center==='meeting'){
+  const meetings=['LEADS MEETING','ORB MEETING','FE OPTIONS MEETING','CELL MEETING']; meetings.forEach(m=>L.push(btn(m,()=>selectMeeting(m),nav.meeting===m)));
+  if(nav.mode==='edit')R.push(btn('SAVE',()=>savedAction?.(),true),btn('CANCEL',()=>go('meeting','history')));
+  else R.push(btn(`START ${nav.meeting}`,()=>startMeeting(nav.meeting),true),btn('SCREENSHOT',shot),btn('REPORT',report));
+ }
+ else if(nav.center==='action'){
+  if(nav.mode==='edit')add([], [btn('SAVE',()=>savedAction?.(),true),btn('CANCEL',()=>go('action','actions'))]);
+  else add([], [btn('ADD ALERT',openAddAlert,true),btn('SCREENSHOT',shot),btn('REPORT',report)]);
+ }
+ else if(nav.center==='reference'){
+  add([btn('FI KNOWLEDGE',()=>go('reference','knowledge'),nav.view==='knowledge'),btn('REFERENCE FILES',()=>go('reference','files'),nav.view==='files')],[]);
+  if(nav.mode==='edit')R.push(btn('SAVE',()=>savedAction?.(),true),btn('CANCEL',()=>go('reference',nav.view)));
+  else if(nav.view==='files')R.push(btn('LOAD FILE',loadReferenceFile,true),btn('SCREENSHOT',shot),btn('REPORT',report));
+  else R.push(btn('ADD REFERENCE NOTE',addReferenceNote,true),btn('SCREENSHOT',shot),btn('REPORT',report));
+ }
+ else if(nav.center==='search') add([], [btn('SCREENSHOT',shot),btn('REPORT',report)]);
+ return [L.filter(Boolean),R.filter(Boolean)];
+}
+function signature(nodes){return nodes.map(b=>b.textContent.trim()).join('|')}
+function expectedSig(){const [l,r]=desiredToolbar();return signature(l)+'||'+signature(r)}
+function actualSig(){const bar=$('#floatingActions');if(!bar)return'';const l=bar.querySelector('.v855-left'),r=bar.querySelector('.v855-right');if(!l||!r)return'legacy';return signature($$('button',l))+'||'+signature($$('button',r))}
+function applyToolbar(){if(applying)return;const bar=$('#floatingActions');if(!bar)return;const [L,R]=desiredToolbar(),want=signature(L)+'||'+signature(R);if(actualSig()===want)return;applying=true;bar.className='floating-actions page-toolbar v855-toolbar';bar.innerHTML='';const l=document.createElement('div'),r=document.createElement('div');l.className='v855-left';r.className='v855-right';L.forEach(b=>l.appendChild(b));R.forEach(b=>r.appendChild(b));bar.append(l,r);applying=false}
+function setVisual(center){const [name,color,rgb]=COLORS[center]||COLORS.home;document.body.dataset.center=center==='tool'?'toolfinal':center;document.body.dataset.theme=center==='tool'?'toolcenter':center;document.documentElement.style.setProperty('--page-accent',color);document.documentElement.style.setProperty('--page-accent-rgb',rgb);document.documentElement.style.setProperty('--center-color',color);document.documentElement.style.setProperty('--center-rgb',rgb);const title=$('#headerPageTitle');if(title){let t=name;if(['home','tool','shipping','priority','status'].includes(center))t+=` — ${q()}`;if(center==='tool'&&nav.view==='archive')t='TOOL ARCHIVE';if(center==='tool'&&nav.mode==='edit'&&nav.toolId)t=`TOOL ${nav.toolId} — EDIT`;title.textContent=t}const map={home:'home',tool:'toolcenter',shipping:'shipping',priority:'priorities',status:'statuscenter',meeting:'meetingcenter',action:'actions',reference:'referencecenter',search:'searchcenter'};$$('.main-nav .nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.view===map[center]));}
+function settle(){setVisual(nav.center);applyToolbar();}
+function after(ms=0){setTimeout(settle,ms)}
+function callLegacy(v){return typeof legacySetView==='function'?legacySetView.call(window,v):undefined}
+function go(center,view){nav={...nav,center,view,mode:'view',toolId:null};window.scrollTo(0,0);let out;
+ if(center==='home')out=callLegacy('home');
+ else if(center==='tool')out=callLegacy(view==='countdown'?'countdown':view==='archive'?'archive':'toolcenter');
+ else if(center==='shipping')out=callLegacy('shipping');
+ else if(center==='priority')out=callLegacy(view==='weekend'?'weekend':'priorities');
+ else if(center==='status')out=callLegacy(view==='extra'?'leads':view==='weekend'?'statuscenter':'statuscenter');
+ else if(center==='meeting')out=callLegacy('meetingcenter');
+ else if(center==='action')out=callLegacy('actions');
+ else if(center==='reference')out=callLegacy(view==='files'?'references':'referencecenter');
+ else if(center==='search')out=callLegacy('searchcenter');
+ [0,30,120,350,900].forEach(after); if(center==='meeting')setTimeout(()=>prepareMeetingBody(),40); if(center==='status'&&view==='weekend')setTimeout(()=>clickSecondary('WEEKEND MORNING STATUS'),70); return out;}
+function clickSecondary(label){const b=$$('#floatingActions button').find(x=>x.textContent.trim().toUpperCase()===label);if(b&&!b.closest('.v855-toolbar'))b.click()}
+function captureButton(re){return $$('#floatingActions button').find(b=>re.test(b.textContent.trim()))||$$('#app button').find(b=>re.test(b.textContent.trim()))}
+function editPriority(kind){nav.mode='edit';callAdmin(kind==='weekend'?'weekend':'daily');setTimeout(()=>{const s=$('#savePriority')||captureButton(/^SAVE.*PRIORIT/i);savedAction=()=>{s?.click();setTimeout(()=>go('priority',kind),30)};settle()},10)}
+function editStatus(kind){nav.mode='edit';if(kind==='weekday'){callAdmin('meeting');setTimeout(()=>{const s=$('#saveMorning');savedAction=()=>{s?.click();setTimeout(()=>go('status','weekday'),30)};setVisual('status');applyToolbar()},10);return}if(kind==='extra'){go('status','extra');setTimeout(()=>{const e=$$('#app button').find(b=>/EDIT LEADS EXTRA STATUS/i.test(b.textContent));if(e)e.click();nav.mode='edit';const s=$$('#app button').find(b=>/^SAVE/i.test(b.textContent));savedAction=()=>{s?.click();setTimeout(()=>go('status','extra'),30)};settle()},30);return}go('status','weekend');setTimeout(()=>{const e=$$('#floatingActions button').find(b=>/EDIT WEEKEND MORNING STATUS/i.test(b.textContent));if(e)e.click();nav.mode='edit';const s=$$('#floatingActions button').find(b=>/^SAVE$/i.test(b.textContent));savedAction=()=>{s?.click();setTimeout(()=>go('status','weekend'),30)};settle()},50)}
+function openShippingChooser(){nav.mode='edit';const list=allTools().filter(t=>String(t.quarterStatus||t.status||'').toLowerCase()!=='archive').sort((a,b)=>String(a.ship||'9999').localeCompare(String(b.ship||'9999'))),app=$('#app');if(!app)return;app.innerHTML=`<div class="v855-picker panel"><h2>EDIT SHIP SCHEDULE</h2><p>Choose a tool to edit its master shipping schedule.</p><select id="v855ShipPick">${list.map(t=>`<option value="${esc(t.id||t.utid)}">${esc(t.id||t.utid)} — ${esc(t.codename||'')} ${esc(t.model||'')} — ${esc(t.customer||'')}</option>`).join('')}</select></div>`;savedAction=()=>{const id=$('#v855ShipPick')?.value;if(id)window.toolAdmin?.(id,'shipping')};applyToolbar()}
+function prepareMeetingBody(){setVisual('meeting');const start=$('.start-now51'),grid=$('.meeting-template-grid51');if(start)start.style.display='none';if(grid)grid.style.display='none';const head=$$('#app h2,#app h3').find(h=>/B7 FI MEETING CENTER/i.test(h.textContent));if(head)head.closest('section')?.classList.add('v855-meeting-head');filterMeetingHistory();applyToolbar()}
+function filterMeetingHistory(){const key=nav.meeting.replace(' MEETING','').toUpperCase();$$('#app .meeting-record51').forEach(d=>{const t=(d.querySelector('summary')?.textContent||'').toUpperCase();d.style.display=t.includes(key)?'':'none'})}
+function selectMeeting(m){nav.meeting=m;nav.mode='view';prepareMeetingBody()}
+function startMeeting(m){const card=$$('.meeting-template51').find(b=>(b.textContent||'').toUpperCase().includes(m.replace(' MEETING','')));if(card)card.click();else{const input=$('#adhocTitle51'),goBtn=$('#adhocStart51');if(input&&goBtn){input.value=m;goBtn.click()}}nav.mode='edit';setTimeout(()=>{const s=$('#saveMeet51')||captureButton(/^SAVE.*MEET/i);savedAction=()=>{s?.click();setTimeout(()=>go('meeting','history'),30)};applyToolbar()},20)}
+function openAddAlert(){nav.mode='edit';const app=$('#app');if(!app)return;app.innerHTML=`<div class="panel v855-add-alert"><h2>ADD ALERT</h2><div class="form-grid"><div class="form-group"><label>Type</label><select id="v855AlertType"><option>Lead Alert</option><option>System Status Alert</option><option>Task</option><option>Reminder</option></select></div><div class="form-group"><label>Related Tool</label><select id="v855AlertTool"><option value="">General</option>${allTools().filter(t=>String(t.quarterStatus)!=='Archive').map(t=>`<option value="${esc(t.id)}">${esc(t.id)} · ${esc(t.codename)}</option>`).join('')}</select></div><div class="form-group wide"><label>Message</label><input id="v855AlertMsg"></div><div class="form-group"><label>Owner</label><input id="v855AlertOwner"></div><div class="form-group"><label>Due Date</label><input id="v855AlertDue" type="date"></div></div></div>`;savedAction=saveManualAlert;applyToolbar()}
+function saveManualAlert(){const msg=$('#v855AlertMsg')?.value.trim();if(!msg)return alert('Message is required.');let st;try{st=window.state||state}catch(e){st={}};st.workspaceTasks=Array.isArray(st.workspaceTasks)?st.workspaceTasks:[];const type=$('#v855AlertType')?.value||'Lead Alert';st.workspaceTasks.unshift({id:'manual-'+Date.now(),title:msg,toolId:$('#v855AlertTool')?.value||'',assignee:$('#v855AlertOwner')?.value.trim()||'',due:$('#v855AlertDue')?.value||'',status:'Open',priority:type==='System Status Alert'?'Critical':'Normal',source:`Manual ${type}`,createdAt:new Date().toISOString(),showTicker:true,alertType:type});saveStore();go('action','actions')}
+function addReferenceNote(){const underlying=$$('#app button').find(b=>/ADD REFERENCE NOTE/i.test(b.textContent)&&!b.closest('#floatingActions'));if(underlying){underlying.click();nav.mode='edit';setTimeout(()=>{const s=$$('#app button').find(b=>/^SAVE/i.test(b.textContent));savedAction=()=>{s?.click();setTimeout(()=>go('reference','knowledge'),30)};applyToolbar()},20)}}
+function loadReferenceFile(){if(nav.view!=='files')return;let input=$('#v855RefFile');if(!input){input=document.createElement('input');input.id='v855RefFile';input.type='file';input.hidden=true;document.body.appendChild(input);input.onchange=()=>{const f=input.files?.[0];if(!f)return;const viewer=$('#app iframe')||$('#app .v854-file-viewer');const u=URL.createObjectURL(f);if(viewer?.tagName==='IFRAME')viewer.src=u;else if(viewer)viewer.innerHTML=`<iframe style="width:100%;height:70vh;border:0" src="${u}"></iframe>`}}input.click()}
+function startArchiveMode(){nav.mode='edit';const app=$('#app');if(!app)return;const list=allTools().filter(t=>String(t.quarterStatus||t.status||'').toLowerCase()!=='archive');app.innerHTML=`<div class="panel v855-archive-mode"><h2>ARCHIVE TOOL</h2><div class="table-wrap"><table class="report-table"><thead><tr><th>UTID</th><th>CODE NAME</th><th>MODEL</th><th>CUSTOMER</th><th>CURRENT STATUS</th><th>NEW STATUS</th></tr></thead><tbody>${list.map(t=>`<tr><td><b>${esc(t.id||t.utid)}</b></td><td>${esc(t.codename||'—')}</td><td>${esc(t.model||'—')}</td><td>${esc(t.customer||'—')}</td><td>${esc(t.quarterStatus||t.status||'—')}</td><td><select class="v855-archive-select" data-id="${esc(t.id||t.utid)}"><option value="">No Change</option><option value="Archive">Archive</option></select></td></tr>`).join('')||'<tr><td colspan="6">No active tools available.</td></tr>'}</tbody></table></div><div id="v855ArchiveMsg"></div></div>`;savedAction=()=>{const ids=$$('.v855-archive-select').filter(x=>x.value==='Archive').map(x=>String(x.dataset.id));if(!ids.length){const m=$('#v855ArchiveMsg');if(m)m.textContent='No changes to save.';return}const day=new Date().toISOString().slice(0,10);allTools().forEach(t=>{if(ids.includes(String(t.id||t.utid))){t.quarterStatus='Archive';t.status='Archive';t.archiveDate=t.archiveDate||day}});saveStore();nav.mode='view';go('tool','archive')};applyToolbar()}
+/* Global routing is capture-phase so old handlers cannot select the wrong center. */
+document.addEventListener('click',e=>{const b=e.target.closest('.main-nav .nav-btn');if(!b)return;e.preventDefault();e.stopImmediatePropagation();const v=b.dataset.view;const map={home:['home','home'],toolcenter:['tool','tools'],shipping:['shipping','shipping'],priorities:['priority','weekday'],statuscenter:['status','weekday'],meetingcenter:['meeting','history'],actions:['action','actions'],referencecenter:['reference','knowledge'],searchcenter:['search','search']};if(map[v])go(...map[v])},true);
+window.setView=function(v){const map={home:['home','home'],systems:['tool','tools'],toolcenter:['tool','tools'],countdown:['tool','countdown'],archive:['tool','archive'],shipping:['shipping','shipping'],priorities:['priority','weekday'],daily:['priority','weekday'],weekend:['priority','weekend'],statuscenter:['status','weekday'],meeting:['status','weekday'],leads:['status','extra'],meetingcenter:['meeting','history'],actions:['action','actions'],referencecenter:['reference','knowledge'],references:['reference','files'],searchcenter:['search','search']};if(map[v])return go(...map[v]);return callLegacy(v)};try{setView=window.setView}catch(e){}
+/* Tool detail/edit wrappers capture real Save/Delete handlers before any legacy toolbar patch can erase them. */
+if(typeof legacyToolStatus==='function'){window.toolStatus=function(id){nav={...nav,center:'tool',view:'detail',mode:'view',toolId:String(id)};const out=legacyToolStatus.apply(this,arguments);[0,30,150].forEach(after);return out};try{toolStatus=window.toolStatus}catch(e){}}
+if(typeof legacyToolAdmin==='function'){window.toolAdmin=function(id){nav={...nav,center:'tool',view:'tools',mode:'edit',toolId:id?String(id):null};const out=legacyToolAdmin.apply(this,arguments);const saveB=captureButton(/^SAVE TOOL$/i),delB=captureButton(/^DELETE TOOL$/i);savedAction=saveB?.onclick?saveB.onclick.bind(saveB):null;deleteAction=delB?.onclick?delB.onclick.bind(delB):null;[0,20,80,200].forEach(after);return out};try{toolAdmin=window.toolAdmin}catch(e){}}
+function installObserver(){const bar=$('#floatingActions');if(!bar)return;observer?.disconnect();observer=new MutationObserver(()=>{if(applying)return;queueMicrotask(()=>{setVisual(nav.center);if(actualSig()!==expectedSig())applyToolbar()})});observer.observe(bar,{childList:true,subtree:true,characterData:true});}
+function boot(){document.title=`B7 FI Command Center v${VERSION}`;const v=$('#appVersionLabel');if(v)v.textContent=`B7 FI COMMAND CENTER V${VERSION}`;installObserver();const active=$('.main-nav .nav-btn.active')?.dataset.view||'home';const map={home:['home','home'],toolcenter:['tool','tools'],shipping:['shipping','shipping'],priorities:['priority','weekday'],statuscenter:['status','weekday'],meetingcenter:['meeting','history'],actions:['action','actions'],referencecenter:['reference','knowledge'],searchcenter:['search','search']};if(map[active])nav={...nav,center:map[active][0],view:map[active][1]};settle();}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+})();

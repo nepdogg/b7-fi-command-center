@@ -1,0 +1,9 @@
+/* v0.80.55 stable centralized page-navigation layout */
+#floatingActions.v855-toolbar{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:14px!important;width:100%!important;min-height:46px!important;padding:6px 14px!important;box-sizing:border-box!important}
+#floatingActions.v855-toolbar .v855-left,#floatingActions.v855-toolbar .v855-right{display:flex!important;align-items:center!important;gap:8px!important;flex-wrap:nowrap!important}
+#floatingActions.v855-toolbar .v855-left{justify-content:flex-start!important;min-width:0!important}
+#floatingActions.v855-toolbar .v855-right{justify-content:flex-end!important;margin-left:auto!important;min-width:0!important}
+#floatingActions.v855-toolbar .btn{white-space:nowrap!important}
+.v855-picker{max-width:900px;margin:28px auto!important}.v855-picker select{width:100%;padding:12px;background:#071827;color:#fff;border:1px solid var(--line);border-radius:7px}
+.v855-add-alert{max-width:1100px;margin:28px auto!important}.v855-meeting-head{display:none!important}
+@media(max-width:1100px){#floatingActions.v855-toolbar{overflow-x:auto!important}.v855-left,.v855-right{flex-shrink:0!important}}
