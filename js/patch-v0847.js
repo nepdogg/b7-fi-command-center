@@ -1,4 +1,4 @@
-/* B7 FI Command Center v0.80.47 — Tool Center finalization / actionable alerts.
+/* B7 FI Command Center v0.80.48 — Tool Center finalization / actionable alerts.
    - Restores the shared compact 8-box quarter summary on Tool Center + Live Status.
    - Structurally enforces Tool Center page-navigation left / page-actions right.
    - Makes Lead Alerts and System Status messages clickable in the editable Command Center.
@@ -6,7 +6,7 @@
    - Standalone Live Status remains read-only/non-navigating.
 */
 (function(){'use strict';
-const VERSION='0.80.47',$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const VERSION='0.80.48',$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 window.B7_APP_VERSION=VERSION;window.VERSION=VERSION;
 function viewerOnly(){return document.body?.dataset?.liveViewerOnly==='true'}
 function stamp(){document.title=viewerOnly()?`B7 FI Live Status v${VERSION}`:`B7 FI Command Center v${VERSION}`;const v=$('#appVersionLabel');if(v)v.textContent=`B7 FI COMMAND CENTER V${VERSION}`}
@@ -47,9 +47,7 @@ function decorateAlerts(){
 function activateAlert(el){if(viewerOnly())return;const bar=el.closest('#b7LeadAlertsBar,#topActionBar,#b7SystemStatusBar,#operationsBar');if(!bar)return;if(bar.id==='b7LeadAlertsBar'||bar.id==='topActionBar')goLead(el);else goSystem(el)}
 document.addEventListener('click',ev=>{const el=ev.target.closest('.b7s-message,.v817-status-message');if(!el||viewerOnly())return;ev.preventDefault();ev.stopPropagation();activateAlert(el)},true);
 document.addEventListener('keydown',ev=>{if(ev.key!=='Enter'&&ev.key!==' ')return;const el=ev.target.closest('.b7s-message,.v817-status-message');if(!el||viewerOnly())return;ev.preventDefault();activateAlert(el)},true);
-let toolbarObserver=null;
-function watchToolbar(){const bar=$('#floatingActions');if(!bar||toolbarObserver)return;toolbarObserver=new MutationObserver(()=>queueMicrotask(normalizeToolToolbar));toolbarObserver.observe(bar,{childList:true,subtree:true})}
-function refresh(){stamp();normalizeToolToolbar();decorateAlerts();watchToolbar()}
+function refresh(){stamp();normalizeToolToolbar();decorateAlerts()}
 const priorSetView=window.setView;if(typeof priorSetView==='function'){window.setView=function(){const r=priorSetView.apply(this,arguments);[0,40,120,260].forEach(ms=>setTimeout(refresh,ms));return r};try{setView=window.setView}catch(e){}}
 const priorToolStatus=window.toolStatus;if(typeof priorToolStatus==='function'){window.toolStatus=function(){const r=priorToolStatus.apply(this,arguments);[0,40,120].forEach(ms=>setTimeout(refresh,ms));return r};try{toolStatus=window.toolStatus}catch(e){}}
 const priorToolAdmin=window.toolAdmin;if(typeof priorToolAdmin==='function'){window.toolAdmin=function(){const r=priorToolAdmin.apply(this,arguments);[0,40,120].forEach(ms=>setTimeout(refresh,ms));return r};try{toolAdmin=window.toolAdmin}catch(e){}}
