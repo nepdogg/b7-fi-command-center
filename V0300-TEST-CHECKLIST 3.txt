@@ -1,0 +1,74 @@
+B7 FI COMMAND CENTER v0.30.0 — HOME/WORK TEST CHECKLIST
+
+IMPORTANT
+- Keep your known-good production copy and latest Full Backup JSON.
+- This build preserves the existing local-storage data key and backup import format.
+
+1. BACKUP FIRST
+- Open Shared Data.
+- Export Full Backup JSON before making large changes.
+
+2. HEADER / PAGE COLORS
+- Visit every main page.
+- Confirm header reads: B7 FI COMMAND CENTER / current page title.
+- Confirm active navigation button and page title use the same page color.
+
+3. REFERENCE FILES (HOME TEST)
+- Open Reference Files.
+- Load an .xlsx Micro Schedule.
+- Confirm filename and loaded timestamp appear.
+- Click Try In-Page Preview.
+- If Edge cannot render the workbook inside the page, this is expected for local .xlsx files.
+- Click Open Original / Interactive Excel and verify the workbook can be opened for worksheet tabs, filters, sorting and normal Excel navigation.
+- Repeat for Shipping Tracker and B7 FI Status.
+
+4. TOOL COUNTDOWN
+- Verify stronger family separation and larger UTID/model badges.
+- Administration > Countdown: test Rapid Tool Intake.
+- Add one temporary test tool using Save & Add Another.
+- Verify it appears immediately and can be removed later from Tool Admin.
+
+5. TOOLS PAGE
+- Verify boxed tool cards, larger UTID and third Supplemental progress line.
+- Test Search and Status filter.
+- Click a card and verify it opens the correct Tool Status page.
+
+6. TOOL STATUS PAGE
+- Verify Tool Information and FI Status/Issues are larger and side-by-side.
+- Confirm Notes appears inside FI Status / Issues.
+- Confirm Shipping Schedule is full-width below those panels.
+- Test starting a Lamp Swap or Daily Monitor supplemental checklist on a temporary/test tool.
+- Confirm the tool card and Action Center reflect the active supplemental checklist.
+
+7. TOOL EDIT IDENTITY
+- Open any Tool for editing.
+- Switch between Tool Information, Tool Progress, Lead/Admin, Shipping, NCs and Custom Fields.
+- Confirm the EDITING TOOL identity banner remains visible.
+
+8. MORNING / SHIFT QUICK UPDATE
+- Administration > Morning.
+- Update Latest Status, Notes, checklist, lamp hours and lamp ON/OFF for one test tool.
+- Click Save All Changes.
+- Confirm the individual Tool Status page reflects those edits.
+
+9. WEEKDAY / WEEKEND PRIORITIES
+- Assign Priority 1 to one tool.
+- Confirm Priority 1 is unavailable in every other tool's dropdown.
+- Repeat on both Weekday and Weekend pages.
+
+10. LEADS EXTRA STATUS
+- Open Leads Extra Status > Edit Leads Extra Status.
+- Add lines, select priority/UTID/cleanroom, enter Notes.
+- Verify duplicate priority numbers cannot be saved.
+- Test Move Up/Down and Delete Line.
+- Confirm deleting a line does NOT delete the Tool.
+
+11. ACTION CENTER
+- Open Action Center.
+- Verify generated critical/attention/reminder items are clickable.
+- Click an item and confirm it opens the correct Tool/editor area.
+- Add one manual reminder and verify it appears in the top Action Bar.
+
+12. BACKUP / RESTORE
+- Export a v0.30.0 Full Backup after testing.
+- On a test browser/computer, import it and verify tools plus new Leads Extra Status / supplemental / reminder data restore.

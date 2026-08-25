@@ -1,0 +1,10 @@
+B7 FI Command Center v0.31.2
+
+Focused fixes:
+- Top B7 FI Actions bar now has a dedicated 9px separator row below it.
+- Permanent lower white/page-color border is outside the Action bar container.
+- Bottom glow travels right-to-left in the separator row; Page Actions cannot clip it.
+- Top glow remains left-to-right.
+- Tool Countdown family summaries now show only Total / Waiting FI / In FI / Shipped.
+- Removed redundant X TOOL(S) label beside each tool family name.
+- Quarter-level Total / Need to Ship / Shipped summary remains unchanged.
