@@ -1,0 +1,7 @@
+B7 FI Command Center v0.31.4
+Final Framework Polish
+
+- Top B7 FI Actions status content now spans the full available width, matching the full-width Fleet Status framework.
+- Page Actions top/bottom padding is balanced for visual centering.
+- Application version is centralized in APP_VERSION and applied to browser title + footer.
+- Preserves v0.31.3 header, action separator, countdown summary cleanup, wallboard, and workflow behavior.

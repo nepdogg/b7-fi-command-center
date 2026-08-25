@@ -1,0 +1,20 @@
+B7 FI Command Center v0.30.5
+
+Home-test consolidation build.
+
+Changes:
+- Top B7 FI Actions bar is driven by the Action Center only.
+- Action Center now automatically includes open Lead Workspace tasks.
+- Action Center includes Micro Schedule behind-schedule alerts when a target is set.
+- Bottom bar is now FLEET STATUS rather than a duplicate Action Center ticker.
+- Fleet Status cycles active tools with current checklist, schedule position, and active supplemental process.
+- Tools cards now have three permanent progress bars: Actual Tool Progress, Micro Schedule / Planned, Lead/Admin.
+- Supplemental / special progress appears only while a Daily Monitor, Lamp Swap, or other supplemental checklist is active.
+- Tool page adds a Micro Schedule Target selector.
+- Schedule comparison shows Ahead / On Schedule / Behind by checklist count.
+- Page Actions inherit the current page color.
+- Header divider simplified to one thick white diagonal band.
+- Top and bottom bars now have permanent borders and opposing animated sweep lines.
+- Backup schema bumped to v3 while retaining existing tool data.
+
+Important: Micro Schedule target is entered manually in this build. Automatic extraction from the manager-provided Micro Schedule workbook is a future step after its sheet structure is mapped.
