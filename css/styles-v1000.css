@@ -1,0 +1,41 @@
+/* B7 FI Command Center v1.0.0 — clean runtime / Operations final layout */
+html,body{min-height:100%;}
+body.b7-booting .sticky-header,body.b7-booting #app,body.b7-booting footer.v57-footer{visibility:hidden!important}
+#b7BootCover{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:#07111f;color:#fff;font-weight:900;letter-spacing:.08em;font-size:20px}
+body:not(.b7-booting) #b7BootCover{display:none}
+/* single page rails */
+body>.sticky-header,body>main#app,body>footer.v57-footer{width:100%!important;max-width:none!important;margin-left:0!important;margin-right:0!important;box-sizing:border-box!important}
+body>main#app.page-shell{padding-left:12px!important;padding-right:12px!important;padding-bottom:18px!important;min-height:0!important;flex:none!important}
+body{display:block!important;min-height:100vh!important;background:#07111f!important}
+body>footer.v57-footer{margin-top:0!important}
+/* Operations child rails align with alert/status bars */
+body[data-center="home"] #app.page-shell{padding-top:10px!important}
+body[data-center="home"] .v825-operations-live,body[data-center="home"] .v803-live-shell,body.v825-operations-dashboard .v825-operations-live{width:100%!important;max-width:none!important;margin:0!important;padding-left:0!important;padding-right:0!important}
+body[data-center="home"] .v825-operations-live>.v802-live-metrics,
+body[data-center="home"] .v825-operations-live>.v829-quarter-progress,
+body[data-center="home"] .v825-operations-live>.v861-family-section,
+body[data-center="home"] .v825-operations-live>.v802-carousel{width:100%!important;max-width:none!important;margin-left:0!important;margin-right:0!important}
+/* Tool family = process flow */
+.v861-family-section{border-radius:4px!important;padding:10px 12px!important}
+.v861-family-header{justify-content:center!important;position:relative!important;text-align:center!important}
+.v861-family-header strong{font-size:15px!important}.v861-family-header span{position:absolute!important;right:2px!important;font-size:11px!important}
+.v861-family-row{grid-template-columns:170px minmax(0,1fr)!important;align-items:center!important;gap:14px!important;padding:9px 0!important}
+.v861-family-row h3{font-size:24px!important;text-align:center!important;margin:0!important}
+.v861-family-kpis{display:flex!important;align-items:center!important;justify-content:center!important;gap:0!important;min-width:0!important}
+.v861-family-kpi{position:relative!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;width:118px!important;min-width:102px!important;max-width:118px!important;min-height:64px!important;padding:7px 8px!important;margin:0 22px 0 0!important;text-align:center!important;border-radius:6px!important}
+.v861-family-kpi:last-child{margin-right:0!important}
+.v861-family-kpi:not(:last-child)::after{content:'→';position:absolute;right:-22px;top:50%;transform:translateY(-50%);width:22px;text-align:center;color:#a9c7da;font-size:26px;font-weight:900;line-height:1}
+.v861-family-kpi span{font-size:11px!important;font-weight:800!important;line-height:1.05!important;letter-spacing:.06em!important;text-align:center!important}
+.v861-family-kpi b{font-size:27px!important;line-height:1!important;margin-top:5px!important;text-align:center!important}
+/* enlarge product photos */
+body[data-center="home"] .v802-tool-visual img,body.v802-live-status .v802-tool-visual img{width:96%!important;height:96%!important;max-width:96%!important;max-height:96%!important;padding:0!important;object-fit:contain!important;object-position:center!important}
+body[data-center="home"] .v802-tool-visual{display:flex!important;align-items:center!important;justify-content:center!important;padding:4px!important}
+/* one page navigation bar: views left, actions right */
+#floatingActions.v1000-toolbar{display:grid!important;grid-template-columns:1fr auto!important;align-items:center!important;gap:14px!important;padding:8px 12px!important;margin:0!important;width:100%!important;box-sizing:border-box!important;border-top:1px solid rgba(var(--page-accent-rgb),.65)!important;border-bottom:1px solid rgba(var(--page-accent-rgb),.65)!important;background:#081724!important}
+#floatingActions .v1000-left,#floatingActions .v1000-right{display:flex!important;align-items:center!important;gap:8px!important;flex-wrap:wrap!important}
+#floatingActions .v1000-left{justify-content:flex-start!important}#floatingActions .v1000-right{justify-content:flex-end!important}
+#floatingActions button{margin:0!important}
+/* avoid legacy duplicate toolbar */
+#b7PageToolbar{display:none!important}
+@media(max-width:1100px){.v861-family-row{grid-template-columns:140px minmax(0,1fr)!important}.v861-family-row h3{font-size:20px!important}.v861-family-kpi{width:104px!important;min-width:90px!important;margin-right:18px!important}.v861-family-kpi:not(:last-child)::after{right:-18px;width:18px;font-size:22px}}
+@media(max-width:820px){.v861-family-row{grid-template-columns:1fr!important}.v861-family-kpis{flex-wrap:wrap!important;gap:8px!important}.v861-family-kpi{margin:0!important;max-width:none!important;flex:1 1 120px!important}.v861-family-kpi::after{display:none!important}.v861-family-header span{position:static!important;margin-left:10px}}

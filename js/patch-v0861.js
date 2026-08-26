@@ -4,9 +4,9 @@
    Lead Alerts/System Status logic is intentionally untouched.
 */
 (function(){'use strict';
-const VERSION='0.80.62';
+const VERSION=window.B7_APP_VERSION||'1.0.0';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
-window.B7_APP_VERSION=VERSION;window.VERSION=VERSION;
+window.VERSION=window.B7_APP_VERSION||VERSION;
 const PHOTO={zephyr:'assets/tool-zephyr.png',regera:'assets/tool-regera-celestiq.png',celestiq:'assets/tool-regera-celestiq.png',macan:'assets/tool-29xx-family.png',boxster:'assets/tool-29xx-family.png',panamera:'assets/tool-29xx-family.png',vanquish:'assets/tool-29xx-family.png',targa:'assets/tool-29xx-family.png',taycan:'assets/tool-29xx-family.png'};
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function toolsList(){try{return Array.isArray(window.tools)?window.tools:[]}catch(e){return[]}}
