@@ -1,12 +1,16 @@
-# B7 FI Command Center v1.0.3 — Morning Meeting Recovery / Single Shell
+# B7 FI Command Center v1.0.4 — Morning Workflow + Operations Flow Gates
 
-This build removes the competing v1.0.1/v1.0.2 final runtime authorities and leaves the v0.85.4 centralized page-navigation framework as the one page-toolbar renderer. A small v1.0.3 shell authority controls version, Center theme, active main navigation, sticky shell and post-render visual cleanup.
+This test build uses unique v1.0.4 JS/CSS asset filenames to prevent older GitHub/browser-cached bundles from replacing the current runtime.
 
 Key changes:
-- one version: v1.0.3 in tab/footer/runtime
-- sticky Header → Main Nav → Lead Alerts → System Status → Page Navigation on every Center
-- page navigation buttons use the v0.85.4 direct handlers again (including Morning Status Edit)
-- Update Center keeps live tool cards, removes quarter totals/progress, and adds Packing to each family summary
-- Operations family flow uses stretching connectors: Family → Total → Waiting FI → In FI → Packing → Shipped
-- Operations product image enlarged to fill the photo bay
-- existing Lead Alerts/System Status business logic and saved data model retained
+- one v1.0.4 tab/footer version stamp
+- full sticky shell: header + main nav + Lead Alerts + System Status + page navigation
+- Update Center defaults to the live tool-card view; quarter summary/progress remain removed
+- Update Center family counters include Total / Waiting FI / In FI / Packing / Shipped
+- Operations family lifecycle uses boxed arrow gates between every stage
+- arrow gates are green when the entire family has cleared the preceding stage, red while tools remain before that transition
+- Morning Quick Update includes independent Current FI Checklist, Micro Schedule Target, and Current Lead/Admin Step selectors
+- Morning editor is card-based to avoid the old horizontal-scroll workflow
+- tool product images scale to fill more of the photo bay automatically
+
+Lead Alerts and System Status business logic were not intentionally changed.
