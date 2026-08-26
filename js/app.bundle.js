@@ -7774,3 +7774,70 @@ function installNav(){const nav=$('.main-nav');if(!nav)return;const labels={home
 function boot(){authoritativeVersion();installNav();const active=$('.main-nav .nav-btn.active')?.dataset.view||'home';center=viewToCenter[active]||'home';subview=center==='tool'?'tools':center==='priority'?'weekday':center==='status'?'weekday':center==='reference'?'knowledge':center==='meeting'?'leads':'home';settle();}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
+
+/* ===== v1.0.2 FINAL MORNING-MEETING STABILITY AUTHORITY ===== */
+(function(){'use strict';
+const VERSION='1.0.2';
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const COLORS={
+ home:['#2477ad','36,119,173','OPERATIONS CENTER'],tool:['#8e5ae8','142,90,232','UPDATE CENTER'],shipping:['#27ae60','39,174,96','SHIPPING CENTER'],priority:['#d4a72c','212,167,44','PRIORITY CENTER'],status:['#f28c28','242,140,40','STATUS CENTER'],meeting:['#19b9d1','25,185,209','MEETING CENTER'],action:['#ef4b4b','239,75,75','ACTION CENTER'],reference:['#e94a9a','233,74,154','REFERENCE CENTER'],search:['#536dfe','83,109,254','SEARCH CENTER']
+};
+const V2C={home:'home',toolcenter:'tool',systems:'tool',countdown:'tool',archive:'tool',shipping:'shipping',priorities:'priority',weekend:'priority',statuscenter:'status',leads:'status',meetingcenter:'meeting',actions:'action',referencecenter:'reference',references:'reference',searchcenter:'search'};
+const C2V={home:'home',tool:'toolcenter',shipping:'shipping',priority:'priorities',status:'statuscenter',meeting:'meetingcenter',action:'actions',reference:'referencecenter',search:'searchcenter'};
+let current='home';
+const underlyingSetView=window.setView;
+window.B7_APP_VERSION=VERSION;window.VERSION=VERSION;
+function quarter(){try{return String(window.getB7ActiveQuarter?.()||window.quarterLabel?.()||'CY26Q3').toUpperCase()}catch(e){return'CY26Q3'}}
+function stamp(){document.title=`B7 FI Command Center v${VERSION}`;const v=$('#appVersionLabel');if(v)v.textContent=`B7 FI COMMAND CENTER V${VERSION}`}
+function applyTheme(center){current=center;const c=COLORS[center]||COLORS.home;document.body.dataset.center=center;document.body.dataset.theme=center==='tool'?'toolcenter':center;['--center-color','--page-accent','--accent'].forEach(k=>document.documentElement.style.setProperty(k,c[0]));['--center-rgb','--page-accent-rgb','--accent-rgb'].forEach(k=>document.documentElement.style.setProperty(k,c[1]));const h=$('#headerPageTitle');if(h)h.textContent=c[2]+(['home','tool','shipping','priority','status'].includes(center)?` — ${quarter()}`:'');$$('.main-nav .nav-btn').forEach(b=>b.classList.toggle('active',V2C[b.dataset.view]===center));stamp()}
+function screenshot(){try{if(typeof window.enterScreenshotMode==='function')return window.enterScreenshotMode()}catch(e){}try{if(typeof window.enterScreenshot==='function')return window.enterScreenshot()}catch(e){}window.print()}
+function report(){try{if(typeof window.openReport530==='function')return window.openReport530()}catch(e){}window.print()}
+function norm(s){return String(s||'').replace(/\s+/g,' ').trim().toUpperCase()}
+function make(label,fn,primary=false){const b=document.createElement('button');b.type='button';b.className='btn'+(primary?' primary':'');b.textContent=label;b.onclick=fn;return b}
+function originalButtons(){const bar=$('#floatingActions');if(!bar)return[];return $$('button',bar).filter(b=>!b.dataset.v102Generated)}
+function findBtn(re,buttons=originalButtons()){return buttons.find(b=>re.test(norm(b.textContent)))}
+function callButton(re){const b=findBtn(re);if(b){b.click();return true}return false}
+function bodyClick(re){const b=$$('#app button,#app [role="button"],#app .meeting-template51,#app .admin-launch').find(x=>re.test(norm(x.textContent)));if(b){b.click();return true}return false}
+function setToolbar(left,right){const bar=$('#floatingActions');if(!bar)return;bar.className='floating-actions page-toolbar v102-toolbar';bar.replaceChildren();const l=document.createElement('div'),r=document.createElement('div');l.className='v102-left';r.className='v102-right';left.filter(Boolean).forEach(b=>l.appendChild(b));right.filter(Boolean).forEach(b=>r.appendChild(b));bar.append(l,r)}
+function reuseOr(label,re,fn,primary=false,buttons=[]){let b=buttons.find(x=>re.test(norm(x.textContent)));if(b){b.style.display='';b.classList.toggle('primary',primary);return b}const n=make(label,fn,primary);n.dataset.v102Generated='1';return n}
+function normalizeToolbar(center){const old=originalButtons();
+ if(center==='home'){
+   const open=reuseOr('OPEN TOOL',/^OPEN TOOL/,()=>{try{const t=window.B7LiveStatusCore?.currentTool?.();if(t?.id&&typeof window.toolStatus==='function')window.toolStatus(t.id)}catch(e){}},false,old);
+   setToolbar([], [open,make('SCREENSHOT',screenshot),make('REPORT',report)]);return;
+ }
+ if(center==='tool'){
+   const tools=reuseOr(`${quarter()} TOOLS`,/TOOLS$/,()=>navigate('toolcenter'),false,old),count=reuseOr('TOOL COUNTDOWN',/TOOL COUNTDOWN/,()=>navigate('countdown'),false,old),archive=reuseOr('TOOL ARCHIVE',/TOOL ARCHIVE/,()=>navigate('archive'),false,old),add=reuseOr('ADD TOOL',/ADD TOOL/,()=>window.toolAdmin?.(),true,old);
+   setToolbar([tools,count,archive],[add,make('SCREENSHOT',screenshot),make('REPORT',report)]);return;
+ }
+ if(center==='shipping'){
+   const edit=reuseOr('EDIT SHIP SCHEDULE',/EDIT .*SHIP.*SCHEDULE/,()=>callButton(/EDIT .*SHIP.*SCHEDULE/)||bodyClick(/EDIT .*SHIP.*SCHEDULE/),true,old);setToolbar([], [edit,make('SCREENSHOT',screenshot),make('REPORT',report)]);return;
+ }
+ if(center==='priority'){
+   const wd=reuseOr('WEEKDAY PRIORITIES',/^WEEKDAY PRIORITIES$/,()=>callButton(/^WEEKDAY PRIORITIES$/),true,old),we=reuseOr('WEEKEND PRIORITIES',/^WEEKEND PRIORITIES$/,()=>callButton(/^WEEKEND PRIORITIES$/),false,old),edit=reuseOr('EDIT PRIORITIES',/^EDIT .*PRIORITIES$/,()=>callButton(/^EDIT .*PRIORITIES$/),true,old);setToolbar([wd,we],[edit,make('SCREENSHOT',screenshot),make('REPORT',report)]);return;
+ }
+ if(center==='status'){
+   const wd=reuseOr('WEEKDAY MORNING STATUS',/^WEEKDAY MORNING STATUS$/,()=>navigate('statuscenter'),true,old);
+   const extra=reuseOr('LEADS EXTRA STATUS',/^LEADS EXTRA STATUS$/,()=>navigate('leads'),false,old);
+   const we=reuseOr('WEEKEND MORNING STATUS',/^WEEKEND MORNING STATUS$/,()=>callButton(/^WEEKEND MORNING STATUS$/)||bodyClick(/^WEEKEND MORNING STATUS$/),false,old);
+   const edit=reuseOr('EDIT WEEKDAY MORNING STATUS',/^EDIT .*STATUS$/,()=>callButton(/^EDIT .*STATUS$/),true,old);
+   setToolbar([wd,extra,we],[edit,make('SCREENSHOT',screenshot),make('REPORT',report)]);return;
+ }
+ if(center==='meeting'){
+   const defs=[['MORNING MEETING',/MORNING (STATUS|MEETING)/],['LEADS MEETING',/LEADS MEETING/],['ORB MEETING',/ORB MEETING/],['FE OPTIONS MEETING',/FE OPTIONS MEETING/],['CELL MEETING',/CELL MEETING/]];
+   const left=defs.map(([lab,re],i)=>reuseOr(lab,re,()=>callButton(re)||bodyClick(re),i===0,old));const start=reuseOr('START NEW MEETING',/START .*MEETING/,()=>callButton(/START .*MEETING/)||bodyClick(/START .*MEETING/),true,old);setToolbar(left,[start,make('SCREENSHOT',screenshot),make('REPORT',report)]);return;
+ }
+ if(center==='action'){const add=reuseOr('ADD ALERT',/ADD (ALERT|TASK|REMINDER)/,()=>callButton(/ADD (ALERT|TASK|REMINDER)/)||bodyClick(/ADD (ALERT|TASK|REMINDER)/),true,old);setToolbar([], [add,make('SCREENSHOT',screenshot),make('REPORT',report)]);return}
+ if(center==='reference'){
+   const know=reuseOr('FI KNOWLEDGE',/^FI KNOWLEDGE$/,()=>navigate('referencecenter'),true,old),files=reuseOr('REFERENCE FILES',/^REFERENCE FILES$/,()=>navigate('references'),false,old);const action=reuseOr('ADD REFERENCE NOTE',/(ADD REFERENCE NOTE|LOAD FILE)/,()=>callButton(/ADD REFERENCE NOTE|LOAD FILE/)||bodyClick(/ADD REFERENCE NOTE|LOAD FILE/),true,old);setToolbar([know,files],[action,make('SCREENSHOT',screenshot),make('REPORT',report)]);return;
+ }
+ if(center==='search'){setToolbar([], [make('SCREENSHOT',screenshot),make('REPORT',report)]);return}
+}
+function trimUpdateCenter(){if(current!=='tool')return;$$('.v837-tool-dashboard>.v837-summary-grid,.v837-tool-dashboard>.v845-summary-grid,.v837-tool-dashboard>.v837-quarter-progress,.v837-tool-dashboard>.quarter-progress').forEach(x=>x.remove())}
+function settle(center=current){requestAnimationFrame(()=>{applyTheme(center);normalizeToolbar(center);trimUpdateCenter()});setTimeout(()=>{applyTheme(center);normalizeToolbar(center);trimUpdateCenter();document.body.classList.remove('b7-booting')},90)}
+function navigate(view){const center=V2C[view]||current;current=center;try{underlyingSetView?.(view)}catch(e){console.error('B7 navigation',e)}settle(center)}
+window.setView=function(view){return navigate(view)};try{setView=window.setView}catch(e){}
+/* Main navigation: one click path, one active Center. */
+document.addEventListener('click',function(e){const b=e.target.closest('.main-nav .nav-btn');if(!b)return;e.preventDefault();e.stopImmediatePropagation();navigate(b.dataset.view)},true);
+function boot(){stamp();$$('.main-nav .nav-btn').forEach(b=>{b.onclick=null});const active=$('.main-nav .nav-btn.active')?.dataset.view||'home';current=V2C[active]||'home';settle(current)}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+})();

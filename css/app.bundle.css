@@ -9918,3 +9918,77 @@ body[data-center="home"]>footer.v57-footer{margin-top:0!important}
 
 @media(max-width:1100px){.v861-family-row{grid-template-columns:135px minmax(0,1fr)!important}.v861-family-row h3{font-size:20px!important;padding-right:28px!important}.v861-family-row h3::after{right:2px!important;font-size:22px!important}.v861-family-kpis{gap:20px!important;grid-template-columns:repeat(5,minmax(72px,1fr))!important}.v861-family-kpi{max-width:none!important}.v861-family-kpi:not(:last-child)::after{left:calc(100% + 2px)!important}}
 @media(max-width:760px){.v861-family-row{grid-template-columns:1fr!important}.v861-family-row h3{text-align:left!important;padding-right:0!important}.v861-family-row h3::after{display:none!important}.v861-family-kpis{grid-template-columns:repeat(2,1fr)!important;gap:8px!important}.v861-family-kpi{max-width:none!important}.v861-family-kpi:first-child{grid-column:1/-1!important}.v861-family-kpi::after{display:none!important}#floatingActions{overflow-x:auto!important;grid-template-columns:auto auto!important}}
+
+/* ===== v1.0.2 MORNING MEETING STABILITY / FINAL SHELL AUTHORITY ===== */
+:root{--v102-rail-gap:12px}
+html,body{width:100%!important;max-width:none!important;overflow-x:hidden!important}
+body{align-items:stretch!important}
+body>.sticky-header,
+body>main#app,
+body>footer.v57-footer{
+  width:calc(100% - (var(--v102-rail-gap) * 2))!important;
+  max-width:none!important;
+  margin-left:var(--v102-rail-gap)!important;
+  margin-right:var(--v102-rail-gap)!important;
+  box-sizing:border-box!important;
+}
+body>.sticky-header .hero,
+body>.sticky-header .main-nav,
+body>.sticky-header .header-status-stack,
+body>.sticky-header #topActionBar,
+body>.sticky-header #operationsBar,
+body>.sticky-header #floatingActions{width:100%!important;max-width:none!important;margin-left:0!important;margin-right:0!important;box-sizing:border-box!important}
+body>main#app.page-shell{padding-left:18px!important;padding-right:18px!important;max-width:none!important}
+body>footer.v57-footer{margin-top:auto!important}
+
+/* One exact Center color authority. */
+body[data-center="home"]{--center-color:#2477ad!important;--center-rgb:36,119,173!important;--page-accent:#2477ad!important;--page-accent-rgb:36,119,173!important}
+body[data-center="tool"]{--center-color:#8e5ae8!important;--center-rgb:142,90,232!important;--page-accent:#8e5ae8!important;--page-accent-rgb:142,90,232!important}
+body[data-center="shipping"]{--center-color:#27ae60!important;--center-rgb:39,174,96!important;--page-accent:#27ae60!important;--page-accent-rgb:39,174,96!important}
+body[data-center="priority"]{--center-color:#d4a72c!important;--center-rgb:212,167,44!important;--page-accent:#d4a72c!important;--page-accent-rgb:212,167,44!important}
+body[data-center="status"]{--center-color:#f28c28!important;--center-rgb:242,140,40!important;--page-accent:#f28c28!important;--page-accent-rgb:242,140,40!important}
+body[data-center="meeting"]{--center-color:#19b9d1!important;--center-rgb:25,185,209!important;--page-accent:#19b9d1!important;--page-accent-rgb:25,185,209!important}
+body[data-center="action"]{--center-color:#ef4b4b!important;--center-rgb:239,75,75!important;--page-accent:#ef4b4b!important;--page-accent-rgb:239,75,75!important}
+body[data-center="reference"]{--center-color:#e94a9a!important;--center-rgb:233,74,154!important;--page-accent:#e94a9a!important;--page-accent-rgb:233,74,154!important}
+body[data-center="search"]{--center-color:#536dfe!important;--center-rgb:83,109,254!important;--page-accent:#536dfe!important;--page-accent-rgb:83,109,254!important}
+body[data-center] .v57-header-right{background:var(--center-color)!important}
+body[data-center] .main-nav .nav-btn.active{background:var(--center-color)!important;border-color:rgba(255,255,255,.7)!important;color:#fff!important}
+body[data-center] #floatingActions{border-top:1px solid var(--center-color)!important;border-bottom:1px solid var(--center-color)!important}
+
+/* Canonical page navigation: left views, right actions. */
+#floatingActions.v102-toolbar{display:flex!important;align-items:center!important;justify-content:space-between!important;min-height:48px!important;height:auto!important;padding:6px 14px!important;gap:14px!important;overflow:visible!important}
+#floatingActions.v102-toolbar::before{display:none!important;content:none!important}
+#floatingActions.v102-toolbar>.v102-left,#floatingActions.v102-toolbar>.v102-right{display:flex!important;align-items:center!important;gap:8px!important;flex-wrap:wrap!important;min-width:0!important}
+#floatingActions.v102-toolbar>.v102-right{margin-left:auto!important;justify-content:flex-end!important}
+#floatingActions.v102-toolbar button{position:static!important;margin:0!important;top:auto!important;bottom:auto!important;white-space:nowrap!important}
+
+/* Update Center remains a card-based working center, but quarter overview now belongs to Operations. */
+body[data-center="tool"] .v837-tool-dashboard>.v837-summary-grid,
+body[data-center="tool"] .v837-tool-dashboard>.v845-summary-grid,
+body[data-center="tool"] .v837-tool-dashboard>.v837-quarter-progress,
+body[data-center="tool"] .v837-tool-dashboard>.quarter-progress{display:none!important}
+body[data-center="tool"] .v837-tool-dashboard{padding-top:14px!important}
+
+/* Operations final product image: visibly fill the photo bay. */
+body[data-center="home"] .v802-tool-visual,
+body.v802-live-status .v802-tool-visual{overflow:hidden!important;padding:0!important}
+body[data-center="home"] .v802-tool-visual img,
+body.v802-live-status .v802-tool-visual img{
+  width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;
+  object-fit:contain!important;object-position:center!important;padding:0!important;margin:0!important;
+  transform:scale(1.20)!important;transform-origin:center center!important
+}
+
+/* Keep all normal Center bodies on the same horizontal rail. */
+body:not(.wallboard-mode) #app>*{max-width:none!important}
+body:not(.wallboard-mode) .report-screen,
+body:not(.wallboard-mode) .panel,
+body:not(.wallboard-mode) .v837-tool-dashboard,
+body:not(.wallboard-mode) .v825-operations-live{width:100%!important;max-width:none!important;box-sizing:border-box!important}
+
+@media(max-width:900px){
+  :root{--v102-rail-gap:6px}
+  body>main#app.page-shell{padding-left:10px!important;padding-right:10px!important}
+  #floatingActions.v102-toolbar{padding:6px 9px!important}
+  #floatingActions.v102-toolbar>.v102-right{margin-left:0!important}
+}
