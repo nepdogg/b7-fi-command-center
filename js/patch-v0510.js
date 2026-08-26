@@ -68,6 +68,10 @@ function routeOptions51(t,selected){
  let r=typeof routeFor==='function'?routeFor(t):[];
  return r.map(x=>`<option value="${esc51(x[0])}" ${x[0]===selected?'selected':''}>${esc51(x[0])} — ${esc51(x[1]||'')}</option>`).join('');
 }
+function leadOptions51(selected){
+ let a=typeof activeLeadTasks==='function'?activeLeadTasks().filter(x=>x.countProgress!==false):[];
+ return `<option value="">Not Set</option>`+a.map(x=>`<option value="${esc51(x.id)}" ${x.id===selected?'selected':''}>${esc51(x.label)}</option>`).join('');
+}
 function morningAdmin51(){
  let a=morningList51();
  return `<section class="panel morning-master51">
@@ -87,6 +91,7 @@ function morningAdmin51(){
        <div class="form-group"><label>Assigned Lead / Driver</label><input class="m51-driver" value="${esc51(t.driver||'')}"></div>
        <div class="form-group wide2"><label>Actual Current Checklist</label><select class="m51-check">${routeOptions51(t,t.checklist)}</select></div>
        <div class="form-group wide2 micro51"><label>Micro Schedule Target</label><select class="m51-micro"><option value="">Target Not Set</option>${routeOptions51(t,t.microTargetChecklist)}</select><small>${mi?.set?esc51(mi.label):'Set the planned checklist during status preparation.'}</small></div>
+       <div class="form-group wide2"><label>Current Lead / Admin Task</label><select class="m51-lead">${leadOptions51(t.currentLeadAdminTask||'')}</select><small>Primary Lead/Admin position used by the Command Center progress bar.</small></div>
        <div class="form-group"><label>Lamp Hours</label><input class="m51-lamp" inputmode="numeric" value="${esc51(String(t.lamp??''))}"></div>
        <div class="form-group"><label>Lamp State</label><select class="m51-lampstate"><option ${t.lampState!=='OFF'?'selected':''}>ON</option><option ${t.lampState==='OFF'?'selected':''}>OFF</option></select></div>
        <div class="form-group status51"><label>Latest Status</label><textarea class="m51-status" rows="5">${esc51(t.activity||'')}</textarea></div>
@@ -114,11 +119,11 @@ function saveMorning51(){
    lamp:Number(String(r.querySelector('.m51-lamp').value).replace(/[^0-9.]/g,''))||0,lampState:r.querySelector('.m51-lampstate').value,
    activity:r.querySelector('.m51-status').value,notes:r.querySelector('.m51-notes').value});
   let ck=r.querySelector('.m51-check').value;
-  if(ck&&ck!==t.checklist){
-    if(typeof applyMorningChecklistTransition==='function')applyMorningChecklistTransition(t,ck,'Complete'); else t.checklist=ck;
-  }
+  if(ck&&ck!==t.checklist){recordField51(t,'Current Checklist',t.checklist||'',ck);t.checklist=ck;}
   let micro=r.querySelector('.m51-micro').value;
   if(micro!==t.microTargetChecklist){recordField51(t,'Micro Schedule Target',t.microTargetChecklist||'',micro);t.microTargetChecklist=micro;t.microTargetUpdatedAt=at}
+  let lead=r.querySelector('.m51-lead')?.value||'';
+  if(lead!==String(t.currentLeadAdminTask||'')){recordField51(t,'Current Lead / Admin Task',t.currentLeadAdminTask||'',lead);t.currentLeadAdminTask=lead;}
   t.lastUpdatedAt=at;n++;
  });
  state.morningLastUpdatedAt=at;save();

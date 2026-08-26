@@ -40,10 +40,9 @@ const fmtShort=d=>d&&/^\d{4}-\d{2}-\d{2}$/.test(d)?new Date(d+'T12:00:00').toLoc
 const clone=x=>JSON.parse(JSON.stringify(x));
 function routeFor(t){return ROUTES[t.codename==='Regera'?'Regera':t.codename==='Celestiq'?'Celestiq':'29XX']||[]}
 function routeProgress(t){
- let r=routeFor(t),vals=r.map(x=>t.checklistStates?.[x[0]]||'Need to Complete');
- let applicable=vals.filter(v=>v!=='N/A'&&v!=='Skipped');
- if(!applicable.length)return 0;
- return pct(applicable.filter(v=>v==='Complete').length,applicable.length)
+ let r=routeFor(t),i=r.findIndex(x=>x[0]===t.checklist);
+ if(t.quarterStatus==='Shipped')return 100;
+ return i<0?0:pct(i+1,r.length)
 }
 function mstApplicable(t){return t.codename==='Regera'||t.codename==='Celestiq'}
 function syncCurrentChecklist(t){
@@ -180,7 +179,7 @@ function quarterLabel(){let c={};tools.forEach(t=>c[t.quarter]=(c[t.quarter]||0)
 function pct(a,b){return b?Math.round(a/b*100):0}
 function qState(t){return t.quarterStatus==='Archive'?'archived':t.quarterStatus==='Shipped'?'shipped':t.quarterStatus==='Packing and Shipping'?'packing':t.quarterStatus==='Waiting for FI'?'waiting':'infi'}
 function tone(t){if(t.quarterStatus==='Shipped')return'good';if(t.fiStatus==='Line Down'||t.ncs.some(n=>n.blocking))return'bad';if(t.fiStatus==='Performing POA'||/trouble|waiting/i.test(t.activity))return'warn';return'good'}
-function adminProgress(t){let tasks=activeLeadTasks().filter(x=>x.countProgress!==false),vals=tasks.map(x=>t.leadAdmin?.[x.id]??'Not Started').filter(x=>x!=='N/A'),done=vals.filter(x=>x==='Complete').length;return pct(done,vals.length)}
+function adminProgress(t){let tasks=activeLeadTasks().filter(x=>x.countProgress!==false);if(t.quarterStatus==='Shipped')return 100;let i=tasks.findIndex(x=>x.id===t.currentLeadAdminTask);return i<0?0:pct(i+1,tasks.length)}
 function routeIndex(t){return Math.max(0,routeFor(t).findIndex(x=>x[0]===t.checklist))}
 function routeCounts(t){
  let r=routeFor(t),vals=r.map(x=>t.checklistStates?.[x[0]]||'Need to Complete');
