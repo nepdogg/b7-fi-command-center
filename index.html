@@ -1,37 +1,69 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
-
-<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1.0" name="viewport"/>
-<title>B7 FI Command Center v1.0.4</title><style>body[data-theme="customer"]{--page-accent:#a78bfa;--page-accent-rgb:167,139,250}</style>
-<link href="css/app.v1.0.4.css?v=1.0.4" rel="stylesheet"/><style>body[data-theme="customer"]{--page-accent:#a78bfa;--page-accent-rgb:167,139,250}</style></head>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+  <title>B7 FI Command Center v1.0.5</title>
+  <style>body[data-theme="customer"]{--page-accent:#a78bfa;--page-accent-rgb:167,139,250}</style>
+  <link href="css/app.v1.0.4.css?v=1.0.4" rel="stylesheet"/>
+  <link href="css/v1.0.5-shell-hotfix.css?v=1.0.5-20260825" rel="stylesheet"/>
+</head>
 <body class="b7-booting" data-theme="home">
-<div class="sticky-header"><header class="hero compact-hero v57-hero">
-<div class="v57-header">
-<section class="v57-header-left">B7 FI COMMAND CENTER</section>
-<section class="v57-header-center"><img alt="KLA+" class="v57-kla-logo" src="assets/kla-plus-official.png"/></section>
-<section class="v57-header-right"><span id="headerPageTitle">OPERATIONS CENTER</span></section>
-</div>
-</header>
-<nav aria-label="Main navigation" class="main-nav">
-<button class="nav-btn active" data-view="home">Operations Center</button>
-<button class="nav-btn" data-view="toolcenter">Update Center</button>
-<button class="nav-btn" data-view="shipping">Shipping Center</button>
-<button class="nav-btn" data-view="priorities">Priority Center</button>
-<button class="nav-btn" data-view="statuscenter">Status Center</button>
-<button class="nav-btn" data-view="meetingcenter">Meeting Center</button>
-<button class="nav-btn" data-view="actions">Action Center</button>
-<button class="nav-btn" data-view="referencecenter">Reference Center</button>
-<button class="nav-btn" data-view="searchcenter">Search Center</button>
-</nav><div class="header-status-stack"><div class="top-action-bar" id="topActionBar"></div><div class="operations-bar" id="operationsBar"><div class="ops-health"><span class="ops-live-dot"></span><b>COMMAND CENTER</b><span id="opsSync">Local test data</span></div><div class="ops-ticker"><span class="ops-ticker-label">FLEET STATUS</span><span id="opsTickerText">Loading fleet status…</span></div><div class="ops-summary"><span id="opsTaskCount">0 open actions</span><span class="ops-divider">•</span><span id="opsPresence">Context: fleet overview</span></div></div><div aria-label="Page actions" class="floating-actions page-toolbar" id="floatingActions"></div></div></div>
-<div id="b7BootCover">B7 FI COMMAND CENTER · LOADING</div>
-<main class="page-shell" id="app"><div class="panel"><h2>Loading B7 FI Command Center…</h2></div></main>
-<button class="screenshot-exit" id="screenshotExit">Exit Screenshot Mode</button>
-<footer class="v57-footer">
-<strong id="appVersionLabel"></strong>
-<button class="v57-admin-footer-btn" id="administrationCenterFooter">ADMINISTRATION CENTER</button>
-<span>Building 7 · Final Integration · Operations</span>
-</footer>
-<script>window.addEventListener('error',function(e){var a=document.getElementById('app');if(a&&!a.dataset.rendered)a.innerHTML='<div class="panel"><h2>Command Center could not load</h2><p class="gray">'+String(e.message||'Unknown error')+'</p></div>'})</script>
-<div aria-label="Wallboard controls" class="wallboard-controls" id="wallboardControls"><button id="wallPrev">◀</button><button id="wallPause">PAUSE</button><button id="wallNext">▶</button><button id="wallExit">EXIT WALLBOARD</button><span id="wallLive">● LIVE</span></div>
+  <div class="sticky-header">
+    <header class="hero compact-hero v57-hero">
+      <div class="v57-header">
+        <section class="v57-header-left">B7 FI COMMAND CENTER</section>
+        <section class="v57-header-center"><img alt="KLA+" class="v57-kla-logo" src="assets/kla-plus-official.png"/></section>
+        <section class="v57-header-right"><span id="headerPageTitle">OPERATIONS CENTER</span></section>
+      </div>
+    </header>
+    <nav aria-label="Main navigation" class="main-nav">
+      <button class="nav-btn active" data-view="home">Operations Center</button>
+      <button class="nav-btn" data-view="toolcenter">Update Center</button>
+      <button class="nav-btn" data-view="shipping">Shipping Center</button>
+      <button class="nav-btn" data-view="priorities">Priority Center</button>
+      <button class="nav-btn" data-view="statuscenter">Status Center</button>
+      <button class="nav-btn" data-view="meetingcenter">Meeting Center</button>
+      <button class="nav-btn" data-view="actions">Action Center</button>
+      <button class="nav-btn" data-view="referencecenter">Reference Center</button>
+      <button class="nav-btn" data-view="searchcenter">Search Center</button>
+    </nav>
+    <div class="header-status-stack">
+      <div class="top-action-bar" id="topActionBar"></div>
+      <div class="operations-bar" id="operationsBar">
+        <div class="ops-health"><span class="ops-live-dot"></span><b>COMMAND CENTER</b><span id="opsSync">Local test data</span></div>
+        <div class="ops-ticker"><span class="ops-ticker-label">FLEET STATUS</span><span id="opsTickerText">Loading fleet status…</span></div>
+        <div class="ops-summary"><span id="opsTaskCount">0 open actions</span><span class="ops-divider">•</span><span id="opsPresence">Context: fleet overview</span></div>
+      </div>
+      <div aria-label="Page actions" class="floating-actions page-toolbar" id="floatingActions"></div>
+    </div>
+  </div>
 
-<script src="js/app.v1.0.4.js?v=1.0.4"></script></body></html>
+  <div id="b7BootCover">B7 FI COMMAND CENTER · LOADING</div>
+  <main class="page-shell" id="app"><div class="panel"><h2>Loading B7 FI Command Center…</h2></div></main>
+  <button class="screenshot-exit" id="screenshotExit">Exit Screenshot Mode</button>
+
+  <footer class="v57-footer">
+    <strong id="appVersionLabel"></strong>
+    <button class="v57-admin-footer-btn" id="administrationCenterFooter">ADMINISTRATION CENTER</button>
+    <span>Building 7 · Final Integration · Operations</span>
+  </footer>
+
+  <script>
+    window.addEventListener('error',function(e){
+      var a=document.getElementById('app');
+      if(a&&!a.dataset.rendered){
+        a.innerHTML='<div class="panel"><h2>Command Center could not load</h2><p class="gray">'+String(e.message||'Unknown error')+'</p></div>';
+      }
+    });
+  </script>
+
+  <div aria-label="Wallboard controls" class="wallboard-controls" id="wallboardControls">
+    <button id="wallPrev">◀</button><button id="wallPause">PAUSE</button><button id="wallNext">▶</button>
+    <button id="wallExit">EXIT WALLBOARD</button><span id="wallLive">● LIVE</span>
+  </div>
+
+  <script src="js/app.v1.0.4.js?v=1.0.4"></script>
+  <script src="js/v1.0.5-shell-hotfix.js?v=1.0.5-20260825"></script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+/* ============================================================
+   B7 FI COMMAND CENTER v1.0.5 — NIGHT STABILIZATION
+   Scope: global shell only.
+   Purpose:
+   - one full-width application rail
+   - one sticky upper shell
+   - no legacy centered/narrow shell regression
+   - content/footer aligned to the same viewport rail
+   - page toolbar stays inside sticky shell
+   ============================================================ */
+
+:root{
+  --b7-shell-gutter: 10px;
+  --b7-shell-bg: #07111f;
+  --b7-sticky-z: 4000;
+}
+
+html,body{
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+  overflow-x:hidden!important;
+}
+
+/* One width authority for the entire application. */
+body > .sticky-header,
+body > main#app,
+body > footer.v57-footer{
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  margin-left:0!important;
+  margin-right:0!important;
+  box-sizing:border-box!important;
+}
+
+/* ONE sticky parent: header + global navigation + alert/status + page nav/actions. */
+body:not(.wallboard-mode):not(.v802-live-status) > .sticky-header{
+  position:sticky!important;
+  position:-webkit-sticky!important;
+  top:0!important;
+  left:0!important;
+  right:0!important;
+  z-index:var(--b7-sticky-z)!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  justify-content:flex-start!important;
+  width:100%!important;
+  max-width:none!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  margin:0!important;
+  padding:0!important;
+  gap:0!important;
+  overflow:visible!important;
+  background:#050b14!important;
+  isolation:isolate!important;
+  box-shadow:0 7px 18px rgba(0,0,0,.30)!important;
+}
+
+/* Children participate in the sticky parent instead of trying to stick themselves. */
+body:not(.wallboard-mode):not(.v802-live-status) > .sticky-header > .hero,
+body:not(.wallboard-mode):not(.v802-live-status) > .sticky-header > .main-nav,
+body:not(.wallboard-mode):not(.v802-live-status) > .sticky-header > #b7StatusStack,
+body:not(.wallboard-mode):not(.v802-live-status) > .sticky-header > .header-status-stack{
+  position:relative!important;
+  top:auto!important;
+  left:auto!important;
+  right:auto!important;
+  bottom:auto!important;
+  inset:auto!important;
+  transform:none!important;
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  flex:0 0 auto!important;
+}
+
+/* Header panels fill the same rail as every page. */
+body:not(.wallboard-mode) .v57-hero,
+body:not(.wallboard-mode) .v57-header{
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+}
+body:not(.wallboard-mode) .v57-hero{
+  padding-left:0!important;
+  padding-right:0!important;
+}
+
+/* Global navigation: same rail, no centered max-width wrapper. */
+body:not(.wallboard-mode) .main-nav{
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  box-sizing:border-box!important;
+  position:relative!important;
+  top:auto!important;
+  z-index:auto!important;
+  padding-left:var(--b7-shell-gutter)!important;
+  padding-right:var(--b7-shell-gutter)!important;
+}
+
+/* Alert/status stack and page toolbar use exactly the same width. */
+body:not(.wallboard-mode) #b7StatusStack,
+body:not(.wallboard-mode) .header-status-stack,
+body:not(.wallboard-mode) .header-status-stack .page-toolbar,
+body:not(.wallboard-mode) .header-status-stack #floatingActions{
+  width:100%!important;
+  max-width:none!important;
+  margin-left:0!important;
+  margin-right:0!important;
+  box-sizing:border-box!important;
+}
+
+body:not(.wallboard-mode) .header-status-stack{
+  padding:0!important;
+}
+
+body:not(.wallboard-mode) .header-status-stack .page-toolbar,
+body:not(.wallboard-mode) .header-status-stack #floatingActions{
+  position:relative!important;
+  inset:auto!important;
+  transform:none!important;
+  left:auto!important;
+  right:auto!important;
+  top:auto!important;
+  bottom:auto!important;
+  border-left:0!important;
+  border-right:0!important;
+  border-radius:0!important;
+  padding-left:var(--b7-shell-gutter)!important;
+  padding-right:var(--b7-shell-gutter)!important;
+}
+
+/* Main content is allowed to use the working screen instead of inheriting old 1500/1680 rails. */
+body > main#app.page-shell{
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  padding-left:var(--b7-shell-gutter)!important;
+  padding-right:var(--b7-shell-gutter)!important;
+  box-sizing:border-box!important;
+}
+
+/* Footer stays aligned with header/content and at normal document bottom. */
+body > footer.v57-footer{
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  box-sizing:border-box!important;
+  padding-left:var(--b7-shell-gutter)!important;
+  padding-right:var(--b7-shell-gutter)!important;
+}
+
+/* Prevent legacy center-specific wrappers from shrinking the application rail. */
+body[data-center] .page-shell,
+body[data-center] .center-shell,
+body[data-center] .operations-shell,
+body[data-center] .tool-center-shell,
+body[data-center] .shipping-shell,
+body[data-center] .priority-shell,
+body[data-center] .status-shell,
+body[data-center] .meeting-shell,
+body[data-center] .action-shell,
+body[data-center] .reference-shell,
+body[data-center] .search-shell{
+  max-width:none!important;
+}
+
+/* Tool cards: preserve the 4-column desktop intent without absurd stretching. */
+@media (min-width:1280px){
+  body[data-center="tool"] .system-grid,
+  body[data-center="tool"] .countdown-card-grid,
+  body[data-center="tool"] .tool-grid{
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  }
+}
+
+/* Meeting cards: four balanced cards, history still full width. */
+@media (min-width:1100px){
+  body[data-center="meeting"] .meeting-launch-grid,
+  body[data-center="meeting"] .meeting-type-grid,
+  body[data-center="meeting"] .meeting-grid{
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  }
+}
+
+/* Narrow screens keep horizontal nav usable without breaking the sticky shell. */
+@media (max-width:1180px){
+  body:not(.wallboard-mode) .main-nav{
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    justify-content:flex-start!important;
+    flex-wrap:nowrap!important;
+  }
+  body:not(.wallboard-mode) .main-nav .nav-btn{
+    white-space:nowrap!important;
+    flex:0 0 auto!important;
+  }
+}
+
+@media (max-width:760px){
+  :root{ --b7-shell-gutter: 6px; }
+  body:not(.wallboard-mode):not(.v802-live-status) > .sticky-header{
+    box-shadow:0 4px 12px rgba(0,0,0,.34)!important;
+  }
+}
+
+/* Screenshot / wallboard behavior remains owned by the base runtime. */
+body.wallboard-mode > .sticky-header,
+body.v802-live-status > .sticky-header{
+  position:relative!important;
+}
