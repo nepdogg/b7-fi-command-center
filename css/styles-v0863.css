@@ -1,0 +1,172 @@
+/* B7 FI Command Center v0.80.63 — Operations Center final layout + global page-nav stabilization */
+
+/* Single visible secondary page-navigation authority. v0.80.56 created a second bar;
+   v0.80.60 owns #floatingActions, so keep only that one visible. */
+#b7PageToolbar{display:none!important}
+#floatingActions.v860-toolbar,
+#floatingActions.v855-toolbar{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:14px!important;
+  width:100%!important;
+  max-width:none!important;
+  min-height:46px!important;
+  padding:6px 12px!important;
+  margin:0!important;
+  box-sizing:border-box!important;
+  border-left:0!important;
+  border-right:0!important;
+  border-radius:0!important;
+}
+#floatingActions .v860-left,#floatingActions .v855-left{justify-self:start!important;display:flex!important;align-items:center!important;gap:8px!important;flex-wrap:nowrap!important;min-width:0!important}
+#floatingActions .v860-right,#floatingActions .v855-right{justify-self:end!important;display:flex!important;align-items:center!important;gap:8px!important;flex-wrap:nowrap!important;margin-left:0!important;min-width:0!important}
+#floatingActions .btn{white-space:nowrap!important}
+
+/* Operations: use the same horizontal rails as the alert/status bars. */
+body.v825-operations-dashboard #app.page-shell,
+body[data-center="home"] #app.page-shell{
+  width:100%!important;
+  max-width:none!important;
+  padding-left:12px!important;
+  padding-right:12px!important;
+  padding-top:10px!important;
+  padding-bottom:0!important;
+  min-height:0!important;
+  flex:0 0 auto!important;
+  box-sizing:border-box!important;
+}
+body.v825-operations-dashboard .v825-operations-live,
+body[data-center="home"] .v825-operations-live,
+body.v802-live-status .v803-live-shell{
+  width:100%!important;
+  max-width:none!important;
+  margin-left:0!important;
+  margin-right:0!important;
+}
+body.v825-operations-dashboard .v825-operations-live>.v802-live-metrics,
+body.v825-operations-dashboard .v825-operations-live>.v829-quarter-progress,
+body.v825-operations-dashboard .v825-operations-live>.v861-family-section,
+body.v825-operations-dashboard .v825-operations-live>.v802-carousel,
+body[data-center="home"] .v825-operations-live>.v802-live-metrics,
+body[data-center="home"] .v825-operations-live>.v829-quarter-progress,
+body[data-center="home"] .v825-operations-live>.v861-family-section,
+body[data-center="home"] .v825-operations-live>.v802-carousel,
+body.v802-live-status .v803-live-shell>.v802-live-metrics,
+body.v802-live-status .v803-live-shell>.v829-quarter-progress,
+body.v802-live-status .v803-live-shell>.v861-family-section,
+body.v802-live-status .v803-live-shell>.v802-carousel{
+  width:100%!important;
+  max-width:none!important;
+  margin-left:0!important;
+  margin-right:0!important;
+  box-sizing:border-box!important;
+}
+
+/* Family countdown: compact vertical tiles, centered, large readable numbers. */
+.v861-family-section{
+  margin:8px 0 10px!important;
+  padding:10px 12px!important;
+  border-radius:9px!important;
+}
+.v861-family-header{margin-bottom:10px!important;padding:0 2px!important}
+.v861-family-header strong{font-size:14px!important;letter-spacing:.08em!important}
+.v861-family-header span{font-size:11px!important}
+.v861-family-list{gap:8px!important}
+.v861-family-row{
+  display:grid!important;
+  grid-template-columns:170px minmax(0,1fr)!important;
+  gap:20px!important;
+  align-items:center!important;
+  padding:8px 0!important;
+}
+.v861-family-row h3{
+  margin:0!important;
+  font-size:23px!important;
+  line-height:1!important;
+  text-align:center!important;
+  letter-spacing:.02em!important;
+}
+.v861-family-kpis{
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(92px,128px))!important;
+  justify-content:space-between!important;
+  justify-items:center!important;
+  align-items:stretch!important;
+  gap:14px!important;
+}
+.v861-family-kpi{
+  width:100%!important;
+  max-width:128px!important;
+  min-height:62px!important;
+  padding:8px 7px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  border-radius:8px!important;
+}
+.v861-family-kpi span{
+  font-size:10px!important;
+  line-height:1.05!important;
+  font-weight:800!important;
+  letter-spacing:.07em!important;
+  text-align:center!important;
+}
+.v861-family-kpi b{
+  font-size:26px!important;
+  line-height:1!important;
+  margin-top:5px!important;
+  text-align:center!important;
+}
+
+/* Make the product image use the photo region instead of floating small inside it. */
+body.v825-operations-dashboard .v802-tool-visual,
+body[data-center="home"] .v802-tool-visual,
+body.v802-live-status .v802-tool-visual{
+  padding:6px!important;
+  overflow:hidden!important;
+}
+body.v825-operations-dashboard .v802-tool-visual img,
+body[data-center="home"] .v802-tool-visual img,
+body.v802-live-status .v802-tool-visual img{
+  width:94%!important;
+  height:94%!important;
+  max-width:94%!important;
+  max-height:94%!important;
+  padding:0!important;
+  margin:auto!important;
+  object-fit:contain!important;
+  object-position:center!important;
+}
+
+/* Remove artificial viewport stretch below the live card. The footer follows content. */
+body.v825-operations-dashboard,
+body[data-center="home"]{
+  min-height:0!important;
+}
+body.v825-operations-dashboard>main#app,
+body[data-center="home"]>main#app{
+  flex:0 0 auto!important;
+  min-height:0!important;
+}
+body.v825-operations-dashboard>footer.v57-footer,
+body[data-center="home"]>footer.v57-footer{
+  margin-top:0!important;
+}
+
+@media(max-width:1100px){
+  .v861-family-row{grid-template-columns:135px minmax(0,1fr)!important;gap:12px!important}
+  .v861-family-row h3{font-size:20px!important}
+  .v861-family-kpis{grid-template-columns:repeat(5,minmax(78px,1fr))!important;gap:8px!important}
+  .v861-family-kpi{max-width:none!important}
+}
+@media(max-width:760px){
+  #floatingActions.v860-toolbar,#floatingActions.v855-toolbar{overflow-x:auto!important;grid-template-columns:auto auto!important}
+  .v861-family-row{grid-template-columns:1fr!important;gap:8px!important}
+  .v861-family-row h3{text-align:left!important}
+  .v861-family-kpis{grid-template-columns:repeat(2,1fr)!important;justify-content:stretch!important}
+  .v861-family-kpi{max-width:none!important}
+  .v861-family-kpi:first-child{grid-column:1/-1!important}
+}
