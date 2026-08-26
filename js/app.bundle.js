@@ -1,10 +1,10 @@
-/* B7 FI Command Center v1.0.1 consolidated runtime. ONE JavaScript payload. */
-window.B7_APP_VERSION='1.0.1'; window.VERSION='1.0.1';
+/* B7 FI Command Center v1.0.3 consolidated runtime. ONE JavaScript payload. */
+window.B7_APP_VERSION='1.0.3'; window.VERSION='1.0.3';
 const __B7_NATIVE_MO = window.MutationObserver;
 window.MutationObserver = class B7LegacyObserverDisabled { constructor(){ } observe(){ } disconnect(){ } takeRecords(){ return []; } };
 
 /* ===== SOURCE: js/app-v0300.js ===== */
-const APP_VERSION='1.0.1';
+const APP_VERSION='1.0.3';
 const PRODUCT_FAMILY='29XX';
 const PRODUCT_CATALOG={"Regera": ["D10H", "D10L", "D10M", "R900", "R900M", "R905", "R905i", "R905iSens", "R905t"], "Celestiq": ["D11H", "D11L", "D11M", "R910", "R910M", "R915", "R915i", "R915t"], "Zephyr": ["C200", "C205", "C300", "C305"], "Panamera": ["2935", "2935i", "2935Lite", "2935Lite_TI", "2935LiteS", "2935LiteSE", "2935t"], "Targa": ["2955", "2955i", "2955t", "D8L", "D8H", "D8M"], "Taycan": ["2965", "2965t", "2965C", "D8H_EP", "D8L_EP", "D8M_EP"], "Macan": ["2930XR", "2935iXR", "2935tXR", "2935XR", "D7XR"], "Boxster": ["2915S2"], "Vanquish": ["2905", "2915"]};
 const QUARTERS=["CY26Q1", "CY26Q2", "CY26Q3", "CY26Q4", "CY27Q1", "CY27Q2", "CY27Q3", "CY27Q4", "CY28Q1", "CY28Q2", "CY28Q3", "CY28Q4", "CY29Q1", "CY29Q2", "CY29Q3", "CY29Q4", "CY30Q1", "CY30Q2", "CY30Q3", "CY30Q4"];
@@ -349,7 +349,7 @@ function downloadBlob(name,content,type='application/octet-stream'){
 function safeFileStamp(){return new Date().toISOString().replace(/[:.]/g,'-')}
 function exportFullBackup(){
   state.tools=tools;state.config=normalizeConfig(state.config);
-  const payload={schema:'B7-FI-COMMAND-CENTER-BACKUP',schemaVersion:1,appVersion:'1.0.1',exportedAt:new Date().toISOString(),state};
+  const payload={schema:'B7-FI-COMMAND-CENTER-BACKUP',schemaVersion:1,appVersion:'1.0.3',exportedAt:new Date().toISOString(),state};
   downloadBlob(`B7-FI-Command-Center-Full-Backup-${safeFileStamp()}.json`,JSON.stringify(payload,null,2),'application/json');
 }
 async function importFullBackup(file){
@@ -376,7 +376,7 @@ async function testDirectSharePoint(){
  catch(e){sh.lastConnectionResult=`FAILED — ${e.message||e}`;sh.mode='local';save();if(box)box.innerHTML=`<div class="diagnostic-fail"><b>Direct REST test did not connect.</b><br>${esc(e.message||String(e))}<br><small>This is still a useful result. A file:// or OneDrive-launched page is commonly blocked by browser CORS/authentication rules. Keep the exact message for the next integration step.</small></div>`;updateOperationsBar()}
 }
 function saveIntegrationConfig(){state.shared.siteUrl=$('#spSiteUrl')?.value.trim()||state.shared.siteUrl;state.shared.listName=$('#spListName')?.value.trim()||state.shared.listName;state.shared.tenantId=$('#spTenantId')?.value.trim()||'';state.shared.clientId=$('#spClientId')?.value.trim()||'';save();let x=$('#configSaveResult');if(x)x.innerHTML='<div class="success-box">Integration configuration saved locally. No secret is stored.</div>'}
-function diagnosticReport(){let sh=state.shared||{};return [`B7 FI Command Center v1.0.1 Diagnostic Report`,`Generated: ${new Date().toISOString()}`,`Browser: ${navigator.userAgent}`,`Page protocol: ${location.protocol}`,`Page location: ${location.href}`,`Local tools: ${tools.length}`,`Current tools: ${current().length}`,`Waiting for FI: ${waitingTools().length}`,`In FI: ${inFiTools().length}`,`Shipped: ${shippedTools().length}`,`Archived: ${archiveTools().length}`,`Workspace tasks: ${(state.workspaceTasks||[]).length}`,`Last local change: ${state.lastLocalChange||'none'}`,`SharePoint site: ${sh.siteUrl||'not set'}`,`List name: ${sh.listName||'not set'}`,`Client ID present: ${sh.clientId?'yes':'no'}`,`Tenant ID present: ${sh.tenantId?'yes':'no'}`,`Last connection test: ${sh.lastConnectionTest||'none'}`,`Last connection result: ${sh.lastConnectionResult||'not tested'}`].join('\n')}
+function diagnosticReport(){let sh=state.shared||{};return [`B7 FI Command Center v1.0.3 Diagnostic Report`,`Generated: ${new Date().toISOString()}`,`Browser: ${navigator.userAgent}`,`Page protocol: ${location.protocol}`,`Page location: ${location.href}`,`Local tools: ${tools.length}`,`Current tools: ${current().length}`,`Waiting for FI: ${waitingTools().length}`,`In FI: ${inFiTools().length}`,`Shipped: ${shippedTools().length}`,`Archived: ${archiveTools().length}`,`Workspace tasks: ${(state.workspaceTasks||[]).length}`,`Last local change: ${state.lastLocalChange||'none'}`,`SharePoint site: ${sh.siteUrl||'not set'}`,`List name: ${sh.listName||'not set'}`,`Client ID present: ${sh.clientId?'yes':'no'}`,`Tenant ID present: ${sh.tenantId?'yes':'no'}`,`Last connection test: ${sh.lastConnectionTest||'none'}`,`Last connection result: ${sh.lastConnectionResult||'not tested'}`].join('\n')}
 async function copyDiagnosticReport(){let report=diagnosticReport();try{await navigator.clipboard.writeText(report);alert('Diagnostic report copied to clipboard.')}catch(e){downloadBlob(`B7-FI-Diagnostic-${safeFileStamp()}.txt`,report,'text/plain')}}
 function openMicrosoftList(){let site=normalizedSiteUrl(),name=encodeURIComponent(state.shared?.listName||'B7 FI Command Center');if(!site)return alert('Enter the SharePoint site URL first.');window.open(`${site}/Lists/${name}/AllItems.aspx`,'_blank')}
 function sharedData(){
@@ -453,7 +453,7 @@ function ensureV0300State(){
    t.supplementals=Array.isArray(t.supplementals)?t.supplementals:[];
    t.supplementalHistory=Array.isArray(t.supplementalHistory)?t.supplementalHistory:[];
  });
- state.appVersion='1.0.1';
+ state.appVersion='1.0.3';
 }
 ensureV0300State();
 function displayLamp(t){let n=(t.lamp===0||t.lamp)?String(t.lamp):'';return t.lampState==='OFF'?(n?`${n} / OFF`:'OFF'):(n||'0')}
@@ -575,7 +575,7 @@ function renderV3(){renderEditControls();setTimeout(enhanceDateInputs,0);setTime
 render=renderV3;
 
 // v0.30 backup metadata
-exportFullBackup=function(){state.tools=tools;state.config=normalizeConfig(state.config);ensureV0300State();const payload={schema:'B7-FI-COMMAND-CENTER-BACKUP',schemaVersion:2,appVersion:'1.0.1',exportedAt:new Date().toISOString(),state};downloadBlob(`B7-FI-Command-Center-Full-Backup-${safeFileStamp()}.json`,JSON.stringify(payload,null,2),'application/json')}
+exportFullBackup=function(){state.tools=tools;state.config=normalizeConfig(state.config);ensureV0300State();const payload={schema:'B7-FI-COMMAND-CENTER-BACKUP',schemaVersion:2,appVersion:'1.0.3',exportedAt:new Date().toISOString(),state};downloadBlob(`B7-FI-Command-Center-Full-Backup-${safeFileStamp()}.json`,JSON.stringify(payload,null,2),'application/json')}
 
 
 
@@ -587,7 +587,7 @@ function ensureV0305ToolState(){
     if(t.microTargetChecklist==null)t.microTargetChecklist='';
     if(t.microTargetUpdatedAt==null)t.microTargetUpdatedAt='';
   });
-  state.appVersion='1.0.1';
+  state.appVersion='1.0.3';
 }
 ensureV0305ToolState();
 
@@ -664,7 +664,7 @@ function toolStatusV5(id){
 toolStatus=toolStatusV5;
 
 /* v1.0.1 metadata */
-exportFullBackup=function(){state.tools=tools;state.config=normalizeConfig(state.config);ensureV0300State();ensureV0305ToolState();const payload={schema:'B7-FI-COMMAND-CENTER-BACKUP',schemaVersion:3,appVersion:'1.0.1',exportedAt:new Date().toISOString(),state};downloadBlob(`B7-FI-Command-Center-Full-Backup-${safeFileStamp()}.json`,JSON.stringify(payload,null,2),'application/json')}
+exportFullBackup=function(){state.tools=tools;state.config=normalizeConfig(state.config);ensureV0300State();ensureV0305ToolState();const payload={schema:'B7-FI-COMMAND-CENTER-BACKUP',schemaVersion:3,appVersion:'1.0.3',exportedAt:new Date().toISOString(),state};downloadBlob(`B7-FI-Command-Center-Full-Backup-${safeFileStamp()}.json`,JSON.stringify(payload,null,2),'application/json')}
 
 // Ensure page label and bars are initialized before first v0.30 render.
 setThemeFor(view);
@@ -730,7 +730,7 @@ window.addEventListener('storage',e=>{if(!wallboard.active||e.key!==KEY)return;t
 
 
 /* ===== SOURCE: js/merge-bridge-v0400.js ===== */
-/* B7 FI Command Center v1.0.1 merge bridge
+/* B7 FI Command Center v1.0.3 merge bridge
  * Saves the v1.0.1 framework functions before the v1.0.1 workflow layer loads.
  */
 window.__B7_V31_FRAMEWORK__={
@@ -988,7 +988,7 @@ ensureV0210();restartOpsTicker();render();
 
 /* ===== SOURCE: js/merge-compat-v0400.js ===== */
 /*
- * B7 FI Command Center v1.0.1 Unified Master Compatibility Layer
+ * B7 FI Command Center v1.0.3 Unified Master Compatibility Layer
  * ---------------------------------------------------------------
  * Functional baseline: v1.0.1 Weekend Operations Test
  * Visual / framework baseline: v1.0.1 Consolidated Test Build
@@ -1065,11 +1065,11 @@ ensureV0210();restartOpsTicker();render();
   document.querySelectorAll('.nav-btn').forEach(b=>b.onclick=()=>setView(b.dataset.view));
 
   // Unified version label.
-  window.B7_UNIFIED_VERSION='1.0.1';
+  window.B7_UNIFIED_VERSION='1.0.3';
   try{
-    state.appVersion='1.0.1';
-    const el=document.getElementById('appVersionLabel');if(el)el.textContent='B7 FI Command Center v1.0.1';
-    document.title='B7 FI Command Center v1.0.1';
+    state.appVersion='1.0.3';
+    const el=document.getElementById('appVersionLabel');if(el)el.textContent='B7 FI Command Center v1.0.3';
+    document.title='B7 FI Command Center v1.0.3';
   }catch(e){}
 
   try{updateOperationsBar()}catch(e){}
@@ -1078,9 +1078,9 @@ ensureV0210();restartOpsTicker();render();
 
 
 /* ===== SOURCE: js/merge-fixes-v0410.js ===== */
-/* B7 FI Command Center v1.0.1 — Unified QA Corrections */
+/* B7 FI Command Center v1.0.3 — Unified QA Corrections */
 (function(){
-  const VERSION=window.B7_APP_VERSION||'1.0.1';
+  const VERSION=window.B7_APP_VERSION||'1.0.3';
 
   function qOptions(selected){
     const now=calendarQuarter();
@@ -1238,9 +1238,9 @@ function familySummary41(name,arr,q){
 
 
 /* ===== SOURCE: js/patch-v0430.js ===== */
-/* B7 FI Command Center v1.0.1 — Countdown Lifecycle Finalization */
+/* B7 FI Command Center v1.0.3 — Countdown Lifecycle Finalization */
 (function(){
-const VERSION=window.B7_APP_VERSION||'1.0.1';
+const VERSION=window.B7_APP_VERSION||'1.0.3';
 function quarterOpts(sel){
   const vals=[sel,...(typeof QUARTERS!=='undefined'?QUARTERS:[]),...tools.map(t=>t.quarter),...tools.map(t=>t.originalQuarter)].filter(Boolean);
   return [...new Set(vals)].map(x=>`<option value="${esc(x)}" ${x===sel?'selected':''}>${esc(x)}</option>`).join('');
@@ -1295,9 +1295,9 @@ document.title=`B7 FI Command Center v${VERSION}`;let v=document.getElementById(
 
 
 /* ===== SOURCE: js/patch-v0450.js ===== */
-/* B7 FI Command Center v1.0.1 — Status + Workflow Polish */
+/* B7 FI Command Center v1.0.3 — Status + Workflow Polish */
 (function(){
-  const VERSION=window.B7_APP_VERSION||'1.0.1';
+  const VERSION=window.B7_APP_VERSION||'1.0.3';
 
   function clampPct(v){ return Math.max(0,Math.min(100,Number(v)||0)); }
   function sourcePct(status){
@@ -1406,9 +1406,9 @@ document.title=`B7 FI Command Center v${VERSION}`;let v=document.getElementById(
 })();
 
 /* ===== SOURCE: js/patch-v0460.js ===== */
-/* B7 FI Command Center v1.0.1 — Framework + Weekend Operations Polish */
+/* B7 FI Command Center v1.0.3 — Framework + Weekend Operations Polish */
 (function(){
-  const VERSION=window.B7_APP_VERSION||'1.0.1';
+  const VERSION=window.B7_APP_VERSION||'1.0.3';
 
   /* ---------- Top Action Center ticker repair ---------- */
   let v46ActionIndex=0;
@@ -1603,9 +1603,9 @@ document.title=`B7 FI Command Center v${VERSION}`;let v=document.getElementById(
 })();
 
 /* ===== SOURCE: js/patch-v0470.js ===== */
-/* B7 FI Command Center v1.0.1 — Meeting Notes + Legacy Reference + Framework QA */
+/* B7 FI Command Center v1.0.3 — Meeting Notes + Legacy Reference + Framework QA */
 (function(){
-const VERSION=window.B7_APP_VERSION||'1.0.1';
+const VERSION=window.B7_APP_VERSION||'1.0.3';
 function today47(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
 function ensure47(){
  state.meetings=state.meetings||{}; state.meetingHistory=Array.isArray(state.meetingHistory)?state.meetingHistory:[];
@@ -1651,14 +1651,14 @@ workspace=function(tab='tasks'){oldWorkspace47(tab);if(tab==='reference'){let h=
 
 /* Keep v0.46 ticker alive even after pages replaced by patch functions. */
 const render47=render;render=function(){render47();setTimeout(()=>{try{if(typeof refreshTopActions46==='function')refreshTopActions46(false);else if(typeof renderTopActionBar==='function')renderTopActionBar();updateOperationsBar()}catch(e){}},0)};
-document.title=`B7 FI Command Center v${VERSION}`;let v=document.getElementById('appVersionLabel');if(v)v.textContent=`B7 FI Command Center v${VERSION}`;setTimeout(()=>{try{render()}catch(e){console.error('v1.0.1',e)}},0);
+document.title=`B7 FI Command Center v${VERSION}`;let v=document.getElementById('appVersionLabel');if(v)v.textContent=`B7 FI Command Center v${VERSION}`;setTimeout(()=>{try{render()}catch(e){console.error('v1.0.3',e)}},0);
 })();
 
 
 /* ===== SOURCE: js/patch-v0480.js ===== */
-/* B7 FI Command Center v1.0.1 — Navigation + Statusbar QA */
+/* B7 FI Command Center v1.0.3 — Navigation + Statusbar QA */
 (function(){
-  const VERSION=window.B7_APP_VERSION||'1.0.1';
+  const VERSION=window.B7_APP_VERSION||'1.0.3';
   let ticker48=0;
 
   function knowledgePage48(){
@@ -1777,9 +1777,9 @@ document.title=`B7 FI Command Center v${VERSION}`;let v=document.getElementById(
 })();
 
 /* ===== SOURCE: js/patch-v0490.js ===== */
-/* B7 FI Command Center v1.0.1 — Knowledge Base + Framework Fix */
+/* B7 FI Command Center v1.0.3 — Knowledge Base + Framework Fix */
 (function(){
-  const VERSION=window.B7_APP_VERSION||'1.0.1';
+  const VERSION=window.B7_APP_VERSION||'1.0.3';
 
   function ensureKnowledge49(){
     state.knowledgeNotes=Array.isArray(state.knowledgeNotes)?state.knowledgeNotes:[];
@@ -1987,9 +1987,9 @@ document.title=`B7 FI Command Center v${VERSION}`;let v=document.getElementById(
 })();
 
 /* ===== SOURCE: js/patch-v0491.js ===== */
-/* B7 FI Command Center v1.0.1 — Header / Page Actions Final Layout Fix */
+/* B7 FI Command Center v1.0.3 — Header / Page Actions Final Layout Fix */
 (function(){
-  const VERSION=window.B7_APP_VERSION||'1.0.1';
+  const VERSION=window.B7_APP_VERSION||'1.0.3';
 
   function normalizeHeader491(){
     const stack=document.querySelector('.header-status-stack');
@@ -2031,9 +2031,9 @@ document.title=`B7 FI Command Center v${VERSION}`;let v=document.getElementById(
 })();
 
 /* ===== SOURCE: js/patch-v0492.js ===== */
-/* B7 FI Command Center v1.0.1 — Action Center Manual Reminder Control */
+/* B7 FI Command Center v1.0.3 — Action Center Manual Reminder Control */
 (function(){
-  const VERSION=window.B7_APP_VERSION||'1.0.1';
+  const VERSION=window.B7_APP_VERSION||'1.0.3';
   const baseV3Alerts492=v3Alerts;
 
   function ensureManual492(){
@@ -2253,9 +2253,9 @@ document.title=`B7 FI Command Center v${VERSION}`;let v=document.getElementById(
 })();
 
 /* ===== SOURCE: js/patch-v0500.js ===== */
-/* B7 FI Command Center v1.0.1 — Home + Report Center + Meeting Actions + Exceptions QA */
+/* B7 FI Command Center v1.0.3 — Home + Report Center + Meeting Actions + Exceptions QA */
 (function(){
-const VERSION=window.B7_APP_VERSION||'1.0.1';
+const VERSION=window.B7_APP_VERSION||'1.0.3';
 const oldSetView500=setView;
 const oldRender500=render;
 const oldCountdown500=countdown;
@@ -2425,10 +2425,10 @@ const ver=document.getElementById('appVersionLabel');if(ver)ver.textContent=`B7 
 })();
 
 /* ===== SOURCE: js/patch-v0510.js ===== */
-/* B7 FI Command Center v1.0.1 — Friday Field-Test Consolidated */
+/* B7 FI Command Center v1.0.3 — Friday Field-Test Consolidated */
 (function(){
 'use strict';
-const VERSION=window.B7_APP_VERSION||'1.0.1';
+const VERSION=window.B7_APP_VERSION||'1.0.3';
 const esc51=(v)=>typeof esc==='function'?esc(String(v??'')):String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const nowISO51=()=>new Date().toISOString();
 const today51=()=>{let d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
@@ -3011,13 +3011,13 @@ window.B7Renderers58={
 })();
 
 /* ===== SOURCE: js/patch-v0600.js ===== */
-/* B7 FI Command Center v1.0.1
+/* B7 FI Command Center v1.0.3
    Authoritative router + theme controller.
    This replaces the v0.52-v0.56 stacked shell patches that caused route flicker.
 */
 (function(){
 'use strict';
-window.VERSION=window.B7_APP_VERSION||'1.0.1';
+window.VERSION=window.B7_APP_VERSION||'1.0.3';
 
 const CENTER={
   home:      {name:'OPERATIONS CENTER', color:'#176FA8', rgb:'23,111,168'},
@@ -3071,7 +3071,7 @@ function setCenterTheme(key){
 
   const title=document.getElementById('headerPageTitle');
   if(title) title.textContent=c.name;
-  document.title='B7 FI Command Center v'+(window.B7_APP_VERSION||'1.0.1');
+  document.title='B7 FI Command Center v'+(window.B7_APP_VERSION||'1.0.3');
 
   document.querySelectorAll('.main-nav .nav-btn').forEach(b=>{
     const active=NAV_VIEW[b.dataset.view]===key;
@@ -3081,7 +3081,7 @@ function setCenterTheme(key){
   const af=document.getElementById('administrationCenterFooter');
   if(af) af.classList.toggle('active',key==='admin');
   const ver=document.getElementById('appVersionLabel');
-  if(ver) ver.textContent='B7 FI Command Center v1.0.1';
+  if(ver) ver.textContent='B7 FI Command Center v1.0.3';
 }
 function cleanLegacyHeading(){
   const candidates=document.querySelectorAll('#app .report-title,#app > .page-title,#app .page-head');
@@ -3282,14 +3282,14 @@ requestAnimationFrame(()=>renderHome());
 })();
 
 /* ===== SOURCE: js/patch-v0610.js ===== */
-/* B7 FI Command Center v1.0.1 — Global UX / Editor / Status workflow pass */
+/* B7 FI Command Center v1.0.3 — Global UX / Editor / Status workflow pass */
 (function(){
 'use strict';
-window.VERSION=window.B7_APP_VERSION||'1.0.1';
+window.VERSION=window.B7_APP_VERSION||'1.0.3';
 const COLORS={home:['#176FA8','23,111,168','OPERATIONS CENTER'],tool:['#8E5AE8','142,90,232','TOOL CENTER'],shipping:['#27AE60','39,174,96','SHIPPING CENTER'],priority:['#D4A72C','212,167,44','PRIORITY CENTER'],status:['#F28C28','242,140,40','STATUS CENTER'],meeting:['#19B9D1','25,185,209','MEETING CENTER'],action:['#E54848','229,72,72','ACTION CENTER'],reference:['#E94A9A','233,74,154','REFERENCE CENTER'],admin:['#A6AFBC','166,175,188','ADMINISTRATION CENTER']};
 const qs=(s,r=document)=>r.querySelector(s), qsa=(s,r=document)=>[...r.querySelectorAll(s)];
 function esc61(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function theme61(k){let c=COLORS[k]||COLORS.home;document.body.dataset.center=k;['--center-color','--accent','--page-accent','--fleet-accent','--live-page-accent'].forEach(v=>{document.documentElement.style.setProperty(v,c[0]);document.body.style.setProperty(v,c[0])});['--center-rgb','--accent-rgb','--page-accent-rgb','--fleet-rgb','--live-page-rgb'].forEach(v=>{document.documentElement.style.setProperty(v,c[1]);document.body.style.setProperty(v,c[1])});let t=qs('#headerPageTitle');if(t)t.textContent=c[2];qsa('.main-nav .nav-btn').forEach(b=>b.classList.toggle('active',({home:'home',toolcenter:'tool',shipping:'shipping',priorities:'priority',statuscenter:'status',meetingcenter:'meeting',actions:'action',referencecenter:'reference'}[b.dataset.view]===k)));let v=qs('#appVersionLabel');if(v)v.textContent='B7 FI Command Center v1.0.1'}
+function theme61(k){let c=COLORS[k]||COLORS.home;document.body.dataset.center=k;['--center-color','--accent','--page-accent','--fleet-accent','--live-page-accent'].forEach(v=>{document.documentElement.style.setProperty(v,c[0]);document.body.style.setProperty(v,c[0])});['--center-rgb','--accent-rgb','--page-accent-rgb','--fleet-rgb','--live-page-rgb'].forEach(v=>{document.documentElement.style.setProperty(v,c[1]);document.body.style.setProperty(v,c[1])});let t=qs('#headerPageTitle');if(t)t.textContent=c[2];qsa('.main-nav .nav-btn').forEach(b=>b.classList.toggle('active',({home:'home',toolcenter:'tool',shipping:'shipping',priorities:'priority',statuscenter:'status',meetingcenter:'meeting',actions:'action',referencecenter:'reference'}[b.dataset.view]===k)));let v=qs('#appVersionLabel');if(v)v.textContent='B7 FI Command Center v1.0.3'}
 function bar61(buttons){let b=qs('#floatingActions');if(!b)return;b.style.display='';b.innerHTML='';buttons.forEach(x=>{let bt=document.createElement('button');bt.className='btn '+(x.primary?'primary':'')+(x.right?' v61-right':'');bt.textContent=x.label;bt.onclick=x.fn;b.appendChild(bt)})}
 function returnViewFor(section){return {countdown:'toolcenter',shipping:'shipping',daily:'priorities',weekend:'weekend',meeting:'statuscenter',tools:'toolcenter',config:'admincenter'}[section]||'home'}
 function centerForEdit(section){return {countdown:'tool',shipping:'shipping',daily:'priority',weekend:'priority',meeting:'status',tools:'tool',config:'admin'}[section]||'admin'}
@@ -3335,13 +3335,13 @@ setTimeout(decorate61,50);
 
 
 /* ===== SOURCE: js/patch-v0620.js ===== */
-/* B7 FI Command Center v1.0.1 — Center Navigation / Page Actions Standardization */
+/* B7 FI Command Center v1.0.3 — Center Navigation / Page Actions Standardization */
 (function(){
 'use strict';
-window.VERSION=window.B7_APP_VERSION||'1.0.1';
+window.VERSION=window.B7_APP_VERSION||'1.0.3';
 const qs=(s,r=document)=>r.querySelector(s), qsa=(s,r=document)=>[...r.querySelectorAll(s)];
 const ACTION_RX=/^(EDIT |\+?\s*ADD |\+?\s*START |MORNING QUICK UPDATE|LEAD WORKSPACE|REPORT$|CANCEL$|SAVE CHANGES$)/i;
-function version62(){let v=qs('#appVersionLabel');if(v)v.textContent='B7 FI Command Center v1.0.1'}
+function version62(){let v=qs('#appVersionLabel');if(v)v.textContent='B7 FI Command Center v1.0.3'}
 function proxyButton(label,source,primary=false){
  const b=document.createElement('button');b.className='btn v62-page-action'+(primary?' primary':'');b.textContent=label;
  b.onclick=()=>source.click();return b;
@@ -3394,10 +3394,10 @@ setTimeout(decorate62,80);
 
 
 /* ===== SOURCE: js/patch-v0630.js ===== */
-/* B7 FI Command Center v1.0.1 — navigation reliability / global chrome / status workflow */
+/* B7 FI Command Center v1.0.3 — navigation reliability / global chrome / status workflow */
 (function(){
 'use strict';
-window.VERSION=window.B7_APP_VERSION||'1.0.1';
+window.VERSION=window.B7_APP_VERSION||'1.0.3';
 const C={home:['#176FA8','23,111,168'],tool:['#8E5AE8','142,90,232'],shipping:['#27AE60','39,174,96'],priority:['#D4A72C','212,167,44'],status:['#F28C28','242,140,40'],meeting:['#19B9D1','25,185,209'],action:['#E54848','229,72,72'],reference:['#E94A9A','233,74,154'],search:['#4F6BFF','79,107,255'],admin:['#A6AFBC','166,175,188']};
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 function center(){return document.body.dataset.center||'home'}
@@ -3408,7 +3408,7 @@ function hardTheme(){
  ['--accent-rgb','--page-accent-rgb','--fleet-rgb','--live-page-rgb'].forEach(v=>document.documentElement.style.setProperty(v,c[1]));
  document.body.style.setProperty('--center-color',c[0]);document.body.style.setProperty('--center-rgb',c[1]);
  const ob=$('#operationsBar'),ft=$('footer.v57-footer'); if(ob){ob.style.setProperty('border-color',c[0],'important')} if(ft){ft.style.setProperty('border-color',c[0],'important')}
- const v=$('#appVersionLabel');if(v)v.textContent='B7 FI Command Center v1.0.1';
+ const v=$('#appVersionLabel');if(v)v.textContent='B7 FI Command Center v1.0.3';
 }
 function btn(label,fn,primary=false,cls=''){
  const b=document.createElement('button');b.className='btn '+cls+(primary?' primary':'');b.textContent=label;b.dataset.worktab='page-action';b.onclick=fn;return b;
@@ -3468,10 +3468,10 @@ setTimeout(decorate,120);
 
 
 /* ===== SOURCE: js/patch-v0640.js ===== */
-/* B7 FI Command Center v1.0.1 — Monday field-test shell stabilization + Search Center */
+/* B7 FI Command Center v1.0.3 — Monday field-test shell stabilization + Search Center */
 (function(){
 'use strict';
-window.VERSION=window.B7_APP_VERSION||'1.0.1';
+window.VERSION=window.B7_APP_VERSION||'1.0.3';
 const SEARCH_COLOR='#4F6BFF', SEARCH_RGB='79,107,255';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 
@@ -3479,7 +3479,7 @@ function setVars(color,rgb){
   ['--center-color','--accent','--page-accent','--fleet-accent','--live-page-accent'].forEach(v=>{document.documentElement.style.setProperty(v,color);document.body.style.setProperty(v,color)});
   ['--center-rgb','--accent-rgb','--page-accent-rgb','--fleet-rgb','--live-page-rgb'].forEach(v=>{document.documentElement.style.setProperty(v,rgb);document.body.style.setProperty(v,rgb)});
 }
-function setVersion(){const v=$('#appVersionLabel');if(v)v.textContent='B7 FI Command Center v1.0.1'}
+function setVersion(){const v=$('#appVersionLabel');if(v)v.textContent='B7 FI Command Center v1.0.3'}
 function screenshot(){
   try{
     if(typeof window.enterScreenshot==='function') return window.enterScreenshot();
@@ -3631,10 +3631,10 @@ setTimeout(shell,180);
 
 
 /* ===== SOURCE: js/patch-v0650.js ===== */
-/* B7 FI Command Center v1.0.1 — status/footer architecture + toolbar reliability */
+/* B7 FI Command Center v1.0.3 — status/footer architecture + toolbar reliability */
 (function(){
 'use strict';
-window.VERSION=window.B7_APP_VERSION||'1.0.1';
+window.VERSION=window.B7_APP_VERSION||'1.0.3';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const COLORS={home:['#176FA8','23,111,168'],tool:['#8E5AE8','142,90,232'],shipping:['#27AE60','39,174,96'],priority:['#D4A72C','212,167,44'],status:['#F28C28','242,140,40'],meeting:['#19B9D1','25,185,209'],action:['#E54848','229,72,72'],reference:['#E94A9A','233,74,154'],search:['#4F6BFF','79,107,255'],admin:['#A6AFBC','166,175,188']};
 
@@ -3643,7 +3643,7 @@ function theme(){
   const c=COLORS[currentCenter()]||COLORS.home;
   ['--center-color','--accent','--page-accent','--fleet-accent','--live-page-accent'].forEach(v=>{document.documentElement.style.setProperty(v,c[0]);document.body.style.setProperty(v,c[0])});
   ['--center-rgb','--accent-rgb','--page-accent-rgb','--fleet-rgb','--live-page-rgb'].forEach(v=>{document.documentElement.style.setProperty(v,c[1]);document.body.style.setProperty(v,c[1])});
-  const v=$('#appVersionLabel');if(v)v.textContent='B7 FI COMMAND CENTER v1.0.1';
+  const v=$('#appVersionLabel');if(v)v.textContent='B7 FI COMMAND CENTER v1.0.3';
 }
 function screenshot(){
   try{if(typeof window.enterScreenshot==='function')return window.enterScreenshot()}catch(e){}
@@ -3671,7 +3671,7 @@ function rebuildFleetBar(){
 function rebuildFooter(){
   const f=$('footer.v57-footer');if(!f)return;
   if(!f.dataset.v65){
-    f.innerHTML=`<div class="v65-footer-version"><strong id="appVersionLabel">B7 FI COMMAND CENTER v1.0.1</strong></div>
+    f.innerHTML=`<div class="v65-footer-version"><strong id="appVersionLabel">B7 FI COMMAND CENTER v1.0.3</strong></div>
       <div class="v65-footer-admin"><button id="administrationCenterFooter" class="v57-admin-footer-btn">ADMINISTRATION CENTER</button></div>
       <div class="v65-footer-system"><span class="ops-live-dot"></span><b>COMMAND CENTER</b><span id="opsSync">Local Production Mode · SharePoint live sync pending</span></div>
       <div class="v65-footer-location">Building 7 · Final Integration · Operations</div>`;
@@ -3729,10 +3729,10 @@ setTimeout(shell,120);
 
 
 /* ===== SOURCE: js/patch-v0660.js ===== */
-/* B7 FI Command Center v1.0.1 — final shared-shell framework stabilization */
+/* B7 FI Command Center v1.0.3 — final shared-shell framework stabilization */
 (function(){
 'use strict';
-window.VERSION=window.B7_APP_VERSION||'1.0.1';
+window.VERSION=window.B7_APP_VERSION||'1.0.3';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const COLORS={home:['#176FA8','23,111,168','OPERATIONS CENTER'],tool:['#8E5AE8','142,90,232','TOOL CENTER'],shipping:['#27AE60','39,174,96','SHIPPING CENTER'],priority:['#D4A72C','212,167,44','PRIORITY CENTER'],status:['#F28C28','242,140,40','STATUS CENTER'],meeting:['#19B9D1','25,185,209','MEETING CENTER'],action:['#E54848','229,72,72','ACTION CENTER'],reference:['#E94A9A','233,74,154','REFERENCE CENTER'],search:['#4F6BFF','79,107,255','SEARCH CENTER'],admin:['#A6AFBC','166,175,188','ADMINISTRATION CENTER']};
 
@@ -3742,7 +3742,7 @@ function applyTheme(){
   ['--center-color','--accent','--page-accent','--fleet-accent','--live-page-accent'].forEach(v=>{document.documentElement.style.setProperty(v,c[0]);document.body.style.setProperty(v,c[0])});
   ['--center-rgb','--accent-rgb','--page-accent-rgb','--fleet-rgb','--live-page-rgb'].forEach(v=>{document.documentElement.style.setProperty(v,c[1]);document.body.style.setProperty(v,c[1])});
   const title=$('#headerPageTitle'); if(title) title.textContent=c[2];
-  const ver=$('#appVersionLabel'); if(ver) ver.textContent='B7 FI COMMAND CENTER v1.0.1';
+  const ver=$('#appVersionLabel'); if(ver) ver.textContent='B7 FI COMMAND CENTER v1.0.3';
   $$('.main-nav .nav-btn').forEach(b=>{
     const map={home:'home',toolcenter:'tool',shipping:'shipping',priorities:'priority',statuscenter:'status',meetingcenter:'meeting',actions:'action',referencecenter:'reference',searchcenter:'search'};
     b.classList.toggle('active',map[b.dataset.view]===center());
@@ -3811,7 +3811,7 @@ function footer(){
     f.innerHTML=`
       <div class="v66-footer-left">
         <button id="administrationCenterFooter" class="v57-admin-footer-btn">ADMINISTRATION CENTER</button>
-        <strong id="appVersionLabel">B7 FI COMMAND CENTER v1.0.1</strong>
+        <strong id="appVersionLabel">B7 FI COMMAND CENTER v1.0.3</strong>
       </div>
       <div class="v66-footer-center"><img src="assets/kla-plus-official.png" alt="KLA+" class="v66-footer-kla"></div>
       <div class="v66-footer-right">
@@ -3841,19 +3841,19 @@ setTimeout(shell,220);
 
 
 /* ===== SOURCE: js/patch-v0670.js ===== */
-/* B7 FI Command Center v1.0.1 — final framework/navigation stabilization */
+/* B7 FI Command Center v1.0.3 — final framework/navigation stabilization */
 (function(){
 'use strict';
-window.VERSION=window.B7_APP_VERSION||'1.0.1';
+window.VERSION=window.B7_APP_VERSION||'1.0.3';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const COLORS={home:['#176FA8','23,111,168','OPERATIONS CENTER'],tool:['#8E5AE8','142,90,232','TOOL CENTER'],shipping:['#27AE60','39,174,96','SHIPPING CENTER'],priority:['#D4A72C','212,167,44','PRIORITY CENTER'],status:['#F28C28','242,140,40','STATUS CENTER'],meeting:['#19B9D1','25,185,209','MEETING CENTER'],action:['#E54848','229,72,72','ACTION CENTER'],reference:['#E94A9A','233,74,154','REFERENCE CENTER'],search:['#4F6BFF','79,107,255','SEARCH CENTER'],admin:['#A6AFBC','166,175,188','ADMINISTRATION CENTER']};
 function center(){return document.body.dataset.center||'home'}
-function theme(){const c=COLORS[center()]||COLORS.home;['--center-color','--accent','--page-accent','--fleet-accent','--live-page-accent'].forEach(v=>{document.documentElement.style.setProperty(v,c[0]);document.body.style.setProperty(v,c[0])});['--center-rgb','--accent-rgb','--page-accent-rgb','--fleet-rgb','--live-page-rgb'].forEach(v=>{document.documentElement.style.setProperty(v,c[1]);document.body.style.setProperty(v,c[1])});const t=$('#headerPageTitle');if(t)t.textContent=c[2];const v=$('#appVersionLabel');if(v)v.textContent='B7 FI COMMAND CENTER v1.0.1';$$('.main-nav .nav-btn').forEach(b=>{const m={home:'home',toolcenter:'tool',shipping:'shipping',priorities:'priority',statuscenter:'status',meetingcenter:'meeting',actions:'action',referencecenter:'reference',searchcenter:'search'};b.classList.toggle('active',m[b.dataset.view]===center())})}
+function theme(){const c=COLORS[center()]||COLORS.home;['--center-color','--accent','--page-accent','--fleet-accent','--live-page-accent'].forEach(v=>{document.documentElement.style.setProperty(v,c[0]);document.body.style.setProperty(v,c[0])});['--center-rgb','--accent-rgb','--page-accent-rgb','--fleet-rgb','--live-page-rgb'].forEach(v=>{document.documentElement.style.setProperty(v,c[1]);document.body.style.setProperty(v,c[1])});const t=$('#headerPageTitle');if(t)t.textContent=c[2];const v=$('#appVersionLabel');if(v)v.textContent='B7 FI COMMAND CENTER v1.0.3';$$('.main-nav .nav-btn').forEach(b=>{const m={home:'home',toolcenter:'tool',shipping:'shipping',priorities:'priority',statuscenter:'status',meetingcenter:'meeting',actions:'action',referencecenter:'reference',searchcenter:'search'};b.classList.toggle('active',m[b.dataset.view]===center())})}
 function make(label,fn,cls=''){const b=document.createElement('button');b.type='button';b.className='btn '+cls;b.textContent=label;b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();fn&&fn()});return b}
 function screenshot(){try{if(typeof window.enterScreenshot==='function')return window.enterScreenshot()}catch(e){}document.body.classList.add('screenshot-mode');const x=$('#screenshotExit');if(x)x.style.display='block'}
 function report(){if(typeof window.print==='function')window.print()}
 function ensureActionLabel(){/* v0.70: Action Status label is rendered atomically by the ticker owner. */}
-function ensureFooter(){const f=$('footer.v57-footer');if(!f)return;if(!f.querySelector('.v66-footer-left')){f.innerHTML=`<div class="v66-footer-left"><button id="administrationCenterFooter" class="v57-admin-footer-btn">ADMINISTRATION CENTER</button><strong id="appVersionLabel">B7 FI COMMAND CENTER v1.0.1</strong></div><div class="v66-footer-center"><img src="assets/kla-plus-official.png" alt="KLA+" class="v66-footer-kla"></div><div class="v66-footer-right"><div><b>COMMAND CENTER</b> <span id="opsSync">Local Production Mode · SharePoint live sync pending</span></div><div>Building 7 · Final Integration · Operations</div></div>`}const a=$('#administrationCenterFooter');if(a)a.onclick=()=>window.setView('admincenter')}
+function ensureFooter(){const f=$('footer.v57-footer');if(!f)return;if(!f.querySelector('.v66-footer-left')){f.innerHTML=`<div class="v66-footer-left"><button id="administrationCenterFooter" class="v57-admin-footer-btn">ADMINISTRATION CENTER</button><strong id="appVersionLabel">B7 FI COMMAND CENTER v1.0.3</strong></div><div class="v66-footer-center"><img src="assets/kla-plus-official.png" alt="KLA+" class="v66-footer-kla"></div><div class="v66-footer-right"><div><b>COMMAND CENTER</b> <span id="opsSync">Local Production Mode · SharePoint live sync pending</span></div><div>Building 7 · Final Integration · Operations</div></div>`}const a=$('#administrationCenterFooter');if(a)a.onclick=()=>window.setView('admincenter')}
 function ensureFleet(){if(window.B7AlertEngine817)return;const bar=$('#operationsBar');if(!bar)return;if(!bar.querySelector('.v65-fleet-label')){const ticker=$('#opsTickerText')?.textContent||'Loading fleet status…',tasks=$('#opsTaskCount')?.textContent||'0 open actions',presence=$('#opsPresence')?.textContent||'Context: fleet overview';bar.innerHTML=`<div class="v65-fleet-label"><b>FLEET STATUS</b></div><div class="ops-ticker v65-fleet-ticker"><span id="opsTickerText">${ticker}</span></div><div class="ops-summary v65-fleet-summary"><span id="opsTaskCount">${tasks}</span><span class="ops-divider">•</span><span id="opsPresence">${presence}</span></div>`}}
 function normalizeToolbar(){const bar=$('#floatingActions');if(!bar)return;bar.style.display='flex';bar.style.pointerEvents='auto';
   if(center()==='home'){ $$(':scope > button',bar).forEach(b=>{if(/^OVERVIEW$/i.test((b.textContent||'').trim())) b.remove()}); }
@@ -3880,10 +3880,10 @@ setTimeout(stabilize,260);
 
 
 /* ===== SOURCE: js/patch-v0700.js ===== */
-/* B7 FI Command Center v1.0.1 — Framework Lock */
+/* B7 FI Command Center v1.0.3 — Framework Lock */
 (function(){
 'use strict';
-window.VERSION=window.B7_APP_VERSION||'1.0.1';
+window.VERSION=window.B7_APP_VERSION||'1.0.3';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const viewToCenter={home:'operations',toolcenter:'tool',shipping:'shipping',priorities:'priority',statuscenter:'status',meetingcenter:'meeting',actions:'action',referencecenter:'reference',searchcenter:'search',admincenter:'admin'};
 const centerToView={operations:'home',tool:'toolcenter',shipping:'shipping',priority:'priorities',status:'statuscenter',meeting:'meetingcenter',action:'actions',reference:'referencecenter',search:'searchcenter',admin:'admincenter'};
@@ -3892,7 +3892,7 @@ function label(b){return (b?.textContent||'').trim().replace(/^\+\s*/,'').toUppe
 function isActionLabel(t){return /^(EDIT|UPDATE|ADD|START|SCREENSHOT|REPORT|CANCEL|SAVE|OPEN|REFRESH|REPLACE|CHANGE|CLOSE)/.test(t)}
 function fleetKind(){const t=($('#opsTickerText')?.textContent||'').toLowerCase();if(/blocked|critical|behind\s+(?:[4-9]|\d{2,})/.test(t))return 'critical';if(/behind|overdue/.test(t))return 'attention';if(/at risk|risk/.test(t))return 'reminder';if(/ahead/.test(t))return 'information';if(/on schedule|complete|shipped/.test(t))return 'good';return 'normal'}
 function paintFleet(){const l=$('.v65-fleet-label');if(!l)return;l.dataset.status=fleetKind();if(!$('.v70-fleet-lamp',l))l.insertAdjacentHTML('afterbegin','<span class="v70-fleet-lamp" aria-hidden="true"></span>');}
-function ensureVersion(){const v=$('#appVersionLabel');if(v)v.textContent='B7 FI COMMAND CENTER v1.0.1';const r=$('.v66-footer-right');if(r){$$('b',r).forEach(b=>{if(/COMMAND CENTER/i.test(b.textContent||''))b.remove()})}}
+function ensureVersion(){const v=$('#appVersionLabel');if(v)v.textContent='B7 FI COMMAND CENTER v1.0.3';const r=$('.v66-footer-right');if(r){$$('b',r).forEach(b=>{if(/COMMAND CENTER/i.test(b.textContent||''))b.remove()})}}
 function removeBodyDuplicates(){
  const c=document.body.dataset.center||'';
  if(c==='meeting')$$('#app .start-now51').forEach(x=>x.remove());
@@ -3968,10 +3968,10 @@ setTimeout(()=>{restoreUrl();stabilize()},360);
 
 
 /* ===== SOURCE: js/patch-v0710.js ===== */
-/* B7 FI Command Center v1.0.1 — independent status colors + geometry stabilization */
+/* B7 FI Command Center v1.0.3 — independent status colors + geometry stabilization */
 (function(){
 'use strict';
-window.VERSION=window.B7_APP_VERSION||'1.0.1';
+window.VERSION=window.B7_APP_VERSION||'1.0.3';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 function text(el){return (el?.textContent||'').trim()}
 function actionStatus(){
@@ -4012,7 +4012,7 @@ function fixToolbar(){
   $$('.v70-first-action',bar).forEach(b=>b.classList.remove('v70-first-action'));
   if(first)first.classList.add('v70-first-action');
 }
-function version(){const v=$('#appVersionLabel');if(v)v.textContent='B7 FI COMMAND CENTER v1.0.1'}
+function version(){const v=$('#appVersionLabel');if(v)v.textContent='B7 FI COMMAND CENTER v1.0.3'}
 function stabilize(){stabilizeStatus();fixToolbar();version()}
 // v1.0.1 performance: continuous framework observers/poller removed.
 setTimeout(stabilize,120);setTimeout(stabilize,500);
@@ -4020,10 +4020,10 @@ setTimeout(stabilize,120);setTimeout(stabilize,500);
 
 
 /* ===== SOURCE: js/patch-v0720.js ===== */
-/* B7 FI Command Center v1.0.1 — unified status beacons + locked page navigation */
+/* B7 FI Command Center v1.0.3 — unified status beacons + locked page navigation */
 (function(){
 'use strict';
-window.VERSION=window.B7_APP_VERSION||'1.0.1';
+window.VERSION=window.B7_APP_VERSION||'1.0.3';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const names={red:'CRITICAL',critical:'CRITICAL',orange:'ATTENTION',attention:'ATTENTION',yellow:'REMINDER',reminder:'REMINDER',blue:'INFORMATION',information:'INFORMATION',green:'ON TRACK',good:'ON TRACK',normal:'NORMAL'};
 function txt(el){return (el?.textContent||'').trim()}
@@ -4081,7 +4081,7 @@ function toolbar(){
   buttons.forEach(b=>{b.classList.toggle('v70-page-nav',nav.includes(b));b.classList.toggle('v70-page-action',actions.includes(b));b.classList.remove('v70-first-action');b.style.marginTop='';b.style.marginBottom=''});
   nav.forEach(b=>bar.appendChild(b));actions.forEach(b=>bar.appendChild(b));if(actions[0])actions[0].classList.add('v70-first-action');
 }
-function version(){const v=$('#appVersionLabel');if(v)v.textContent='B7 FI COMMAND CENTER v1.0.1'}
+function version(){const v=$('#appVersionLabel');if(v)v.textContent='B7 FI COMMAND CENTER v1.0.3'}
 function run(){paint();toolbar();version()}
 // v1.0.1 performance: no continuous status observer/painter.
 setTimeout(run,80);setTimeout(run,300);setTimeout(run,900);
@@ -4089,10 +4089,10 @@ setTimeout(run,80);setTimeout(run,300);setTimeout(run,900);
 
 
 /* ===== SOURCE: js/patch-v0730.js ===== */
-/* B7 FI Command Center v1.0.1 — deterministic status rails + compact page navigation */
+/* B7 FI Command Center v1.0.3 — deterministic status rails + compact page navigation */
 (function(){
 'use strict';
-window.VERSION=window.B7_APP_VERSION||'1.0.1';
+window.VERSION=window.B7_APP_VERSION||'1.0.3';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const LABEL={red:'CRITICAL',critical:'CRITICAL',orange:'ATTENTION',attention:'ATTENTION',yellow:'REMINDER',reminder:'REMINDER',blue:'INFORMATION',information:'INFORMATION',green:'ON TRACK',good:'ON TRACK',normal:'NORMAL'};
 function text(el){return (el?.textContent||'').trim()}
@@ -4128,7 +4128,7 @@ function paint(){
   }finally{painting=false}
 }
 function toolbar(){const bar=$('#floatingActions');if(!bar)return;const buttons=$$(':scope > button',bar);const nav=buttons.filter(b=>b.classList.contains('v70-page-nav')||b.dataset.v57tab);const actions=buttons.filter(b=>!nav.includes(b));buttons.forEach(b=>{b.classList.toggle('v70-page-nav',nav.includes(b));b.classList.toggle('v70-page-action',actions.includes(b));b.classList.remove('v70-first-action');b.style.marginTop='';b.style.marginBottom=''});nav.forEach(b=>bar.appendChild(b));actions.forEach(b=>bar.appendChild(b));if(actions[0])actions[0].classList.add('v70-first-action')}
-function version(){const v=$('#appVersionLabel');if(v)v.textContent='B7 FI COMMAND CENTER v1.0.1'}
+function version(){const v=$('#appVersionLabel');if(v)v.textContent='B7 FI COMMAND CENTER v1.0.3'}
 function run(){paint();toolbar();version()}
 // v1.0.1 performance: no continuous status observer/painter.
 setTimeout(run,80);setTimeout(run,300);setTimeout(run,900);
@@ -4136,13 +4136,13 @@ setTimeout(run,80);setTimeout(run,300);setTimeout(run,900);
 
 
 /* ===== SOURCE: js/patch-v0740.js ===== */
-/* B7 FI Command Center v1.0.1 — stable top status stack hotfix
+/* B7 FI Command Center v1.0.3 — stable top status stack hotfix
    IMPORTANT: no MutationObserver, no recurring re-parent loop, no polling timer.
    The header/status/footer shell is persistent in this SPA, so these changes are applied once.
 */
 (function(){
 'use strict';
-window.VERSION=window.B7_APP_VERSION||'1.0.1';
+window.VERSION=window.B7_APP_VERSION||'1.0.3';
 const $=(s,r=document)=>r.querySelector(s);
 
 function moveFleetTopOnce(){
@@ -4163,7 +4163,7 @@ function buildFooterOnce(){
     f.dataset.v74Footer='1';
     f.innerHTML=`
       <div class="v74-footer-admin"><button id="administrationCenterFooter" class="v57-admin-footer-btn">ADMINISTRATION CENTER</button></div>
-      <strong id="appVersionLabel" class="v74-footer-version">B7 FI COMMAND CENTER v1.0.1</strong>
+      <strong id="appVersionLabel" class="v74-footer-version">B7 FI COMMAND CENTER v1.0.3</strong>
       <div class="v74-footer-brand"><img src="assets/kla-plus-official.png" alt="KLA+"></div>
       <div class="v74-footer-system"><div class="v74-footer-live"><span class="v74-footer-dot" aria-hidden="true"></span><span>Local Production Mode</span></div><span class="v74-footer-sync">SharePoint live sync pending</span></div>
       <div class="v74-footer-location">Building 7 · Final Integration · Operations</div>`;
@@ -4215,12 +4215,12 @@ setTimeout(applyStableShell,500);
 
 
 /* ===== SOURCE: js/patch-v0750.js ===== */
-/* B7 FI Command Center v1.0.1 — stable shell polish
+/* B7 FI Command Center v1.0.3 — stable shell polish
    No MutationObserver. No recurring timers. Only bounded startup passes.
 */
 (function(){
 'use strict';
-window.VERSION=window.B7_APP_VERSION||'1.0.1';
+window.VERSION=window.B7_APP_VERSION||'1.0.3';
 const $=(s,r=document)=>r.querySelector(s);
 
 function ensurePerimeter(bar){
@@ -4243,7 +4243,7 @@ function ensureFooter(){
     f.dataset.v75Footer='1';
     f.innerHTML=`
       <div class="v74-footer-admin"><button id="administrationCenterFooter" class="v57-admin-footer-btn">ADMINISTRATION CENTER</button></div>
-      <strong id="appVersionLabel" class="v74-footer-version">B7 FI COMMAND CENTER v1.0.1</strong>
+      <strong id="appVersionLabel" class="v74-footer-version">B7 FI COMMAND CENTER v1.0.3</strong>
       <div class="v74-footer-brand"><img src="assets/kla-plus-official.png" alt="KLA+"></div>
       <div class="v74-footer-system"><div class="v74-footer-live"><span class="v74-footer-dot" aria-hidden="true"></span><span>Local Production Mode</span></div><span class="v74-footer-sync">SharePoint live sync pending</span></div>
       <div class="v74-footer-location">Building 7 · Final Integration · Operations</div>`;
@@ -4270,12 +4270,12 @@ setTimeout(run,600);
 
 
 /* ===== SOURCE: js/patch-v0760.js ===== */
-/* B7 FI Command Center v1.0.1 — stable shared shell/status/footer polish.
+/* B7 FI Command Center v1.0.3 — stable shared shell/status/footer polish.
    No MutationObserver. No recurring interval. Pure CSS motion only.
 */
 (function(){
 'use strict';
-window.VERSION=window.B7_APP_VERSION||'1.0.1';
+window.VERSION=window.B7_APP_VERSION||'1.0.3';
 const $=(s,r=document)=>r.querySelector(s);
 
 function ensureTwinTracers(bar){
@@ -4296,12 +4296,12 @@ function ensureFooter(){
   if(!f.querySelector('.v74-footer-brand') || !f.querySelector('.v74-footer-system')){
     f.innerHTML=`
       <div class="v74-footer-admin"><button id="administrationCenterFooter" class="v57-admin-footer-btn">ADMINISTRATION CENTER</button></div>
-      <strong id="appVersionLabel" class="v74-footer-version">B7 FI COMMAND CENTER v1.0.1</strong>
+      <strong id="appVersionLabel" class="v74-footer-version">B7 FI COMMAND CENTER v1.0.3</strong>
       <div class="v74-footer-brand"><img src="assets/kla-plus-official.png" alt="KLA+"></div>
       <div class="v74-footer-system"><div class="v74-footer-live"><span class="v74-footer-dot" aria-hidden="true"></span><span>Local Production Mode</span></div><span class="v74-footer-sync">SharePoint live sync pending</span></div>
       <div class="v74-footer-location">Building 7 · Final Integration · Operations</div>`;
   }
-  const version=$('#appVersionLabel');if(version)version.textContent='B7 FI COMMAND CENTER v1.0.1';
+  const version=$('#appVersionLabel');if(version)version.textContent='B7 FI COMMAND CENTER v1.0.3';
   const btn=$('#administrationCenterFooter');
   if(btn && !btn.dataset.v76Bound){
     btn.dataset.v76Bound='1';
@@ -4339,12 +4339,12 @@ setTimeout(run,760);
 
 
 /* ===== SOURCE: js/patch-v0770.js ===== */
-/* B7 FI Command Center v1.0.1 — bounded shell/status finishing patch.
+/* B7 FI Command Center v1.0.3 — bounded shell/status finishing patch.
    No MutationObserver. No recurring interval.
 */
 (function(){
 'use strict';
-window.VERSION=window.B7_APP_VERSION||'1.0.1';
+window.VERSION=window.B7_APP_VERSION||'1.0.3';
 const $=(s,r=document)=>r.querySelector(s);
 function text(el){return (el?.textContent||'').trim()}
 function fleetCount(){
@@ -4358,7 +4358,7 @@ function finish(){
   if(f&&stack&&toolbar&&f.parentElement!==stack)stack.insertBefore(f,toolbar);
   const sum=$('.v65-fleet-summary',f);
   if(sum)sum.setAttribute('data-v77-count',String(Math.max(1,fleetCount())));
-  const version=$('#appVersionLabel');if(version)version.textContent='B7 FI COMMAND CENTER v1.0.1';
+  const version=$('#appVersionLabel');if(version)version.textContent='B7 FI COMMAND CENTER v1.0.3';
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',finish,{once:true});else finish();
 setTimeout(finish,220);
@@ -4367,12 +4367,12 @@ setTimeout(finish,850);
 
 
 /* ===== SOURCE: js/patch-v0780.js ===== */
-/* B7 FI Command Center v1.0.1 — bounded shell/status/footer finishing patch.
+/* B7 FI Command Center v1.0.3 — bounded shell/status/footer finishing patch.
    No MutationObserver. No recurring interval. Animation is CSS-only.
 */
 (function(){
 'use strict';
-window.VERSION=window.B7_APP_VERSION||'1.0.1';
+window.VERSION=window.B7_APP_VERSION||'1.0.3';
 const $=(s,r=document)=>r.querySelector(s);
 
 function text(el){return (el?.textContent||'').trim()}
@@ -4405,12 +4405,12 @@ function ensureFooter(){
   if(!f.querySelector('.v74-footer-brand') || !f.querySelector('.v74-footer-system')){
     f.innerHTML=`
       <div class="v74-footer-admin"><button id="administrationCenterFooter" class="v57-admin-footer-btn">ADMINISTRATION CENTER</button></div>
-      <strong id="appVersionLabel" class="v74-footer-version">B7 FI COMMAND CENTER v1.0.1</strong>
+      <strong id="appVersionLabel" class="v74-footer-version">B7 FI COMMAND CENTER v1.0.3</strong>
       <div class="v74-footer-brand"><img src="assets/kla-plus-official.png" alt="KLA+"></div>
       <div class="v74-footer-system"><div class="v74-footer-live"><span class="v74-footer-dot" aria-hidden="true"></span><span>Local Production Mode</span></div><span class="v74-footer-sync">SharePoint live sync pending</span></div>
       <div class="v74-footer-location">Building 7 · Final Integration · Operations</div>`;
   }
-  const version=$('#appVersionLabel'); if(version) version.textContent='B7 FI COMMAND CENTER v1.0.1';
+  const version=$('#appVersionLabel'); if(version) version.textContent='B7 FI COMMAND CENTER v1.0.3';
   const btn=$('#administrationCenterFooter');
   if(btn && !btn.dataset.v78Bound){
     btn.dataset.v78Bound='1';
@@ -4436,12 +4436,12 @@ setTimeout(run,760);
 
 
 /* ===== SOURCE: js/patch-v0790.js ===== */
-/* B7 FI Command Center v1.0.1 — framework lock candidate.
+/* B7 FI Command Center v1.0.3 — framework lock candidate.
    Bounded startup normalization only; no MutationObserver and no recurring timer.
 */
 (function(){
 'use strict';
-window.VERSION=window.B7_APP_VERSION||'1.0.1';
+window.VERSION=window.B7_APP_VERSION||'1.0.3';
 const $=(s,r=document)=>r.querySelector(s);
 
 function txt(el){return (el&&el.textContent||'').trim();}
@@ -4479,7 +4479,7 @@ function buildFooter(){
     <div class="v79-footer-center"><img src="assets/kla-plus-official.png" alt="KLA+"></div>
     <div class="v79-footer-right">
       <div class="v79-footer-mode"><span class="v79-footer-dot" aria-hidden="true"></span><span>Local Production Mode</span></div>
-      <div id="appVersionLabel" class="v79-footer-version">B7 FI COMMAND CENTER v1.0.1</div>
+      <div id="appVersionLabel" class="v79-footer-version">B7 FI COMMAND CENTER v1.0.3</div>
     </div>`;
   const btn=$('#administrationCenterFooter');
   if(btn && !btn.dataset.v79Bound){
@@ -4505,10 +4505,10 @@ setTimeout(run,1600);
 
 
 /* ===== SOURCE: js/patch-v0800.js ===== */
-/* B7 FI Command Center v1.0.1 — final framework polish. No observers or recurring timers. */
+/* B7 FI Command Center v1.0.3 — final framework polish. No observers or recurring timers. */
 (function(){
-'use strict'; window.VERSION=window.B7_APP_VERSION||'1.0.1'; const $=(s,r=document)=>r.querySelector(s);
-function footer(){const f=$('footer.v57-footer'),app=$('main#app');if(!f||!app)return;if(f.previousElementSibling!==app)app.insertAdjacentElement('afterend',f);f.innerHTML=`<div class="v80-footer-left"><button id="administrationCenterFooter" class="v57-admin-footer-btn">ADMINISTRATION CENTER</button></div><div class="v80-footer-center"><img src="assets/kla-plus-official.png" alt="KLA+"></div><div class="v80-footer-right"><div class="v80-footer-mode">Local Production Mode · SharePoint live sync pending</div><div id="appVersionLabel" class="v80-footer-version">B7 FI COMMAND CENTER V1.0.1</div></div>`;const b=$('#administrationCenterFooter');if(b&&!b.dataset.v80){b.dataset.v80='1';b.onclick=()=>{const n=document.querySelector('[data-view="admincenter"],[data-view="admin"]');if(n)n.click();else if(typeof window.setView==='function')window.setView('admincenter')}}}
+'use strict'; window.VERSION=window.B7_APP_VERSION||'1.0.3'; const $=(s,r=document)=>r.querySelector(s);
+function footer(){const f=$('footer.v57-footer'),app=$('main#app');if(!f||!app)return;if(f.previousElementSibling!==app)app.insertAdjacentElement('afterend',f);f.innerHTML=`<div class="v80-footer-left"><button id="administrationCenterFooter" class="v57-admin-footer-btn">ADMINISTRATION CENTER</button></div><div class="v80-footer-center"><img src="assets/kla-plus-official.png" alt="KLA+"></div><div class="v80-footer-right"><div class="v80-footer-mode">Local Production Mode · SharePoint live sync pending</div><div id="appVersionLabel" class="v80-footer-version">B7 FI COMMAND CENTER V1.0.3</div></div>`;const b=$('#administrationCenterFooter');if(b&&!b.dataset.v80){b.dataset.v80='1';b.onclick=()=>{const n=document.querySelector('[data-view="admincenter"],[data-view="admin"]');if(n)n.click();else if(typeof window.setView==='function')window.setView('admincenter')}}}
 function labels(){const a=$('#topActionBar .v72-beacon-title'),s=$('#operationsBar .v72-beacon-title');if(a)a.textContent='LEAD ALERTS';if(s)s.textContent='SYSTEM STATUS'}
 function liveCard(){document.querySelectorAll('.v57-live-card').forEach(b=>{const title=b.querySelector('span');if(!title)return;if(/^WALLBOARD$/i.test(title.textContent.trim())){title.textContent='LIVE STATUS CENTER';const strong=b.querySelector('strong');const open=b.querySelector('b');if(strong)strong.textContent='Live B7 FI operational status display';if(open)open.textContent='OPEN LIVE STATUS CENTER →';}})}
 function run(){footer();labels();liveCard()}
@@ -4519,10 +4519,10 @@ document.addEventListener('click',e=>{if(e.target.closest('.nav-btn'))setTimeout
 
 
 /* ===== SOURCE: js/patch-v0801.js ===== */
-/* B7 FI Command Center v1.0.1 — performance/stability hotfix + real Live Status Center. */
+/* B7 FI Command Center v1.0.3 — performance/stability hotfix + real Live Status Center. */
 (function(){
 'use strict';
-window.VERSION=window.B7_APP_VERSION||'1.0.1';
+window.VERSION=window.B7_APP_VERSION||'1.0.3';
 const $=(s,r=document)=>r.querySelector(s);
 let liveTimer=null, liveIndex=0, livePaused=false;
 function safe(v,f='—'){return v===undefined||v===null||String(v).trim()===''?f:String(v)}
@@ -4549,7 +4549,7 @@ function fields(t){
 function footer(){
  const f=$('footer.v57-footer'),app=$('main#app');if(!f||!app)return;
  if(f.previousElementSibling!==app)app.insertAdjacentElement('afterend',f);
- f.innerHTML='<div class="v80-footer-left"><button id="administrationCenterFooter" class="v57-admin-footer-btn">ADMINISTRATION CENTER</button></div><div class="v80-footer-center"><img src="assets/kla-plus-official.png" alt="KLA+"></div><div class="v80-footer-right"><div class="v80-footer-mode">Local Production Mode · SharePoint live sync pending</div><div id="appVersionLabel" class="v80-footer-version">B7 FI COMMAND CENTER V1.0.1</div></div>';
+ f.innerHTML='<div class="v80-footer-left"><button id="administrationCenterFooter" class="v57-admin-footer-btn">ADMINISTRATION CENTER</button></div><div class="v80-footer-center"><img src="assets/kla-plus-official.png" alt="KLA+"></div><div class="v80-footer-right"><div class="v80-footer-mode">Local Production Mode · SharePoint live sync pending</div><div id="appVersionLabel" class="v80-footer-version">B7 FI COMMAND CENTER V1.0.3</div></div>';
  const b=$('#administrationCenterFooter');if(b)b.onclick=()=>window.setView&&window.setView('admincenter');
 }
 function stopLiveTimer(){if(liveTimer){clearTimeout(liveTimer);liveTimer=null}}
@@ -4583,17 +4583,17 @@ window.setView=function(v){if(v==='livestatus'||v==='live-status'){renderLiveSta
 document.addEventListener('click',e=>{const card=e.target.closest('.v57-live-card');if(!card)return;const text=(card.textContent||'').toUpperCase();if(card.dataset.dest==='wallboard'&&text.includes('LIVE STATUS CENTER')){e.preventDefault();e.stopImmediatePropagation();window.setView('livestatus')}},true);
 /* Pause costly decorative animation when the tab is not visible. */
 document.addEventListener('visibilitychange',()=>document.body.classList.toggle('v801-tab-hidden',document.hidden));
-function startup(){footer();document.title='B7 FI Command Center v1.0.1'}
+function startup(){footer();document.title='B7 FI Command Center v1.0.3'}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',startup,{once:true});else startup();
 requestAnimationFrame(startup);
 })();
 
 
 /* ===== SOURCE: js/patch-v0803.js ===== */
-/* B7 FI Command Center v1.0.1 — Live Status independent tool card + multi-progress display. */
+/* B7 FI Command Center v1.0.3 — Live Status independent tool card + multi-progress display. */
 (function(){
 'use strict';
-window.VERSION=window.B7_APP_VERSION||'1.0.1';
+window.VERSION=window.B7_APP_VERSION||'1.0.3';
 const $=(s,r=document)=>r.querySelector(s);
 let liveTimer=null, liveIndex=0, livePaused=false, modalWasPaused=false;
 let statusHome=null;
@@ -4721,7 +4721,7 @@ function renderLive(){
 function leaveLive(){if(!document.body.classList.contains('v802-live-status'))return;stopTimer();closeModal();statusBarsHome();document.body.classList.remove('v802-live-status');livePaused=false}
 window.setView=function(v){
  if(v==='livestatus'||v==='live-status'){renderLive();return}
- leaveLive();const r=oldSetView?oldSetView(v):undefined;requestAnimationFrame(()=>{const label=$('#appVersionLabel');if(label)label.textContent='B7 FI COMMAND CENTER V1.0.1'});return r;
+ leaveLive();const r=oldSetView?oldSetView(v):undefined;requestAnimationFrame(()=>{const label=$('#appVersionLabel');if(label)label.textContent='B7 FI COMMAND CENTER V1.0.3'});return r;
 };
 /* Ensure the Operations Live Status card routes to the dedicated display even if a legacy handler is still attached. */
 document.addEventListener('click',e=>{const card=e.target.closest('.v57-live-card');if(!card)return;const text=(card.textContent||'').toUpperCase();if(text.includes('LIVE STATUS CENTER')){e.preventDefault();e.stopImmediatePropagation();window.setView('livestatus')}},true);
@@ -4737,16 +4737,16 @@ window.B7LiveStatusCore={
  setPaused:v=>{livePaused=!!v;if(livePaused)stopTimer();else schedule();return livePaused},
  isPaused:()=>livePaused
 };
-function startup(){const label=$('#appVersionLabel');if(label)label.textContent='B7 FI COMMAND CENTER V1.0.1';document.title='B7 FI Command Center v1.0.1'}
+function startup(){const label=$('#appVersionLabel');if(label)label.textContent='B7 FI COMMAND CENTER V1.0.3';document.title='B7 FI Command Center v1.0.3'}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',startup,{once:true});else startup();
 })();
 
 
 /* ===== SOURCE: js/patch-v0804.js ===== */
-/* B7 FI Command Center v1.0.1 — active-quarter identity + Live Status spacing polish. */
+/* B7 FI Command Center v1.0.3 — active-quarter identity + Live Status spacing polish. */
 (function(){
 'use strict';
-window.VERSION=window.B7_APP_VERSION||'1.0.1';
+window.VERSION=window.B7_APP_VERSION||'1.0.3';
 const $=(s,r=document)=>r.querySelector(s);
 const QUARTER_CENTERS={toolcenter:'TOOL CENTER',shipping:'SHIPPING CENTER',priorities:'PRIORITY CENTER',statuscenter:'STATUS CENTER'};
 function currentQuarter(){
@@ -4776,7 +4776,7 @@ function decorateQuarterTitle(v){
  const key=QUARTER_CENTERS[v]?v:viewName();
  if(QUARTER_CENTERS[key])title.textContent=`${QUARTER_CENTERS[key]} — ${currentQuarter()}`;
 }
-function version(){const l=$('#appVersionLabel');if(l)l.textContent='B7 FI COMMAND CENTER V1.0.1';document.title='B7 FI Command Center v1.0.1'}
+function version(){const l=$('#appVersionLabel');if(l)l.textContent='B7 FI COMMAND CENTER V1.0.3';document.title='B7 FI Command Center v1.0.3'}
 /* Wrap the newest setView last so quarter-aware titles survive older theme renderers. */
 const previousSetView=window.setView;
 window.setView=function(v){
@@ -4806,11 +4806,11 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 
 /* ===== SOURCE: js/patch-v0806.js ===== */
-/* B7 FI Command Center v1.0.1 — Live Status lock + persistent footer/version guard.
+/* B7 FI Command Center v1.0.3 — Live Status lock + persistent footer/version guard.
    Bounded updates only: no MutationObserver and no recurring interval. */
 (function(){
 'use strict';
-const VERSION=window.B7_APP_VERSION||'1.0.1';
+const VERSION=window.B7_APP_VERSION||'1.0.3';
 window.VERSION=VERSION;
 const $=(s,r=document)=>r.querySelector(s);
 function syncVersion(){
@@ -4853,7 +4853,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 
 /* ===== SOURCE: js/patch-v0808.js ===== */
-/* B7 FI Command Center v1.0.1 — standalone Live Status viewer boot.
+/* B7 FI Command Center v1.0.3 — standalone Live Status viewer boot.
    Viewer-only entry uses the exact same Live Status renderer as the Command Center,
    but boots it ONCE and removes only the Return control. No delayed rerender/re-parent pass. */
 (function(){
@@ -4882,11 +4882,11 @@ else queueMicrotask(viewerBoot);
 
 
 /* ===== SOURCE: js/patch-v0809.js ===== */
-/* B7 FI Command Center v1.0.1 — shared status naming + Live viewer parity + automatic active-quarter titles.
+/* B7 FI Command Center v1.0.3 — shared status naming + Live viewer parity + automatic active-quarter titles.
    Bounded reconciliation only: no MutationObserver, no setInterval, no recurring polling. */
 (function(){
 'use strict';
-const VERSION=window.B7_APP_VERSION||'1.0.1';
+const VERSION=window.B7_APP_VERSION||'1.0.3';
 window.VERSION=VERSION;
 const $=(s,r=document)=>r.querySelector(s);
 const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
@@ -5004,10 +5004,10 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 
 /* ===== SOURCE: js/patch-v0815.js ===== */
-/* B7 FI Command Center v1.0.1 — Action Center save/edit controls for status-bar testing. */
+/* B7 FI Command Center v1.0.3 — Action Center save/edit controls for status-bar testing. */
 (function(){
 'use strict';
-const VERSION=window.B7_APP_VERSION||'1.0.1';
+const VERSION=window.B7_APP_VERSION||'1.0.3';
 window.VERSION=VERSION;
 const $=(s,r=document)=>r.querySelector(s);
 const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
@@ -5109,10 +5109,10 @@ setTimeout(enhance,120);
 
 
 /* ===== SOURCE: js/patch-v0819.js ===== */
-/* B7 FI Command Center v1.0.1 — single-source Alert Engine + dirty-save Action Center */
+/* B7 FI Command Center v1.0.3 — single-source Alert Engine + dirty-save Action Center */
 (function(){
 'use strict';
-const VERSION=window.B7_APP_VERSION||'1.0.1';
+const VERSION=window.B7_APP_VERSION||'1.0.3';
 window.VERSION=VERSION;
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 const viewerOnly=document.body?.dataset?.liveViewerOnly==='true';
@@ -5177,10 +5177,10 @@ window.addEventListener('storage',()=>{migrateManual();refresh(true);if(document
 
 
 /* ===== SOURCE: js/patch-v0820.js ===== */
-/* B7 FI Command Center v1.0.1 — independent permanent status shell + Action Center stabilization */
+/* B7 FI Command Center v1.0.3 — independent permanent status shell + Action Center stabilization */
 (function(){
 'use strict';
-const VERSION=window.B7_APP_VERSION||'1.0.1';
+const VERSION=window.B7_APP_VERSION||'1.0.3';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 const viewerOnly=()=>document.body?.dataset?.liveViewerOnly==='true';
 let leadTimer=null,systemTimer=null,leadIndex=0,systemIndex=0,lastLead='',lastSystem='';
@@ -5230,10 +5230,10 @@ window.addEventListener('storage',()=>{refreshAll(true)});
 
 
 /* ===== SOURCE: js/patch-v0821.js ===== */
-/* B7 FI Command Center v1.0.1 — status placement / duplicate-container cleanup only */
+/* B7 FI Command Center v1.0.3 — status placement / duplicate-container cleanup only */
 (function(){
 'use strict';
-const VERSION=window.B7_APP_VERSION||'1.0.1';
+const VERSION=window.B7_APP_VERSION||'1.0.3';
 const $=(s,r=document)=>r.querySelector(s);
 
 function version(){
@@ -5309,10 +5309,10 @@ window.B7StatusPlacement821={place,cleanLiveMount,cleanCommandMount};
 
 
 /* ===== SOURCE: js/patch-v0822.js ===== */
-/* B7 FI Command Center v1.0.1 — placement, Live Status parity, Tool editor recovery */
+/* B7 FI Command Center v1.0.3 — placement, Live Status parity, Tool editor recovery */
 (function(){
 'use strict';
-const VERSION=window.B7_APP_VERSION||'1.0.1';
+const VERSION=window.B7_APP_VERSION||'1.0.3';
 const $=(s,r=document)=>r.querySelector(s);
 
 function viewerOnly(){return document.body?.dataset?.liveViewerOnly==='true'}
@@ -5413,10 +5413,10 @@ window.B7StatusPlacement822={settle,placeStatus,restoreToolEditor};
 
 
 /* ===== SOURCE: js/patch-v0823.js ===== */
-/* B7 FI Command Center v1.0.1 — final status placement/parity guard */
+/* B7 FI Command Center v1.0.3 — final status placement/parity guard */
 (function(){
 'use strict';
-const VERSION=window.B7_APP_VERSION||'1.0.1';
+const VERSION=window.B7_APP_VERSION||'1.0.3';
 const $=(s,r=document)=>r.querySelector(s);
 const viewerOnly=()=>document.body?.dataset?.liveViewerOnly==='true';
 function setVersion(){
@@ -5454,10 +5454,10 @@ window.B7StatusPlacement823={settle,placeStatus};
 
 
 /* ===== SOURCE: js/patch-v0824.js ===== */
-/* B7 FI Command Center v1.0.1 — final frame/layout guard */
+/* B7 FI Command Center v1.0.3 — final frame/layout guard */
 (function(){
 'use strict';
-const VERSION=window.B7_APP_VERSION||'1.0.1';
+const VERSION=window.B7_APP_VERSION||'1.0.3';
 const $=(s,r=document)=>r.querySelector(s);
 const viewerOnly=()=>document.body?.dataset?.liveViewerOnly==='true';
 function normalize(){
@@ -5487,14 +5487,14 @@ window.B7Frame824={normalize};
 
 
 /* ===== SOURCE: js/patch-v0825.js ===== */
-/* B7 FI Command Center v1.0.1 — Operations Live Dashboard + shared viewer data sync.
+/* B7 FI Command Center v1.0.3 — Operations Live Dashboard + shared viewer data sync.
    - Operations Center becomes the live operational dashboard (no redundant home cards).
    - Standalone live-status-view consumes the same canonical state as the Command Center.
    - Same-origin tabs synchronize through BroadcastChannel + storage events.
 */
 (function(){
 'use strict';
-const VERSION=window.B7_APP_VERSION||'1.0.1';
+const VERSION=window.B7_APP_VERSION||'1.0.3';
 const STATE_KEY='b7fi-v0210-state';
 const SNAP_KEY='b7fi-live-status-snapshot-v1';
 const CHANNEL='b7fi-live-sync-v1';
@@ -5678,7 +5678,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 
 /* ===== SOURCE: js/patch-v0826.js ===== */
-/* B7 FI Command Center v1.0.1 — Operations Center cleanup + contextual tool navigation.
+/* B7 FI Command Center v1.0.3 — Operations Center cleanup + contextual tool navigation.
    - Operations Center toolbar becomes contextual navigation, not generic Page Actions.
    - Current rotating system becomes a real navigation button that follows the carousel.
    - Remove visible alert queue diagnostics from normal Action Center use.
@@ -5686,7 +5686,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 */
 (function(){
 'use strict';
-const VERSION=window.B7_APP_VERSION||'1.0.1';
+const VERSION=window.B7_APP_VERSION||'1.0.3';
 const $=(s,r=document)=>r.querySelector(s);
 const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 const viewerOnly=()=>document.body?.dataset?.liveViewerOnly==='true';
@@ -5778,10 +5778,10 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 
 /* ===== SOURCE: js/patch-v0827.js ===== */
-/* B7 FI Command Center v1.0.1 — quarter-aware Operations + compact Live Status parity. */
+/* B7 FI Command Center v1.0.3 — quarter-aware Operations + compact Live Status parity. */
 (function(){
 'use strict';
-const VERSION='1.0.1',$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const VERSION='1.0.3',$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 const viewerOnly=()=>document.body?.dataset?.liveViewerOnly==='true';
 function quarter(){try{if(typeof window.B7ActiveQuarter==='function')return window.B7ActiveQuarter()}catch(e){} const d=new Date(),q=Math.floor(d.getMonth()/3)+1;return `CY${String(d.getFullYear()).slice(-2)}Q${q}`}
 function setVersion(){window.VERSION=VERSION;document.title=viewerOnly()?`B7 FI Live Status v${VERSION}`:`B7 FI Command Center v${VERSION}`;const v=$('#appVersionLabel');if(v)v.textContent=`B7 FI COMMAND CENTER V${VERSION}`}
@@ -5801,7 +5801,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 
 /* ===== SOURCE: js/patch-v0828.js ===== */
-/* B7 FI Command Center v1.0.1 — finalize Operations + standalone Live Status parity.
+/* B7 FI Command Center v1.0.3 — finalize Operations + standalone Live Status parity.
    - Standalone viewer receives the compact quarter/progress/control-rail design.
    - Operations toolbar positions are deterministic after refresh/render.
    - Operations carousel removes redundant KLA system image; footer/header already brand the Command Center.
@@ -5809,7 +5809,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 */
 (function(){
 'use strict';
-const VERSION='1.0.1',$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const VERSION='1.0.3',$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 const viewerOnly=()=>document.body?.dataset?.liveViewerOnly==='true';
 function quarter(){try{if(typeof window.B7ActiveQuarter==='function')return window.B7ActiveQuarter()}catch(e){}const d=new Date(),q=Math.floor(d.getMonth()/3)+1;return `CY${String(d.getFullYear()).slice(-2)}Q${q}`}
 function setVersion(){window.VERSION=VERSION;document.title=viewerOnly()?`B7 FI Live Status v${VERSION}`:`B7 FI Command Center v${VERSION}`;const v=$('#appVersionLabel');if(v)v.textContent=`B7 FI COMMAND CENTER V${VERSION}`}
@@ -5830,7 +5830,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 
 /* ===== SOURCE: js/patch-v0829.js ===== */
-/* B7 FI Command Center v1.0.1 — Operations / Live Status final cleanup.
+/* B7 FI Command Center v1.0.3 — Operations / Live Status final cleanup.
    - Exactly one Current Quarter Shipping Progress rail in each live view.
    - Standalone viewer removes redundant large KLA tool-card artwork.
    - Standalone bottom rail: KLA+ mathematically centered; carousel controls anchored right.
@@ -5838,7 +5838,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 */
 (function(){
 'use strict';
-const VERSION='1.0.1',$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const VERSION='1.0.3',$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 const viewerOnly=()=>document.body?.dataset?.liveViewerOnly==='true';
 function quarter(){try{if(typeof window.B7ActiveQuarter==='function')return window.B7ActiveQuarter()}catch(e){}const d=new Date(),q=Math.floor(d.getMonth()/3)+1;return `CY${String(d.getFullYear()).slice(-2)}Q${q}`}
 function counts(){let list=[];try{list=window.B7LiveStatusCore?.activeTools?.()||[]}catch(e){}let c={infi:0,packing:0,waiting:0,shipped:0};try{c=window.B7LiveStatusCore?.metricCounts?.(list)||c}catch(e){}return {list,c,pct:list.length?Math.round((Number(c.shipped)||0)/list.length*100):0}}
@@ -5863,10 +5863,10 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 
 /* ===== SOURCE: js/patch-v0830.js ===== */
-/* B7 FI Command Center v1.0.1 — tool-photo bay + final live spacing support. */
+/* B7 FI Command Center v1.0.3 — tool-photo bay + final live spacing support. */
 (function(){
 'use strict';
-const VERSION=window.B7_APP_VERSION||'1.0.1';
+const VERSION=window.B7_APP_VERSION||'1.0.3';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 function viewerOnly(){return document.body?.dataset?.liveViewerOnly==='true'}
 function setVersion(){
@@ -5898,8 +5898,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 
 /* ===== SOURCE: js/patch-v0831.js ===== */
-/* B7 FI Command Center v1.0.1 — final Live Status parity/version lock. */
-(function(){'use strict';const VERSION=window.B7_APP_VERSION||'1.0.1';
+/* B7 FI Command Center v1.0.3 — final Live Status parity/version lock. */
+(function(){'use strict';const VERSION=window.B7_APP_VERSION||'1.0.3';
 function viewerOnly(){return document.body?.dataset?.liveViewerOnly==='true'}
 function stamp(){window.VERSION=VERSION;document.title=viewerOnly()?`B7 FI Live Status v${VERSION}`:`B7 FI Command Center v${VERSION}`;const v=document.querySelector('#appVersionLabel');if(v)v.textContent=`B7 FI COMMAND CENTER V${VERSION}`}
 const old=window.setView;if(typeof old==='function')window.setView=function(){const r=old.apply(this,arguments);setTimeout(stamp,0);setTimeout(stamp,150);return r};
@@ -5908,10 +5908,10 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 
 /* ===== SOURCE: js/patch-v0832.js ===== */
-/* B7 FI Command Center v1.0.1 — final Operations/Live Status edge + toolbar lock. */
+/* B7 FI Command Center v1.0.3 — final Operations/Live Status edge + toolbar lock. */
 (function(){
 'use strict';
-const VERSION=window.B7_APP_VERSION||'1.0.1';
+const VERSION=window.B7_APP_VERSION||'1.0.3';
 const $=(s,r=document)=>r.querySelector(s);
 function viewerOnly(){return document.body?.dataset?.liveViewerOnly==='true'}
 function stamp(){
@@ -5938,10 +5938,10 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 
 /* ===== SOURCE: js/patch-v0833.js ===== */
-/* B7 FI Command Center v1.0.1 — single-version boot + Tool Center page-navigation standardization. */
+/* B7 FI Command Center v1.0.3 — single-version boot + Tool Center page-navigation standardization. */
 (function(){
 'use strict';
-const VERSION=window.B7_APP_VERSION||'1.0.1';
+const VERSION=window.B7_APP_VERSION||'1.0.3';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const label=b=>(b?.textContent||'').trim().replace(/\s+/g,' ').toUpperCase();
 function viewerOnly(){return document.body?.dataset?.liveViewerOnly==='true'}
@@ -6027,10 +6027,10 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 
 /* ===== SOURCE: js/patch-v0834.js ===== */
-/* B7 FI Command Center v1.0.1 — conditional Customer Source / STR mini progress bars on shared live tool cards. */
+/* B7 FI Command Center v1.0.3 — conditional Customer Source / STR mini progress bars on shared live tool cards. */
 (function(){
 'use strict';
-const VERSION=window.B7_APP_VERSION||'1.0.1';
+const VERSION=window.B7_APP_VERSION||'1.0.3';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 function viewerOnly(){return document.body?.dataset?.liveViewerOnly==='true'}
@@ -6085,14 +6085,14 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 
 /* ===== SOURCE: js/patch-v0835.js ===== */
-/* B7 FI Command Center v1.0.1 — live-card plan-change indicator + Operations editable tool navigation.
+/* B7 FI Command Center v1.0.3 — live-card plan-change indicator + Operations editable tool navigation.
    - Shows latest ship-plan exception next to UTID/model only when a change exists.
    - Pull In / Push Out / ship-date-only changes derive from countdown plan-change history.
    - Operations carousel opens the actual Tool Detail page; standalone Live Status remains read-only.
 */
 (function(){
 'use strict';
-const VERSION=window.B7_APP_VERSION||'1.0.1';
+const VERSION=window.B7_APP_VERSION||'1.0.3';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 const viewerOnly=()=>document.body?.dataset?.liveViewerOnly==='true';
@@ -6172,10 +6172,10 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 
 /* ===== SOURCE: js/patch-v0836.js ===== */
-/* B7 FI Command Center v1.0.1 — canonical tool record + route persistence + center-to-tool editing */
+/* B7 FI Command Center v1.0.3 — canonical tool record + route persistence + center-to-tool editing */
 (function(){
 'use strict';
-const VERSION='1.0.1', $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const VERSION='1.0.3', $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 window.B7_APP_VERSION=VERSION;window.VERSION=VERSION;
 function stamp(){document.title=`B7 FI Command Center v${VERSION}`;const x=$('#appVersionLabel');if(x)x.textContent=`B7 FI COMMAND CENTER V${VERSION}`}
@@ -6217,7 +6217,7 @@ stamp();
 
 
 /* ===== SOURCE: js/patch-v0837.js ===== */
-/* B7 FI Command Center v1.0.1 — Tool Center canonical landing/detail workflow cleanup.
+/* B7 FI Command Center v1.0.3 — Tool Center canonical landing/detail workflow cleanup.
    Goals:
    - Restore Tool Center as the live-card/current-quarter dashboard.
    - Keep Tool Countdown as a separate quick-list page.
@@ -6228,7 +6228,7 @@ stamp();
 */
 (function(){
 'use strict';
-const VERSION='1.0.1';
+const VERSION='1.0.3';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 const priorSetView=window.setView;
@@ -6289,7 +6289,7 @@ function toolCard(t){
 function renderToolDashboard(){
   remember({kind:'view',view:'toolcenter'});toolTheme(`TOOL CENTER — ${qLabel()}`);
   let list=[];try{list=typeof pageTools==='function'?pageTools('countdown'):(tools||[]).filter(t=>t.quarterStatus!=='Archive')}catch(e){list=[]}
-  const q=qLabel(),waiting=list.filter(t=>statusFor(t)==='Waiting for FI').length,infi=list.filter(t=>statusFor(t)==='In FI').length,shipped=list.filter(t=>statusFor(t)==='Shipped').length;
+  const q=qLabel(),waiting=list.filter(t=>statusFor(t)==='Waiting for FI').length,infi=list.filter(t=>statusFor(t)==='In FI').length,packing=list.filter(t=>statusFor(t)==='Packing and Shipping').length,shipped=list.filter(t=>statusFor(t)==='Shipped').length;
   const groups={};list.forEach(t=>(groups[t.codename||'Other']??=[]).push(t));
   const pct=list.length?Math.round(shipped/list.length*100):0;
   const app=$('#app');if(!app)return;
@@ -6301,7 +6301,7 @@ function renderToolDashboard(){
       <div class="metric"><span>SHIPPED</span><strong>${shipped}</strong></div>
     </div>
     <div class="quarter-progress v837-quarter-progress"><div class="progress-label"><span>Current Quarter Shipping Progress</span><b>${pct}% Shipped</b></div><div class="track"><div class="fill" style="width:${pct}%;background:var(--good)"></div></div></div>
-    <div class="v837-tool-groups">${Object.entries(groups).sort((a,b)=>a[0].localeCompare(b[0])).map(([name,arr])=>{const w=arr.filter(t=>statusFor(t)==='Waiting for FI').length,i=arr.filter(t=>statusFor(t)==='In FI').length,s=arr.filter(t=>statusFor(t)==='Shipped').length;return `<section class="tool-section v3-tool-section"><div class="tool-section-head"><h2 class="tool-section-title">${esc(name)}</h2><div class="family-counts"><div><span>TOTAL</span><b>${arr.length}</b></div><div class="family-waiting"><span>WAITING FI</span><b>${w}</b></div><div class="family-infi"><span>IN FI</span><b>${i}</b></div><div class="family-shipped"><span>SHIPPED</span><b>${s}</b></div></div></div><div class="system-grid v3-system-grid">${arr.slice().sort((a,b)=>String(a.ship||'9').localeCompare(String(b.ship||'9'))).map(toolCard).join('')}</div></section>`}).join('')}</div>
+    <div class="v837-tool-groups">${Object.entries(groups).sort((a,b)=>a[0].localeCompare(b[0])).map(([name,arr])=>{const w=arr.filter(t=>statusFor(t)==='Waiting for FI').length,i=arr.filter(t=>statusFor(t)==='In FI').length,p=arr.filter(t=>statusFor(t)==='Packing and Shipping').length,s=arr.filter(t=>statusFor(t)==='Shipped').length;return `<section class="tool-section v3-tool-section"><div class="tool-section-head"><h2 class="tool-section-title">${esc(name)}</h2><div class="family-counts"><div><span>TOTAL</span><b>${arr.length}</b></div><div class="family-waiting"><span>WAITING FI</span><b>${w}</b></div><div class="family-infi"><span>IN FI</span><b>${i}</b></div><div class="family-packing"><span>PACKING</span><b>${p}</b></div><div class="family-shipped"><span>SHIPPED</span><b>${s}</b></div></div></div><div class="system-grid v3-system-grid">${arr.slice().sort((a,b)=>String(a.ship||'9').localeCompare(String(b.ship||'9'))).map(toolCard).join('')}</div></section>`}).join('')}</div>
   </div>`;
   $$('[data-v837-tool]').forEach(c=>{const go=()=>window.toolStatus(c.dataset.v837Tool);c.onclick=go;c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}}});
   toolbar([
@@ -6380,7 +6380,7 @@ stamp();
 
 
 /* ===== SOURCE: js/patch-v0838.js ===== */
-/* B7 FI Command Center v1.0.1 — single master Tool page + canonical tool routing.
+/* B7 FI Command Center v1.0.3 — single master Tool page + canonical tool routing.
    - One purple Tool page is the canonical editable record for a Tool.
    - Tool Detail and Tool Edit are collapsed into one vertically scrolling page.
    - No secondary tab navigation; the global Page Navigation bar is the only toolbar.
@@ -6390,7 +6390,7 @@ stamp();
 */
 (function(){
 'use strict';
-const VERSION='1.0.1';
+const VERSION='1.0.3';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 const idSafe=s=>String(s||'').replace(/[^A-Za-z0-9_-]/g,'_');
@@ -6482,7 +6482,7 @@ stamp();
 
 
 /* ===== SOURCE: js/patch-v0839.js ===== */
-/* B7 FI Command Center v1.0.1 — authoritative Center theme + Tool plan-change UX cleanup.
+/* B7 FI Command Center v1.0.3 — authoritative Center theme + Tool plan-change UX cleanup.
    - One authoritative Center theme is re-applied after every Center navigation.
    - Tool Center can no longer inherit Status/Shipping/etc. accent colors.
    - Quarter / Ship Plan clearly separates current values from NEW values.
@@ -6492,7 +6492,7 @@ stamp();
 */
 (function(){
 'use strict';
-const VERSION='1.0.1';
+const VERSION='1.0.3';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 window.B7_APP_VERSION=VERSION; window.VERSION=VERSION;
 
@@ -6622,7 +6622,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 
 /* ===== SOURCE: js/patch-v0840.js ===== */
-/* B7 FI Command Center v1.0.1 — Final Tool Center navigation/workflow lock.
+/* B7 FI Command Center v1.0.3 — Final Tool Center navigation/workflow lock.
    - Tool Center landing remains the quarter live-card dashboard.
    - Tool Countdown remains a compact clickable summary.
    - Tool Archive remains the archive view.
@@ -6633,7 +6633,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 */
 (function(){
 'use strict';
-const VERSION='1.0.1';
+const VERSION='1.0.3';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 const priorToolStatus=window.toolStatus;
 const priorToolAdmin=window.toolAdmin;
@@ -6755,7 +6755,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 
 /* ===== SOURCE: js/patch-v0841.js ===== */
-/* B7 FI Command Center v1.0.1 — Tool live-card state parity + save acknowledgement.
+/* B7 FI Command Center v1.0.3 — Tool live-card state parity + save acknowledgement.
    - Tool Center live cards consume the same master-tool exception state used by Operations/Live Status.
    - Adds compact badges for plan changes, Customer Source, STR, and Packing without replacing lifecycle state.
    - Master Tool editor provides explicit Unsaved / Saving / Saved / No changes feedback.
@@ -6763,7 +6763,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 */
 (function(){
 'use strict';
-const VERSION='1.0.1';
+const VERSION='1.0.3';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 window.B7_APP_VERSION=VERSION; window.VERSION=VERSION;
@@ -6885,12 +6885,12 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 
 /* ===== SOURCE: js/patch-v0842.js ===== */
-/* B7 FI Command Center v1.0.1 — Standard/Mini Tool Card system.
+/* B7 FI Command Center v1.0.3 — Standard/Mini Tool Card system.
    Tool Center mini cards are photo-less compact versions of the Live Status card.
    All six workflow positions are always reserved and read the same master tool record.
 */
 (function(){'use strict';
-const VERSION='1.0.1',$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const VERSION='1.0.3',$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 window.B7_APP_VERSION=VERSION;window.VERSION=VERSION;
 function stamp(){document.title=`B7 FI Command Center v${VERSION}`;const v=$('#appVersionLabel');if(v)v.textContent=`B7 FI COMMAND CENTER V${VERSION}`}
@@ -6919,12 +6919,12 @@ function boot(){[0,150,400].forEach(ms=>setTimeout(enhance,ms))}if(document.read
 
 
 /* ===== SOURCE: js/patch-v0843.js ===== */
-/* B7 FI Command Center v1.0.1 — Tool Center Mini Card refinement.
+/* B7 FI Command Center v1.0.3 — Tool Center Mini Card refinement.
    Four-across desktop density, Model/Customer in the core field grid,
    and Tool Status badge/left accent use the same fleet-status color language.
 */
 (function(){'use strict';
-const VERSION='1.0.1',$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const VERSION='1.0.3',$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 window.B7_APP_VERSION=VERSION;window.VERSION=VERSION;
 function stamp(){document.title=`B7 FI Command Center v${VERSION}`;const v=$('#appVersionLabel');if(v)v.textContent=`B7 FI COMMAND CENTER V${VERSION}`}
 function statusClass(text){const s=String(text||'').toLowerCase();if(s.includes('ship'))return'v843-shipped';if(s.includes('pack'))return'v843-packing';if(s.includes('wait'))return'v843-waiting';return'v843-infi'}
@@ -6947,7 +6947,7 @@ function boot(){[0,150,400,800].forEach(ms=>setTimeout(refine,ms))}if(document.r
 
 
 /* ===== SOURCE: js/patch-v0844.js ===== */
-/* B7 FI Command Center v1.0.1
+/* B7 FI Command Center v1.0.3
    - Repairs v1.0.1 load regression via clean index references.
    - Completes Tool Center summary placeholders: Waiting, In FI, Packing, Shipped,
      Pulled Into current quarter, Pushed Out.
@@ -6955,7 +6955,7 @@ function boot(){[0,150,400,800].forEach(ms=>setTimeout(refine,ms))}if(document.r
    - Keeps v1.0.1 Mini Tool Card density/status coloring active.
 */
 (function(){'use strict';
-const VERSION='1.0.1',$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const VERSION='1.0.3',$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 window.B7_APP_VERSION=VERSION;window.VERSION=VERSION;
 function stamp(){document.title=`B7 FI Command Center v${VERSION}`;const v=$('#appVersionLabel');if(v)v.textContent=`B7 FI COMMAND CENTER V${VERSION}`}
 function allTools(){try{return Array.isArray(tools)?tools:[]}catch(e){return[]}}
@@ -7033,7 +7033,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 
 /* ===== SOURCE: js/patch-v0845.js ===== */
-/* B7 FI Command Center v1.0.1 — current plan state + reversible plan changes.
+/* B7 FI Command Center v1.0.3 — current plan state + reversible plan changes.
    - Adds PLANNED <quarter> metric derived from current active plan state.
    - Pull In / Push Out counters count only currently-active deltas vs original plan.
    - Adds REVERSE LATEST PLAN CHANGE on the Master Tool editor.
@@ -7042,7 +7042,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
    - Brings the same quarter summary metrics to Operations / standalone Live Status.
 */
 (function(){'use strict';
-const VERSION='1.0.1',$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const VERSION='1.0.3',$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 window.B7_APP_VERSION=VERSION;window.VERSION=VERSION;
 function stamp(){document.title=(document.body?.dataset?.liveViewerOnly==='true'?`B7 FI Live Status v${VERSION}`:`B7 FI Command Center v${VERSION}`);const v=$('#appVersionLabel');if(v)v.textContent=`B7 FI COMMAND CENTER V${VERSION}`}
@@ -7088,7 +7088,7 @@ function boot(){[0,100,300,700].forEach(ms=>setTimeout(refresh,ms))}if(document.
 
 
 /* ===== SOURCE: js/patch-v0846.js ===== */
-/* B7 FI Command Center v1.0.1 — Tool Center navigation + archive + lifecycle finalization.
+/* B7 FI Command Center v1.0.3 — Tool Center navigation + archive + lifecycle finalization.
    - Tool Center toolbar: navigation left, actions right.
    - Tool Archive gets a dedicated, working route (not Tool Countdown).
    - Canonical tool lifecycle: Waiting to be Handed to FI, In FI, Packing and Shipping, Shipped, Archive.
@@ -7096,7 +7096,7 @@ function boot(){[0,100,300,700].forEach(ms=>setTimeout(refresh,ms))}if(document.
    - Tool Center summary uses fixed placeholders and current lifecycle state.
 */
 (function(){'use strict';
-const VERSION='1.0.1',$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const VERSION='1.0.3',$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 window.B7_APP_VERSION=VERSION;window.VERSION=VERSION;
 function stamp(){document.title=`B7 FI Command Center v${VERSION}`;const v=$('#appVersionLabel');if(v)v.textContent=`B7 FI COMMAND CENTER V${VERSION}`}
@@ -7143,7 +7143,7 @@ function boot(){[0,100,300,700].forEach(ms=>setTimeout(refresh,ms))}if(document.
 
 
 /* ===== SOURCE: js/patch-v0847.js ===== */
-/* B7 FI Command Center v1.0.1 — Tool Center finalization / actionable alerts.
+/* B7 FI Command Center v1.0.3 — Tool Center finalization / actionable alerts.
    - Restores the shared compact 8-box quarter summary on Tool Center + Live Status.
    - Structurally enforces Tool Center page-navigation left / page-actions right.
    - Makes Lead Alerts and System Status messages clickable in the editable Command Center.
@@ -7151,7 +7151,7 @@ function boot(){[0,100,300,700].forEach(ms=>setTimeout(refresh,ms))}if(document.
    - Standalone Live Status remains read-only/non-navigating.
 */
 (function(){'use strict';
-const VERSION='1.0.1',$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const VERSION='1.0.3',$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 window.B7_APP_VERSION=VERSION;window.VERSION=VERSION;
 function viewerOnly(){return document.body?.dataset?.liveViewerOnly==='true'}
 function stamp(){document.title=viewerOnly()?`B7 FI Live Status v${VERSION}`:`B7 FI Command Center v${VERSION}`;const v=$('#appVersionLabel');if(v)v.textContent=`B7 FI COMMAND CENTER V${VERSION}`}
@@ -7201,7 +7201,7 @@ function boot(){[0,100,300,700].forEach(ms=>setTimeout(refresh,ms))}if(document.
 
 
 /* ===== SOURCE: js/patch-v0849.js ===== */
-/* B7 FI Command Center v1.0.1 — shared summary polish + canonical tool identity.
+/* B7 FI Command Center v1.0.3 — shared summary polish + canonical tool identity.
    - Tool Center and Live Status use the same compact 8-box summary presentation.
    - Summary labels and values are centered; values are larger for faster scanning.
    - Full Live Status/Operations cards use UTID -> Code Name -> Model identity.
@@ -7210,7 +7210,7 @@ function boot(){[0,100,300,700].forEach(ms=>setTimeout(refresh,ms))}if(document.
    - Presentation-only patch: does not alter master tool data or working alert navigation.
 */
 (function(){'use strict';
-const VERSION='1.0.1',$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const VERSION='1.0.3',$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 window.B7_APP_VERSION=VERSION;window.VERSION=VERSION;
 function viewerOnly(){return document.body?.dataset?.liveViewerOnly==='true'}
@@ -7295,7 +7295,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 
 /* ===== SOURCE: js/patch-v0850.js ===== */
-/* B7 FI Command Center v1.0.1 — Tool Center workflow lock + shared status language.
+/* B7 FI Command Center v1.0.3 — Tool Center workflow lock + shared status language.
    - Final Tool Center page-toolbar convention: navigation left, actions right, no center/duplicates.
    - Tool Center workflows: quarter setup (Add Tool), active Tool editing, quarter-close bulk archive.
    - One Master Tool record remains the source of truth; saves emit a universal tool-record update event.
@@ -7304,7 +7304,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
    - Repairs Meeting Center top-navigation routing through the mature Meeting renderer.
 */
 (function(){'use strict';
-const VERSION='1.0.1';
+const VERSION='1.0.3';
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 window.B7_APP_VERSION=VERSION;window.VERSION=VERSION;
 
@@ -7443,7 +7443,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 
 /* ===== SOURCE: js/patch-v0851.js ===== */
-/* B7 FI Command Center v1.0.1 — Tool Center framework finalization.
+/* B7 FI Command Center v1.0.3 — Tool Center framework finalization.
    - Countdown removes helper description.
    - Archive becomes a clean historical list.
    - ARCHIVE TOOL opens a deliberate archive-selection mode.
@@ -7451,7 +7451,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
    - Archive is a master-record lifecycle change; all active views update from the same tools[] records.
 */
 (function(){'use strict';
-const VERSION='1.0.1';
+const VERSION='1.0.3';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 window.B7_APP_VERSION=VERSION;window.VERSION=VERSION;
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
@@ -7493,7 +7493,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 
 /* ===== SOURCE: js/patch-v0852.js ===== */
-/* B7 FI Command Center v1.0.1 — Tool Center + Administration stabilization.
+/* B7 FI Command Center v1.0.3 — Tool Center + Administration stabilization.
    - Restores Administration Home access to full Data & Backup / Entra-SharePoint tools.
    - Keeps Tool Center page navigation fixed left and page actions fixed right.
    - Tool Countdown removes redundant in-page title/description.
@@ -7501,7 +7501,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
    - Archive changes the master tool lifecycle record and preserves history/data.
 */
 (function(){'use strict';
-const VERSION='1.0.1';
+const VERSION='1.0.3';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 window.B7_APP_VERSION=VERSION;window.VERSION=VERSION;
@@ -7614,12 +7614,12 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 
 /* ===== SOURCE: js/patch-v0854.js ===== */
-/* B7 FI Command Center v1.0.1 — Centralized Page Navigation Framework
+/* B7 FI Command Center v1.0.3 — Centralized Page Navigation Framework
    One authoritative secondary toolbar. Left = destinations, right = actions.
    Removes the v1.0.1 delayed toolbar recovery layer that caused jumpy controls.
 */
 (function(){'use strict';
-const VERSION='1.0.1';
+const VERSION='1.0.3';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 window.B7_APP_VERSION=VERSION;window.VERSION=VERSION;
@@ -7695,13 +7695,13 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 
 /* ===== SOURCE: js/patch-v0861.js ===== */
-/* B7 FI Command Center v1.0.1 — Operations responsiveness hotfix.
+/* B7 FI Command Center v1.0.3 — Operations responsiveness hotfix.
    Fixes v1.0.1 render loop while retaining Operations family summaries,
    lifecycle colors and automatic product photos.
    Lead Alerts/System Status logic is intentionally untouched.
 */
 (function(){'use strict';
-const VERSION=window.B7_APP_VERSION||'1.0.0';
+const VERSION=window.B7_APP_VERSION||'1.0.3';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 window.VERSION=window.B7_APP_VERSION||VERSION;
 const PHOTO={zephyr:'assets/tool-zephyr.png',regera:'assets/tool-regera-celestiq.png',celestiq:'assets/tool-regera-celestiq.png',macan:'assets/tool-29xx-family.png',boxster:'assets/tool-29xx-family.png',panamera:'assets/tool-29xx-family.png',vanquish:'assets/tool-29xx-family.png',targa:'assets/tool-29xx-family.png',taycan:'assets/tool-29xx-family.png'};
@@ -7737,107 +7737,33 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 window.MutationObserver = __B7_NATIVE_MO;
 
-/* ===== v1.0.1 FINAL RUNTIME AUTHORITY ===== */
+/* ===== B7 FI COMMAND CENTER v1.0.3 — SINGLE SHELL / ROUTER AUTHORITY ===== */
 (function(){'use strict';
-const VERSION='1.0.1';
+const VERSION='1.0.3';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
-const viewToCenter={home:'home',toolcenter:'tool',countdown:'tool',archive:'tool',shipping:'shipping',priorities:'priority',weekend:'priority',statuscenter:'status',meetingcenter:'meeting',actions:'action',referencecenter:'reference',references:'reference',searchcenter:'search'};
-const centerLegacy={home:'home',tool:'toolcenter',shipping:'shipping',priority:'priorities',status:'statuscenter',meeting:'meetingcenter',action:'actions',reference:'referencecenter',search:'searchcenter'};
-const titleMap={home:['OPERATIONS CENTER','#2477ad','36,119,173'],tool:['UPDATE CENTER','#8e5ae8','142,90,232'],shipping:['SHIPPING CENTER','#27ae60','39,174,96'],priority:['PRIORITY CENTER','#d4a72c','212,167,44'],status:['STATUS CENTER','#f28c28','242,140,40'],meeting:['MEETING CENTER','#19b9d1','25,185,209'],action:['ACTION CENTER','#ef4b4b','239,75,75'],reference:['REFERENCE CENTER','#e94a9a','233,74,154'],search:['SEARCH CENTER','#536dfe','83,109,254']};
-let center='home',subview='home',inAuthority=false;
-function quarter(){try{return String(window.getB7ActiveQuarter?.()||window.quarterLabel?.()||'CY26Q3').toUpperCase()}catch(e){return'CY26Q3'}}
-function authoritativeVersion(){window.B7_APP_VERSION=VERSION;window.VERSION=VERSION;document.title=(document.body?.dataset?.liveViewerOnly==='true'?`B7 FI Live Status v${VERSION}`:`B7 FI Command Center v${VERSION}`);const v=$('#appVersionLabel');if(v)v.textContent=`B7 FI COMMAND CENTER V${VERSION}`}
-function visual(){const cfg=titleMap[center]||titleMap.home;document.body.dataset.center=center==='tool'?'toolfinal':center;document.documentElement.style.setProperty('--page-accent',cfg[1]);document.documentElement.style.setProperty('--page-accent-rgb',cfg[2]);document.documentElement.style.setProperty('--center-color',cfg[1]);document.documentElement.style.setProperty('--center-rgb',cfg[2]);const h=$('#headerPageTitle');if(h){h.textContent=cfg[0]+(['home','tool','shipping','priority','status'].includes(center)?` — ${quarter()}`:'')}$$('.main-nav .nav-btn').forEach(b=>b.classList.toggle('active',viewToCenter[b.dataset.view]===center));}
-function btn(label,fn,active=false){const b=document.createElement('button');b.type='button';b.className='btn'+(active?' primary':'');b.textContent=label;b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();fn?.()});return b}
-function proxy(re){const candidates=$$('#app button,#app a').filter(x=>!x.closest('#floatingActions')&&re.test((x.textContent||'').trim()));if(candidates[0]){candidates[0].click();return true}return false}
-function shot(){try{if(typeof window.enterScreenshotMode==='function')return window.enterScreenshotMode()}catch(e){}window.print()}
-function report(){try{if(typeof window.openReport530==='function')return window.openReport530()}catch(e){}window.print()}
-function invoke(v){if(typeof legacySetView==='function')legacySetView(v);}
-function goSubview(c,v){center=c;subview=v;let target=centerLegacy[c];if(c==='tool')target=v==='countdown'?'countdown':v==='archive'?'archive':'toolcenter';if(c==='priority')target=v==='weekend'?'weekend':'priorities';if(c==='reference')target=v==='files'?'references':'referencecenter';invoke(target);settle()}
-function toolbar(){const bar=$('#floatingActions');if(!bar)return;inAuthority=true;const L=[],R=[],q=quarter();
- if(center==='home'){R.push(btn('OPEN TOOL',()=>proxy(/^OPEN TOOL/)),btn('SCREENSHOT',shot),btn('REPORT',report));}
- else if(center==='tool'){L.push(btn(`${q} TOOLS`,()=>goSubview('tool','tools'),subview==='tools'),btn('TOOL COUNTDOWN',()=>goSubview('tool','countdown'),subview==='countdown'),btn('TOOL ARCHIVE',()=>goSubview('tool','archive'),subview==='archive'));R.push(btn('ADD TOOL',()=>{try{if(typeof window.toolAdmin==='function')return window.toolAdmin()}catch(e){}proxy(/ADD TOOL/)}),btn('SCREENSHOT',shot),btn('REPORT',report));}
- else if(center==='shipping'){R.push(btn('EDIT SHIP SCHEDULE',()=>proxy(/EDIT SHIP SCHEDULE/)),btn('SCREENSHOT',shot),btn('REPORT',report));}
- else if(center==='priority'){L.push(btn('WEEKDAY PRIORITIES',()=>goSubview('priority','weekday'),subview!=='weekend'),btn('WEEKEND PRIORITIES',()=>goSubview('priority','weekend'),subview==='weekend'));R.push(btn(subview==='weekend'?'EDIT WEEKEND PRIORITIES':'EDIT WEEKDAY PRIORITIES',()=>proxy(subview==='weekend'?/EDIT WEEKEND PRIORITIES/:/EDIT WEEKDAY PRIORITIES/)),btn('SCREENSHOT',shot),btn('REPORT',report));}
- else if(center==='status'){L.push(btn('WEEKDAY MORNING STATUS',()=>goSubview('status','weekday'),subview==='weekday'),btn('LEADS EXTRA STATUS',()=>goSubview('status','extra'),subview==='extra'),btn('WEEKEND MORNING STATUS',()=>goSubview('status','weekend'),subview==='weekend'));R.push(btn(subview==='extra'?'EDIT LEADS EXTRA STATUS':subview==='weekend'?'EDIT WEEKEND MORNING STATUS':'EDIT WEEKDAY MORNING STATUS',()=>proxy(subview==='extra'?/EDIT LEADS EXTRA STATUS/:subview==='weekend'?/EDIT WEEKEND MORNING STATUS/:/EDIT WEEKDAY MORNING STATUS/)),btn('SCREENSHOT',shot),btn('REPORT',report));}
- else if(center==='meeting'){['MORNING','WEEKEND MORNING','LEADS','ORB','FE OPTIONS','CELL'].forEach(n=>{const k=n.toLowerCase().replace(/ /g,'-');L.push(btn(n+' MEETING',()=>{subview=k;proxy(new RegExp(n+' MEETING','i'));settle()},subview===k))});R.push(btn('START MEETING',()=>proxy(/START .*MEETING|START MEETING NOW/)),btn('SCREENSHOT',shot),btn('REPORT',report));}
- else if(center==='action'){R.push(btn('ADD ALERT',()=>proxy(/ADD ALERT|ADD TASK|ADD REMINDER/)),btn('SCREENSHOT',shot),btn('REPORT',report));}
- else if(center==='reference'){L.push(btn('FI KNOWLEDGE',()=>goSubview('reference','knowledge'),subview!=='files'),btn('REFERENCE FILES',()=>goSubview('reference','files'),subview==='files'));R.push(btn(subview==='files'?'LOAD FILE':'ADD REFERENCE NOTE',()=>proxy(subview==='files'?/LOAD FILE/:/ADD REFERENCE NOTE/)),btn('SCREENSHOT',shot),btn('REPORT',report));}
- else if(center==='search'){R.push(btn('SCREENSHOT',shot),btn('REPORT',report));}
- bar.className='floating-actions page-toolbar v101-toolbar';bar.replaceChildren();const l=document.createElement('div'),r=document.createElement('div');l.className='v101-left';r.className='v101-right';L.forEach(x=>l.appendChild(x));R.forEach(x=>r.appendChild(x));bar.append(l,r);inAuthority=false;}
-function opsFinal(){const hdr=$('.v861-family-header');if(hdr)hdr.style.display='none';}
-function settle(){requestAnimationFrame(()=>{authoritativeVersion();visual();toolbar();opsFinal()});setTimeout(()=>{authoritativeVersion();visual();toolbar();opsFinal()},80);setTimeout(()=>{authoritativeVersion();visual();toolbar();opsFinal();document.body.classList.remove('b7-booting')},220)}
-const legacySetView=window.setView;
-window.setView=function(v){center=viewToCenter[v]||center;subview=v==='countdown'?'countdown':v==='archive'?'archive':v==='weekend'?'weekend':v==='references'?'files':(center==='tool'?'tools':center==='priority'?'weekday':center==='status'?'weekday':center==='reference'?'knowledge':subview);const r=typeof legacySetView==='function'?legacySetView.apply(this,arguments):undefined;settle();return r};
-try{setView=window.setView}catch(e){}
-function installNav(){const nav=$('.main-nav');if(!nav)return;const labels={home:'OPERATIONS CENTER',toolcenter:'UPDATE CENTER',shipping:'SHIPPING CENTER',priorities:'PRIORITY CENTER',statuscenter:'STATUS CENTER',meetingcenter:'MEETING CENTER',actions:'ACTION CENTER',referencecenter:'REFERENCE CENTER',searchcenter:'SEARCH CENTER'};$$('.nav-btn',nav).forEach(old=>{const n=old.cloneNode(false);n.className='nav-btn';n.dataset.view=old.dataset.view;n.textContent=labels[n.dataset.view]||old.textContent;old.replaceWith(n);n.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();const c=viewToCenter[n.dataset.view]||'home';center=c;subview=c==='tool'?'tools':c==='priority'?'weekday':c==='status'?'weekday':c==='reference'?'knowledge':c==='meeting'?'leads':'home';window.setView(centerLegacy[c]);});});}
-function boot(){authoritativeVersion();installNav();const active=$('.main-nav .nav-btn.active')?.dataset.view||'home';center=viewToCenter[active]||'home';subview=center==='tool'?'tools':center==='priority'?'weekday':center==='status'?'weekday':center==='reference'?'knowledge':center==='meeting'?'leads':'home';settle();}
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
-})();
-
-/* ===== v1.0.2 FINAL MORNING-MEETING STABILITY AUTHORITY ===== */
-(function(){'use strict';
-const VERSION='1.0.2';
-const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
-const COLORS={
- home:['#2477ad','36,119,173','OPERATIONS CENTER'],tool:['#8e5ae8','142,90,232','UPDATE CENTER'],shipping:['#27ae60','39,174,96','SHIPPING CENTER'],priority:['#d4a72c','212,167,44','PRIORITY CENTER'],status:['#f28c28','242,140,40','STATUS CENTER'],meeting:['#19b9d1','25,185,209','MEETING CENTER'],action:['#ef4b4b','239,75,75','ACTION CENTER'],reference:['#e94a9a','233,74,154','REFERENCE CENTER'],search:['#536dfe','83,109,254','SEARCH CENTER']
+const META={
+ home:['OPERATIONS CENTER','#2477ad','36,119,173'],
+ toolcenter:['UPDATE CENTER','#8e5ae8','142,90,232'],systems:['UPDATE CENTER','#8e5ae8','142,90,232'],countdown:['UPDATE CENTER','#8e5ae8','142,90,232'],archive:['UPDATE CENTER','#8e5ae8','142,90,232'],
+ shipping:['SHIPPING CENTER','#27ae60','39,174,96'],
+ priorities:['PRIORITY CENTER','#d4a72c','212,167,44'],weekend:['PRIORITY CENTER','#d4a72c','212,167,44'],
+ statuscenter:['STATUS CENTER','#f28c28','242,140,40'],leads:['STATUS CENTER','#f28c28','242,140,40'],
+ meetingcenter:['MEETING CENTER','#19b9d1','25,185,209'],
+ actions:['ACTION CENTER','#ef4b4b','239,75,75'],
+ referencecenter:['REFERENCE CENTER','#e94a9a','233,74,154'],references:['REFERENCE CENTER','#e94a9a','233,74,154'],
+ searchcenter:['SEARCH CENTER','#536dfe','83,109,254']
 };
-const V2C={home:'home',toolcenter:'tool',systems:'tool',countdown:'tool',archive:'tool',shipping:'shipping',priorities:'priority',weekend:'priority',statuscenter:'status',leads:'status',meetingcenter:'meeting',actions:'action',referencecenter:'reference',references:'reference',searchcenter:'search'};
-const C2V={home:'home',tool:'toolcenter',shipping:'shipping',priority:'priorities',status:'statuscenter',meeting:'meetingcenter',action:'actions',reference:'referencecenter',search:'searchcenter'};
-let current='home';
-const underlyingSetView=window.setView;
-window.B7_APP_VERSION=VERSION;window.VERSION=VERSION;
+const CENTER={home:'home',toolcenter:'tool',systems:'tool',countdown:'tool',archive:'tool',shipping:'shipping',priorities:'priority',weekend:'priority',statuscenter:'status',leads:'status',meetingcenter:'meeting',actions:'action',referencecenter:'reference',references:'reference',searchcenter:'search'};
 function quarter(){try{return String(window.getB7ActiveQuarter?.()||window.quarterLabel?.()||'CY26Q3').toUpperCase()}catch(e){return'CY26Q3'}}
-function stamp(){document.title=`B7 FI Command Center v${VERSION}`;const v=$('#appVersionLabel');if(v)v.textContent=`B7 FI COMMAND CENTER V${VERSION}`}
-function applyTheme(center){current=center;const c=COLORS[center]||COLORS.home;document.body.dataset.center=center;document.body.dataset.theme=center==='tool'?'toolcenter':center;['--center-color','--page-accent','--accent'].forEach(k=>document.documentElement.style.setProperty(k,c[0]));['--center-rgb','--page-accent-rgb','--accent-rgb'].forEach(k=>document.documentElement.style.setProperty(k,c[1]));const h=$('#headerPageTitle');if(h)h.textContent=c[2]+(['home','tool','shipping','priority','status'].includes(center)?` — ${quarter()}`:'');$$('.main-nav .nav-btn').forEach(b=>b.classList.toggle('active',V2C[b.dataset.view]===center));stamp()}
-function screenshot(){try{if(typeof window.enterScreenshotMode==='function')return window.enterScreenshotMode()}catch(e){}try{if(typeof window.enterScreenshot==='function')return window.enterScreenshot()}catch(e){}window.print()}
-function report(){try{if(typeof window.openReport530==='function')return window.openReport530()}catch(e){}window.print()}
-function norm(s){return String(s||'').replace(/\s+/g,' ').trim().toUpperCase()}
-function make(label,fn,primary=false){const b=document.createElement('button');b.type='button';b.className='btn'+(primary?' primary':'');b.textContent=label;b.onclick=fn;return b}
-function originalButtons(){const bar=$('#floatingActions');if(!bar)return[];return $$('button',bar).filter(b=>!b.dataset.v102Generated)}
-function findBtn(re,buttons=originalButtons()){return buttons.find(b=>re.test(norm(b.textContent)))}
-function callButton(re){const b=findBtn(re);if(b){b.click();return true}return false}
-function bodyClick(re){const b=$$('#app button,#app [role="button"],#app .meeting-template51,#app .admin-launch').find(x=>re.test(norm(x.textContent)));if(b){b.click();return true}return false}
-function setToolbar(left,right){const bar=$('#floatingActions');if(!bar)return;bar.className='floating-actions page-toolbar v102-toolbar';bar.replaceChildren();const l=document.createElement('div'),r=document.createElement('div');l.className='v102-left';r.className='v102-right';left.filter(Boolean).forEach(b=>l.appendChild(b));right.filter(Boolean).forEach(b=>r.appendChild(b));bar.append(l,r)}
-function reuseOr(label,re,fn,primary=false,buttons=[]){let b=buttons.find(x=>re.test(norm(x.textContent)));if(b){b.style.display='';b.classList.toggle('primary',primary);return b}const n=make(label,fn,primary);n.dataset.v102Generated='1';return n}
-function normalizeToolbar(center){const old=originalButtons();
- if(center==='home'){
-   const open=reuseOr('OPEN TOOL',/^OPEN TOOL/,()=>{try{const t=window.B7LiveStatusCore?.currentTool?.();if(t?.id&&typeof window.toolStatus==='function')window.toolStatus(t.id)}catch(e){}},false,old);
-   setToolbar([], [open,make('SCREENSHOT',screenshot),make('REPORT',report)]);return;
- }
- if(center==='tool'){
-   const tools=reuseOr(`${quarter()} TOOLS`,/TOOLS$/,()=>navigate('toolcenter'),false,old),count=reuseOr('TOOL COUNTDOWN',/TOOL COUNTDOWN/,()=>navigate('countdown'),false,old),archive=reuseOr('TOOL ARCHIVE',/TOOL ARCHIVE/,()=>navigate('archive'),false,old),add=reuseOr('ADD TOOL',/ADD TOOL/,()=>window.toolAdmin?.(),true,old);
-   setToolbar([tools,count,archive],[add,make('SCREENSHOT',screenshot),make('REPORT',report)]);return;
- }
- if(center==='shipping'){
-   const edit=reuseOr('EDIT SHIP SCHEDULE',/EDIT .*SHIP.*SCHEDULE/,()=>callButton(/EDIT .*SHIP.*SCHEDULE/)||bodyClick(/EDIT .*SHIP.*SCHEDULE/),true,old);setToolbar([], [edit,make('SCREENSHOT',screenshot),make('REPORT',report)]);return;
- }
- if(center==='priority'){
-   const wd=reuseOr('WEEKDAY PRIORITIES',/^WEEKDAY PRIORITIES$/,()=>callButton(/^WEEKDAY PRIORITIES$/),true,old),we=reuseOr('WEEKEND PRIORITIES',/^WEEKEND PRIORITIES$/,()=>callButton(/^WEEKEND PRIORITIES$/),false,old),edit=reuseOr('EDIT PRIORITIES',/^EDIT .*PRIORITIES$/,()=>callButton(/^EDIT .*PRIORITIES$/),true,old);setToolbar([wd,we],[edit,make('SCREENSHOT',screenshot),make('REPORT',report)]);return;
- }
- if(center==='status'){
-   const wd=reuseOr('WEEKDAY MORNING STATUS',/^WEEKDAY MORNING STATUS$/,()=>navigate('statuscenter'),true,old);
-   const extra=reuseOr('LEADS EXTRA STATUS',/^LEADS EXTRA STATUS$/,()=>navigate('leads'),false,old);
-   const we=reuseOr('WEEKEND MORNING STATUS',/^WEEKEND MORNING STATUS$/,()=>callButton(/^WEEKEND MORNING STATUS$/)||bodyClick(/^WEEKEND MORNING STATUS$/),false,old);
-   const edit=reuseOr('EDIT WEEKDAY MORNING STATUS',/^EDIT .*STATUS$/,()=>callButton(/^EDIT .*STATUS$/),true,old);
-   setToolbar([wd,extra,we],[edit,make('SCREENSHOT',screenshot),make('REPORT',report)]);return;
- }
- if(center==='meeting'){
-   const defs=[['MORNING MEETING',/MORNING (STATUS|MEETING)/],['LEADS MEETING',/LEADS MEETING/],['ORB MEETING',/ORB MEETING/],['FE OPTIONS MEETING',/FE OPTIONS MEETING/],['CELL MEETING',/CELL MEETING/]];
-   const left=defs.map(([lab,re],i)=>reuseOr(lab,re,()=>callButton(re)||bodyClick(re),i===0,old));const start=reuseOr('START NEW MEETING',/START .*MEETING/,()=>callButton(/START .*MEETING/)||bodyClick(/START .*MEETING/),true,old);setToolbar(left,[start,make('SCREENSHOT',screenshot),make('REPORT',report)]);return;
- }
- if(center==='action'){const add=reuseOr('ADD ALERT',/ADD (ALERT|TASK|REMINDER)/,()=>callButton(/ADD (ALERT|TASK|REMINDER)/)||bodyClick(/ADD (ALERT|TASK|REMINDER)/),true,old);setToolbar([], [add,make('SCREENSHOT',screenshot),make('REPORT',report)]);return}
- if(center==='reference'){
-   const know=reuseOr('FI KNOWLEDGE',/^FI KNOWLEDGE$/,()=>navigate('referencecenter'),true,old),files=reuseOr('REFERENCE FILES',/^REFERENCE FILES$/,()=>navigate('references'),false,old);const action=reuseOr('ADD REFERENCE NOTE',/(ADD REFERENCE NOTE|LOAD FILE)/,()=>callButton(/ADD REFERENCE NOTE|LOAD FILE/)||bodyClick(/ADD REFERENCE NOTE|LOAD FILE/),true,old);setToolbar([know,files],[action,make('SCREENSHOT',screenshot),make('REPORT',report)]);return;
- }
- if(center==='search'){setToolbar([], [make('SCREENSHOT',screenshot),make('REPORT',report)]);return}
-}
-function trimUpdateCenter(){if(current!=='tool')return;$$('.v837-tool-dashboard>.v837-summary-grid,.v837-tool-dashboard>.v845-summary-grid,.v837-tool-dashboard>.v837-quarter-progress,.v837-tool-dashboard>.quarter-progress').forEach(x=>x.remove())}
-function settle(center=current){requestAnimationFrame(()=>{applyTheme(center);normalizeToolbar(center);trimUpdateCenter()});setTimeout(()=>{applyTheme(center);normalizeToolbar(center);trimUpdateCenter();document.body.classList.remove('b7-booting')},90)}
-function navigate(view){const center=V2C[view]||current;current=center;try{underlyingSetView?.(view)}catch(e){console.error('B7 navigation',e)}settle(center)}
-window.setView=function(view){return navigate(view)};try{setView=window.setView}catch(e){}
-/* Main navigation: one click path, one active Center. */
-document.addEventListener('click',function(e){const b=e.target.closest('.main-nav .nav-btn');if(!b)return;e.preventDefault();e.stopImmediatePropagation();navigate(b.dataset.view)},true);
-function boot(){stamp();$$('.main-nav .nav-btn').forEach(b=>{b.onclick=null});const active=$('.main-nav .nav-btn.active')?.dataset.view||'home';current=V2C[active]||'home';settle(current)}
+function stamp(){window.B7_APP_VERSION=VERSION;window.VERSION=VERSION;document.title=`B7 FI Command Center v${VERSION}`;const v=$('#appVersionLabel');if(v)v.textContent=`B7 FI COMMAND CENTER V${VERSION}`}
+function applyTheme(view){const m=META[view]||META.home,c=CENTER[view]||'home';document.body.dataset.center=c;document.body.dataset.theme=c==='tool'?'toolcenter':c;document.documentElement.style.setProperty('--page-accent',m[1]);document.documentElement.style.setProperty('--page-accent-rgb',m[2]);document.documentElement.style.setProperty('--center-color',m[1]);document.documentElement.style.setProperty('--center-rgb',m[2]);const h=$('#headerPageTitle');if(h)h.textContent=m[0]+(['home','toolcenter','systems','countdown','shipping','priorities','weekend','statuscenter','leads'].includes(view)?` — ${quarter()}`:'');$$('.main-nav .nav-btn').forEach(b=>b.classList.toggle('active',CENTER[b.dataset.view]===c));stamp()}
+function trimUpdate(){if(document.body.dataset.center!=='tool')return;$$('.v837-tool-dashboard>.v837-summary-grid,.v837-tool-dashboard>.v845-summary-grid,.v837-tool-dashboard>.v837-quarter-progress,.v837-tool-dashboard>.quarter-progress').forEach(x=>x.remove())}
+function addPackingFamilyBox(){if(document.body.dataset.center!=='tool')return;$$('.v837-tool-groups .tool-section').forEach(sec=>{const counts=$('.family-counts',sec);if(!counts||$('.family-packing',counts))return;const ids=$$('[data-v837-tool]',sec).map(x=>x.dataset.v837Tool);let list=[];try{list=Array.isArray(window.tools)?window.tools:(typeof tools!=='undefined'?tools:[])}catch(e){}const p=list.filter(t=>ids.includes(String(t.id||t.utid))&&String(t.quarterStatus||t.status)==='Packing and Shipping').length;const box=document.createElement('div');box.className='family-packing';box.innerHTML=`<span>PACKING</span><b>${p}</b>`;const shipped=$('.family-shipped',counts);if(shipped)counts.insertBefore(box,shipped);else counts.appendChild(box)})}
+function decorateFlow(){if(document.body.dataset.center!=='home')return;$$('.v861-family-row').forEach(row=>{const h=$('h3',row),k=$('.v861-family-kpis',row);if(h&&!h.nextElementSibling?.classList?.contains('v103-flow-arrow')){const a=document.createElement('span');a.className='v103-flow-arrow';a.setAttribute('aria-hidden','true');h.after(a)}if(k&&!k.querySelector('.v103-flow-arrow')){const cards=Array.from(k.children).filter(x=>x.classList.contains('v861-family-kpi'));cards.slice(0,-1).forEach(card=>{const a=document.createElement('span');a.className='v103-flow-arrow';a.setAttribute('aria-hidden','true');card.after(a)})}})}
+function finalize(view){requestAnimationFrame(()=>{applyTheme(view);trimUpdate();addPackingFamilyBox();decorateFlow();document.body.classList.remove('b7-booting')})}
+const core=window.setView;
+window.setView=function(view){const v=String(view||'home');let out;try{out=core?.call(this,v)}catch(e){console.error('B7 route',e)}finalize(v);return out};try{setView=window.setView}catch(e){}
+function bindMainNav(){const nav=$('.main-nav');if(!nav)return;$$('.nav-btn',nav).forEach(old=>{const n=old.cloneNode(true);old.replaceWith(n);n.onclick=e=>{e.preventDefault();e.stopPropagation();window.setView(n.dataset.view)}})}
+function boot(){stamp();bindMainNav();const active=$('.main-nav .nav-btn.active')?.dataset.view||'home';finalize(active)}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+document.addEventListener('b7fi:tool-records-updated',()=>finalize(document.querySelector('.main-nav .nav-btn.active')?.dataset.view||'home'));
 })();
